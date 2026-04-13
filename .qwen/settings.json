@@ -38,7 +38,23 @@
       "Bash(me *)",
       "Bash(asyncio.run)",
       "Bash(launchctl *)",
-      "Bash(wc *)"
+      "Bash(wc *)",
+      "Bash(kill *)",
+      "Bash(os.environ['telegram_bot_token'] *)",
+      "Bash('bot_token': *)",
+      "Bash('allowed_users': *)",
+      "Bash(})",
+      "Bash(adapter *)",
+      "Bash(config)",
+      "Bash(sig *)",
+      "Bash(platformconfig.__init__)",
+      "Bash(pc *)",
+      "Bash(,)",
+      "Bash(\"allowed_users\": *)",
+      "Bash([\"8223961194\"]})",
+      "Bash(head *)",
+      "Bash(src *)",
+      "Bash(load_hermes_dotenv)"
     ]
   },
   "$version": 3

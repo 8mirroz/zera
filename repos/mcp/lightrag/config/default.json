@@ -1,0 +1,46 @@
+{
+  "chunking": {
+    "chunkSize": 512,
+    "chunkOverlap": 64,
+    "minChunkSize": 128,
+    "semanticBoundaries": true
+  },
+  "embedding": {
+    "provider": "local",
+    "model": "bge-small",
+    "dimensions": 384,
+    "batchSize": 32
+  },
+  "storage": {
+    "backend": "jsonl",
+    "dataDir": "./data",
+    "flushThreshold": 100,
+    "compression": false
+  },
+  "retrieval": {
+    "topK": 5,
+    "minScore": 0.3,
+    "hybrid": true,
+    "keywordWeight": 0.3,
+    "maxKeywordResults": 20
+  },
+  "generation": {
+    "provider": "ollama",
+    "model": "qwen2.5-coder:7b",
+    "maxTokens": 2048,
+    "temperature": 0.1
+  },
+  "cache": {
+    "enabled": true,
+    "cacheFile": "./data/cache/embeddings.json",
+    "maxEntries": 10000,
+    "ttl": 86400000
+  },
+  "memory": {
+    "maxMemoryMB": 512,
+    "lazyIndexing": true,
+    "autoRebuildThreshold": 50
+  },
+  "debug": false,
+  "logLevel": "info"
+}

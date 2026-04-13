@@ -1,0 +1,8 @@
+{
+  "provider": "ton-connect",
+  "status": "pending",
+  "order_id": "order-ton-1",
+  "provider_payment_id": "ton-evt-1",
+  "amount_minor": 250000000,
+  "currency": "TON"
+}

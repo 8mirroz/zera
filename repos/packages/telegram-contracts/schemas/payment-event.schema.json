@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity.dev/schemas/telegram/payment-event.schema.json",
+  "title": "TelegramPaymentEvent",
+  "type": "object",
+  "required": [
+    "event_id",
+    "order_id",
+    "provider",
+    "provider_event_id",
+    "status_from",
+    "status_to",
+    "occurred_at",
+    "idempotency_key"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "order_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "payment_id": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string",
+      "enum": ["telegram-stars", "ton-connect", "yookassa", "tbank-acquiring", "stripe"]
+    },
+    "provider_event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status_from": {
+      "type": "string",
+      "enum": ["created", "pending", "confirmed", "fulfilled", "failed", "recoverable"]
+    },
+    "status_to": {
+      "type": "string",
+      "enum": ["created", "pending", "confirmed", "fulfilled", "failed", "recoverable"]
+    },
+    "amount_minor": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "currency": {
+      "type": "string"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "raw_payload": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

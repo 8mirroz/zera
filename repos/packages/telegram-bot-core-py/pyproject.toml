@@ -1,0 +1,17 @@
+[project]
+name = "telegram-bot-core"
+version = "0.1.0"
+description = "Shared Telegram bot core for aiogram/FastAPI baselines"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic-settings>=2.7"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

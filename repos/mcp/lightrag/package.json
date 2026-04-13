@@ -1,0 +1,38 @@
+{
+  "name": "@antigravity/lightrag",
+  "version": "1.0.0",
+  "description": "Lightweight RAG system for Antigravity Core — low latency, minimal resources, agent-native",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "lightrag": "./dist/cli.js",
+    "lightrag-ingest": "./dist/cli/ingest.js",
+    "lightrag-query": "./dist/cli/query.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "ingest": "node dist/cli/ingest.js",
+    "query": "node dist/cli/query.js",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --config jest.config.js",
+    "bench": "node dist/tests/benchmarks.js",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "better-sqlite3": "^11.7.0",
+    "tiktoken": "^1.0.18"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.2",
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

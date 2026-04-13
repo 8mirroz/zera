@@ -1,0 +1,8 @@
+{
+  "provider": "tbank-acquiring",
+  "status": "pending",
+  "order_id": "order-tbank-1",
+  "provider_payment_id": "tb-evt-1",
+  "amount_minor": 25900,
+  "currency": "RUB"
+}

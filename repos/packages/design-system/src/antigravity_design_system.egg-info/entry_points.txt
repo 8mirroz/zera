@@ -1,0 +1,4 @@
+[console_scripts]
+agds = antigravity_design_system.__main__:main
+agds-audit = antigravity_design_system.debug_audit:main
+agds-search = antigravity_design_system.search_cli:main

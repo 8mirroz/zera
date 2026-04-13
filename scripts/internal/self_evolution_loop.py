@@ -48,7 +48,12 @@ from typing import Any
 # ── Constants ──────────────────────────────────────────────────────────
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-HERMES_PROFILES = Path.home() / ".hermes/profiles"
+
+# Discovery of profiles directory (prefer ~/.zera/profiles, fallback to ~/.hermes/profiles)
+_zera_profiles = Path.home() / ".zera/profiles"
+_hermes_profiles = Path.home() / ".hermes/profiles"
+ZERA_PROFILES_DIR = _zera_profiles if _zera_profiles.exists() else _hermes_profiles
+
 GOVERNANCE_PATH = REPO_ROOT / "configs/tooling/zera_growth_governance.json"
 EVO_STATE_PATH = REPO_ROOT / ".agent/evolution/state.json"
 EVO_TELEMETRY_PATH = REPO_ROOT / ".agent/evolution/telemetry.jsonl"
@@ -532,7 +537,7 @@ def check_freeze_conditions(governance: dict[str, Any], state: EvolutionState | 
         return True, f"Consecutive regressions: {current_state.consecutive_regressions}"
 
     # Check profile existence
-    if not (HERMES_PROFILES / "zera/config.yaml").exists():
+    if not (ZERA_PROFILES_DIR / "zera/config.yaml").exists():
         return True, "Zera profile not found"
 
     return False, ""
@@ -589,7 +594,7 @@ def scout_external_patterns() -> list[dict[str, str]]:
         logger.warning("  Scout daemon not found at %s", scout_script)
         return [{"source": "scout", "status": "daemon_not_found"}]
 
-    env_file = HERMES_PROFILES / "zera/.env"
+    env_file = ZERA_PROFILES_DIR / "zera/.env"
     env_overrides = _load_env_file(env_file)
     has_exa_key = bool((os.getenv("EXA_API_KEY") or "").strip() or (env_overrides.get("EXA_API_KEY") or "").strip())
 
@@ -1035,7 +1040,7 @@ def basic_eval_checks(
     checks = []
 
     # Check 1: Required config files exist
-    checks.append((HERMES_PROFILES / "zera/config.yaml").exists())
+    checks.append((ZERA_PROFILES_DIR / "zera/config.yaml").exists())
     checks.append((REPO_ROOT / "configs/tooling/zera_growth_governance.json").exists())
     checks.append((REPO_ROOT / "configs/adapters/hermes/adapter.yaml").exists())
     checks.append((REPO_ROOT / "configs/tooling/zera_client_profiles.yaml").exists())

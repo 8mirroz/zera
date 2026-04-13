@@ -1,0 +1,8 @@
+{
+  "provider": "yookassa",
+  "status": "pending",
+  "order_id": "order-yk-1",
+  "provider_payment_id": "yk-evt-1",
+  "amount_minor": 19900,
+  "currency": "RUB"
+}

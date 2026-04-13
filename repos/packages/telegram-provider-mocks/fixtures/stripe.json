@@ -1,0 +1,8 @@
+{
+  "provider": "stripe",
+  "status": "confirmed",
+  "order_id": "order-stripe-1",
+  "provider_payment_id": "pi_123",
+  "amount_minor": 4900,
+  "currency": "USD"
+}

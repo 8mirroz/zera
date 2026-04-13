@@ -1,0 +1,16 @@
+{
+  "name": "mcp-profile-manager",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP profile selector (stdout recommendations, no config writes)",
+  "bin": {
+    "mcp-profile": "src/index.js"
+  },
+  "scripts": {
+    "mcp-profile": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,25 @@
+[project]
+name = "antigravity-design-system"
+version = "0.1.0"
+description = "Design system engine and adaptive token generator for Antigravity"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "httpx>=0.27.0",
+  "pinterest-python-sdk>=0.2.0",
+]
+
+[project.scripts]
+agds = "antigravity_design_system.__main__:main"
+agds-search = "antigravity_design_system.search_cli:main"
+agds-audit = "antigravity_design_system.debug_audit:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

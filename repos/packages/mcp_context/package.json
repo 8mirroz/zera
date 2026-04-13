@@ -1,0 +1,22 @@
+{
+    "name": "mcp-antigravity-context",
+    "version": "1.0.0",
+    "description": "MCP Server for fetching specific Antigravity OS configuration contexts directly to the LLM",
+    "main": "dist/index.js",
+    "type": "module",
+    "bin": {
+        "mcp-antigravity-context": "./dist/index.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "dev": "tsc --watch"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.2",
+        "typescript": "^5.5.4"
+    }
+}

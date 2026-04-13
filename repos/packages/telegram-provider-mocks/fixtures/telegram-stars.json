@@ -1,0 +1,8 @@
+{
+  "provider": "telegram-stars",
+  "status": "confirmed",
+  "order_id": "order-stars-1",
+  "provider_payment_id": "stars-evt-1",
+  "amount_minor": 100,
+  "currency": "XTR"
+}

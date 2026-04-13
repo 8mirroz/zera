@@ -1,0 +1,28 @@
+{
+  "designSources": {
+    "priority": ["stitch", "magic_21st", "magic_ui", "pinterest"],
+    "fallbackThreshold": 0.8,
+    "servers": {
+      "stitch": {
+        "serverId": "stitch",
+        "requiredEnv": ["STITCH_API_KEY"],
+        "enabled": true
+      },
+      "magic_21st": {
+        "serverId": "magic_21st",
+        "requiredEnv": ["MAGIC21ST_API_KEY"],
+        "enabled": true
+      },
+      "magic_ui": {
+        "serverId": "magic_ui",
+        "requiredEnv": [],
+        "enabled": false
+      },
+      "pinterest": {
+        "requiredEnv": ["PERPLEXITY_API_KEY"],
+        "enabled": true,
+        "profileUrl": "https://ru.pinterest.com/deushareAI/"
+      }
+    }
+  }
+}

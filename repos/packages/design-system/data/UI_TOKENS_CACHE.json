@@ -1,0 +1,54 @@
+{
+    "presets": {
+        "fintech dashboard": {
+            "style": "Glassmorphism",
+            "primary": "#00F2FE",
+            "secondary": "#4FACFE",
+            "background": "#0F172A",
+            "text": "#F8FAFC",
+            "magic_ui": [
+                "animated-grid-pattern",
+                "border-beam"
+            ],
+            "stitch_prompt": "Fintech dashboard with dark navy glassmorphism, glowing borders, and animated grid background."
+        },
+        "saas landing": {
+            "style": "Minimalism",
+            "primary": "#6366F1",
+            "secondary": "#A5B4FC",
+            "background": "#FFFFFF",
+            "text": "#111827",
+            "magic_ui": [
+                "blur-fade",
+                "retro-grid"
+            ],
+            "stitch_prompt": "Clean iOS-style SaaS landing page with high-contrast typography, subtle indigo accents, and smooth fade-in animations."
+        },
+        "luxury ecommerce": {
+            "style": "Quiet Luxury",
+            "primary": "#1A1A1A",
+            "secondary": "#D4AF37",
+            "background": "#FDFCF0",
+            "text": "#1A1A1A",
+            "magic_ui": [
+                "shiny-button",
+                "dock"
+            ],
+            "stitch_prompt": "High-end luxury e-commerce boutique with serif typography, gold accents, and minimal layout."
+        },
+        "premium motion": {
+            "style": "Motion Premium (GSAP)",
+            "primary": "#000000",
+            "secondary": "#FFFFFF",
+            "background": "#000000",
+            "text": "#FFFFFF",
+            "magic_ui": [
+                "gsap-scroll-reveal",
+                "gsap-stagger-list",
+                "gsap-magnetic-button"
+            ],
+            "stitch_prompt": "Cinematic dark landing page with ultra-smooth GSAP ScrollTrigger animations, magnetic buttons, and staggered text reveals."
+        }
+    },
+    "last_updated": "2026-02-23T23:30:00Z"
+}

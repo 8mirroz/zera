@@ -1,0 +1,14 @@
+[project]
+name = "telegram-payments-core"
+version = "0.1.0"
+description = "Telegram payment state machine and provider contracts"
+requires-python = ">=3.12"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

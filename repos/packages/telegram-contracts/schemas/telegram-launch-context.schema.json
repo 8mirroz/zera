@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity.dev/schemas/telegram/telegram-launch-context.schema.json",
+  "title": "TelegramLaunchContext",
+  "type": "object",
+  "required": ["source", "platform", "init_data_present"],
+  "properties": {
+    "source": {
+      "type": "string",
+      "enum": ["telegram", "browser-preview", "unknown"]
+    },
+    "platform": {
+      "type": "string"
+    },
+    "init_data_present": {
+      "type": "boolean"
+    },
+    "query_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "chat_type": {
+      "type": "string"
+    },
+    "start_param": {
+      "type": "string"
+    },
+    "theme_params": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
