@@ -1,0 +1,28 @@
+services:
+  zera-telegram:
+    image: python:3.12-slim
+    working_dir: /workspace
+    command: >
+      sh -lc "pip install -r sandbox/template-telegram/requirements.txt &&
+      python sandbox/template-telegram/bot/main.py"
+    env_file:
+      - .env
+    volumes:
+      - ../..:/workspace
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
+  zera-background-daemon:
+    image: python:3.12-slim
+    working_dir: /workspace
+    command: >
+      sh -lc "while true; do
+      python repos/packages/agent-os/scripts/swarmctl.py background-daemon --limit 10;
+      sleep 30;
+      done"
+    env_file:
+      - .env
+    volumes:
+      - ../..:/workspace
+    restart: unless-stopped

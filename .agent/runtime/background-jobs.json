@@ -1,0 +1,191 @@
+{
+  "queued": [],
+  "completed": [
+    {
+      "id": "6c7c93cd-0d5e-4b9e-a8b4-5ef38716efee",
+      "idempotency_key": "zera-v1:goal_review:plan",
+      "job_type": "goal_review",
+      "objective": "Run a concise goal review for zera-v1 in plan mode and produce one practical next action.",
+      "runtime_provider": "zeroclaw",
+      "runtime_profile": "zera-edge-local",
+      "persona_id": "zera-v1",
+      "scheduler_profile": "local-dev",
+      "queued_at": "2026-03-11T01:11:57.156592+00:00",
+      "not_before": "2026-03-11T01:11:57.156600+00:00",
+      "attempts": 0,
+      "max_attempts": 3,
+      "payload": {
+        "source_run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "job_spec": {
+          "job_type": "goal_review",
+          "cadence_minutes": 720,
+          "retry_limit": 2,
+          "concurrency_limit": 1,
+          "quiet_hours": "23:00-08:00",
+          "stop_condition": "goal_completed",
+          "escalation_rule": "queue_review",
+          "user_suppressible": true,
+          "scheduler_profile": "local-dev",
+          "scheduler_policy": {
+            "cadence_policy": "debug",
+            "quiet_hours": "00:00-00:00",
+            "max_parallel_jobs": 1,
+            "jitter_budget_seconds": 30
+          }
+        },
+        "route_decision": {
+          "task_type": "T7",
+          "complexity": "C2",
+          "approval_policy": "zera-standard",
+          "autonomy_mode": "bounded_initiative"
+        }
+      },
+      "completed_at": "2026-03-11T01:12:10.196601+00:00",
+      "result": {
+        "status": "completed",
+        "next_action": "Promote the adapter contract to the real ZeroClaw binary integration once the target node is provisioned.",
+        "response_text": "Zera runtime handled the request in plan mode. I may be wrong on details, so let's verify external assumptions and keep the next step concrete."
+      }
+    },
+    {
+      "id": "7b70e3bd-cc1e-44d3-92cc-704fa056a89b",
+      "idempotency_key": "zera-v1:memory_consolidation:plan",
+      "job_type": "memory_consolidation",
+      "objective": "Consolidate recent memory for zera-v1 without writing speculative facts.",
+      "runtime_provider": "zeroclaw",
+      "runtime_profile": "zera-edge-local",
+      "persona_id": "zera-v1",
+      "scheduler_profile": "local-dev",
+      "queued_at": "2026-03-11T01:11:57.161113+00:00",
+      "not_before": "2026-03-11T01:11:57.161128+00:00",
+      "attempts": 0,
+      "max_attempts": 4,
+      "payload": {
+        "source_run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "job_spec": {
+          "job_type": "memory_consolidation",
+          "cadence_minutes": 360,
+          "retry_limit": 3,
+          "concurrency_limit": 1,
+          "quiet_hours": "00:00-00:00",
+          "stop_condition": "manual_stop",
+          "escalation_rule": "queue_review",
+          "user_suppressible": false,
+          "scheduler_profile": "local-dev",
+          "scheduler_policy": {
+            "cadence_policy": "debug",
+            "quiet_hours": "00:00-00:00",
+            "max_parallel_jobs": 1,
+            "jitter_budget_seconds": 30
+          }
+        },
+        "route_decision": {
+          "task_type": "T7",
+          "complexity": "C2",
+          "approval_policy": "zera-standard",
+          "autonomy_mode": "bounded_initiative"
+        }
+      },
+      "completed_at": "2026-03-11T01:12:10.406733+00:00",
+      "result": {
+        "status": "completed",
+        "next_action": "Promote the adapter contract to the real ZeroClaw binary integration once the target node is provisioned.",
+        "response_text": "Zera runtime handled the request in plan mode. I may be wrong on details, so let's verify external assumptions and keep the next step concrete."
+      }
+    },
+    {
+      "id": "0c32d706-1a97-4e5f-ba8b-6c3acd6c756d",
+      "idempotency_key": "zera-v1:self_reflection:plan",
+      "job_type": "self_reflection",
+      "objective": "Write an operational self-reflection for zera-v1 focused on actionability and boundaries.",
+      "runtime_provider": "zeroclaw",
+      "runtime_profile": "zera-edge-local",
+      "persona_id": "zera-v1",
+      "scheduler_profile": "local-dev",
+      "queued_at": "2026-03-11T01:11:57.166222+00:00",
+      "not_before": "2026-03-11T01:11:57.166246+00:00",
+      "attempts": 0,
+      "max_attempts": 2,
+      "payload": {
+        "source_run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "job_spec": {
+          "job_type": "self_reflection",
+          "cadence_minutes": 720,
+          "retry_limit": 1,
+          "concurrency_limit": 1,
+          "quiet_hours": "00:00-00:00",
+          "stop_condition": "manual_stop",
+          "escalation_rule": "queue_review",
+          "user_suppressible": false,
+          "scheduler_profile": "local-dev",
+          "scheduler_policy": {
+            "cadence_policy": "debug",
+            "quiet_hours": "00:00-00:00",
+            "max_parallel_jobs": 1,
+            "jitter_budget_seconds": 30
+          }
+        },
+        "route_decision": {
+          "task_type": "T7",
+          "complexity": "C2",
+          "approval_policy": "zera-standard",
+          "autonomy_mode": "bounded_initiative"
+        }
+      },
+      "completed_at": "2026-03-11T01:12:10.612906+00:00",
+      "result": {
+        "status": "completed",
+        "next_action": "Promote the adapter contract to the real ZeroClaw binary integration once the target node is provisioned.",
+        "response_text": "Zera runtime handled the request in plan mode. I may be wrong on details, so let's verify external assumptions and keep the next step concrete."
+      }
+    },
+    {
+      "id": "38a9dd94-9128-4a85-a605-f5a19a4737d3",
+      "idempotency_key": "zera-v1:rhythm_check_in:plan",
+      "job_type": "rhythm_check_in",
+      "objective": "Prepare a low-pressure rhythm check-in for zera-v1 with one optional follow-up.",
+      "runtime_provider": "zeroclaw",
+      "runtime_profile": "zera-edge-local",
+      "persona_id": "zera-v1",
+      "scheduler_profile": "local-dev",
+      "queued_at": "2026-03-11T01:11:57.171342+00:00",
+      "not_before": "2026-03-11T01:11:57.171369+00:00",
+      "attempts": 0,
+      "max_attempts": 3,
+      "payload": {
+        "source_run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "job_spec": {
+          "job_type": "rhythm_check_in",
+          "cadence_minutes": 1440,
+          "retry_limit": 2,
+          "concurrency_limit": 1,
+          "quiet_hours": "23:00-08:00",
+          "stop_condition": "user_suppressed",
+          "escalation_rule": "notify_operator",
+          "user_suppressible": true,
+          "scheduler_profile": "local-dev",
+          "scheduler_policy": {
+            "cadence_policy": "debug",
+            "quiet_hours": "00:00-00:00",
+            "max_parallel_jobs": 1,
+            "jitter_budget_seconds": 30
+          }
+        },
+        "route_decision": {
+          "task_type": "T7",
+          "complexity": "C2",
+          "approval_policy": "zera-standard",
+          "autonomy_mode": "bounded_initiative"
+        }
+      },
+      "completed_at": "2026-03-11T01:12:10.905519+00:00",
+      "result": {
+        "status": "completed",
+        "next_action": "Promote the adapter contract to the real ZeroClaw binary integration once the target node is provisioned.",
+        "response_text": "Zera runtime handled the request in plan mode. I may be wrong on details, so let's verify external assumptions and keep the next step concrete."
+      }
+    }
+  ],
+  "failed": [],
+  "updated_at": "2026-03-11T01:12:10.905530+00:00"
+}

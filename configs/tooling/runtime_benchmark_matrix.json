@@ -1,0 +1,28 @@
+{
+  "version": "2026-03-11",
+  "dimensions": [
+    "pass_rate",
+    "latency",
+    "token_efficiency",
+    "recovery_rate",
+    "initiative_usefulness",
+    "persona_consistency",
+    "anti_sycophancy",
+    "retrieval_quality",
+    "stop_signal_compliance",
+    "proof_of_action_coverage",
+    "approval_latency"
+  ],
+  "profiles": {
+    "zera-telegram-prod": {
+      "runtime_provider": "zeroclaw",
+      "scheduler_profile": "telegram-edge",
+      "background_profile": "zera-companion"
+    },
+    "generic-c1-c2-worker": {
+      "runtime_provider": "zeroclaw",
+      "scheduler_profile": "local-dev",
+      "background_profile": "worker-maintenance"
+    }
+  }
+}

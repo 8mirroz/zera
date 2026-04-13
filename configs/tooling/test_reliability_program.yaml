@@ -1,0 +1,132 @@
+version: "2026-04-08"
+program_id: "monorepo-test-debug-reliability-platform-v1"
+artifacts_root: "outputs/reliability"
+
+scope:
+  first_party_include:
+    - "repos/packages/**"
+    - "repos/runtime/**"
+    - "repos/mcp/servers/**"
+    - "repos/tools/**"
+    - "scripts/**"
+    - "configs/**"
+    - ".github/workflows/**"
+    - "docs/**"
+  excluded_from_blocking:
+    - path: "repos/imported/**"
+      policy: "smoke_only"
+      reason: "third-party mirrors and imported assets are not first-party runtime ownership"
+    - path: "repos/vendor/**"
+      policy: "smoke_only"
+      reason: "vendored dependencies are read-only compatibility surfaces"
+    - path: "repos/gsap-public/**"
+      policy: "compat_only"
+      reason: "mirrored upstream distribution assets"
+  inventory_exclude:
+    - ".git/**"
+    - "**/.venv/**"
+    - "**/node_modules/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "outputs/**"
+    - "sandbox/**"
+
+ownership:
+  categories:
+    agent_os_core:
+      owned_paths:
+        - "repos/packages/agent-os/src/**"
+        - "repos/packages/agent-os/tests/**"
+      suite_classes: ["unit", "integration", "doctor", "regression", "governance"]
+      blocking_tier: "required"
+    runtime_packs:
+      owned_paths:
+        - "repos/runtime/**"
+      suite_classes: ["smoke", "integration"]
+      blocking_tier: "required"
+    mcp_servers:
+      owned_paths:
+        - "repos/mcp/servers/**"
+      suite_classes: ["integration", "smoke"]
+      blocking_tier: "required"
+    tools_build_chain:
+      owned_paths:
+        - "repos/tools/**"
+      suite_classes: ["contract", "smoke"]
+      blocking_tier: "required"
+    configs_contracts:
+      owned_paths:
+        - "configs/**"
+      suite_classes: ["contract", "governance"]
+      blocking_tier: "required"
+    root_scripts:
+      owned_paths:
+        - "scripts/**"
+      suite_classes: ["contract", "smoke"]
+      blocking_tier: "required"
+    governance_autonomy_persona:
+      owned_paths:
+        - "configs/personas/**"
+        - "configs/tooling/autonomy_policy.yaml"
+        - "configs/tooling/background_jobs.yaml"
+        - "configs/tooling/zera_growth_governance.json"
+        - "Zera/**"
+      suite_classes: ["governance", "contract"]
+      blocking_tier: "required"
+    benchmarks_reliability_telemetry:
+      owned_paths:
+        - "configs/tooling/analyze_benchmark.py"
+        - "configs/tooling/benchmark_*.json"
+        - "configs/tooling/runtime_benchmark_matrix.json"
+        - "logs/**"
+      suite_classes: ["benchmark", "doctor", "regression"]
+      blocking_tier: "scheduled"
+
+profiles:
+  local_quick:
+    description: "Fast local confidence path"
+    suites: ["smoke"]
+  pre_commit:
+    description: "Blocking local quality path before commit"
+    suites: ["contract", "smoke", "governance"]
+  ci_required:
+    description: "Required CI coverage for first-party workspace"
+    suites: ["contract", "governance", "smoke", "unit"]
+  nightly:
+    description: "Heavy and integration-focused scheduled checks"
+    suites: ["integration", "doctor", "regression", "benchmark"]
+  all_non_benchmark:
+    description: "Run every non-benchmark suite"
+    suites: ["contract", "governance", "smoke", "unit", "integration", "doctor", "regression"]
+
+governance:
+  skip_policy:
+    require_reason: true
+    require_owner: true
+    require_sunset_date: true
+    forbid_unregistered_ignores: true
+  quarantine_policy:
+    require_owner: true
+    require_reason: true
+    require_exit_condition: true
+    forbid_silent_retries: true
+  benchmark_policy:
+    threshold_changes_require_review: true
+  blocking_gate_policy:
+    require_config_diff: true
+    forbid_runtime_only_downgrade: true
+
+inventory:
+  report_path: "outputs/reliability/inventory/latest_inventory.json"
+  summary_path: "outputs/reliability/inventory/latest_inventory.md"
+  scan:
+    test_patterns:
+      - "**/tests/test_*.py"
+    validator_patterns:
+      - "scripts/validation/*.py"
+    doctor_patterns:
+      - "repos/packages/agent-os/scripts/*doctor*.py"
+      - "repos/packages/agent-os/scripts/swarmctl.py"
+    benchmark_patterns:
+      - "configs/tooling/*benchmark*"
+      - "docs/ki/benchmark_*"

@@ -1,0 +1,15 @@
+{
+  "suite_name": "benchmark_suite_manifest",
+  "generated_from": "configs/tooling/benchmark_suite.json",
+  "expected_case_ids": [
+    "bench-c1-config",
+    "bench-c2-fix",
+    "bench-c3-implement",
+    "bench-c4-architect",
+    "bench-zera-persona",
+    "bench-zera-recovery",
+    "bench-memory-retrieval",
+    "bench-stop-signal",
+    "bench-approval-gate"
+  ]
+}

@@ -1,0 +1,69 @@
+# Runtime Registry
+# Version: 4.2
+# DERIVED from configs/tooling/runtime_providers.json (canonical for runtime selection).
+# This file provides the agent-facing runtime view.
+# In case of conflict, runtime_providers.json wins.
+# Sync required when adding/removing runtimes.
+
+version: "4.2"
+derived: true
+source_of_truth: "configs/tooling/runtime_providers.json"
+
+runtimes:
+  default: "agent_os_python"
+
+  available:
+    - id: "agent_os_python"
+      enabled: true
+      capabilities:
+        - local_execution
+        - background_jobs
+        - mcp_tools
+      max_parallel_tasks: 3
+      timeout_minutes: 25
+
+    - id: "zeroclaw"
+      enabled: true
+      capabilities:
+        - telegram
+        - edge
+        - streaming
+        - persona_mode
+      max_parallel_tasks: 1
+      timeout_minutes: 10
+
+    - id: "hermes"
+      enabled: true
+      capabilities:
+        - local_execution
+        - mcp
+        - cron
+        - vault_access
+      max_parallel_tasks: 2
+      timeout_minutes: 30
+
+    - id: "claw_code"
+      enabled: true
+      capabilities:
+        - local_execution
+        - code_execution
+        - file_ops
+      max_parallel_tasks: 2
+      timeout_minutes: 20
+
+    - id: "mlx_lm"
+      enabled: true
+      capabilities:
+        - local_inference
+        - metal_acceleration
+      max_parallel_tasks: 1
+      timeout_minutes: 15
+      notes: "Direct Metal inference on Apple Silicon. Use for local-only tasks."
+
+  selection_policy:
+    prefer_local_for: ["C1", "C2"]
+    prefer_cloud_for: ["C4", "C5"]
+    telegram_channel: "zeroclaw"
+    background_jobs: "hermes"
+    local_inference: "mlx_lm"
+    code_execution: "claw_code"

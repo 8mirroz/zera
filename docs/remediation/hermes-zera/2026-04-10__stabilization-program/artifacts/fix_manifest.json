@@ -1,0 +1,109 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "audit_reference": "docs/audits/agents/hermes-zera/2026-04-10__full-system-audit/",
+  "fixes": [
+    {
+      "id": "FIX-001",
+      "file": "configs/tooling/analyze_benchmark.py",
+      "change": "Canonical benchmark identity normalization and strict gate semantics for unexpected/duplicate/real-trace cases.",
+      "audit_finding": "Benchmark identity and gate trust issues",
+      "validation": "python3 configs/tooling/analyze_benchmark.py --strict (exit 2 expected while quality remains below thresholds)",
+      "post_fix_validation": {
+        "status": "applied_but_failing_quality_gate",
+        "exit_code": 2,
+        "residual_failures": [
+          "score",
+          "pass_rate",
+          "report_confidence",
+          "canonical_coverage",
+          "duplicate_cases",
+          "real_trace_case_mix"
+        ]
+      },
+      "rollback": "Revert analyze_benchmark.py to previous revision."
+    },
+    {
+      "id": "FIX-002",
+      "file": "scripts/internal/test_mcp_profiles.py",
+      "change": "Correct repo-root resolution and fail-fast exits to eliminate false-green.",
+      "audit_finding": "Validator false-green",
+      "validation": "python3 scripts/test_mcp_profiles.py (exit 1 on real contract failures)",
+      "post_fix_validation": {
+        "status": "effective",
+        "exit_code": 1,
+        "residual_failures": [
+          "9 missing servers",
+          "1 routing mismatch"
+        ]
+      },
+      "rollback": "Revert scripts/internal/test_mcp_profiles.py and remove scripts/test_mcp_profiles.py wrapper."
+    },
+    {
+      "id": "FIX-003",
+      "file": "repos/packages/agent-os/src/agent_os/runtime_registry.py",
+      "change": "Provider parity APIs (is_registered/is_available/provider_parity_report) and availability-aware resolve().",
+      "audit_finding": "Declared/runtime provider drift",
+      "validation": "python3 scripts/validation/check_provider_health.py (exit 0, parity_ok true)",
+      "post_fix_validation": {
+        "status": "effective",
+        "exit_code": 0,
+        "residual_failures": []
+      },
+      "rollback": "Revert runtime_registry.py changes."
+    },
+    {
+      "id": "FIX-004",
+      "file": "repos/packages/agent-os/scripts/workflow_model_alias_validator.py",
+      "change": "Missing workflow files now treated as explicit errors (MISSING_WORKFLOW_FILE).",
+      "audit_finding": "Workflow catalog references inconsistent or hollow",
+      "validation": "python3 repos/packages/agent-os/scripts/workflow_model_alias_validator.py --json (exit 1, 18 missing files detected)",
+      "post_fix_validation": {
+        "status": "effective_with_open_findings",
+        "exit_code": 1,
+        "residual_failures": [
+          "18 missing workflow files"
+        ]
+      },
+      "rollback": "Revert validator missing-file enforcement."
+    },
+    {
+      "id": "FIX-005",
+      "file": "configs/tooling/agent_os_trace_schema.json",
+      "change": "Mirror schema synchronized with canonical trace schema; parity test added.",
+      "audit_finding": "Observability schema drift",
+      "validation": "pytest -q repos/packages/agent-os/tests/test_trace_schema_mirror.py repos/packages/agent-os/tests/test_trace_validator.py (4 passed)",
+      "post_fix_validation": {
+        "status": "effective",
+        "exit_code": 0,
+        "residual_failures": []
+      },
+      "rollback": "Restore prior mirror schema content."
+    },
+    {
+      "id": "FIX-006",
+      "file": "repos/packages/agent-os/src/agent_os/agent_runtime.py",
+      "change": "Added safe provider health recording wrapper to preserve compatibility with legacy registry stubs.",
+      "audit_finding": "Runtime hardening regression risk",
+      "validation": "pytest -q repos/packages/agent-os/tests/test_agent_runtime_dispatch.py repos/packages/agent-os/tests/test_swarmctl_run_integration.py (13 passed)",
+      "post_fix_validation": {
+        "status": "effective",
+        "exit_code": 0,
+        "residual_failures": []
+      },
+      "rollback": "Revert _record_provider_health_safe integration."
+    },
+    {
+      "id": "FIX-007",
+      "file": "configs/tooling/trace_schema.json, configs/tooling/agent_os_trace_schema.json",
+      "change": "Removed duplicate runtime_workflow_missing key declaration from both schemas.",
+      "audit_finding": "Trace contract ambiguity",
+      "validation": "rg -n \"runtime_workflow_missing\" ... (single occurrence per schema)",
+      "post_fix_validation": {
+        "status": "effective",
+        "exit_code": 0,
+        "residual_failures": []
+      },
+      "rollback": "Reintroduce duplicate key blocks if needed (not recommended)."
+    }
+  ]
+}

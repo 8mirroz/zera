@@ -1,0 +1,1177 @@
+{
+  "generated_at": "2026-03-11T02:15:34.858497+00:00",
+  "goal": "max_speed_and_free_solutions",
+  "top_fast_free": [
+    {
+      "path": "repos/skills/antigravity-skills",
+      "compact_alias": "sk:ask",
+      "path_alias": "r/sk/antigravity-skills",
+      "speed_free_score": 75,
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ]
+    },
+    {
+      "path": "repos/skills/huggingface-skills",
+      "compact_alias": "sk:hsk",
+      "path_alias": "r/sk/huggingface-skills",
+      "speed_free_score": 75,
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ]
+    },
+    {
+      "path": "repos/skills/antigravity-awesome-skills",
+      "compact_alias": "sk:aas",
+      "path_alias": "r/sk/antigravity-awesome-skills",
+      "speed_free_score": 75,
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ]
+    },
+    {
+      "path": "repos/workflows/Antigravity-Workflow-System",
+      "compact_alias": "wf:aws",
+      "path_alias": "r/wf/antigravity-workflow-system",
+      "speed_free_score": 65,
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "repo-catalog",
+        "wf",
+        "workflows"
+      ]
+    },
+    {
+      "path": "repos/mcp/servers",
+      "compact_alias": "mcp:srv",
+      "path_alias": "r/mcp/servers",
+      "speed_free_score": 60,
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "mcp",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/packages/agent-os",
+      "compact_alias": "pkg:aos",
+      "path_alias": "r/pkg/agent-os",
+      "speed_free_score": 55,
+      "tags": [
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "requirements.txt",
+        "scripts",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/design-system",
+      "compact_alias": "pkg:dsy",
+      "path_alias": "r/pkg/design-system",
+      "speed_free_score": 55,
+      "tags": [
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "scripts",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/mcp-profile-manager",
+      "compact_alias": "pkg:mpm",
+      "path_alias": "r/pkg/mcp-profile-manager",
+      "speed_free_score": 55,
+      "tags": [
+        "package.json",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/mcp/awesome-mcp-servers",
+      "compact_alias": "mcp:ams",
+      "path_alias": "r/mcp/awesome-mcp-servers",
+      "speed_free_score": 50,
+      "tags": [
+        "mcp",
+        "repo-catalog"
+      ]
+    },
+    {
+      "path": "repos/packages/mcp_context",
+      "compact_alias": "pkg:mcn",
+      "path_alias": "r/pkg/mcp-context",
+      "speed_free_score": 45,
+      "tags": [
+        "package.json",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/gsap-public/esm",
+      "compact_alias": "gsa:esm",
+      "path_alias": "r/gsa/esm",
+      "speed_free_score": 0,
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ]
+    },
+    {
+      "path": "repos/gsap-public/minified",
+      "compact_alias": "gsa:mnf",
+      "path_alias": "r/gsa/minified",
+      "speed_free_score": 0,
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ]
+    },
+    {
+      "path": "repos/gsap-public/src",
+      "compact_alias": "gsa:src",
+      "path_alias": "r/gsa/src",
+      "speed_free_score": 0,
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ]
+    },
+    {
+      "path": "repos/gsap-public/umd",
+      "compact_alias": "gsa:umd",
+      "path_alias": "r/gsa/umd",
+      "speed_free_score": 0,
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ]
+    }
+  ],
+  "by_domain": {
+    "skills": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      }
+    ],
+    "workflows": [
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      }
+    ],
+    "mcp": [
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::mcp::awesome-mcp-servers",
+        "path": "repos/mcp/awesome-mcp-servers",
+        "slug": "awesome-mcp-servers",
+        "compact_alias": "mcp:ams",
+        "path_alias": "r/mcp/awesome-mcp-servers",
+        "speed_free_score": 50,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      }
+    ],
+    "packages": [
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "gsap-public": [
+      {
+        "repo_id": "repo::gsap-public::esm",
+        "path": "repos/gsap-public/esm",
+        "slug": "esm",
+        "compact_alias": "gsa:esm",
+        "path_alias": "r/gsa/esm",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::minified",
+        "path": "repos/gsap-public/minified",
+        "slug": "minified",
+        "compact_alias": "gsa:mnf",
+        "path_alias": "r/gsa/minified",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::src",
+        "path": "repos/gsap-public/src",
+        "slug": "src",
+        "compact_alias": "gsa:src",
+        "path_alias": "r/gsa/src",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::umd",
+        "path": "repos/gsap-public/umd",
+        "slug": "umd",
+        "compact_alias": "gsa:umd",
+        "path_alias": "r/gsa/umd",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      }
+    ]
+  },
+  "by_tag": {
+    "fast-free-priority": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      }
+    ],
+    "git": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      }
+    ],
+    "likely-oss": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      }
+    ],
+    "package.json": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "repo-catalog": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::mcp::awesome-mcp-servers",
+        "path": "repos/mcp/awesome-mcp-servers",
+        "slug": "awesome-mcp-servers",
+        "compact_alias": "mcp:ams",
+        "path_alias": "r/mcp/awesome-mcp-servers",
+        "speed_free_score": 50,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::gsap-public::esm",
+        "path": "repos/gsap-public/esm",
+        "slug": "esm",
+        "compact_alias": "gsa:esm",
+        "path_alias": "r/gsa/esm",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::minified",
+        "path": "repos/gsap-public/minified",
+        "slug": "minified",
+        "compact_alias": "gsa:mnf",
+        "path_alias": "r/gsa/minified",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::src",
+        "path": "repos/gsap-public/src",
+        "slug": "src",
+        "compact_alias": "gsa:src",
+        "path_alias": "r/gsa/src",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::umd",
+        "path": "repos/gsap-public/umd",
+        "slug": "umd",
+        "compact_alias": "gsa:umd",
+        "path_alias": "r/gsa/umd",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      }
+    ],
+    "scripts": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      }
+    ],
+    "sk": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      }
+    ],
+    "skills": [
+      {
+        "repo_id": "repo::skills::antigravity-skills",
+        "path": "repos/skills/antigravity-skills",
+        "slug": "antigravity-skills",
+        "compact_alias": "sk:ask",
+        "path_alias": "r/sk/antigravity-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::huggingface-skills",
+        "path": "repos/skills/huggingface-skills",
+        "slug": "huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "path_alias": "r/sk/huggingface-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      {
+        "repo_id": "repo::skills::antigravity-awesome-skills",
+        "path": "repos/skills/antigravity-awesome-skills",
+        "slug": "antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      }
+    ],
+    "wf": [
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      }
+    ],
+    "workflows": [
+      {
+        "repo_id": "repo::workflows::antigravity-workflow-system",
+        "path": "repos/workflows/Antigravity-Workflow-System",
+        "slug": "antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      }
+    ],
+    "mcp": [
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::mcp::awesome-mcp-servers",
+        "path": "repos/mcp/awesome-mcp-servers",
+        "slug": "awesome-mcp-servers",
+        "compact_alias": "mcp:ams",
+        "path_alias": "r/mcp/awesome-mcp-servers",
+        "speed_free_score": 50,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      }
+    ],
+    "src": [
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "tsconfig.json": [
+      {
+        "repo_id": "repo::mcp::servers",
+        "path": "repos/mcp/servers",
+        "slug": "servers",
+        "compact_alias": "mcp:srv",
+        "path_alias": "r/mcp/servers",
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "packages": [
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "pkg": [
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 55,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::packages::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "pyproject.toml": [
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::packages::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      }
+    ],
+    "requirements.txt": [
+      {
+        "repo_id": "repo::packages::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      }
+    ],
+    "gsa": [
+      {
+        "repo_id": "repo::gsap-public::esm",
+        "path": "repos/gsap-public/esm",
+        "slug": "esm",
+        "compact_alias": "gsa:esm",
+        "path_alias": "r/gsa/esm",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::minified",
+        "path": "repos/gsap-public/minified",
+        "slug": "minified",
+        "compact_alias": "gsa:mnf",
+        "path_alias": "r/gsa/minified",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::src",
+        "path": "repos/gsap-public/src",
+        "slug": "src",
+        "compact_alias": "gsa:src",
+        "path_alias": "r/gsa/src",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::umd",
+        "path": "repos/gsap-public/umd",
+        "slug": "umd",
+        "compact_alias": "gsa:umd",
+        "path_alias": "r/gsa/umd",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      }
+    ],
+    "gsap-public": [
+      {
+        "repo_id": "repo::gsap-public::esm",
+        "path": "repos/gsap-public/esm",
+        "slug": "esm",
+        "compact_alias": "gsa:esm",
+        "path_alias": "r/gsa/esm",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::minified",
+        "path": "repos/gsap-public/minified",
+        "slug": "minified",
+        "compact_alias": "gsa:mnf",
+        "path_alias": "r/gsa/minified",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::src",
+        "path": "repos/gsap-public/src",
+        "slug": "src",
+        "compact_alias": "gsa:src",
+        "path_alias": "r/gsa/src",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      {
+        "repo_id": "repo::gsap-public::umd",
+        "path": "repos/gsap-public/umd",
+        "slug": "umd",
+        "compact_alias": "gsa:umd",
+        "path_alias": "r/gsa/umd",
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      }
+    ]
+  },
+  "recommended_start_points": {
+    "skills": [
+      "sk:ask",
+      "sk:hsk",
+      "sk:aas"
+    ],
+    "workflows": [
+      "wf:aws"
+    ],
+    "packages": [
+      "pkg:aos",
+      "pkg:dsy",
+      "pkg:mpm",
+      "pkg:mcn"
+    ],
+    "mcp": [
+      "mcp:srv",
+      "mcp:ams"
+    ]
+  }
+}

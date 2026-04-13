@@ -1,0 +1,1 @@
+/Users/user/antigravity-core/configs/rules/01_WORKSPACE_OPS.md

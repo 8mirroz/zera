@@ -1,0 +1,58 @@
+# Import Status: wshobson Agent Pack
+# Imported: 2026-04-08
+# Source: wshobson (upstream agent pack)
+# Status: QUARANTINED — not available for routing until collision review is complete
+
+---
+import_id: wshobson-pack-v1
+source: wshobson
+import_date: "2026-04-08"
+status: quarantined
+quarantine_reason: "117 agents imported without collision check against canonical roles"
+
+agents_count: 117
+location: agents/imported/wshobson/
+
+collision_report:
+  detected_collisions:
+    - canonical: review-critic
+      imported: wshobson/code-reviewer
+      overlap: high
+    - canonical: review-critic
+      imported: wshobson/architect-review
+      overlap: medium
+    - canonical: architecture-systems-architect
+      imported: wshobson/cloud-architect
+      overlap: medium
+    - canonical: execution-builder
+      imported: wshobson/python-pro
+      overlap: medium
+    - canonical: execution-builder
+      imported: wshobson/typescript-pro
+      overlap: medium
+    - canonical: execution-builder
+      imported: wshobson/javascript-pro
+      overlap: medium
+    - canonical: review-qa-auditor
+      imported: wshobson/security-auditor
+      overlap: medium
+    - canonical: core-orchestrator
+      imported: wshobson/conductor-validator
+      overlap: medium
+
+  total_collisions: 8
+  collision_rate: 6.8%
+
+review_status:
+  reviewed: false
+  reviewer: null
+  review_date: null
+  approved_agents: []
+  rejected_agents: []
+  pending: 117
+
+activation_policy:
+  requires_manual_review: true
+  requires_collision_resolution: true
+  requires_adapter_mapping: true
+  requires_index_entry: true

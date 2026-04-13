@@ -1,0 +1,1 @@
+/Users/user/antigravity-core/configs/rules/02_TECH_STANDARDS.md

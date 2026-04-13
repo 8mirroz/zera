@@ -1,0 +1,14 @@
+id: fast-path-to-completion
+name: Fast Path (C1-C2)
+version: 1.0.0
+entry_agent: core-task-router
+stages:
+  - id: execute
+    agent: execution-builder
+    outputs: [source_code]
+  - id: verify
+    agent: review-qa-auditor
+    outputs: [lint_report]
+completion_criteria:
+  - "Source code is generated"
+  - "QA Auditor reports success"

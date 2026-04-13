@@ -1,0 +1,96 @@
+# Auto-generated skills index — 2026-04-08
+# Source: configs/registry/skills/
+# Do not edit manually. Run registry linter to regenerate.
+
+skills:
+  # === registry root-level skills ===
+  - id: analyze-repository
+    path: skills/analyze-repository.yaml
+    type: analysis
+    status: active
+
+  - id: compare-alternatives
+    path: skills/compare-alternatives.yaml
+    type: analysis
+    status: active
+
+  - id: compile-shortlist
+    path: skills/compile-shortlist.yaml
+    type: generation
+    status: active
+
+  - id: dynamic-handoff
+    path: skills/dynamic-handoff.yaml
+    type: orchestration
+    status: active
+
+  - id: extract-config-patterns
+    path: skills/extract-config-patterns.yaml
+    type: analysis
+    status: active
+
+  - id: generate-adapter-layer
+    path: skills/generate-adapter-layer.yaml
+    type: generation
+    status: active
+
+  - id: lint-agent-definition
+    path: skills/lint-agent-definition.yaml
+    type: validation
+    status: active
+
+  - id: map-runtime-capabilities
+    path: skills/map-runtime-capabilities.yaml
+    type: analysis
+    status: active
+
+  - id: ralph-loop-execute
+    path: skills/ralph-loop-execute.yaml
+    type: orchestration
+    status: active
+
+  - id: score-integration-fit
+    path: skills/score-integration-fit.yaml
+    type: validation
+    status: active
+
+  - id: validate-workflow-graph
+    path: skills/validate-workflow-graph.yaml
+    type: validation
+    status: active
+
+  - id: write-decision-note
+    path: skills/write-decision-note.yaml
+    type: generation
+    status: active
+
+  # === imported/agentsys ===
+  # (no skills currently in this directory)
+
+  # === imported/genius ===
+  - id: obsidian-dna-inject
+    path: skills/imported/genius/obsidian-dna-inject.yaml
+    type: context
+    status: deprecated
+
+  - id: semantic-discovery
+    path: skills/imported/genius/semantic-discovery.yaml
+    type: orchestration
+    status: deprecated
+
+  - id: model-prober
+    path: skills/imported/genius/model-prober.yaml
+    type: system
+    status: deprecated
+
+summary:
+  total_skills: 15
+  active: 12
+  deprecated: 3
+  by_type:
+    analysis: 4
+    generation: 3
+    validation: 3
+    orchestration: 2
+    context: 1
+    system: 1

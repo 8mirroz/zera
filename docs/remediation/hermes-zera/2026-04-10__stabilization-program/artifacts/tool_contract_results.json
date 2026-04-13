@@ -1,0 +1,190 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "mcp_profiles_validator": {
+    "command": "python3 scripts/test_mcp_profiles.py",
+    "exit_code": 1,
+    "status": "fail",
+    "config_version": "2026-07-obsidian",
+    "profiles_total": 14,
+    "routing_rules_total": 15,
+    "default_profile": "research",
+    "missing_servers": 9,
+    "missing_server_names": [
+      "exa",
+      "obsidian-semantic",
+      "obsidian-disk",
+      "google-llm",
+      "lsp-bridge",
+      "obsidian-memory",
+      "browser",
+      "openclaude-executor",
+      "agent-pool"
+    ],
+    "routing_failed": 1,
+    "routing_total": 8,
+    "routing_failures": [
+      {
+        "route": "TT5+CC4",
+        "expected": "data-scraping",
+        "actual": "knowledge"
+      }
+    ]
+  },
+  "workflow_model_alias_validator": {
+    "command": "python3 repos/packages/agent-os/scripts/workflow_model_alias_validator.py --json",
+    "exit_code": 1,
+    "status": "fail",
+    "severity": "error",
+    "summary": {
+      "workflow_files_scanned": 8,
+      "workflow_files_missing": 18,
+      "skill_files_scanned": 80,
+      "defined_model_aliases": 47,
+      "unknown_alias_refs": 0,
+      "hardcoded_model_refs": 0
+    },
+    "findings": [
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/repo-memory-refresh.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/build-memory-capture.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/drift-validator.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/self-learning-retro.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/triage.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/task-blueprint-selection.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/project-bootstrap-guided.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/polyglot-autoevo-routing.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/swarm-review.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/error-healing.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/swarm-plan.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/multi-agent-routing-v3-free-first.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/axel.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/ralph-loop.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/multi-agent-routing.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/kilo-mode-routing.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/ai-bot-kb.md"
+      },
+      {
+        "severity": "error",
+        "code": "MISSING_WORKFLOW_FILE",
+        "kind": "workflow",
+        "path": ".agent/workflows/infa.md"
+      }
+    ],
+    "diff_spec_proposals": [
+      "Replace provider/model strings in active workflows/skills with $AGENT_MODEL_* aliases",
+      "Add missing aliases to configs/orchestrator/models.yaml or update stale alias references in workflows/skills"
+    ]
+  },
+  "trace_schema_validator": {
+    "command": "python3 repos/packages/agent-os/scripts/verify_trace_coverage.py",
+    "exit_code": 1,
+    "status": "fail",
+    "runtime_trace_errors": [
+      {
+        "line": 2,
+        "error": "event catalog_update_result: missing required field catalog_update_status",
+        "format": "v2"
+      },
+      {
+        "line": 3,
+        "error": "event memory_write_completed: missing required field key; event memory_write_completed: missing required field scope",
+        "format": "v2"
+      },
+      {
+        "line": 4,
+        "error": "event profile_context_injected: missing required field profile_context_size_bytes",
+        "format": "v2"
+      },
+      {
+        "line": 9,
+        "error": "event provider_state_transition: missing required field provider_state_from; event provider_state_transition: missing required field provider_state_to; event provider_state_transition: missing required field reason",
+        "format": "v2"
+      }
+    ],
+    "errors_count": 4
+  },
+  "overall_status": "fail"
+}

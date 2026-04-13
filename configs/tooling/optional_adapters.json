@@ -1,0 +1,427 @@
+{
+  "version": "2026-03-11",
+  "config_name": "optional_adapters_v2",
+  "description": "Production-grade optional adapter registry with capability matrices, activation gates, integration policies, health probes, fallback chains, and cost governance.",
+  "design_principles": [
+    "off-by-default, evidence-gated activation",
+    "every adapter must have a measurable gate and a fallback",
+    "no adapter activates without health probe passing",
+    "cost and latency budgets are first-class constraints",
+    "adapters compose through capability tags, not hardcoded chains"
+  ],
+  "global_policies": {
+    "default_state": "disabled",
+    "activation_requires": [
+      "env_flag_set",
+      "gate_condition_met",
+      "health_probe_passing"
+    ],
+    "deactivation_triggers": [
+      "health_probe_failing_3_consecutive",
+      "cost_budget_exceeded",
+      "latency_p95_exceeded",
+      "error_rate_above_threshold"
+    ],
+    "max_concurrent_adapters": 3,
+    "fallback_policy": "graceful_degrade_to_builtin",
+    "cost_governance": {
+      "global_daily_budget_usd": 1.00,
+      "alert_at_percent": 80,
+      "hard_stop_at_percent": 100
+    },
+    "audit": {
+      "log_activations": true,
+      "log_gate_evaluations": true,
+      "log_fallback_events": true,
+      "redact_secrets": true
+    }
+  },
+  "capability_tags": [
+    "multi_agent_orchestration",
+    "code_generation",
+    "code_review",
+    "benchmark_evaluation",
+    "memory_augmentation",
+    "edge_runtime",
+    "telegram_runtime",
+    "research_deep",
+    "ui_generation",
+    "background_jobs",
+    "tool_execution",
+    "context_expansion"
+  ],
+  "adapters": {
+    "autogen": {
+      "enabled": false,
+      "display_name": "AutoGen Multi-Agent",
+      "env_flag": "ENABLE_AUTOGEN_ADAPTER",
+      "role": "multi-agent orchestration for complex decomposition tasks",
+      "capabilities": [
+        "multi_agent_orchestration",
+        "code_generation",
+        "code_review"
+      ],
+      "when_used": "C4/C5 multi-agent scenarios requiring agent-to-agent delegation and parallel subtask execution",
+      "when_not_used": "C1-C3 single-agent tasks, routine code edits, simple Q&A",
+      "complexity_range": ["C4", "C5"],
+      "task_types": ["T3", "T4", "T5"],
+      "gate": {
+        "condition": "regression_uplift_gte_10_percent",
+        "measurement": "compare baseline single-agent vs autogen on same task set",
+        "eval_cadence": "weekly",
+        "auto_disable_if": "uplift_below_5_percent_for_2_weeks"
+      },
+      "health_probe": {
+        "type": "process_check",
+        "command": "autogen --version",
+        "timeout_ms": 5000,
+        "interval_s": 300
+      },
+      "resource_limits": {
+        "max_agents_per_session": 5,
+        "max_rounds": 10,
+        "timeout_s": 120,
+        "cost_per_invocation_budget_usd": 0.10
+      },
+      "fallback": {
+        "target": "builtin_single_agent",
+        "strategy": "decompose_manually_and_execute_sequentially"
+      },
+      "integration": {
+        "input_format": "task_graph_json",
+        "output_format": "merged_result_with_trace",
+        "hooks": {
+          "pre_invoke": "validate_task_complexity_gte_c4",
+          "post_invoke": "compare_result_quality_vs_baseline"
+        }
+      },
+      "anti_patterns": [
+        "using for simple single-file edits",
+        "spawning agents without clear subtask boundaries",
+        "recursive agent delegation without depth limit"
+      ]
+    },
+    "gpt_engineer": {
+      "enabled": false,
+      "display_name": "GPT-Engineer Benchmark Runner",
+      "env_flag": "ENABLE_GPTE_ADAPTER",
+      "role": "benchmark and evaluation harness for comparing scaffold quality",
+      "capabilities": [
+        "benchmark_evaluation",
+        "code_generation"
+      ],
+      "when_used": "benchmark runs comparing scaffold quality, template evaluation, and A/B generation tests",
+      "when_not_used": "production execution, user-facing tasks, routine development",
+      "complexity_range": ["C2", "C3", "C4"],
+      "task_types": ["T3", "T4"],
+      "gate": {
+        "condition": "benchmark_plan_active",
+        "measurement": "explicit benchmark session flag in session context",
+        "eval_cadence": "per_benchmark_run",
+        "auto_disable_if": "no_benchmark_session_for_7_days"
+      },
+      "health_probe": {
+        "type": "process_check",
+        "command": "gpt-engineer --version",
+        "timeout_ms": 5000,
+        "interval_s": 600
+      },
+      "resource_limits": {
+        "max_generations_per_session": 10,
+        "timeout_s": 180,
+        "cost_per_invocation_budget_usd": 0.15
+      },
+      "fallback": {
+        "target": "manual_benchmark_comparison",
+        "strategy": "log_generation_for_offline_review"
+      },
+      "integration": {
+        "input_format": "benchmark_spec_json",
+        "output_format": "scored_generation_with_diff",
+        "hooks": {
+          "pre_invoke": "validate_benchmark_plan_exists",
+          "post_invoke": "store_benchmark_result_to_memory"
+        }
+      },
+      "anti_patterns": [
+        "using as primary code generation engine in production",
+        "running benchmarks without baseline comparison defined"
+      ]
+    },
+    "letta": {
+      "enabled": false,
+      "display_name": "Letta Memory Augmentation",
+      "env_flag": "ENABLE_LETTA_ADAPTER",
+      "role": "long-term memory augmentation with structured recall and forgetting",
+      "capabilities": [
+        "memory_augmentation",
+        "context_expansion"
+      ],
+      "when_used": "when native memory retrieval recall drops below threshold or context window pressure requires external memory offload",
+      "when_not_used": "MVP runtime, short conversations, tasks with no memory dependency",
+      "complexity_range": ["C3", "C4", "C5"],
+      "task_types": ["T3", "T4", "T5", "T6", "T7"],
+      "gate": {
+        "condition": "recall_uplift_gte_10_percent_and_p95_lt_300ms",
+        "measurement": "compare native recall@10 vs letta-augmented recall@10 on standardized memory test set",
+        "eval_cadence": "weekly",
+        "auto_disable_if": "recall_uplift_below_5_percent_or_p95_above_500ms"
+      },
+      "health_probe": {
+        "type": "api_ping",
+        "endpoint": "http://localhost:8283/api/health",
+        "timeout_ms": 3000,
+        "interval_s": 120
+      },
+      "resource_limits": {
+        "max_memory_entries": 10000,
+        "max_retrieval_per_turn": 20,
+        "timeout_s": 5,
+        "storage_budget_mb": 500
+      },
+      "fallback": {
+        "target": "builtin_memory_system",
+        "strategy": "use_native_memory_schema_with_reduced_recall"
+      },
+      "integration": {
+        "input_format": "memory_query_json",
+        "output_format": "ranked_memory_entries_with_confidence",
+        "memory_schema_compatibility": "configs/personas/zera/memory_schema.json",
+        "hooks": {
+          "pre_invoke": "validate_memory_query_not_empty",
+          "post_invoke": "merge_results_with_native_memory_and_deduplicate"
+        }
+      },
+      "anti_patterns": [
+        "replacing native memory entirely instead of augmenting",
+        "storing raw conversation dumps without structured extraction",
+        "querying memory on every turn regardless of need"
+      ]
+    },
+    "zeroclaw": {
+      "enabled": false,
+      "display_name": "ZeroClaw Edge Runtime",
+      "env_flag": "ENABLE_ZEROCLAW_ADAPTER",
+      "role": "lightweight constrained runtime for telegram bots, edge workloads, and background jobs with strict resource budgets",
+      "capabilities": [
+        "edge_runtime",
+        "telegram_runtime",
+        "background_jobs",
+        "tool_execution"
+      ],
+      "when_used": "telegram webhook handlers, edge runtime with strict latency/cost limits, background job execution, resource-constrained environments",
+      "when_not_used": "deep code integration, complex multi-file edits, tasks requiring full context window",
+      "complexity_range": ["C1", "C2", "C3"],
+      "task_types": ["T1", "T2", "T7"],
+      "gate": {
+        "condition": "runtime_contract_tests_green_and_fallback_verified",
+        "measurement": "zeroclaw contract test suite passes and builtin fallback handles zeroclaw-down scenario",
+        "eval_cadence": "daily",
+        "auto_disable_if": "contract_tests_failing_or_error_rate_above_5_percent"
+      },
+      "health_probe": {
+        "type": "process_check",
+        "command": "zeroclaw health",
+        "timeout_ms": 3000,
+        "interval_s": 60
+      },
+      "resource_limits": {
+        "max_actions_per_invocation": 4,
+        "timeout_s": 20,
+        "cost_per_invocation_budget_usd": 0.02,
+        "max_memory_mb": 128
+      },
+      "runtime_profiles_ref": "configs/tooling/zeroclaw_profiles.json",
+      "network_policy_ref": "configs/tooling/network_policy.yaml",
+      "fallback": {
+        "target": "agent_os_python",
+        "strategy": "queue_task_for_full_runtime_execution"
+      },
+      "integration": {
+        "input_format": "stdio_json",
+        "output_format": "stdio_json_with_trace",
+        "channel_routing": {
+          "telegram": "zera-telegram-prod",
+          "edge": "zera-edge-local",
+          "background": "generic-c1-c2-worker"
+        },
+        "hooks": {
+          "pre_invoke": "validate_resource_budget_available",
+          "post_invoke": "log_resource_usage_and_update_budget"
+        }
+      },
+      "anti_patterns": [
+        "routing complex multi-file tasks through edge runtime",
+        "disabling timeout for long-running operations",
+        "bypassing network policy for convenience"
+      ]
+    },
+    "notebooklm": {
+      "enabled": false,
+      "display_name": "NotebookLM Deep Research",
+      "env_flag": "ENABLE_NOTEBOOKLM_ADAPTER",
+      "role": "deep research synthesis from large document sets with structured summaries",
+      "capabilities": [
+        "research_deep",
+        "context_expansion"
+      ],
+      "when_used": "research-heavy tasks requiring synthesis across multiple large documents, competitive analysis, literature review",
+      "when_not_used": "quick factual lookups, code-only tasks, tasks with no research component",
+      "complexity_range": ["C3", "C4", "C5"],
+      "task_types": ["T4", "T5", "T6"],
+      "gate": {
+        "condition": "research_task_detected_and_document_count_gte_3",
+        "measurement": "task classification signals research need with multiple source documents",
+        "eval_cadence": "per_task",
+        "auto_disable_if": "no_research_tasks_for_14_days"
+      },
+      "health_probe": {
+        "type": "api_ping",
+        "endpoint": "https://notebooklm.google.com/api/health",
+        "timeout_ms": 10000,
+        "interval_s": 600
+      },
+      "resource_limits": {
+        "max_sources_per_session": 50,
+        "timeout_s": 300,
+        "cost_per_invocation_budget_usd": 0.00
+      },
+      "config_ref": "configs/tooling/notebooklm_integration.json",
+      "fallback": {
+        "target": "perplexity_mcp_or_manual_research",
+        "strategy": "use_perplexity_ask_mcp_for_narrower_queries"
+      },
+      "integration": {
+        "input_format": "document_urls_or_paths",
+        "output_format": "structured_summary_with_citations",
+        "hooks": {
+          "pre_invoke": "validate_source_documents_accessible",
+          "post_invoke": "extract_key_findings_to_memory"
+        }
+      },
+      "anti_patterns": [
+        "using for single-document summarization when a simple read suffices",
+        "submitting sensitive/private documents without review",
+        "treating output as verified fact without cross-checking"
+      ]
+    },
+    "openrouter": {
+      "enabled": false,
+      "display_name": "OpenRouter Multi-Model Gateway",
+      "env_flag": "ENABLE_OPENROUTER_ADAPTER",
+      "role": "model routing gateway for A/B testing, cost optimization, and capability-specific model selection",
+      "capabilities": [
+        "code_generation",
+        "code_review",
+        "context_expansion"
+      ],
+      "when_used": "when primary model is rate-limited, for A/B quality comparison, or when a specialized model outperforms on specific task type",
+      "when_not_used": "default execution with primary model, tasks requiring persona consistency",
+      "complexity_range": ["C2", "C3", "C4"],
+      "task_types": ["T2", "T3", "T4", "T5"],
+      "gate": {
+        "condition": "primary_model_rate_limited_or_ab_test_active",
+        "measurement": "detect 429 responses from primary or explicit ab_test flag",
+        "eval_cadence": "per_request",
+        "auto_disable_if": "primary_model_available_and_no_ab_test"
+      },
+      "health_probe": {
+        "type": "api_ping",
+        "endpoint": "https://openrouter.ai/api/v1/models",
+        "timeout_ms": 5000,
+        "interval_s": 300
+      },
+      "resource_limits": {
+        "max_requests_per_hour": 100,
+        "timeout_s": 60,
+        "cost_per_invocation_budget_usd": 0.05
+      },
+      "fallback": {
+        "target": "primary_model_with_retry",
+        "strategy": "exponential_backoff_then_queue"
+      },
+      "integration": {
+        "input_format": "openai_compatible_chat",
+        "output_format": "openai_compatible_response",
+        "model_selection_policy": {
+          "code_tasks": "anthropic/claude-sonnet-4-6",
+          "research_tasks": "google/gemini-2.5-pro",
+          "fast_tasks": "anthropic/claude-haiku-4-5"
+        },
+        "hooks": {
+          "pre_invoke": "validate_model_available_and_budget_ok",
+          "post_invoke": "log_model_used_and_quality_score"
+        }
+      },
+      "anti_patterns": [
+        "routing persona-critical responses through non-primary models",
+        "using as default without measuring quality delta",
+        "ignoring cost tracking on high-volume routes"
+      ]
+    }
+  },
+  "adapter_composition": {
+    "description": "Rules for how adapters can work together in the same session",
+    "allowed_combinations": [
+      {
+        "id": "research_enhanced_build",
+        "adapters": ["notebooklm", "autogen"],
+        "use_case": "deep research feeding into multi-agent code generation",
+        "max_cost_usd": 0.30
+      },
+      {
+        "id": "telegram_with_memory",
+        "adapters": ["zeroclaw", "letta"],
+        "use_case": "telegram runtime with augmented long-term memory",
+        "max_cost_usd": 0.05
+      },
+      {
+        "id": "benchmark_with_routing",
+        "adapters": ["gpt_engineer", "openrouter"],
+        "use_case": "benchmark comparison across multiple models",
+        "max_cost_usd": 0.50
+      }
+    ],
+    "forbidden_combinations": [
+      {
+        "adapters": ["autogen", "zeroclaw"],
+        "reason": "multi-agent orchestration exceeds edge runtime resource constraints"
+      },
+      {
+        "adapters": ["gpt_engineer", "zeroclaw"],
+        "reason": "benchmarks require full runtime, not edge constraints"
+      }
+    ]
+  },
+  "activation_flow": {
+    "steps": [
+      "check env_flag is set",
+      "evaluate gate condition against current metrics",
+      "run health_probe",
+      "verify resource_limits.cost_per_invocation within remaining daily budget",
+      "check adapter_composition rules if other adapters active",
+      "activate and log",
+      "monitor deactivation_triggers continuously"
+    ]
+  },
+  "observability": {
+    "metrics_per_adapter": [
+      "invocation_count",
+      "success_rate",
+      "p50_latency_ms",
+      "p95_latency_ms",
+      "cost_usd_total",
+      "fallback_trigger_count",
+      "gate_pass_rate"
+    ],
+    "dashboard_ref": "memory/adapter_health_snapshots/"
+  },
+  "future_adapters_queue": [
+    "langchain_tools_bridge",
+    "crewai_orchestrator",
+    "e2b_sandbox_runtime",
+    "browserbase_web_agent",
+    "composio_tool_gateway",
+    "mem0_memory_layer"
+  ]
+}

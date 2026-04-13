@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "benchmark_identity": {
+    "before": {
+      "case_identity": "raw IDs compared directly; repeat suffixes could distort canonical matching",
+      "coverage_calculation": "non-canonical and repeated traces could inflate interpretation",
+      "gate_behavior": "allowed contradictory pass signals in historical audited runs",
+      "provenance": "canonical/repeat/real-trace separation incomplete"
+    },
+    "after": {
+      "case_identity": "canonical IDs normalized (including repeat suffix handling)",
+      "coverage_calculation": "canonical expected set intersection used for coverage metrics",
+      "gate_behavior": "strict gate now fails on canonical_coverage quality and provenance anomalies",
+      "provenance": "canonical/repeat/real-trace diagnostics emitted"
+    }
+  },
+  "latest_strict_run": {
+    "command": "python3 configs/tooling/analyze_benchmark.py --strict",
+    "exit_code": 2,
+    "gate_status": "fail",
+    "failed_metrics": [
+      "score",
+      "pass_rate",
+      "report_confidence",
+      "canonical_coverage",
+      "duplicate_cases",
+      "real_trace_case_mix"
+    ],
+    "score": 0.66660875,
+    "pass_rate": 0.6666666666666666,
+    "report_confidence": 0.5,
+    "canonical_coverage": 0.6923076923076923,
+    "missing_cases": [
+      "bench-context-map-retrieval",
+      "bench-doc-staleness-detection",
+      "bench-harness-gardening-candidate",
+      "bench-worktree-validation-evidence"
+    ],
+    "unexpected_cases": [],
+    "duplicate_cases_count": 24,
+    "real_trace_cases_count": 15,
+    "evidence_files": [
+      "docs/ki/benchmark_latest.json",
+      "docs/ki/benchmark_gate.json",
+      "docs/ki/benchmark_anomalies.json"
+    ]
+  }
+}

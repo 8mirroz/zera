@@ -1,0 +1,7 @@
+id: lint-agent-definition
+name: Lint Agent Definition
+version: 1.0.0
+type: validation
+inputs: [agent_yaml]
+outputs: [lint_report]
+constraints: [strict_schema]

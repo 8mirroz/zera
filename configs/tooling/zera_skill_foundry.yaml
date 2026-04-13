@@ -1,0 +1,34 @@
+version: "2026-04-09"
+ledgers:
+  candidates: "${VAULT_PATH}/research/candidates"
+  promotions: "${VAULT_PATH}/research/promotions"
+  rejections: "${VAULT_PATH}/research/rejections"
+  quarantine: "${VAULT_PATH}/research/quarantine"
+lane_owners:
+  - "zera-core"
+  - "zera-strategist"
+  - "zera-researcher"
+  - "zera-rhythm-coach"
+candidate_types:
+  - "skill_refinement"
+  - "workflow_recipe"
+  - "command_recipe"
+  - "router_heuristic"
+  - "branch_template"
+  - "research_heuristic"
+  - "operator_ritual_template"
+required_candidate_fields:
+  - "candidate_id"
+  - "candidate_type"
+  - "lane_owner"
+  - "overlap_result"
+  - "provenance"
+  - "eval_suite"
+  - "reversibility"
+  - "promotion_gate"
+  - "quarantine_status"
+rules:
+  require_overlap_check: true
+  prefer_existing_skill_extension: true
+  external_code_requires_import_record: true
+  no_auto_promotion_from_external_code: true

@@ -1,0 +1,12 @@
+id: semantic-discovery
+name: Semantic Agent Discovery
+version: 1.0.0
+type: orchestration
+status: deprecated
+deprecated_reason: "exec_path references sandbox/tooling/semantic_router.py which was deleted from the repository"
+deprecated_date: "2026-04-08"
+description: Finds the best expert agent for a given task query by performing semantic search on the agent registry.
+exec_path: null
+inputs: [query]
+outputs: [agent_id]
+replacement: "Use core-task-router with registry index lookup instead"

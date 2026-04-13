@@ -1,0 +1,7 @@
+id: write-decision-note
+name: Write Decision Note
+version: 1.0.0
+type: generation
+inputs: [shortlist, context]
+outputs: [decision_md]
+constraints: [adhere_to_adr_format]

@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-04-10T15:00:00Z",
+  "description": "Inventory of governance surfaces outside repo control that influence Hermes/Zera behavior",
+  "external_surfaces": [
+    {
+      "path": "~/.hermes/profiles/antigravity/config.yaml",
+      "type": "hermes_profile",
+      "influence": "Controls Hermes runtime behavior, model selection, MCP connections",
+      "governed_by_repo": false,
+      "sync_mechanism": "scripts/hermes-sync-config.sh (advisory only)",
+      "risk": "medium — drift between repo intent and actual Hermes behavior",
+      "recommended_action": "Import critical fields into repo-governed config or add doctor check"
+    },
+    {
+      "path": "~/.gemini/antigravity/mcp_config.json",
+      "type": "gemini_mcp_config",
+      "influence": "Controls MCP server connections for Gemini runtime",
+      "governed_by_repo": false,
+      "sync_mechanism": "none",
+      "risk": "medium — MCP surface diverges from repo declaration",
+      "recommended_action": "Document as external dependency; add parity check to swarmctl.py doctor"
+    },
+    {
+      "path": "~/.hermes/profiles/zera/cron/jobs.json",
+      "type": "zera_cron_sidecar",
+      "influence": "Defines scheduled Zera behavior (self-evolution, intelligence gathering)",
+      "governed_by_repo": false,
+      "sync_mechanism": "none",
+      "risk": "high — active behavior outside repo governance, cannot audit or block",
+      "recommended_action": "Import into configs/tooling/background_jobs.yaml or quarantine with documentation"
+    },
+    {
+      "path": "~/.hermes/profiles/zera/cron/*.json",
+      "type": "zera_cron_individual_jobs",
+      "influence": "Individual scheduled job definitions",
+      "governed_by_repo": false,
+      "sync_mechanism": "none",
+      "risk": "high — parallel governance plane",
+      "recommended_action": "Catalog each job; decide import vs. quarantine"
+    },
+    {
+      "path": "~/.hermes/profiles/zera/system_prompt.md (if exists)",
+      "type": "persona_system_prompt",
+      "influence": "Actual Zera persona content loaded by LLM (vs. repo docs that are governance-only)",
+      "governed_by_repo": false,
+      "sync_mechanism": "manual operator discipline",
+      "risk": "critical — persona behavior depends on this, not on repo docs",
+      "recommended_action": "Either import into runtime prompt assembly or explicitly document as source-of-truth"
+    }
+  ],
+  "repo_governed_equivalents": {
+    "~/.hermes/profiles/antigravity/config.yaml": "configs/orchestrator/models.yaml + configs/tooling/runtime_providers.json",
+    "~/.gemini/antigravity/mcp_config.json": "configs/tooling/mcp_profiles.json",
+    "~/.hermes/profiles/zera/cron/jobs.json": "configs/tooling/background_jobs.yaml",
+    "~/.hermes/profiles/zera/system_prompt.md": "configs/personas/zera/*.md (but these are NOT loaded at runtime)"
+  },
+  "drift_summary": {
+    "total_external_surfaces": 5,
+    "critical_risk": 1,
+    "high_risk": 2,
+    "medium_risk": 2,
+    "sync_coverage": "partial — only Hermes has advisory sync, others have none"
+  }
+}

@@ -1,0 +1,75 @@
+version: "2026-03-11"
+artifact: "evaluation-harness"
+status: "baseline-first-draft"
+
+modes:
+  - online_evaluation
+  - replay_evaluation
+  - shadow_evaluation
+
+datasets:
+  - known_bug_fixes
+  - architecture_tasks
+  - refactor_tasks
+  - ci_failures
+  - integration_failures
+
+metrics:
+  - success_rate
+  - first_pass_success
+  - avg_token_cost
+  - avg_verification_pass_rate
+  - rollback_safety
+  - persona_stability_score
+  - governance_violation_rate
+  - personality_drift_score
+  - candidate_classification_accuracy
+  - unreviewed_promotion_rate
+  - files_changed_per_task
+  - overengineering_index
+  - unnecessary_research_rate
+  - premature_swarm_rate
+  - confidence_calibration_error
+
+compare:
+  baseline: "current_promoted_policy"
+  challenger: "candidate_policy_or_strategy"
+  tie_policy: "prefer_lower_token_cost_if_safety_is_not_worse"
+
+accept_if:
+  success_rate_delta: ">= 0"
+  token_cost_delta: "<= -0.12"
+  rollback_safety_delta: ">= -0.02"
+  overengineering_index_delta: "<= -0.10"
+
+scenario_coverage:
+  - low_entropy_bugfix
+  - architecture_change
+  - recurring_error_signature
+  - ambiguous_multi_file_failure
+  - kill_switch_recovery
+  - drift_response
+  - zera_persona_boundary
+  - zera_autonomy_governance
+  - zera_dual_loop_candidate_routing
+  - zera_prompt_injection_self_evolution
+  - zera_personality_delta_budget
+  - zera_memory_restraint
+  - zera_rollback_rehearsal
+  - zera_command_registry_parity
+  - zera_branch_lifecycle
+  - zera_client_parity
+  - zera_governor_budget
+  - zera_source_import_foundry_safety
+  - zera_runtime_telemetry_contract
+  - zera_branch_merge_enforcement
+  - context_map_retrieval
+  - doc_staleness_detection
+  - worktree_validation_evidence
+  - harness_gardening_candidate
+
+related_source_of_truth:
+  - "./runtime_benchmark_matrix.json"
+  - "./persona_eval_suite.json"
+  - "./benchmark_suite.json"
+  - "../../docs/ki/AGENT_HARNESS_MAP.md"

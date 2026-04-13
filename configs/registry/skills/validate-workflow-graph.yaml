@@ -1,0 +1,7 @@
+id: validate-workflow-graph
+name: Validate Workflow Graph
+version: 1.0.0
+type: validation
+inputs: [workflow_definition]
+outputs: [validation_report]
+constraints: [no_circular_dependencies]

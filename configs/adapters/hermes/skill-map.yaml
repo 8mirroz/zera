@@ -1,0 +1,8 @@
+compare-alternatives:
+  implementation: hermes_comparison_matrix
+
+score-integration-fit:
+  implementation: hermes_scoring_engine
+
+write-decision-note:
+  implementation: hermes_adr_generator

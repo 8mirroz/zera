@@ -1,0 +1,22 @@
+[
+  {"id": "r01", "text": "fix typo in readme", "task_type": "T2", "complexity": "C1", "expected_tier": "light"},
+  {"id": "r02", "text": "update package.json dependencies", "task_type": "T1", "complexity": "C2", "expected_tier": "light"},
+  {"id": "r03", "text": "add new api endpoint", "task_type": "T3", "complexity": "C3", "expected_tier": "quality"},
+  {"id": "r04", "text": "architecture redesign", "task_type": "T4", "complexity": "C4", "expected_tier": "reasoning"},
+  {"id": "r05", "text": "security production incident", "task_type": "T2", "complexity": "C5", "expected_tier": "reasoning"},
+  {"id": "r06", "text": "implement ui animation", "task_type": "T6", "complexity": "C2", "expected_tier": "light"},
+  {"id": "r07", "text": "telegram payments flow", "task_type": "T7", "complexity": "C4", "expected_tier": "reasoning"},
+  {"id": "r08", "text": "integration tests for feature", "task_type": "T3", "complexity": "C3", "expected_tier": "quality"},
+  {"id": "r09", "text": "data scraping strategy", "task_type": "T5", "complexity": "C5", "expected_tier": "reasoning"},
+  {"id": "r10", "text": "small config rename", "task_type": "T1", "complexity": "C1", "expected_tier": "light"},
+  {"id": "r11", "text": "migrate auth subsystem", "task_type": "T4", "complexity": "C5", "expected_tier": "reasoning"},
+  {"id": "r12", "text": "research alternatives", "task_type": "T5", "complexity": "C3", "expected_tier": "quality"},
+  {"id": "r13", "text": "refactor bug prone module", "task_type": "T2", "complexity": "C4", "expected_tier": "reasoning"},
+  {"id": "r14", "text": "design landing page", "task_type": "T6", "complexity": "C3", "expected_tier": "quality"},
+  {"id": "r15", "text": "telegram mini app screen", "task_type": "T7", "complexity": "C3", "expected_tier": "quality"},
+  {"id": "r16", "text": "new component implementation", "task_type": "T3", "complexity": "C2", "expected_tier": "light"},
+  {"id": "r17", "text": "production token rotation", "task_type": "T1", "complexity": "C5", "expected_tier": "reasoning"},
+  {"id": "r18", "text": "fix failing lint", "task_type": "T2", "complexity": "C2", "expected_tier": "light"},
+  {"id": "r19", "text": "ui accessibility overhaul", "task_type": "T6", "complexity": "C4", "expected_tier": "reasoning"},
+  {"id": "r20", "text": "payment webhook hardening", "task_type": "T7", "complexity": "C5", "expected_tier": "reasoning"}
+]

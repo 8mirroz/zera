@@ -1,0 +1,81 @@
+# Feature Flags — Antigravity Core
+# Version: 4.2
+# Source of truth for all ENABLE_* feature flags.
+# Referenced by: lane_events.yaml, swarm_recovery.yaml, mcp_profiles.json, routing-matrix.yaml
+# To enable a flag: set to true AND ensure the dependent runtime/provider is available.
+# Operator must review before enabling any flag marked operator_only: true.
+
+version: "4.2"
+
+flags:
+  # === SWARM ===
+  ENABLE_SWARM_V2:
+    enabled: false
+    description: "Event-driven swarm v2 with typed lane events and recovery protocol"
+    depends_on: [agent_os_python]
+    operator_only: false
+    files_affected:
+      - configs/orchestrator/lane_events.yaml
+      - configs/orchestrator/swarm_recovery.yaml
+      - configs/registry/workflows/path-swarm.yaml
+
+  # === RUNTIMES ===
+  ENABLE_ZEROCLAW_ADAPTER:
+    enabled: true
+    description: "Zeroclaw runtime for Telegram/edge channels"
+    depends_on: []
+    operator_only: false
+    files_affected:
+      - configs/tooling/runtime_providers.json
+
+  ENABLE_CLAW_CODE:
+    enabled: false
+    description: "Claw Code runtime for local code execution"
+    depends_on: []
+    operator_only: false
+    files_affected:
+      - configs/tooling/runtime_providers.json
+
+  ENABLE_HERMES_ADAPTER:
+    enabled: true
+    description: "Hermes AI runtime for long-context and background jobs"
+    depends_on: []
+    operator_only: false
+    files_affected:
+      - configs/tooling/runtime_providers.json
+      - configs/adapters/hermes/adapter.yaml
+
+  # === MEMORY / SEARCH ===
+  ENABLE_QMD_WIKI_CORE:
+    enabled: false
+    description: "qmd-based wiki-core search transport (requires qmd installed)"
+    depends_on: [qmd_binary]
+    operator_only: false
+    files_affected:
+      - configs/tooling/mcp_profiles.json
+
+  ENABLE_UNLIMITED_CONTEXT_V3:
+    enabled: true
+    description: "Extended context profiles for research/knowledge/swarm MCP profiles"
+    depends_on: []
+    operator_only: false
+    files_affected:
+      - configs/tooling/mcp_profiles.json
+
+  # === CODE QUALITY ===
+  ENABLE_LSP_BRIDGE:
+    enabled: false
+    description: "LSP bridge MCP server for code quality (requires lsp-bridge installed)"
+    depends_on: [lsp_bridge_binary]
+    operator_only: false
+    files_affected:
+      - configs/tooling/mcp_profiles.json
+
+  # === GOVERNANCE ===
+  ENABLE_GOVERNANCE_AUDIT_MODE:
+    enabled: false
+    description: "Activates zera:governance-check as ambient suggestion for all C4-C5 tasks"
+    depends_on: []
+    operator_only: true
+    files_affected:
+      - configs/tooling/zera_command_registry.yaml

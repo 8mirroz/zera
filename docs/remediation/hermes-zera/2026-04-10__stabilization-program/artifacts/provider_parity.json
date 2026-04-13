@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "command": "python3 scripts/validation/check_provider_health.py",
+  "exit_code": 0,
+  "declared_providers": [
+    "agent_os_python",
+    "claw_code",
+    "hermes",
+    "mlx_lm",
+    "twentyfirst_agents",
+    "zeroclaw"
+  ],
+  "registered_providers": [
+    "agent_os_python",
+    "claw_code",
+    "mlx_lm",
+    "zeroclaw"
+  ],
+  "enabled_providers": [
+    "agent_os_python",
+    "mlx_lm",
+    "zeroclaw"
+  ],
+  "enabled_and_registered": [
+    "agent_os_python",
+    "mlx_lm",
+    "zeroclaw"
+  ],
+  "enabled_but_unregistered": [],
+  "disabled_but_registered": [
+    "claw_code"
+  ],
+  "parity_ok": true,
+  "health_summary": {
+    "healthy": 3,
+    "disabled": 1,
+    "unhealthy": 0
+  }
+}

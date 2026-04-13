@@ -1,0 +1,305 @@
+{
+  "version": "2026-04-09",
+  "_note": "Source of truth for runtime selection. Supersedes configs/orchestrator/runtimes.yaml.",
+  "default_provider": "agent_os_python",
+  "providers": {
+    "agent_os_python": {
+      "enabled": true,
+      "type": "builtin",
+      "fallback_chain": [],
+      "capabilities": [
+        "local_execution",
+        "background_jobs",
+        "mcp_tools"
+      ],
+      "autonomy_level": "approval_only",
+      "background_jobs_supported": true,
+      "approval_gates": [
+        "destructive",
+        "external",
+        "privacy_sensitive"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 1500,
+        "max_memory_mb": 512
+      },
+      "network_policy": "workspace_only",
+      "max_chain_length": 2,
+      "max_cost_usd_per_run": 0.05,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop"
+      ],
+      "supported_task_types": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "supported_channels": [
+        "cli",
+        "local"
+      ]
+    },
+    "zeroclaw": {
+      "enabled": true,
+      "type": "builtin",
+      "env_flag": "ENABLE_ZEROCLAW_ADAPTER",
+      "fallback_chain": [
+        "agent_os_python"
+      ],
+      "capabilities": [
+        "local_execution",
+        "background_jobs",
+        "memory_sync",
+        "tool_execution",
+        "telegram",
+        "streaming",
+        "persona_mode"
+      ],
+      "autonomy_level": "bounded_initiative",
+      "background_jobs_supported": true,
+      "approval_gates": [
+        "financial",
+        "destructive",
+        "privacy_sensitive",
+        "irreversible",
+        "external"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 600,
+        "max_memory_mb": 80
+      },
+      "network_policy": "profile_defined",
+      "max_chain_length": 4,
+      "max_cost_usd_per_run": 0.02,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop",
+        "budget_stop",
+        "loop_stop"
+      ],
+      "supported_task_types": [
+        "T1",
+        "T2",
+        "T3",
+        "T7"
+      ],
+      "supported_channels": [
+        "telegram",
+        "edge",
+        "cli"
+      ]
+    },
+    "hermes": {
+      "enabled": false,
+      "type": "builtin",
+      "env_flag": "ENABLE_HERMES_ADAPTER",
+      "fallback_chain": [
+        "agent_os_python"
+      ],
+      "capabilities": [
+        "local_execution",
+        "mcp",
+        "cron",
+        "vault_access",
+        "long_context",
+        "structured_workflows"
+      ],
+      "autonomy_level": "bounded_initiative",
+      "background_jobs_supported": true,
+      "approval_gates": [
+        "financial",
+        "destructive",
+        "privacy_sensitive",
+        "irreversible",
+        "external"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 1800,
+        "max_memory_mb": 256
+      },
+      "network_policy": "profile_defined",
+      "max_chain_length": 3,
+      "max_cost_usd_per_run": 0.1,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop",
+        "budget_stop"
+      ],
+      "supported_task_types": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5"
+      ],
+      "supported_channels": [
+        "cli",
+        "local",
+        "background"
+      ],
+      "_disabled_reason": "No runtime factory registered in RuntimeRegistry; declared but unreachable",
+      "_disabled_at": "2026-04-10",
+      "_audit_finding": "RC-1: Declarative surface exceeds executable enforcement"
+    },
+    "claw_code": {
+      "enabled": false,
+      "type": "builtin",
+      "env_flag": "ENABLE_CLAW_CODE",
+      "fallback_chain": [
+        "zeroclaw",
+        "agent_os_python"
+      ],
+      "capabilities": [
+        "local_execution",
+        "tool_execution",
+        "recovery"
+      ],
+      "autonomy_level": "bounded_initiative",
+      "background_jobs_supported": false,
+      "approval_gates": [
+        "financial",
+        "destructive",
+        "privacy_sensitive",
+        "irreversible",
+        "external"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 45,
+        "max_memory_mb": 128
+      },
+      "network_policy": "profile_defined",
+      "max_chain_length": 3,
+      "max_cost_usd_per_run": 0.03,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop",
+        "budget_stop",
+        "loop_stop"
+      ],
+      "supported_task_types": [
+        "T2",
+        "T3",
+        "T4"
+      ],
+      "supported_channels": [
+        "cli",
+        "local"
+      ]
+    },
+    "mlx_lm": {
+      "enabled": true,
+      "type": "builtin",
+      "fallback_chain": [
+        "agent_os_python"
+      ],
+      "capabilities": [
+        "local_execution",
+        "kv_cache_quantization",
+        "direct_metal"
+      ],
+      "autonomy_level": "approval_only",
+      "background_jobs_supported": false,
+      "approval_gates": [
+        "destructive",
+        "external",
+        "privacy_sensitive"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 300,
+        "max_memory_mb": 12288
+      },
+      "network_policy": "workspace_only",
+      "max_chain_length": 1,
+      "max_cost_usd_per_run": 0.0,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop"
+      ],
+      "supported_task_types": [
+        "T1",
+        "T2",
+        "T3",
+        "T5"
+      ],
+      "supported_channels": [
+        "cli",
+        "local"
+      ]
+    },
+    "twentyfirst_agents": {
+      "enabled": false,
+      "type": "builtin",
+      "fallback_chain": [
+        "agent_os_python"
+      ],
+      "capabilities": [
+        "managed_external_runtime",
+        "bounded_execution",
+        "telemetry_bridge"
+      ],
+      "autonomy_level": "bounded_initiative",
+      "background_jobs_supported": false,
+      "approval_gates": [
+        "external",
+        "privacy_sensitive",
+        "irreversible"
+      ],
+      "resource_limits": {
+        "timeout_seconds": 90,
+        "max_memory_mb": 256
+      },
+      "network_policy": "profile_defined",
+      "max_chain_length": 2,
+      "max_cost_usd_per_run": 0.1,
+      "stop_conditions": [
+        "user_stop",
+        "admin_stop",
+        "safety_stop",
+        "budget_stop"
+      ],
+      "supported_task_types": [
+        "T2",
+        "T3",
+        "T5",
+        "T6",
+        "T7"
+      ],
+      "supported_channels": [
+        "cli",
+        "local",
+        "background"
+      ],
+      "_disabled_reason": "No runtime factory registered in RuntimeRegistry; declared but unreachable",
+      "_disabled_at": "2026-04-10",
+      "_audit_finding": "RC-1: Declarative surface exceeds executable enforcement"
+    }
+  },
+  "routing_overrides": [
+    {
+      "task_type": [
+        "T7"
+      ],
+      "complexity": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "provider": "zeroclaw",
+      "profile": "zera-telegram-prod",
+      "fallback_provider": "agent_os_python",
+      "fallback_reason": "zeroclaw disabled or unavailable — degrade to agent_os_python"
+    }
+  ]
+}

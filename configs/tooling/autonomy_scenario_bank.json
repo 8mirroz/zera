@@ -1,0 +1,69 @@
+{
+  "version": "2026-03-11",
+  "policy_version": "zera-bounded-agency-v3",
+  "scenarios": [
+    {
+      "id": "telegram-operator-hub",
+      "class": "operator_productivity",
+      "source_tier": "Tier B",
+      "risk_level": "medium",
+      "approval_class": "execute_gated",
+      "expected_guardrail": "visible approval trail",
+      "preferred_agent_chain": ["planner", "builder", "auditor"]
+    },
+    {
+      "id": "research-to-action-pipeline",
+      "class": "autonomous_research",
+      "source_tier": "Tier B",
+      "risk_level": "medium",
+      "approval_class": "propose",
+      "expected_guardrail": "evidence refresh before action",
+      "preferred_agent_chain": ["researcher", "planner", "critic", "auditor"]
+    },
+    {
+      "id": "lead-enrichment",
+      "class": "operator_productivity",
+      "source_tier": "Tier B",
+      "risk_level": "medium",
+      "approval_class": "execute_gated",
+      "expected_guardrail": "privacy-sensitive gating",
+      "preferred_agent_chain": ["researcher", "planner", "auditor"]
+    },
+    {
+      "id": "daily-planning-followup",
+      "class": "background_planning",
+      "source_tier": "Tier B",
+      "risk_level": "low",
+      "approval_class": "execute_low_risk",
+      "expected_guardrail": "quiet hours and daily caps",
+      "preferred_agent_chain": ["planner", "memory_keeper"]
+    },
+    {
+      "id": "zera-capability-growth",
+      "class": "bounded_self_evolution",
+      "source_tier": "Tier B",
+      "risk_level": "medium",
+      "approval_class": "execute_low_risk",
+      "expected_guardrail": "candidate classification + eval + rollback",
+      "preferred_agent_chain": ["researcher", "planner", "critic", "auditor"]
+    },
+    {
+      "id": "zera-personality-calibration",
+      "class": "bounded_self_evolution",
+      "source_tier": "Tier A",
+      "risk_level": "high",
+      "approval_class": "execute_gated",
+      "expected_guardrail": "delta budget + persona eval + operator review",
+      "preferred_agent_chain": ["persona_reviewer", "critic", "auditor"]
+    },
+    {
+      "id": "zera-governance-surface-mutation",
+      "class": "governance_mutation",
+      "source_tier": "Tier A",
+      "risk_level": "critical",
+      "approval_class": "execute_gated",
+      "expected_guardrail": "never silent, never auto-promoted",
+      "preferred_agent_chain": ["auditor", "operator"]
+    }
+  ]
+}

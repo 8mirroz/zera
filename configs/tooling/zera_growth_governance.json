@@ -1,0 +1,282 @@
+{
+  "version": "2026-04-08",
+  "persona_id": "zera-v1",
+  "control_plane": {
+    "source_of_truth": [
+      "configs/personas/zera/identity.md",
+      "configs/personas/zera/constitution.md",
+      "configs/personas/zera/safety.md",
+      "configs/personas/zera/relationship_boundaries.md",
+      "configs/personas/zera/modes.yaml",
+      "configs/personas/zera/memory_schema.json",
+      "configs/personas/zera/eval_cases.json",
+      "configs/tooling/autonomy_policy.yaml",
+      "configs/tooling/background_jobs.yaml",
+      "configs/tooling/memory_write_policy.yaml",
+      "configs/tooling/drift-detection-rules.yaml",
+      "configs/tooling/evaluation-harness.yaml",
+      "configs/tooling/zera_command_registry.yaml",
+      "configs/tooling/zera_client_profiles.yaml",
+      "configs/tooling/zera_branching_policy.yaml",
+      "configs/tooling/zera_research_registry.yaml",
+      "configs/tooling/zera_skill_foundry.yaml",
+      "configs/tooling/zera_external_imports.yaml",
+      "Zera/SELF_EVOLUTION_PROTOCOL.md",
+      "Zera/ZERA_SELF_EVOLUTION_WORKFLOW.md"
+    ],
+    "governance_surfaces": [
+      "constitution",
+      "safety",
+      "relationship_boundaries",
+      "autonomy_policy",
+      "action_classes",
+      "budgets",
+      "approval_boundaries",
+      "memory_retention_rules",
+      "promotion_rules",
+      "rollback_rules",
+      "eval_thresholds",
+      "tool_permission_surfaces",
+      "background_job_cadence",
+      "command_registry",
+      "client_profiles",
+      "branching_policy",
+      "research_registry",
+      "skill_foundry",
+      "external_import_policy"
+    ],
+    "command_semantics_source": "configs/tooling/zera_command_registry.yaml",
+    "branching_policy_source": "configs/tooling/zera_branching_policy.yaml",
+    "client_profile_source": "configs/tooling/zera_client_profiles.yaml",
+    "external_import_source": "configs/tooling/zera_external_imports.yaml"
+  },
+  "candidate_classes": {
+    "research_target": {
+      "loop": "capability",
+      "default_risk": "low",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "source_provenance",
+        "discussion_first"
+      ]
+    },
+    "skill_refinement": {
+      "loop": "capability",
+      "default_risk": "medium",
+      "auto_promote_allowed": true,
+      "eval_suite": [
+        "skill_output_contract",
+        "non_overlap",
+        "rollback_path"
+      ]
+    },
+    "tool_usage_refinement": {
+      "loop": "capability",
+      "default_risk": "medium",
+      "auto_promote_allowed": true,
+      "eval_suite": [
+        "tool_safety_boundary",
+        "cost_benefit",
+        "rollback_path"
+      ]
+    },
+    "workflow_improvement": {
+      "loop": "capability",
+      "default_risk": "medium",
+      "auto_promote_allowed": true,
+      "eval_suite": [
+        "dry_run",
+        "dependency_integrity",
+        "rollback_path"
+      ]
+    },
+    "orchestration_pattern_update": {
+      "loop": "capability",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "routing_regression",
+        "budget_safety",
+        "rollback_path"
+      ]
+    },
+    "memory_policy_refinement": {
+      "loop": "capability",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "schema_integrity",
+        "restraint_check",
+        "rollback_path"
+      ]
+    },
+    "tone_calibration": {
+      "loop": "personality",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "persona_stability",
+        "anti_dependency",
+        "style_drift"
+      ]
+    },
+    "boundary_tightening": {
+      "loop": "personality",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "boundary_integrity",
+        "persona_stability",
+        "rollback_path"
+      ]
+    },
+    "proactivity_adjustment": {
+      "loop": "personality",
+      "default_risk": "medium",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "initiative_boundaries",
+        "non_intrusiveness",
+        "rollback_path"
+      ]
+    },
+    "refusal_behavior_adjustment": {
+      "loop": "personality",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "refusal_quality",
+        "anti_sycophancy",
+        "rollback_path"
+      ]
+    },
+    "autonomy_behavior_adjustment": {
+      "loop": "mixed",
+      "default_risk": "critical",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "action_class_obedience",
+        "approval_boundaries",
+        "rollback_path"
+      ]
+    },
+    "governance_affecting_candidate": {
+      "loop": "governance",
+      "default_risk": "critical",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "operator_review_only"
+      ]
+    },
+    "mixed_ambiguous_candidate": {
+      "loop": "mixed",
+      "default_risk": "critical",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "classification_review",
+        "operator_review_only"
+      ]
+    },
+    "command_recipe": {
+      "loop": "capability",
+      "default_risk": "medium",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "command_registry_parity",
+        "client_degradation_path",
+        "rollback_path"
+      ]
+    },
+    "branch_template": {
+      "loop": "mixed",
+      "default_risk": "high",
+      "auto_promote_allowed": false,
+      "eval_suite": [
+        "branch_manifest_integrity",
+        "merge_policy_enforcement",
+        "rollback_path"
+      ]
+    }
+  },
+  "approval_routes": {
+    "capability": "allow_low_risk_after_eval",
+    "personality": "review_required",
+    "mixed": "review_required",
+    "governance": "operator_only"
+  },
+  "promotion_rules": {
+    "eval_required": true,
+    "rollback_required": true,
+    "telemetry_required": true,
+    "mixed_candidate_requires_review": true,
+    "governance_touch_requires_review": true,
+    "max_significant_personality_deltas_per_cycle": 1,
+    "freeze_after_consecutive_personality_regressions": 2,
+    "external_import_requires_registry_record": true,
+    "branch_outputs_require_classification": true
+  },
+  "personality_governor": {
+    "axes": {
+      "warmth": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 },
+      "firmness": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 },
+      "directness": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 },
+      "initiative": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 },
+      "expressive_richness": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 },
+      "emotional_closeness": { "baseline": "bounded", "soft_delta_per_cycle": 0, "hard_delta_per_cycle": 1, "freeze_threshold": 1, "rollback_trigger": 1 },
+      "stylistic_variance": { "baseline": "medium", "soft_delta_per_cycle": 1, "hard_delta_per_cycle": 2, "freeze_threshold": 3, "rollback_trigger": 2 }
+    }
+  },
+  "freeze_conditions": [
+    "governance_surface_touched_without_approval",
+    "unclassified_candidate",
+    "missing_rollback_path",
+    "missing_eval_suite",
+    "missing_telemetry",
+    "prompt_injection_detected",
+    "personality_delta_budget_breach",
+    "repeated_eval_regression",
+    "drift_signal_above_threshold",
+    "undocumented_command_surface",
+    "branch_merge_without_classification",
+    "client_parity_drift",
+    "source_import_without_lane_metadata",
+    "inline_secret_detected_in_client_config"
+  ],
+  "required_telemetry_fields": [
+    "ts",
+    "run_id",
+    "event_type",
+    "candidate_id",
+    "candidate_class",
+    "loop",
+    "target_layer",
+    "risk_level",
+    "governance_impact",
+    "decision",
+    "eval_suite",
+    "rollback_path",
+    "source",
+    "command_id",
+    "client_id",
+    "branch_id",
+    "branch_type",
+    "import_lane",
+    "source_license",
+    "trust_score"
+  ],
+  "memory_write_guards": {
+    "direct_persona_memory_writes_from_intelligence_scan": false,
+    "direct_stable_memory_writes_from_branch_outputs": false,
+    "stable_memory_requires": [
+      "explicit_source",
+      "confidence",
+      "classification",
+      "non_ambiguous_payload"
+    ],
+    "personality_delta_records_target": "vault/research/reports/",
+    "promotion_records_target": "vault/research/promotions/",
+    "rejection_records_target": "vault/research/rejections/",
+    "branch_manifest_target": "vault/research/branches/",
+    "governor_ledger_target": "vault/research/governor/"
+  }
+}

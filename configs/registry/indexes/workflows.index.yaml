@@ -1,0 +1,97 @@
+# Auto-generated workflows index — 2026-04-08
+# Source: configs/registry/workflows/
+# Do not edit manually. Run registry linter to regenerate.
+
+workflows:
+  - id: fast-path-to-completion
+    path: workflows/path-fast.yaml
+    category: execution
+    tier: [C1, C2]
+    status: active
+    stages: 2
+    agents: [execution-builder, review-qa-auditor]
+
+  - id: quality-path-to-completion
+    path: workflows/path-quality.yaml
+    category: execution
+    tier: [C3]
+    status: active
+    stages: 4
+    agents: [execution-builder, review-critic, core-memory-steward]
+
+  - id: swarm-path-to-completion
+    path: workflows/path-swarm.yaml
+    category: execution
+    tier: [C4, C5]
+    status: active
+    stages: 4
+    agents: [architecture-systems-architect, execution-builder, execution-integrator, review-security-audit]
+
+  - id: pdf-to-estimate
+    path: workflows/pdf-to-estimate.yaml
+    category: estimation
+    tier: [C2, C3]
+    status: active
+    stages: 0
+    agents: []
+
+  - id: repo-scout-to-shortlist
+    path: workflows/repo-scout-to-shortlist.yaml
+    category: research
+    tier: [C2]
+    status: active
+    stages: 0
+    agents: []
+
+  - id: brief-to-system-design
+    path: workflows/brief-to-system-design.yaml
+    category: engineering
+    tier: [C3, C4]
+    status: active
+    stages: 0
+    agents: []
+
+  # === subdirectories ===
+  - id: content-workflows
+    path: workflows/content/
+    category: content
+    status: active
+    count: 0
+
+  - id: engineering-workflows
+    path: workflows/engineering/
+    category: engineering
+    status: active
+    count: 0
+
+  - id: estimation-workflows
+    path: workflows/estimation/
+    category: estimation
+    status: active
+    count: 0
+
+  - id: research-workflows
+    path: workflows/research/
+    category: research
+    status: active
+    count: 0
+
+  - id: strategy-workflows
+    path: workflows/strategy/
+    category: strategy
+    status: active
+    count: 0
+
+summary:
+  total_workflows: 6
+  by_category:
+    execution: 3
+    estimation: 1
+    research: 1
+    engineering: 1
+  by_tier:
+    C1: 1
+    C2: 2
+    C3: 3
+    C4: 2
+    C5: 1

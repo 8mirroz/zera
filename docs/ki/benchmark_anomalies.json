@@ -1,0 +1,17 @@
+[
+  {
+    "severity": "high",
+    "kind": "missing_cases",
+    "message": "Missing expected cases: ['bench-context-map-retrieval', 'bench-doc-staleness-detection', 'bench-harness-gardening-candidate', 'bench-worktree-validation-evidence']"
+  },
+  {
+    "severity": "high",
+    "kind": "duplicate_cases",
+    "message": "Duplicate case IDs found: ['bench-approval-gate', 'bench-c1-config', 'bench-c2-fix', 'bench-c3-implement', 'bench-c4-architect', 'bench-memory-retrieval', 'bench-stop-signal', 'bench-zera-persona', 'bench-zera-recovery', 'real-trace-0214de30-d78', 'real-trace-3b4886b6-651', 'real-trace-48257d77-cdb', 'real-trace-55eef642-6d5', 'real-trace-5cbeb236-851', 'real-trace-72dcccb6-3b6', 'real-trace-9355d660-175', 'real-trace-9536bd28-0ca', 'real-trace-a19906d7-65c', 'real-trace-a2d177a7-fba', 'real-trace-b261c8b5-fbe', 'real-trace-b8453b6e-5a8', 'real-trace-bf9988cc-260', 'real-trace-c5b46e2d-6f7', 'real-trace-ed831db6-81a']"
+  },
+  {
+    "severity": "high",
+    "kind": "low_pass_rate",
+    "message": "Pass rate is low: 0.67"
+  }
+]

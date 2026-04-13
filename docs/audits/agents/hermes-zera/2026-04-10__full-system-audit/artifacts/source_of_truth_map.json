@@ -1,0 +1,134 @@
+{
+  "audit_id": "2026-04-10__full-system-audit",
+  "generated_at": "2026-04-10T13:46:04Z",
+  "domains": [
+    {
+      "domain": "zera_persona",
+      "canonical": [
+        "configs/personas/zera/manifest.yaml",
+        "configs/personas/zera/identity.md",
+        "configs/personas/zera/constitution.md",
+        "configs/personas/zera/safety.md",
+        "configs/personas/zera/relationship_boundaries.md",
+        "configs/personas/zera/tone.md",
+        "configs/personas/zera/modes.yaml"
+      ],
+      "derived": [
+        "configs/tooling/persona_eval_suite.json"
+      ],
+      "narrative": [
+        "Zera/HERMES_SOUL.md",
+        "Zera/HERMES_INTEGRATION.md"
+      ],
+      "status": "mostly_clear",
+      "drift": [
+        "Persona docs are canonical, but enforcement remains heuristic in persona_eval.py and mode routing is keyword-only."
+      ]
+    },
+    {
+      "domain": "zera_command_os",
+      "canonical": [
+        "configs/tooling/zera_command_registry.yaml",
+        "configs/tooling/zera_client_profiles.yaml",
+        "configs/tooling/zera_mode_router.json",
+        "configs/tooling/zera_branching_policy.yaml",
+        "configs/tooling/zera_growth_governance.json"
+      ],
+      "consumers": [
+        "scripts/zera_command_runtime.py",
+        "repos/packages/agent-os/src/agent_os/zera_command_os.py",
+        "repos/packages/agent-os/src/agent_os/agent_runtime.py"
+      ],
+      "status": "canonical_but_partially_duplicated"
+    },
+    {
+      "domain": "hermes_runtime_dispatch",
+      "canonical": [
+        "repos/packages/agent-os/src/agent_os/agent_runtime.py",
+        "repos/packages/agent-os/src/agent_os/runtime_registry.py",
+        "configs/tooling/runtime_providers.json",
+        "configs/tooling/zeroclaw_profiles.json"
+      ],
+      "narrative": [
+        "docs/guides/hermes-agent-integration-guide.md",
+        "configs/adapters/hermes/adapter.yaml"
+      ],
+      "status": "ambiguous_due_to_drift",
+      "drift": [
+        "runtime_providers.json declares mlx_lm, but runtime_registry.py does not register it.",
+        "Hermes guide describes a workspace path not matching current repo cwd."
+      ]
+    },
+    {
+      "domain": "memory_policy",
+      "canonical": [
+        "configs/global/memory_policy.yaml",
+        "configs/tooling/memory_write_policy.yaml",
+        "configs/tooling/memory_mesh.yaml",
+        "configs/orchestrator/user_profile.json"
+      ],
+      "consumers": [
+        "repos/packages/agent-os/src/agent_os/memory_store.py",
+        "repos/packages/agent-os/src/agent_os/memory_policy_layer.py",
+        "repos/packages/agent-os/src/agent_os/profile_manager.py",
+        "repos/packages/agent-os/src/agent_os/agent_runtime.py"
+      ],
+      "status": "split_between_declared_and_reachable"
+    },
+    {
+      "domain": "benchmarking",
+      "canonical": [
+        "configs/tooling/benchmark_suite.json",
+        "configs/tooling/benchmark_config.json",
+        "configs/tooling/analyze_benchmark.py"
+      ],
+      "derived": [
+        "docs/ki/benchmark_latest.json",
+        "docs/ki/benchmark_latest.md",
+        "docs/ki/benchmark_anomalies.json"
+      ],
+      "status": "invalidated_by_case_normalization_drift"
+    },
+    {
+      "domain": "observability",
+      "canonical": [
+        "configs/tooling/trace_schema.json",
+        "repos/packages/agent-os/src/agent_os/observability.py",
+        "logs/agent_traces.jsonl"
+      ],
+      "mirrors_or_legacy": [
+        "configs/tooling/agent_os_trace_schema.json",
+        "repos/packages/agent-os/src/logs/agent_traces.jsonl"
+      ],
+      "status": "split_storage_and_partial_contract"
+    },
+    {
+      "domain": "skills_publication",
+      "canonical": [
+        "configs/skills/ACTIVE_SKILLS.md",
+        "configs/skills/ZERA_ACTIVE_SKILLS.md"
+      ],
+      "derived": [
+        ".agent/skills/.active_set_manifest.json"
+      ],
+      "status": "drifted",
+      "drift": [
+        "ZERA_ACTIVE_SKILLS.md is not published into .agent/skills."
+      ]
+    },
+    {
+      "domain": "workflow_catalog",
+      "canonical": [
+        ".agent/config/workflow_sets.active.json",
+        "configs/tooling/workflow_sets_catalog.json"
+      ],
+      "required_runtime_assets": [
+        ".agent/workflows/*"
+      ],
+      "status": "broken",
+      "drift": [
+        "Indexes point to workflow markdown files that are absent from the workspace."
+      ]
+    }
+  ]
+}

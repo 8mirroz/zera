@@ -1,0 +1,100 @@
+# Zera Client Profiles
+# Version: 2026-04-09
+# Defines transport profiles for each Zera client runtime.
+# RULE: All paths MUST use ${HOME}, ${ANTIGRAVITY_ROOT}, or ${VAULT_PATH} — never hardcoded absolute paths.
+# Command semantics SoT: configs/tooling/zera_command_registry.yaml
+
+version: "2026-04-09"
+default_client: "repo_native"
+
+repo_semantics:
+  command_registry: "configs/tooling/zera_command_registry.yaml"
+  branching_policy: "configs/tooling/zera_branching_policy.yaml"
+  growth_governance: "configs/tooling/zera_growth_governance.json"
+  mode_router: "configs/tooling/zera_mode_router.json"
+  reliability_contract: "configs/tooling/test_suite_matrix.yaml"
+
+secret_policy:
+  env_ref_only: true
+  inline_secret_forbidden: true
+  client_configs_must_not_define_command_semantics: true
+
+parity_requirements:
+  semantics_must_resolve_from_repo: true
+  command_namespace: "zera:*"
+  required_clients:
+    - repo_native
+    - hermes
+    - gemini
+  required_degrade_paths:
+    unsupported_command: "degrade_to_fallback_or_fail_closed"
+    unsupported_transport: "degrade_to_repo_semantics"
+    unsupported_tool_surface: "propose_and_request_review"
+
+transport_profiles:
+  repo_native:
+    adapter_ref: "scripts/zera-command.sh"
+    transport_mode: "local_cli"
+  hermes:
+    adapter_ref: "configs/adapters/hermes/adapter.yaml"
+    profile_path: "${HOME}/.hermes/profiles/zera/config.yaml"
+    transport_mode: "provider_routed_chat_runtime"
+  gemini:
+    adapter_ref: "configs/tooling/zera_client_profiles.yaml"
+    profile_path: "${HOME}/.gemini/zera/mcp_config.json"
+    transport_mode: "mcp_orchestrated_chat_runtime"
+
+clients:
+  repo_native:
+    display_name: "Repo-native"
+    config_path: "scripts/zera-command.sh"
+    command_registry_source: "configs/tooling/zera_command_registry.yaml"
+    capabilities:
+      terminal: "full"
+      filesystem: "full"
+      repo_editing: "full"
+      network: "limited"
+      background_jobs: "full"
+      long_context: "medium"
+    degradation_policy:
+      unsupported_command_action: "fail_closed"
+      prefer_fallback_command: true
+      fallback_command: "zera:plan"
+      unsupported_transport_action: "fail_closed"
+      unsupported_tool_surface_action: "propose_and_request_review"
+
+  hermes:
+    display_name: "Hermes"
+    config_path: "${HOME}/.hermes/profiles/zera/config.yaml"
+    command_registry_source: "configs/tooling/zera_command_registry.yaml"
+    capabilities:
+      terminal: "limited"
+      filesystem: "limited"
+      repo_editing: "limited"
+      network: "limited"
+      background_jobs: "limited"
+      long_context: "high"
+    degradation_policy:
+      unsupported_command_action: "degrade_to_fallback"
+      prefer_fallback_command: true
+      fallback_command: "zera:plan"
+      unsupported_transport_action: "degrade_to_repo_semantics"
+      unsupported_tool_surface_action: "propose_and_request_review"
+
+  gemini:
+    display_name: "Gemini"
+    config_path: "${HOME}/.gemini/zera/mcp_config.json"
+    command_registry_source: "configs/tooling/zera_command_registry.yaml"
+    capabilities:
+      terminal: "none"
+      filesystem: "limited"
+      repo_editing: "none"
+      network: "limited"
+      background_jobs: "none"
+      long_context: "medium"
+    degradation_policy:
+      unsupported_command_action: "degrade_to_fallback"
+      prefer_fallback_command: true
+      fallback_command: "zera:plan"
+      unsupported_transport_action: "degrade_to_repo_semantics"
+      unsupported_tool_surface_action: "propose_and_request_review"

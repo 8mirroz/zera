@@ -1,0 +1,60 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "schema": {
+    "canonical_file": "configs/tooling/trace_schema.json",
+    "mirror_file": "configs/tooling/agent_os_trace_schema.json",
+    "schema_id": "agent_os_trace_event_v2.1",
+    "version": "2026-04-10",
+    "event_types_count": 63,
+    "required_common_fields": [
+      "ts",
+      "run_id",
+      "event_type",
+      "level",
+      "component",
+      "data"
+    ],
+    "mirror_parity": {
+      "schema_id": true,
+      "required_common_fields": true,
+      "field_types": true,
+      "event_types": true
+    }
+  },
+  "validation": {
+    "tests": [
+      {
+        "command": "python3 -m pytest -q repos/packages/agent-os/tests/test_trace_schema_mirror.py repos/packages/agent-os/tests/test_trace_validator.py",
+        "status": "pass",
+        "result": "4 passed"
+      }
+    ],
+    "runtime_coverage_check": {
+      "command": "python3 repos/packages/agent-os/scripts/verify_trace_coverage.py",
+      "exit_code": 1,
+      "status": "fail",
+      "errors": [
+        {
+          "line": 2,
+          "error": "event catalog_update_result: missing required field catalog_update_status",
+          "format": "v2"
+        },
+        {
+          "line": 3,
+          "error": "event memory_write_completed: missing required field key; event memory_write_completed: missing required field scope",
+          "format": "v2"
+        },
+        {
+          "line": 4,
+          "error": "event profile_context_injected: missing required field profile_context_size_bytes",
+          "format": "v2"
+        },
+        {
+          "line": 9,
+          "error": "event provider_state_transition: missing required field provider_state_from; event provider_state_transition: missing required field provider_state_to; event provider_state_transition: missing required field reason",
+          "format": "v2"
+        }
+      ]
+    }
+  }
+}

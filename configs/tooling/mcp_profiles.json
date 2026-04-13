@@ -1,0 +1,388 @@
+{
+  "version": "2026-07-obsidian",
+  "description": "MCP server profiles for Antigravity Agent OS + Obsidian memory layer",
+  "allowlist": [
+    "${HOME}/antigravity-core",
+    "${HOME}/projects",
+    "${HOME}/lab",
+    "${VAULT_PATH}"
+  ],
+  "obsidian_servers": {
+    "obsidian-disk": {
+      "description": "Disk-based vault access (no Obsidian required, headless-safe)",
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-obsidian"
+      ],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      }
+    },
+    "obsidian-semantic": {
+      "description": "Semantic search via Smart Connections embeddings (read-only)",
+      "command": "node",
+      "args": [
+        "${SMART_CONNECTIONS_MCP_PATH}/dist/index.js"
+      ],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}"
+      }
+    },
+    "obsidian-memory": {
+      "description": "Agent memory write-back as Markdown with wikilinks",
+      "command": "npx",
+      "args": [
+        "-y",
+        "obsidian-memory-mcp"
+      ],
+      "env": {
+        "VAULT_PATH": "${VAULT_PATH}",
+        "MEMORY_DIR": "memory"
+      }
+    }
+  },
+  "search_transports": {
+    "qmd": {
+      "description": "Optional local markdown/wiki search transport for wiki-core; primary when qmd is installed, with TF-IDF fallback in agent_os.wiki_core",
+      "command": "qmd",
+      "collection": "antigravity-wiki-core",
+      "paths": [
+        "repos/data/knowledge/wiki-core/wiki"
+      ],
+      "feature_flag": "ENABLE_QMD_WIKI_CORE",
+      "fallback_backend": "tfidf"
+    }
+  },
+  "servers": {
+    "browser": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agent-infra/mcp-server-browser"
+      ]
+    },
+    "google-llm": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@agent-infra/mcp-server-google-llm"
+      ],
+      "env": {
+        "MODEL": "gemini-1.5-pro"
+      }
+    },
+    "exa": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}"
+      ]
+    }
+  },
+  "profiles": {
+    "core": {
+      "description": "Default profile for general development tasks",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7",
+        "qwen-context",
+        "mcp-antigravity-context"
+      ]
+    },
+    "research": {
+      "description": "Research and analysis tasks with semantic vault search",
+      "servers": [
+        "memory",
+        "sequential-thinking",
+        "context7",
+        "perplexity-ask"
+      ],
+      "feature_flag": "ENABLE_UNLIMITED_CONTEXT_V3"
+    },
+    "knowledge": {
+      "description": "Deep knowledge retrieval \u2014 semantic search over vault (T5/C3+)",
+      "servers": [
+        "memory",
+        "sequential-thinking",
+        "context7"
+      ],
+      "feature_flag": "ENABLE_UNLIMITED_CONTEXT_V3"
+    },
+    "code-review": {
+      "description": "Code review with GitHub integration",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7"
+      ]
+    },
+    "lsp-code": {
+      "description": "Optional code-quality profile with lsp-bridge; use only when the lsp-bridge server is installed and degraded-mode reporting is enabled",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7"
+      ],
+      "feature_flag": "ENABLE_LSP_BRIDGE"
+    },
+    "ui-design": {
+      "description": "UI/UX design with design system access",
+      "servers": [
+        "filesystem",
+        "memory",
+        "context7",
+        "stitch",
+        "magicui"
+      ]
+    },
+    "swarm": {
+      "description": "Multi-agent swarm coordination with full memory access",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7",
+        "qwen-context",
+        "sequential-thinking",
+        "openrouter",
+        "mcp-antigravity-context"
+      ],
+      "feature_flag": "ENABLE_UNLIMITED_CONTEXT_V3"
+    },
+    "pipeline": {
+      "description": "Event-driven pipeline orchestration — fractal agents, bounce-back, cron, SSH runners",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory"
+      ]
+    },
+    "data-scraping": {
+      "description": "Data collection and scraping tasks",
+      "servers": [
+        "filesystem",
+        "memory",
+        "context7"
+      ]
+    },
+    "config": {
+      "description": "Configuration and dependency management (T1)",
+      "servers": [
+        "filesystem",
+        "context7"
+      ]
+    },
+    "fix": {
+      "description": "Bug fixes and error resolution (T2)",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7",
+        "sequential-thinking"
+      ]
+    },
+    "implement": {
+      "description": "Feature implementation (T3)",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7",
+        "qwen-context"
+      ]
+    },
+    "architect": {
+      "description": "Architecture and system design (T4) with vault memory",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7",
+        "sequential-thinking",
+        "mcp-antigravity-context"
+      ]
+    },
+    "telegram": {
+      "description": "Telegram bot and mini-app development (T7)",
+      "servers": [
+        "filesystem",
+        "github",
+        "memory",
+        "context7"
+      ]
+    }
+  },
+  "routing": [
+    {
+      "task_type": [
+        "T1"
+      ],
+      "complexity": [
+        "C1",
+        "C2"
+      ],
+      "profile": "config"
+    },
+    {
+      "task_type": [
+        "T1"
+      ],
+      "complexity": [
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "profile": "core"
+    },
+    {
+      "task_type": [
+        "T2"
+      ],
+      "complexity": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "profile": "fix"
+    },
+    {
+      "task_type": [
+        "T2"
+      ],
+      "complexity": [
+        "C4",
+        "C5"
+      ],
+      "profile": "code-review"
+    },
+    {
+      "task_type": [
+        "T3"
+      ],
+      "complexity": [
+        "C1",
+        "C2"
+      ],
+      "profile": "implement"
+    },
+    {
+      "task_type": [
+        "T3"
+      ],
+      "complexity": [
+        "C3"
+      ],
+      "profile": "core"
+    },
+    {
+      "task_type": [
+        "T3"
+      ],
+      "complexity": [
+        "C4"
+      ],
+      "profile": "pipeline"
+    },
+    {
+      "task_type": [
+        "T3"
+      ],
+      "complexity": [
+        "C5"
+      ],
+      "profile": "swarm"
+    },
+    {
+      "task_type": [
+        "T4"
+      ],
+      "complexity": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "profile": "architect"
+    },
+    {
+      "task_type": [
+        "T4"
+      ],
+      "complexity": [
+        "C4",
+        "C5"
+      ],
+      "profile": "swarm"
+    },
+    {
+      "task_type": [
+        "T5"
+      ],
+      "complexity": [
+        "C1",
+        "C2"
+      ],
+      "profile": "research"
+    },
+    {
+      "task_type": [
+        "T5"
+      ],
+      "complexity": [
+        "C3",
+        "C5"
+      ],
+      "profile": "knowledge"
+    },
+    {
+      "task_type": [
+        "T5"
+      ],
+      "complexity": [
+        "C4"
+      ],
+      "profile": "data-scraping"
+    },
+    {
+      "task_type": [
+        "T6"
+      ],
+      "complexity": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "profile": "ui-design"
+    },
+    {
+      "task_type": [
+        "T7"
+      ],
+      "complexity": [
+        "C1",
+        "C2",
+        "C3"
+      ],
+      "profile": "telegram"
+    },
+    {
+      "task_type": [
+        "T7"
+      ],
+      "complexity": [
+        "C4",
+        "C5"
+      ],
+      "profile": "swarm"
+    }
+  ],
+  "default_profile": "research"
+}

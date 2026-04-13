@@ -1,0 +1,44 @@
+{
+  "audit_id": "2026-04-10__full-system-audit",
+  "generated_at": "2026-04-10T13:46:04Z",
+  "evidence_sources": [
+    "docs/ki/benchmark_latest.json",
+    "logs/benchmark-latest.json",
+    "configs/tooling/benchmark_suite.json",
+    "configs/tooling/analyze_benchmark.py"
+  ],
+  "historical_latest": {
+    "run_id": "d736ea14-257e-46d5-913b-e258443d05c0",
+    "suite_name": "benchmark_suite",
+    "score": 0.7755996666666667,
+    "pass_rate": 0.875,
+    "report_confidence": 1.0,
+    "coverage": 9.23076923076923,
+    "total_cases": 120,
+    "expected_cases": 13,
+    "gate_status": "pass",
+    "validity": "compromised"
+  },
+  "local_log_latest": {
+    "run_id": "6d56b4b8-9e2d-4651-b1f1-4d817d7b6785",
+    "cases_total": 4,
+    "cases_passed": 2,
+    "pass_rate": 0.5,
+    "first_pass_success": 0.5,
+    "composite_score": 0.7211,
+    "validity": "partial"
+  },
+  "credibly_scored_metrics": {
+    "task_success_rate": 0.5,
+    "first_pass_success_rate": 0.5,
+    "silent_failure_rate": 0.5,
+    "repeated_run_consistency": "not credibly established",
+    "tool_invocation_success_rate": "not credibly established",
+    "trace_completeness": "partial"
+  },
+  "invalidity_notes": [
+    "Case IDs with ::rN suffixes are treated as unexpected while also inflating coverage.",
+    "real-trace-* sampled cases are mixed into benchmark coverage, obscuring suite completeness.",
+    "Gate status can pass even when anomalies show missing canonical cases."
+  ]
+}

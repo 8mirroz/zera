@@ -1,0 +1,94 @@
+version: "2026-04-08"
+program_ref: "configs/tooling/test_reliability_program.yaml"
+artifacts_root: "outputs/reliability"
+
+failure_classes:
+  syntax_or_parse:
+    first_triage_command: "make test-contract"
+    primary_artifacts:
+      - "outputs/reliability/latest/last_failed_suite.json"
+      - "outputs/reliability/latest/failure-summary.json"
+    doctor_command: "make doctor"
+    escalation_path: "config-contract-owner"
+    rollback_action: "revert recent syntax/config edits or restore last known good config"
+  contract_violation:
+    first_triage_command: "cd repos/packages/agent-os && uv run python ../../../scripts/validation/check_reliability_platform.py --json"
+    primary_artifacts:
+      - "outputs/reliability/latest/failure-summary.json"
+      - "outputs/reliability/inventory/latest_inventory.json"
+    doctor_command: "make doctor"
+    escalation_path: "reliability-platform-owner"
+    rollback_action: "undo contract or schema drift before rerunning suites"
+  routing_logic:
+    first_triage_command: "cd repos/packages/agent-os && uv run pytest tests/test_routing.py -v"
+    primary_artifacts:
+      - "logs/agent_traces.jsonl"
+      - "outputs/reliability/latest/failure-summary.json"
+    doctor_command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py doctor"
+    escalation_path: "routing-owner"
+    rollback_action: "rollback routing and model alias changes"
+  governance_boundary:
+    first_triage_command: "make test-governance"
+    primary_artifacts:
+      - "outputs/reliability/latest/governance-summary.json"
+      - "outputs/reliability/latest/failure-summary.json"
+    doctor_command: "python3 scripts/validation/check_zera_hardening.py --json"
+    escalation_path: "governance-owner"
+    rollback_action: "freeze promotion-related changes and revert unauthorized governance diffs"
+  tooling_or_env:
+    first_triage_command: "make doctor"
+    primary_artifacts:
+      - "outputs/reliability/latest/doctor-summary.json"
+      - "outputs/reliability/latest/failure-summary.json"
+    doctor_command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py doctor"
+    escalation_path: "devex-owner"
+    rollback_action: "restore known-good env/config and rerun smoke profile"
+  integration_surface:
+    first_triage_command: "make test-integration"
+    primary_artifacts:
+      - "outputs/reliability/latest/failure-summary.json"
+      - "outputs/reliability/latest/suite-manifest.json"
+    doctor_command: "make doctor"
+    escalation_path: "subsystem-owner"
+    rollback_action: "disable failing integration change and rerun targeted suite"
+  benchmark_regression:
+    first_triage_command: "make test-benchmark"
+    primary_artifacts:
+      - "outputs/reliability/latest/benchmark-summary.json"
+      - "docs/ki/benchmark_latest.json"
+    doctor_command: "python3 configs/tooling/analyze_benchmark.py --config configs/tooling/benchmark_config.json --suite-manifest configs/tooling/benchmark_suite.json"
+    escalation_path: "performance-owner"
+    rollback_action: "revert threshold or runtime changes; do not relax gate silently"
+  observability_gap:
+    first_triage_command: "make doctor"
+    primary_artifacts:
+      - "outputs/reliability/events.jsonl"
+      - "outputs/reliability/latest/failure-summary.json"
+    doctor_command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py harness-report --task 'observability gap triage'"
+    escalation_path: "observability-owner"
+    rollback_action: "restore event emission before trusting green suites"
+  doc_runtime_drift:
+    first_triage_command: "cd repos/packages/agent-os && uv run python ../../../scripts/validation/check_reliability_platform.py --json"
+    primary_artifacts:
+      - "outputs/reliability/latest/failure-summary.json"
+      - "outputs/reliability/inventory/latest_inventory.md"
+    doctor_command: "make reliability-report"
+    escalation_path: "docs-platform-owner"
+    rollback_action: "realign docs with runtime contract before rollout"
+  flaky_or_nondeterministic:
+    first_triage_command: "make debug-test TEST=<node>"
+    primary_artifacts:
+      - "outputs/reliability/latest/failure-summary.json"
+      - "outputs/reliability/events.jsonl"
+    doctor_command: "make reliability-report"
+    escalation_path: "suite-owner"
+    rollback_action: "quarantine with owner, reason, exit condition; do not add silent retries"
+
+standard_artifacts:
+  failure_summary_json: "outputs/reliability/latest/failure-summary.json"
+  last_failed_suite_manifest: "outputs/reliability/latest/last_failed_suite.json"
+  repro_command: "outputs/reliability/latest/repro-command.txt"
+  event_log: "outputs/reliability/events.jsonl"
+  suite_manifest: "outputs/reliability/latest/suite-manifest.json"
+  benchmark_delta_summary: "outputs/reliability/latest/benchmark-summary.json"
+  doc_runtime_drift_summary: "outputs/reliability/inventory/latest_inventory.md"

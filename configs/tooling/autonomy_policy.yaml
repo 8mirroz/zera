@@ -1,0 +1,644 @@
+action_classes:
+  allowed_under_budget:
+    blocked: false
+    description: safe action if budget, evidence, and policy constraints pass
+    max_risk_score: 4
+    requires_approval: false
+  allowed_with_delayed_approval:
+    approval_window_minutes: 30
+    blocked: false
+    description: queued action, executed only if approval arrives in window
+    max_risk_score: 6
+    requires_approval: true
+  execute_gated:
+    blocked: false
+    description: action allowed only after explicit operator approval
+    max_risk_score: 7
+    requires_approval: true
+  execute_low_risk:
+    blocked: false
+    description: safe internal operations with no external irreversible effect
+    max_risk_score: 4
+    requires_approval: false
+  never_autonomous:
+    blocked: true
+    description: must never be performed autonomously
+    max_risk_score: 999
+    requires_approval: true
+  observe:
+    blocked: false
+    description: read-only observation, classification, retrieval
+    max_risk_score: 1
+    requires_approval: false
+  propose:
+    blocked: false
+    description: draft plans, recommendations, candidate actions
+    max_risk_score: 3
+    requires_approval: false
+action_type_map:
+  account_change: never_autonomous
+  browser_action: execute_gated
+  browser_observation: observe
+  branch_creation: execute_low_risk
+  branch_merge_review: propose
+  command_resolution: execute_low_risk
+  content_generation: execute_low_risk
+  content_publish: execute_gated
+  credential_access: never_autonomous
+  crm_update_non_sensitive: execute_low_risk
+  crm_update_sensitive: execute_gated
+  destructive_change: never_autonomous
+  doc_gardening: execute_low_risk
+  dormant_plan_resurfacing: execute_gated
+  evidence_revalidation: execute_low_risk
+  external_contact: execute_gated
+  external_message_send: never_autonomous
+  financial_commitment: never_autonomous
+  goal_review: execute_low_risk
+  harness_gardening: execute_low_risk
+  lead_enrichment: execute_gated
+  lead_scoring: execute_low_risk
+  memory_consolidation: execute_low_risk
+  external_pattern_intake: execute_low_risk
+  pending_task_follow_up: execute_low_risk
+  plan_generation: execute_low_risk
+  plan_reprioritization: execute_low_risk
+  privacy_sensitive_export: never_autonomous
+  research_refresh: execute_low_risk
+  rhythm_check_in: execute_low_risk
+  source_governance_audit: propose
+  self_reflection: execute_low_risk
+  system_level_change: never_autonomous
+  task_follow_up: execute_low_risk
+budget_governor:
+  compute:
+    max_background_cycles_per_day: 12
+    max_parallel_agents: 5
+    max_parallel_heavy_agents: 2
+    max_single_task_runtime_minutes: 25
+  cost_limits_usd:
+    daily_hard: 40
+    daily_soft: 15
+    per_run_hard: 5
+    per_run_soft: 2
+  degradation_strategy:
+    hard_limit_actions:
+    - stop_new_execution
+    - preserve_state
+    - request_operator_approval_for_resume
+    soft_limit_actions:
+    - switch_to_cheaper_model
+    - reduce_context_window
+    - disable_noncritical_subagents
+    - compress_memory_retrieval
+  enabled: true
+  model_tiers:
+    tier_1_fast_cheap:
+      use_for:
+      - classification
+      - extraction
+      - summarization
+      - first_pass_routing
+    tier_2_balanced:
+      use_for:
+      - planning
+      - synthesis
+      - implementation
+    tier_3_premium:
+      use_for:
+      - high_stakes_review
+      - final_audit
+      - difficult_debug
+      - strategic_reasoning
+  token_limits:
+    daily_hard: 5000000
+    daily_soft: 2500000
+    hourly_hard: 700000
+    hourly_soft: 350000
+    per_run_hard: 220000
+    per_run_soft: 120000
+capability_sandbox:
+  enabled: true
+  execution_barriers:
+    bulk_write_requires_approval: true
+    delete_operations_blocked: true
+    export_sensitive_requires_approval: true
+    outbound_network_requires_approval: true
+  tool_classes:
+    guarded_external:
+    - crm_write
+    - web_publish
+    - outbound_api_post
+    - file_export
+    - browser_observation
+    - browser_action
+    prohibited:
+    - credential_export
+    - unrestricted_shell
+    - financial_transaction
+    - destructive_delete
+    - outbound_message_send
+    - account_permission_change
+    safe_internal:
+    - retrieval
+    - note_writing
+    - summarization
+    - planning
+    - tagging
+    - internal_memory_update_non_sensitive
+default_action_class: execute_gated
+evidence_layer:
+  enabled: true
+  evidence_policy:
+    minimum_confidence_score: 0.72
+    minimum_source_count: 2
+    require_confidence_score: true
+    require_source_diversity: true
+    require_timestamp_check: true
+  freshness_requirements:
+    compliance_rules_days: 14
+    contact_data_days: 30
+    market_intel_days: 7
+    product_requirements_days: 30
+    technical_docs_days: 45
+    vendor_pricing_days: 7
+  required_before_action_types:
+  - content_publish
+  - external_contact
+  - lead_enrichment
+  - crm_update_sensitive
+  stale_data_behavior:
+    conflicting: operator_review_required
+    uncertain: downgrade_to_propose
+    verified_but_stale: revalidate_before_action
+  truth_states:
+  - verified
+  - plausible
+  - uncertain
+  - stale
+  - conflicting
+execution_graph:
+  default_flow:
+  - classify_request
+  - compute_risk
+  - inspect_budget
+  - retrieve_memory
+  - gather_evidence
+  - draft_plan
+  - critique_plan
+  - audit_plan
+  - determine_action_class
+  - if_gated_request_approval
+  - execute_if_allowed
+  - log_outcome
+  - consolidate_memory
+  fast_path_flow:
+    allowed_for:
+    - goal_review
+    - rhythm_check_in
+    - memory_consolidation
+    - simple_lookup
+    steps:
+    - classify_request
+    - retrieve_memory
+    - execute_low_risk
+    - log_outcome
+hard_constraints:
+- never send external messages autonomously
+- never make financial commitments autonomously
+- never export sensitive data autonomously
+- never change credentials, permissions, or security settings autonomously
+- never perform destructive changes autonomously
+- never treat unverified data as verified memory
+human_control:
+  approval_modes:
+    batch:
+      description: approve multiple queued actions together
+    delayed:
+      approval_window_minutes: 30
+      description: approve queued action later
+    inline:
+      description: approve a single action immediately
+  deny_behavior:
+    log_reason: true
+    preserve_context: true
+    propose_safe_alternative: true
+  enabled: true
+  required_approval_payload:
+  - action_id
+  - action_type
+  - concise_reason
+  - risk_score
+  - data_scope
+  - expected_effect
+  - rollback_plan
+  - budget_estimate
+  - evidence_status
+memory_architecture:
+  consolidation:
+    contradiction_detection: true
+    daily_summary_enabled: true
+    duplicate_merge: true
+  enabled: true
+  layers:
+    episodic_memory:
+      ttl_days: 30
+      use_for:
+      - prior_attempts
+      - execution_outcomes
+      - recurring_user_patterns
+    policy_memory:
+      immutable_priority: high
+      ttl_days: 365
+      use_for:
+      - approval_rules
+      - hard_constraints
+      - safety_boundaries
+    semantic_memory:
+      ttl_days: 180
+      use_for:
+      - stable_facts
+      - preferences
+      - project_structures
+      - reusable_playbooks
+    working_memory:
+      ttl_hours: 12
+      use_for:
+      - current_task_state
+      - active_constraints
+      - recent_operator_instructions
+  write_rules:
+    never_save:
+    - credentials
+    - secrets
+    - raw_personal_identifiers_unless_required_and_approved
+    - unverified_claims_as_facts
+    save_only_if:
+    - useful_for_future_execution
+    - non_transient
+    - not_sensitive_without_authorization
+meta:
+  deployment_targets:
+  - openclaw
+  - antigravity
+  - langgraph
+  - crewai
+  - custom_orchestrator
+  design_principles:
+  - human_authority_final
+  - autonomy_inside_clear_boundaries
+  - deterministic_before_creative
+  - evidence_before_external_action
+  - budget_aware_execution
+  - reversible_by_default
+  - observable_reasoning_surface
+  primary_modes:
+  - operator_assistant
+  - research_engine
+  - planning_engine
+  - execution_coordinator
+  product_intent: high-performance agentic operator with bounded autonomy
+observability:
+  audit_log:
+    store:
+    - timestamp
+    - action_id
+    - parent_task_id
+    - agent
+    - action_type
+    - action_class
+    - risk_score
+    - evidence_state
+    - approval_status
+    - model_tier
+    - token_usage
+    - cost_estimate
+    - outcome
+    - rollback_reference
+  enabled: true
+  explainability_surface:
+    operator_visible_fields:
+    - what_i_want_to_do
+    - why
+    - evidence
+    - risk
+    - cost
+    - expected_result
+    - rollback
+policy_name: zera-bounded-agency-v4
+policy_tier: production
+# Kill switches: configs/tooling/kill-switches.yaml
+# Feature flags: configs/feature_flags.yaml
+# Budget limits: configs/orchestrator/budgets.yaml
+quiet_hours:
+  behavior:
+    allow_only:
+    - observe
+    - memory_consolidation
+    - low_noise_planning
+    block_nonessential_followups: true
+    defer_actions:
+    - dormant_plan_resurfacing
+    - rhythm_check_in
+    - task_follow_up
+  enabled: true
+  end: 08:00
+  start: '23:00'
+  timezone: user_local
+rate_limits:
+  daily_caps:
+    dormant_plan_resurfacing: 1
+    follow_ups: 3
+    research_refresh: 2
+  per_project_caps:
+    autonomous_replans: 2
+    retry_loops: 3
+retry_policy:
+  enabled: true
+  max_attempts_same_strategy: 2
+  require_critic_review_after_second_failure: true
+  require_strategy_change_after_failure: true
+  stop_if:
+  - risk_score_increases
+  - confidence_drops_below_threshold
+  - budget_soft_limit_exceeded_twice
+risk_engine:
+  auto_escalation_rules:
+  - escalate_to: execute_gated
+    if_data_sensitivity_at_least: personal_data
+  - escalate_to: execute_gated
+    if_externality_at_least: public_visible
+  - escalate_to: propose
+    if_uncertainty_at_least: weak_evidence
+  - escalate_to: never_autonomous
+    if_reversibility_equals: irreversible
+  dimensions:
+    data_sensitivity:
+      confidential: 3
+      internal: 1
+      personal_data: 4
+      public: 0
+      regulated_sensitive: 5
+    externality:
+      internal_only: 1
+      none: 0
+      partner_visible: 2
+      public_visible: 4
+    financial_impact:
+      high: 5
+      low: 1
+      moderate: 3
+      none: 0
+    operational_blast_radius:
+      multi_workflow: 3
+      org_wide: 5
+      single_record: 0
+      single_workflow: 1
+    reputation_risk:
+      high: 4
+      low: 1
+      medium: 2
+      none: 0
+    reversibility:
+      difficult_to_reverse: 3
+      fully_reversible: 0
+      irreversible: 5
+      partially_reversible: 2
+    uncertainty:
+      incomplete: 2
+      likely: 1
+      verified: 0
+      weak_evidence: 4
+  enabled: true
+  resolution_policy:
+    high: never_autonomous
+    low: execute_low_risk
+    medium: execute_gated
+  scoring:
+    high_risk_min: 8
+    low_risk_max: 3
+    medium_risk_max: 7
+rollback:
+  enabled: true
+  mandatory_forbidden_without_rollback:
+  - bulk_update
+  - content_publish
+  - crm_update_sensitive
+  required_for_action_classes:
+  - execute_gated
+  - allowed_with_delayed_approval
+  rollback_levels:
+    hard:
+      description: halt workflows and require human intervention
+    medium:
+      description: restore prior record state
+    soft:
+      description: undo internal state or draft artifacts
+routing_matrix:
+  enabled: true
+  task_buckets:
+    execution_plan:
+      preferred_agent_chain:
+      - planner
+      - critic
+      - auditor
+      preferred_model_tier: tier_2_balanced
+    external_action_candidate:
+      preferred_agent_chain:
+      - researcher
+      - planner
+      - critic
+      - auditor
+      preferred_model_tier: tier_3_premium
+      requires_approval: true
+    high_stakes_review:
+      preferred_agent_chain:
+      - researcher
+      - planner
+      - critic
+      - auditor
+      preferred_model_tier: tier_3_premium
+    simple_lookup:
+      preferred_agent_chain:
+      - researcher
+      preferred_model_tier: tier_1_fast_cheap
+    synthesis_report:
+      preferred_agent_chain:
+      - researcher
+      - planner
+      - builder
+      - critic
+      preferred_model_tier: tier_2_balanced
+scenarios:
+- approval_class: execute_gated
+  class: operator_productivity
+  expected_guardrail: visible approval trail
+  id: telegram-operator-hub
+  preferred_agent_chain:
+  - planner
+  - builder
+  - auditor
+  risk_level: medium
+  source_tier: Tier B
+- approval_class: propose
+  class: autonomous_research
+  expected_guardrail: evidence refresh before action
+  id: research-to-action-pipeline
+  preferred_agent_chain:
+  - researcher
+  - planner
+  - critic
+  - auditor
+  risk_level: medium
+  source_tier: Tier B
+- approval_class: execute_gated
+  class: operator_productivity
+  expected_guardrail: privacy-sensitive gating
+  id: lead-enrichment
+  preferred_agent_chain:
+  - researcher
+  - planner
+  - auditor
+  risk_level: medium
+  source_tier: Tier B
+- approval_class: execute_low_risk
+  class: background_planning
+  expected_guardrail: quiet hours and daily caps
+  id: daily-planning-followup
+  preferred_agent_chain:
+  - planner
+  - memory_keeper
+  risk_level: low
+  source_tier: Tier B
+self_improvement:
+  allowed:
+  - prompt_refinement
+  - workflow_reordering
+  - routing_threshold_tuning
+  - checklist_improvement
+  - memory_schema_optimization
+  disallowed:
+  - changing_never_autonomous_rules
+  - loosening_approval_requirements
+  - enabling_new_external_tools_without_operator
+  - modifying_budget_hard_limits
+  - changing_data_retention_for_sensitive_items
+  enabled: true
+  improvement_loop:
+    deployment_policy:
+      auto_revert_if_failure_rate_increase_pct: 15
+      dry_run_first: true
+      shadow_mode_for_first_n_runs: 3
+    required_output:
+    - diagnosis
+    - proposed_change
+    - expected_benefit
+    - rollback_condition
+    - validation_metric
+    trigger_conditions:
+    - repeated_failure_count_ge: 2
+    - latency_above_target_count_ge: 3
+    - operator_feedback_negative
+    - budget_waste_detected
+  mode: bounded
+  vault_linking: execute_low_risk
+  vault_reorganize: execute_low_risk
+  vault_synthesis: execute_low_risk
+  vault_write: execute_low_risk
+success_metrics:
+  efficiency:
+  - cost_per_successful_task
+  - average_runtime
+  - token_efficiency_ratio
+  - premium_model_usage_share
+  learning:
+  - improvement_success_rate
+  - rollback_frequency
+  - repeated_failure_reduction
+  quality:
+  - task_success_rate
+  - operator_acceptance_rate
+  - evidence_completeness_score
+  - revision_rate_after_approval
+  safety:
+  - approval_violations_zero
+  - blocked_action_bypass_zero
+  - sensitive_export_zero
+swarm_architecture:
+  agents:
+    auditor:
+      allowed_actions:
+      - observe
+      - propose
+      role: policy, budget, evidence, and consistency checks
+    builder:
+      allowed_actions:
+      - execute_low_risk
+      role: produce drafts, assets, implementation artifacts
+    critic:
+      allowed_actions:
+      - observe
+      - propose
+      role: challenge assumptions, detect failure modes
+    memory_keeper:
+      allowed_actions:
+      - execute_low_risk
+      role: compress, deduplicate, and structure memory
+    planner:
+      allowed_actions:
+      - propose
+      - execute_low_risk
+      role: turn goals into executable plans
+    researcher:
+      allowed_actions:
+      - observe
+      - propose
+      - execute_low_risk
+      role: collect and revalidate evidence
+  collaboration_rules:
+    auditor_required_before_any_gated_action: true
+    critic_required_for_external_or_high_visibility_tasks: true
+    planner_must_precede_builder_for_complex_tasks: true
+    supervisor_only_can_request_approval: true
+  enabled: true
+  orchestration_mode: supervisor_with_specialists
+  supervisor:
+    responsibilities:
+    - classify_task
+    - assign_subagents
+    - enforce_policy
+    - merge_outputs
+    - request_approval_when_needed
+    role: router-governor
+version: '2026-04-09'
+zera_overrides:
+  browser_action: execute_gated
+  browser_observation: execute_gated
+  candidate_discussion_prep: execute_gated
+  candidate_scoring: execute_low_risk
+  config_analysis: execute_low_risk
+  destructive_change: never_autonomous
+  disable_safety: never_autonomous
+  evolution_report: execute_low_risk
+  evolution_rule_update: execute_low_risk
+  external_message_send: never_autonomous
+  goal_review: execute_low_risk
+  internet_research: execute_low_risk
+  internet_search: execute_gated
+  knowledge_extraction: execute_low_risk
+  memory_consolidation: execute_low_risk
+  memory_update_evolution: execute_low_risk
+  pattern_detection: execute_low_risk
+  production_config_change: execute_gated
+  production_skill_add: execute_gated
+  production_workflow_change: execute_gated
+  sandbox_integration: execute_low_risk
+  sandbox_testing: execute_low_risk
+  self_reflection: execute_low_risk
+  system_change: never_autonomous
+  vault_read: observe
+  vault_reorganize: execute_low_risk
+  vault_research_write: execute_low_risk
+  vault_synthesis: execute_low_risk
+  vault_write: execute_low_risk
+  web_search_patterns: execute_low_risk

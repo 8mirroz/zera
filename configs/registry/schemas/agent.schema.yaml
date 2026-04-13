@@ -1,0 +1,107 @@
+# Canonical Agent Schema — configs/registry/schemas/agent.schema.yaml
+# Version: 4.2
+# Source of truth for agent validation in configs/registry/agents/
+# Supersedes: configs/schemas/agent.schema.yaml (legacy, kept for compat)
+# Used by: registry linter, adapter generator, index builder
+
+$schema: "http://json-schema.org/draft-07/schema#"
+title: Canonical Agent Schema
+description: "Schema for Antigravity/Hermes unified agent registry (v4.2)"
+type: object
+
+required:
+  - id
+  - name
+  - version
+  - category
+  - description
+  - personas
+  - skills
+  - allowed_phases
+
+properties:
+  id:
+    type: string
+    pattern: "^[a-z0-9]+-[a-z0-9-]+$"
+    description: "Kebab-case ID (e.g. research-repo-scout)"
+
+  name:
+    type: string
+    description: "Display name (e.g. Repo Scout)"
+
+  version:
+    type: string
+    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    description: "Semantic version (e.g. 1.0.0)"
+
+  category:
+    type: string
+    enum: [core, domain, execution, review, research, design, data, ops, architecture, growth]
+    description: "Agent category — must match agents.index.yaml category"
+
+  description:
+    type: string
+    minLength: 10
+    description: "One-line description of agent purpose"
+
+  personas:
+    type: array
+    items:
+      type: string
+    minItems: 1
+    description: "Allowed behavioral modes (e.g., consultant, critic, architect)"
+
+  skills:
+    type: array
+    items:
+      type: string
+    description: "List of allowed atomic skill IDs (from registry/skills/)"
+
+  allowed_phases:
+    type: array
+    items:
+      type: string
+      enum: [discovery, planning, implementation, execution, evaluation, review, post-execution, finalization, delivery]
+    minItems: 1
+    description: "Execution phases this agent may operate in"
+
+  preferred_models:
+    type: array
+    items:
+      type: string
+    description: "Preferred model aliases from models.yaml (e.g. balanced_reasoner)"
+
+  tool_profile:
+    type: string
+    description: "Logical tool group (mapped in runtime adapters)"
+
+  risk_level:
+    type: string
+    enum: [low, medium, high, critical]
+    default: "low"
+    description: "Operational risk level — affects approval gates"
+
+  output_contract:
+    type: array
+    items:
+      type: string
+    description: "Expected output artifact types (e.g. architecture_docs, test_report)"
+
+  complexity_scope:
+    type: array
+    items:
+      type: string
+      enum: [C1, C2, C3, C4, C5]
+    description: "Complexity tiers this agent is authorized to handle"
+
+  runtime_hint:
+    type: string
+    enum: [agent_os_python, hermes, claw_code, mlx_lm]
+    description: "Preferred runtime for this agent"
+
+  adapter_required:
+    type: boolean
+    default: false
+    description: "Whether this agent requires an entry in adapters/*/agent-map.yaml"
+
+additionalProperties: false

@@ -1,0 +1,18 @@
+id: pdf-to-estimate
+name: PDF Spec to Engineering Estimate
+version: 1.0.0
+entry_agent: research-source-analyst
+stages:
+  - id: extract-requirements
+    agent: research-source-analyst
+    outputs: [parsed_requirements_md]
+  - id: breakdown-components
+    agent: architecture-systems-architect
+    outputs: [wbs_document]
+  - id: effort-estimation
+    agent: execution-builder
+    outputs: [time_estimation_sheet]
+completion_criteria:
+  - "All text and tables successfully extracted from PDF"
+  - "Requirements broken down into clear engineering tasks"
+  - "Bottom-up time estimates attached to all tasks"

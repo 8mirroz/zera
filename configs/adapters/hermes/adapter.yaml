@@ -1,0 +1,77 @@
+# Hermes Runtime Adapter
+# Version: 4.2
+# Runtime wrapper for Hermes AI agent runtime.
+# Canonical agent definitions: configs/registry/agents/
+# Command semantics SoT: configs/tooling/zera_command_registry.yaml
+# RULE: All paths MUST use ${HOME} — never hardcoded absolute paths.
+
+runtime_id: hermes
+runtime_name: "ZeRa AI"
+version: "4.2"
+
+command_registry_ref: "configs/tooling/zera_command_registry.yaml"
+client_profile_ref: "configs/tooling/zera_client_profiles.yaml"
+branching_policy_ref: "configs/tooling/zera_branching_policy.yaml"
+growth_governance_ref: "configs/tooling/zera_growth_governance.json"
+
+capabilities:
+  terminal: false
+  filesystem: limited
+  repo_editing: limited
+  long_context: high
+  plugin_system: true
+  structured_workflows: true
+
+strengths:
+  - planning
+  - synthesis
+  - routing
+  - long-context-analysis
+  - knowledge-orchestration
+
+weaknesses:
+  - heavy-repo-surgery
+
+default_persona: zera
+default_model_alias: "$MODEL_HERMES_DEFAULT"
+default_command_profile: "zera:plan"
+
+transport:
+  mode: "provider_routed_chat_runtime"
+  profile_config_path: "${HOME}/.hermes/profiles/zera/config.yaml"
+  semantics_source: repo
+  degrade_to_command: "zera:plan"
+
+command_resolution:
+  source_of_truth: "configs/tooling/zera_command_registry.yaml"
+  fallback_router: "configs/tooling/zera_mode_router.json"
+  fallback_router_status: "deprecated — use zera_command_registry.yaml"
+  allowed_auto_selection:
+    - zera:plan
+    - zera:research
+    - zera:critic
+    - zera:retro
+  disallowed_auto_selection:
+    - zera:branch
+    - zera:evolve-capability
+    - zera:evolve-personality
+    - zera:governance-check
+    - zera:foundry-ingest
+  degrade_paths:
+    unsupported_command: "zera:plan"
+    unsupported_transport: "repo_native_contract"
+    unsupported_tool_surface: "propose_and_request_review"
+
+supported_artifacts:
+  - markdown
+  - yaml
+  - json
+  - reports
+
+execution_modes:
+  - planner
+  - reviewer
+  - orchestrator
+  - brancher
+  - researcher
+  - governor

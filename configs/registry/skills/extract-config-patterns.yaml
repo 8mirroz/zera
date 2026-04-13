@@ -1,0 +1,7 @@
+id: extract-config-patterns
+name: Extract Config Patterns
+version: 1.0.0
+type: analysis
+inputs: [source_code]
+outputs: [config_snippet]
+constraints: [keep_original_comments]

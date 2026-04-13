@@ -1,0 +1,141 @@
+{
+  "version": "2026-04-09",
+  "_status": "DEPRECATED — superseded by configs/tooling/zera_command_registry.yaml. Do not add new commands here. Kept for fallback_router compatibility in adapters/hermes/adapter.yaml only.",
+  "default_mode": "plan",
+  "default_command": "zera:plan",
+  "command_precedence": [
+    "explicit_command",
+    "intent_rule",
+    "keyword_rule",
+    "default_command"
+  ],
+  "ambient_auto_suggestion": {
+    "enabled": true,
+    "require_visible_explanation": true,
+    "require_telemetry": true
+  },
+  "mode_fallback_commands": {
+    "love": "zera:calibrate",
+    "plan": "zera:plan",
+    "analysis": "zera:critic",
+    "critique": "zera:critic",
+    "strategize": "zera:strategist",
+    "hard_truth": "zera:critic",
+    "style": "zera:architect",
+    "research": "zera:research"
+  },
+  "intent_rules": [
+    {
+      "command": "zera:branch",
+      "keywords": [
+        "branch",
+        "alternatives",
+        "counterfactual",
+        "red team"
+      ]
+    },
+    {
+      "command": "zera:governance-check",
+      "keywords": [
+        "governance",
+        "policy audit",
+        "approval boundaries",
+        "safety audit"
+      ]
+    },
+    {
+      "command": "zera:foundry-ingest",
+      "keywords": [
+        "foundry",
+        "ingest",
+        "reuse pattern",
+        "skill candidate"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "mode": "love",
+      "keywords": [
+        "support me",
+        "i feel",
+        "overwhelmed",
+        "lonely",
+        "need care",
+        "warmth"
+      ]
+    },
+    {
+      "mode": "hard_truth",
+      "keywords": [
+        "be honest",
+        "hard truth",
+        "tell me directly",
+        "stop me if wrong"
+      ]
+    },
+    {
+      "mode": "analysis",
+      "keywords": [
+        "analyze",
+        "why",
+        "root cause",
+        "tradeoff",
+        "reasoning"
+      ]
+    },
+    {
+      "mode": "style",
+      "keywords": [
+        "style",
+        "look",
+        "design",
+        "aesthetic",
+        "luxury",
+        "wardrobe"
+      ]
+    },
+    {
+      "mode": "research",
+      "keywords": [
+        "research",
+        "compare",
+        "sources",
+        "evidence",
+        "benchmark"
+      ]
+    },
+    {
+      "mode": "plan",
+      "keywords": [
+        "plan",
+        "roadmap",
+        "priorities",
+        "schedule",
+        "next steps"
+      ]
+    },
+    {
+      "mode": "critique",
+      "keywords": [
+        "review",
+        "critique",
+        "find flaws",
+        "what's wrong",
+        "improve this",
+        "audit"
+      ]
+    },
+    {
+      "mode": "strategize",
+      "keywords": [
+        "strategy",
+        "long-term",
+        "approach",
+        "positioning",
+        "competitive",
+        "playbook"
+      ]
+    }
+  ]
+}

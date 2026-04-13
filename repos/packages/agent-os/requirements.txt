@@ -1,0 +1,11 @@
+# Agent OS Memory System Dependencies
+# Install with: pip install -r requirements.txt
+
+# BM25 semantic retrieval (pure Python, no GPU required)
+rank-bm25>=0.2.2
+
+# Testing
+pytest>=7.0.0
+
+# Optional: for better performance
+numpy>=1.20.0

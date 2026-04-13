@@ -1,0 +1,82 @@
+# Memory Write Policy — Obsidian Vault
+# Управляет тем, когда и как агент записывает выводы в vault
+
+version: "1.0"
+
+vault_path: "${VAULT_PATH}"
+
+write_triggers:
+  session_completed:
+    condition: "complexity >= C3 AND status == completed"
+    target: "memory/sessions/"
+    format: "markdown_frontmatter"
+    dedup_check: true
+
+  pattern_detected:
+    condition: "confidence >= 0.8 AND source == build_library"
+    target: "memory/patterns/"
+    format: "markdown_frontmatter"
+    dedup_check: true
+
+  decision_made:
+    condition: "task_type in [T4, T5] AND complexity >= C3"
+    target: "memory/decisions/"
+    format: "markdown_frontmatter"
+    dedup_check: true
+
+naming_convention: "{YYYY-MM-DD}-{task_type}-{slug}.md"
+
+frontmatter_schema:
+  required: [task_id, task_type, complexity, tags, created_at]
+  optional: [model_used, related_notes, project, confidence]
+
+wikilink_policy:
+  enabled: true
+  auto_link_to: ["memory/decisions/", "knowledge/adr/", "knowledge/ki/"]
+  min_similarity: 0.7
+
+dedup_strategy:
+  pre_write_search: true
+  search_backend: "obsidian-semantic"
+  similarity_threshold: 0.85
+  on_duplicate: "skip"  # skip | merge | append
+
+cold_storage_sync:
+  enabled: true
+  source: ".agent/memory/memory.jsonl"
+  on_prune: "export_to_vault"
+  export_target: "memory/archive/"
+  export_format: "markdown_frontmatter"
+
+# Расширенные триггеры для саморазвития
+self_analysis_update:
+  condition: 'task_type == T4 AND model_used == google-llm'
+  target: 'memory/growth_records/'
+  format: 'markdown_frontmatter'
+
+# Zera growth writes must remain reviewable and reversible
+zera_growth_records:
+  candidate_observation:
+    target: "research/candidates/"
+    require_classification: true
+    require_source: true
+    require_reversibility: true
+    require_rollback_path: true
+
+  promotion_record:
+    target: "memory/zera/evolution-memory.md"
+    require_eval_pass: true
+    require_decision_log: true
+    require_telemetry: true
+
+  personality_delta_record:
+    target: "memory/zera/personality-deltas/"
+    require_eval_pass: true
+    require_review_for_significant_delta: true
+    max_significant_deltas_per_cycle: 1
+
+  intelligence_promotion:
+    default_target: "research/discussions/"
+    memory_target: "memory/zera/agent-intelligence.md"
+    require_curated_summary: true
+    default_mode: "discussion_first"

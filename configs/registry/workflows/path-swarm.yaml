@@ -1,0 +1,28 @@
+id: swarm-path-to-completion
+name: Swarm Path (C4-C5)
+version: 1.1.0
+entry_agent: core-orchestrator
+handoff_skill: dynamic-handoff
+iteration_skill: ralph-loop-execute
+knowledge_policy:
+  pre_search: true
+  writeback: true
+  source: wiki_core
+  capture_stage_briefs: true
+  min_complexity: C4
+stages:
+  - id: plan
+    agent: architecture-systems-architect
+    outputs: [implementation_plan]
+  - id: sprint
+    agent: execution-builder
+    outputs: [component_code]
+  - id: integrate
+    agent: execution-integrator
+    outputs: [integrated_system]
+  - id: audit
+    agent: review-security-audit
+    outputs: [audit_report]
+completion_criteria:
+  - "System passes security audit"
+  - "All components are integrated"

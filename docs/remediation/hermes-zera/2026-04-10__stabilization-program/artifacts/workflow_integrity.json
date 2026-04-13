@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "validator_name": "workflow_model_alias_validator",
+  "command": "python3 repos/packages/agent-os/scripts/workflow_model_alias_validator.py --json",
+  "exit_code": 1,
+  "integrity_ok": false,
+  "severity": "error",
+  "summary": {
+    "workflow_files_scanned": 8,
+    "workflow_files_missing": 18,
+    "skill_files_scanned": 80,
+    "defined_model_aliases": 47,
+    "unknown_alias_refs": 0,
+    "hardcoded_model_refs": 0
+  },
+  "missing_workflow_paths": [
+    ".agent/workflows/repo-memory-refresh.md",
+    ".agent/workflows/build-memory-capture.md",
+    ".agent/workflows/drift-validator.md",
+    ".agent/workflows/self-learning-retro.md",
+    ".agent/workflows/triage.md",
+    ".agent/workflows/task-blueprint-selection.md",
+    ".agent/workflows/project-bootstrap-guided.md",
+    ".agent/workflows/polyglot-autoevo-routing.md",
+    ".agent/workflows/swarm-review.md",
+    ".agent/workflows/error-healing.md",
+    ".agent/workflows/swarm-plan.md",
+    ".agent/workflows/multi-agent-routing-v3-free-first.md",
+    ".agent/workflows/axel.md",
+    ".agent/workflows/ralph-loop.md",
+    ".agent/workflows/multi-agent-routing.md",
+    ".agent/workflows/kilo-mode-routing.md",
+    ".agent/workflows/ai-bot-kb.md",
+    ".agent/workflows/infa.md"
+  ],
+  "findings": [
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/repo-memory-refresh.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/build-memory-capture.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/drift-validator.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/self-learning-retro.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/triage.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/task-blueprint-selection.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/project-bootstrap-guided.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/polyglot-autoevo-routing.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/swarm-review.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/error-healing.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/swarm-plan.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/multi-agent-routing-v3-free-first.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/axel.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/ralph-loop.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/multi-agent-routing.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/kilo-mode-routing.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/ai-bot-kb.md"
+    },
+    {
+      "severity": "error",
+      "code": "MISSING_WORKFLOW_FILE",
+      "kind": "workflow",
+      "path": ".agent/workflows/infa.md"
+    }
+  ],
+  "migration_actions": [
+    "Replace provider/model strings in active workflows/skills with $AGENT_MODEL_* aliases",
+    "Add missing aliases to configs/orchestrator/models.yaml or update stale alias references in workflows/skills"
+  ],
+  "related_checks": {
+    "check_workflow_integrity_py": {
+      "command": "python3 scripts/validation/check_workflow_integrity.py",
+      "exit_code": 0,
+      "status": "pass"
+    }
+  }
+}

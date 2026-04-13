@@ -1,0 +1,14 @@
+{
+  "command": "promote-policy-check",
+  "attempt_id": "attempt-20260411_212944-4e24a57e",
+  "ok": true,
+  "gates": [
+    {
+      "gate": "rollback_snapshot",
+      "ok": true,
+      "returncode": 0,
+      "note": "snapshot exists"
+    }
+  ],
+  "timestamp": "2026-04-11T21:29:45.030673+00:00"
+}

@@ -1,0 +1,34 @@
+command_registry_ref: configs/tooling/zera_command_registry.yaml
+client_profile_ref: configs/tooling/zera_client_profiles.yaml
+degrade_defaults:
+  unsupported_command: zera:plan
+  unsupported_transport: repo_native_contract
+  unsupported_tool_surface: propose_and_request_review
+  review_route: zera:governance-check
+
+research-repo-scout:
+  runtime_name: repo_scout
+  enabled: true
+  wrapper: templates/research-repo-scout.md
+  tool_profile: web_research
+  context_budget: large
+  execution_mode: planner
+  command_id: zera:research
+  fallback_command_id: zera:plan
+
+execution-builder:
+  runtime_name: builder
+  enabled: false
+  reason: runtime_not_ideal_for_code_surgery
+  command_id: zera:architect
+  fallback_command_id: zera:plan
+
+review-critic:
+  runtime_name: critic
+  enabled: true
+  wrapper: templates/review-critic.md
+  tool_profile: analysis_only
+  context_budget: large
+  execution_mode: reviewer
+  command_id: zera:critic
+  fallback_command_id: zera:plan

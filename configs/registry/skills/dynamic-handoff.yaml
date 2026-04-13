@@ -1,0 +1,11 @@
+id: dynamic-handoff
+name: Dynamic Handoff
+version: 1.1.0
+type: orchestration
+inputs: [task_context, from_agent, to_agent, visited_agents, evidence_refs]
+outputs: [handoff_contract, event_log, decision_note]
+constraints: [max_depth_2, block_cycles]
+contract_fields: [objective, evidence, open_risks, next_owner, completion_target]
+knowledge_capture:
+  writeback: true
+  target: wiki/_logs

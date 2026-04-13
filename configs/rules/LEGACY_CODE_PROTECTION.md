@@ -1,0 +1,1 @@
+/Users/user/antigravity-core/configs/rules/LEGACY_CODE_PROTECTION.md

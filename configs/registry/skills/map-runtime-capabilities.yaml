@@ -1,0 +1,7 @@
+id: map-runtime-capabilities
+name: Map Runtime Capabilities
+version: 1.0.0
+type: analysis
+inputs: [agent_id, runtime_target]
+outputs: [capability_map]
+constraints: [enforce_schema]

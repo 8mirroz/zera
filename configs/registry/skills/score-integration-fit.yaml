@@ -1,0 +1,7 @@
+id: score-integration-fit
+name: Score Integration Fit
+version: 1.0.0
+type: validation
+inputs: [comparison_matrix, architecture_rules]
+outputs: [fit_scores]
+constraints: [explain_low_scores]

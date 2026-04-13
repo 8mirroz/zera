@@ -1,0 +1,94 @@
+# Model Registry — Antigravity Core
+# Version: 4.2
+# Source of truth for all model aliases.
+# All role_contracts and routing configs MUST reference aliases defined here.
+# Never hardcode model strings outside this file.
+# Hermes profile defaults: synced with ~/.hermes/profiles/*/config.yaml
+
+version: "4.2"
+
+models:
+  # ==========================================
+  # TIERED MODEL SYSTEM (Agent OS v4.2)
+  # ==========================================
+
+  # === ARCHITECT (Complex Reasoning / C4-C5) ===
+  MODEL_ARCHITECT_PRIMARY: "deepseek/deepseek-r1:free"
+  MODEL_ARCHITECT_STABILITY: "anthropic/claude-3.5-opus"
+  MODEL_ARCHITECT_POWER: "openai/gpt-4o"
+
+  # === ENGINEER (Coding / C2-C3) ===
+  MODEL_ENGINEER_PRIMARY: "deepseek/deepseek-v3:free"
+  MODEL_ENGINEER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
+  MODEL_ENGINEER_POWER: "openrouter/qwen/qwen2.5-coder-72b-instruct"
+
+  # === REVIEWER (Security / Quality Audit) ===
+  MODEL_REVIEWER_PRIMARY: "mistralai/mistral-small-24b-instruct-2501"
+  MODEL_REVIEWER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
+  MODEL_REVIEWER_POWER: "openrouter/qwen/qwen2.5-coder-32b-instruct"
+
+  # === ROUTINE/FAST (Trivial / UI / C1) ===
+  MODEL_FAST_PRIMARY: "google/gemini-2.0-flash-001"
+  MODEL_FAST_STABILITY: "$MODEL_ENGINEER_PRIMARY"
+  MODEL_FAST_POWER: "openrouter/qwen/qwen2.5-72b-instruct"
+
+  # === LOCAL MODELS (Ollama / Mac mini M1) ===
+  MODEL_LOCAL_CODING: "ollama/qwen2.5-coder:7b"
+  MODEL_LOCAL_MULTIPURPOSE: "ollama/qwen3.5:9b-q4_K_M"
+  MODEL_LOCAL_VISION: "ollama/minicpm-v:latest"
+  MODEL_LOCAL_COMPACT: "ollama/gemma4:e2b"
+  MODEL_LOCAL_MEDIUM: "ollama/gemma4:e4b"
+  MODEL_LOCAL_ROBUST: "ollama/llama3.1:8b"
+  MODEL_LOCAL_FAST_QWEN: "ollama/qwen3.5:4b-q4_K_M"
+  MODEL_LOCAL_BONSAI: "ollama/bonsai"
+
+  # === LOCAL MLX MODELS (Direct Metal / TurboQuant) ===
+  MODEL_LOCAL_MLX_FAST: "mlx:mlx-community/Llama-3.2-3B-Instruct-4bit"
+  MODEL_LOCAL_MLX_MEDIUM: "mlx:mlx-community/quantized-gemma-2b-it"
+  MODEL_LOCAL_MLX_LARGE: "mlx:mlx-community/gemma-4-26b-a4b-it-4bit"
+  MODEL_EXTERNAL_GEMMA_4_31B: "google/gemma-4-31b-it"
+  MODEL_ZERA_BRAIN_EZAI: "ezai/anthropic/claude-3-5-sonnet"
+
+  # === HERMES RUNTIME DEFAULTS ===
+  # Free strong models for Hermes agent profile (zera)
+  # Synced with ${HOME}/.hermes/profiles/*/config.yaml model.default
+  MODEL_HERMES_DEFAULT: "openrouter/qwen/qwen3.6-plus-preview:free"
+  MODEL_HERMES_FALLBACK_1: "openrouter/qwen/qwen3.6-plus:free"
+  MODEL_HERMES_FALLBACK_2: "openrouter/google/gemma-3-27b-it:free"
+  MODEL_HERMES_COMPRESSION: "openrouter/qwen/qwen3.6-plus-preview:free"
+  # Premium override (requires OpenRouter credits):
+  # MODEL_HERMES_PREMIUM: "qwen/qwen3-235b-a22b"
+
+  # ==========================================
+  # LEGACY ALIASES (Compatibility Layer)
+  # Used by role_contracts and older workflows.
+  # Do not remove without updating all consumers.
+  # ==========================================
+  AGENT_MODEL_BUILDER_A: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_BUILDER_B: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_REVIEWER: "$MODEL_REVIEWER_PRIMARY"
+  AGENT_MODEL_REVIEWER_STABILITY: "$MODEL_REVIEWER_STABILITY"
+  AGENT_MODEL_ORCHESTRATOR: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_COUNCIL: "$MODEL_ARCHITECT_PRIMARY"
+  AGENT_MODEL_ARCHITECT_STABILITY: "$MODEL_ARCHITECT_STABILITY"
+  AGENT_MODEL_DESIGN: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_RESEARCH: "$MODEL_ARCHITECT_PRIMARY"
+  AGENT_MODEL_FAST: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_FAST_ALT: "$MODEL_FAST_STABILITY"
+  AGENT_MODEL_QUALITY: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_QUALITY_ALT: "$MODEL_ENGINEER_STABILITY"
+  AGENT_MODEL_REASONING: "$MODEL_ARCHITECT_PRIMARY"
+  AGENT_MODEL_REVIEW: "$MODEL_REVIEWER_PRIMARY"
+
+  # === Fallback Chain (Global Defaults) ===
+  AGENT_MODEL_FALLBACK_1: "$MODEL_ENGINEER_STABILITY"
+  AGENT_MODEL_FALLBACK_2: "$MODEL_ENGINEER_POWER"
+  AGENT_MODEL_FALLBACK_3: "$MODEL_FAST_PRIMARY"
+
+hermes_profiles:
+  # Profiles use MODEL_HERMES_DEFAULT (free) as primary.
+  # To revert to premium: hermes config set model.default "qwen/qwen3-235b-a22b"
+  zera:
+    default: "$MODEL_HERMES_DEFAULT"
+    fallback: "$MODEL_HERMES_FALLBACK_1"
+  premium_override: "qwen/qwen3-235b-a22b"  # Requires OpenRouter credits

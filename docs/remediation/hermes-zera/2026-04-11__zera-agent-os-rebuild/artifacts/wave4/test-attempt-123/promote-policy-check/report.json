@@ -1,0 +1,66 @@
+{
+  "command": "promote-policy-check",
+  "attempt_id": "test-attempt-123",
+  "ok": false,
+  "gates": [
+    {
+      "gate": "swarmctl_doctor",
+      "ok": false,
+      "returncode": 2,
+      "stdout_tail": "",
+      "stderr_tail": "r.yaml (ok after full migration)\nFAIL: Trace validator: error (invalid trace rows; see `repos/packages/agent-os/scripts/trace_validator.py --json --allow-legacy`)\nREMEDIATION: Run `python3 repos/packages/agent-os/scripts/trace_validator.py --json --allow-legacy` to inspect invalid/mixed trace rows.\n"
+    },
+    {
+      "gate": "check_zera_hardening",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "governor_budget_breach\",\n      \"zera_runtime_telemetry_drift\",\n      \"zera_source_import_foundry_drift\"\n    ]\n  },\n  \"scripts\": {\n    \"scripts_checked\": [\n      \"scripts/zera-self-evolution.sh\",\n      \"scripts/zera-evolve.sh\",\n      \"scripts/zera-agent-intelligence.sh\"\n    ]\n  },\n  \"status\": \"ok\"\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "gate": "trace_validator",
+      "ok": false,
+      "returncode": 1,
+      "stdout_tail": "\n    {\n      \"line\": 21427,\n      \"error\": \"event runtime_provider_completed: missing required field runtime_provider\",\n      \"format\": \"v2\"\n    },\n    {\n      \"line\": 21436,\n      \"error\": \"event runtime_provider_completed: missing required field runtime_provider\",\n      \"format\": \"v2\"\n    }\n  ]\n}\n",
+      "stderr_tail": ""
+    },
+    {
+      "gate": "test_mcp_profiles",
+      "ok": true,
+      "returncode": 0,
+      "stdout_tail": "ervers\n      • swarm: 8 servers\n      • pipeline: 3 servers\n      • data-scraping: 3 servers\n      • config: 2 servers\n      • fix: 5 servers\n      • implement: 5 servers\n      • architect: 6 servers\n      • telegram: 4 servers\n   Routing rules: 16\n   Default profile: research\n   Allowlist paths: 4\n",
+      "stderr_tail": ""
+    },
+    {
+      "gate": "shadow_smoke",
+      "ok": false,
+      "returncode": 1,
+      "note": "no passing smoke report found",
+      "report_path": null
+    },
+    {
+      "gate": "rollback_snapshot",
+      "ok": false,
+      "returncode": 1,
+      "note": "no snapshot found — run promote-rollback or create one"
+    },
+    {
+      "gate": "gateway_check",
+      "ok": false,
+      "returncode": 1,
+      "report": {
+        "mode": "disabled_allowed",
+        "running": true,
+        "not_running": true,
+        "adapters_ready": false,
+        "disabled_intent_required": true,
+        "required_adapters": [],
+        "raw_output_tail": "✗ Gateway is not running\n\nRecent gateway health:\n  ⚠ Last startup issue: all configured messaging platforms failed to connect\n\nTo start:\n  hermes gateway          # Run in foreground\n  hermes gateway install  # Install as user service\n  sudo hermes gateway install --system  # Install as boot-time system service\n",
+        "attempt_id": "test-attempt-123",
+        "decision": "blocked",
+        "reason": "gateway not running but no explicit disabled intent"
+      }
+    }
+  ],
+  "timestamp": "2026-04-11T23:17:32.054272+00:00"
+}

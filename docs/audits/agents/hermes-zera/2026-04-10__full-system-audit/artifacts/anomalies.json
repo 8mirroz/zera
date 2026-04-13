@@ -1,0 +1,108 @@
+{
+  "audit_id": "2026-04-10__full-system-audit",
+  "generated_at": "2026-04-10T13:46:04Z",
+  "anomalies": [
+    {
+      "id": "A-001",
+      "severity": "high",
+      "domain": "runtime",
+      "title": "Declared MLX provider is unreachable via RuntimeRegistry",
+      "evidence": [
+        "configs/tooling/runtime_providers.json",
+        "repos/packages/agent-os/src/agent_os/runtime_registry.py"
+      ]
+    },
+    {
+      "id": "A-002",
+      "severity": "critical",
+      "domain": "workflow_catalog",
+      "title": "Workflow sets index points to missing .agent/workflows markdown files",
+      "evidence": [
+        ".agent/config/workflow_sets.active.json",
+        "configs/tooling/workflow_sets_catalog.json",
+        ".agent/workflows/"
+      ]
+    },
+    {
+      "id": "A-003",
+      "severity": "high",
+      "domain": "skills",
+      "title": "Zera active skills are defined but not published into .agent/skills",
+      "evidence": [
+        "configs/skills/ZERA_ACTIVE_SKILLS.md",
+        ".agent/skills/.active_set_manifest.json"
+      ]
+    },
+    {
+      "id": "A-004",
+      "severity": "critical",
+      "domain": "benchmark",
+      "title": "Benchmark gate passes despite missing canonical cases and inflated coverage",
+      "evidence": [
+        "docs/ki/benchmark_latest.json",
+        "docs/ki/benchmark_latest.md",
+        "configs/tooling/analyze_benchmark.py"
+      ]
+    },
+    {
+      "id": "A-005",
+      "severity": "high",
+      "domain": "diagnostics",
+      "title": "scripts/test_mcp_profiles.py prints success with 7/8 routing checks",
+      "evidence": [
+        "scripts/test_mcp_profiles.py",
+        "stdout: expected=data-scraping, got=knowledge"
+      ]
+    },
+    {
+      "id": "A-006",
+      "severity": "high",
+      "domain": "verification",
+      "title": "Default provider records verification_result=not-run as normal completion",
+      "evidence": [
+        "repos/packages/agent-os/src/agent_os/runtime_providers/agent_os_python.py",
+        "logs/agent_traces.jsonl event_type=verification_result"
+      ]
+    },
+    {
+      "id": "A-007",
+      "severity": "medium",
+      "domain": "operator_profile",
+      "title": "Hermes profile cwd is '.' rather than explicit repo path",
+      "evidence": [
+        "~/.hermes/profiles/antigravity/config.yaml"
+      ]
+    },
+    {
+      "id": "A-008",
+      "severity": "medium",
+      "domain": "scheduler",
+      "title": "Zera cron directory contains malformed jobs.json surfaced as unknown job",
+      "evidence": [
+        "~/.hermes/profiles/zera/cron/jobs.json",
+        "scripts/zera-autonomous-launcher.sh --dry-run"
+      ]
+    },
+    {
+      "id": "A-009",
+      "severity": "medium",
+      "domain": "observability",
+      "title": "Trace storage is split between main logs and nested repos/packages/agent-os/src/logs",
+      "evidence": [
+        "logs/agent_traces.jsonl",
+        "repos/packages/agent-os/src/logs/agent_traces.jsonl"
+      ]
+    },
+    {
+      "id": "A-010",
+      "severity": "medium",
+      "domain": "memory",
+      "title": "Memory policy is layered on paper but write path remains mostly raw JSONL plus L1 prompt injection",
+      "evidence": [
+        "configs/global/memory_policy.yaml",
+        "repos/packages/agent-os/src/agent_os/memory_store.py",
+        "repos/packages/agent-os/src/agent_os/profile_manager.py"
+      ]
+    }
+  ]
+}

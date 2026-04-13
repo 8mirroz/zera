@@ -1,0 +1,14 @@
+[Unit]
+Description=ZeroClaw Zera Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/Users/user/zera
+EnvironmentFile=/Users/user/zera/scripts/ops/ops/zeroclaw/.env
+ExecStart=/usr/bin/env python3 /Users/user/zera/repos/apps/zera-telegram/bot/main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

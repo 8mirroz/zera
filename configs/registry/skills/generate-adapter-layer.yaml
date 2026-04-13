@@ -1,0 +1,7 @@
+id: generate-adapter-layer
+name: Generate Adapter Layer
+version: 1.0.0
+type: generation
+inputs: [capability_map]
+outputs: [adapter_code]
+constraints: [must_be_executable]

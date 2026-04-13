@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Zera Promotion Artifact Schema",
+  "description": "Schema for all Wave 4+ promotion artifacts",
+  "type": "object",
+  "required": ["schema_version", "command", "attempt_id", "ok", "timestamp"],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version for this artifact"
+    },
+    "command": {
+      "type": "string",
+      "enum": [
+        "shadow-smoke",
+        "promote-policy-check",
+        "promote-enable",
+        "promote-disable",
+        "promote-rollback",
+        "promote-rehearsal",
+        "gateway-check"
+      ],
+      "description": "Which command produced this artifact"
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique promotion attempt ID (format: attempt-YYYYMMDD_HHMMSS-XXXXXXXX)"
+    },
+    "ok": {
+      "type": "boolean",
+      "description": "Whether the command succeeded overall"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when artifact was created"
+    },
+    "artifact_path": {
+      "type": "string",
+      "description": "Filesystem path to this artifact"
+    },
+    "runtime_profile": {
+      "type": "string",
+      "description": "Hermes profile name this artifact relates to"
+    },
+    "evidence_refs": {
+      "type": "object",
+      "description": "References to supporting evidence artifacts",
+      "additionalProperties": true
+    },
+    "gates": {
+      "type": "array",
+      "description": "Gate check results (for promote-policy-check)",
+      "items": {
+        "type": "object",
+        "required": ["gate", "ok"],
+        "properties": {
+          "gate": {"type": "string"},
+          "ok": {"type": "boolean"},
+          "returncode": {"type": "integer"}
+        }
+      }
+    },
+    "snapshot_id": {
+      "type": "string",
+      "description": "Snapshot ID referenced by this artifact"
+    },
+    "ttl_minutes": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "TTL window in minutes (for promote-enable/rehearsal)"
+    },
+    "results": {
+      "type": "object",
+      "description": "Detailed results map (for promote-rehearsal)",
+      "additionalProperties": true
+    },
+    "hermes_version_before": {
+      "type": "string",
+      "description": "Hermes version before promotion attempt"
+    }
+  },
+  "additionalProperties": true
+}

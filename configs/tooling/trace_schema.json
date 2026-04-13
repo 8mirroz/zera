@@ -1,0 +1,758 @@
+{
+  "version": "2026-04-10",
+  "schema_id": "agent_os_trace_event_v2.1",
+  "format": "jsonl",
+  "status": "canonical",
+  "description": "Unified Trace Event v2 schema for Agent OS runtime, memory, retro, eval, and ML telemetry",
+  "required_common_fields": [
+    "ts",
+    "run_id",
+    "event_type",
+    "level",
+    "component",
+    "data"
+  ],
+  "field_types": {
+    "ts": "string (ISO-8601 UTC)",
+    "run_id": "string (uuid or stable correlation id)",
+    "event_type": "string",
+    "level": "debug|info|warn|error",
+    "component": "triage|router|agent|tool|verifier|ralph|retro|policy|memory|eval|harness|ml",
+    "task_type": "T1|T2|T3|T4|T5|T6|T7",
+    "complexity": "C1|C2|C3|C4|C5",
+    "model_tier": "free|light|quality|reasoning",
+    "model": "string",
+    "tool_name": "string",
+    "status": "ok|error|pass|fail|success|failure|escalated|completed|selected|executed|completed_unverified|warn|degraded|not-run|unknown|skipped|not_found|timeout|failed",
+    "duration_ms": "int",
+    "message": "string",
+    "runtime_provider": "string",
+    "runtime_profile": "string",
+    "persona_id": "string",
+    "mode": "string",
+    "background_job_type": "string",
+    "approval_policy": "string",
+    "autonomy_mode": "string",
+    "approval_ticket_id": "string",
+    "risk_class": "string",
+    "data": "object"
+  },
+  "event_types": {
+    "triage_decision": {
+      "required": [
+        "task_type",
+        "complexity",
+        "model_tier"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "route_decision": {
+      "required": [
+        "task_type",
+        "complexity",
+        "model_tier",
+        "model"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "bootstrap_plan_generated": {
+      "required": [
+        "task_type",
+        "complexity"
+      ],
+      "optional": [
+        "message",
+        "status"
+      ]
+    },
+    "agent_run_started": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "runtime_provider_selected": {
+      "required": [
+        "status",
+        "runtime_provider"
+      ],
+      "optional": [
+        "runtime_profile",
+        "persona_id",
+        "approval_policy",
+        "autonomy_mode",
+        "message",
+        "data"
+      ]
+    },
+    "runtime_provider_fallback": {
+      "required": [
+        "status",
+        "runtime_provider"
+      ],
+      "optional": [
+        "runtime_profile",
+        "persona_id",
+        "message",
+        "data"
+      ]
+    },
+    "agent_run_completed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "background_job_started": {
+      "required": [
+        "status",
+        "background_job_type"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "background_job_completed": {
+      "required": [
+        "status",
+        "background_job_type"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "background_job_dead_lettered": {
+      "required": [
+        "status",
+        "background_job_type"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "autonomy_decision": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "approval_policy",
+        "autonomy_mode",
+        "message",
+        "data"
+      ]
+    },
+    "approval_gate_triggered": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "approval_policy",
+        "message",
+        "data"
+      ]
+    },
+    "self_reflection_written": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "self_reflection_invalid": {
+      "required": [
+        "status",
+        "message"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "data"
+      ]
+    },
+    "persona_eval_scored": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "memory_retrieval_scored": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "goal_stack_updated": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "stop_signal_received": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "stop_signal_honored": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "proof_of_action_recorded": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "approval_ticket_id",
+        "message",
+        "data"
+      ]
+    },
+    "budget_limit_hit": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "loop_guard_triggered": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "persona_id",
+        "mode",
+        "risk_class",
+        "message",
+        "data"
+      ]
+    },
+    "tool_call": {
+      "required": [
+        "tool_name",
+        "status"
+      ],
+      "optional": [
+        "duration_ms",
+        "message"
+      ]
+    },
+    "verification_result": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "duration_ms",
+        "message",
+        "data.verification_status",
+        "data.reason",
+        "data.hallucination"
+      ]
+    },
+    "ralph_iteration_started": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "model",
+        "message"
+      ]
+    },
+    "ralph_iteration_scored": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "model",
+        "message"
+      ]
+    },
+    "ralph_stop_decision": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "ralph_best_selected": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "model",
+        "message"
+      ]
+    },
+    "retro_written": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "message"
+      ]
+    },
+    "build_memory_candidate_created": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "message"
+      ]
+    },
+    "build_memory_promoted": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message"
+      ]
+    },
+    "eval_run_completed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "model",
+        "message"
+      ]
+    },
+    "ml_train_run_completed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "model",
+        "message"
+      ]
+    },
+    "task_run_summary": {
+      "required": [
+        "task_type",
+        "complexity",
+        "status"
+      ],
+      "optional": [
+        "model",
+        "message",
+        "data.latency_breakdown_ms",
+        "data.token_usage",
+        "data.cost_estimate_usd",
+        "data.hallucination"
+      ]
+    },
+    "policy_violation_detected": {
+      "required": [
+        "status",
+        "message"
+      ],
+      "optional": []
+    },
+    "model_ab_test_decision": {
+      "required": [
+        "status",
+        "model"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "handoff_executed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "model",
+        "message",
+        "data"
+      ]
+    },
+    "sandbox_execution_result": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "duration_ms",
+        "message",
+        "data"
+      ]
+    },
+    "auto_evo_promotion": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "revenue_gate_check": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "benchmark_run_completed": {
+      "required": [
+        "status",
+        "model"
+      ],
+      "optional": [
+        "message",
+        "data",
+        "data.case_id",
+        "data.duration_seconds",
+        "data.cost_usd",
+        "data.token_total"
+      ]
+    },
+    "harness_validation_started": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "message",
+        "data"
+      ]
+    },
+    "harness_validation_completed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "duration_ms",
+        "message",
+        "data"
+      ]
+    },
+    "harness_evidence_collected": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "message",
+        "data",
+        "data.evidence_type",
+        "data.path"
+      ]
+    },
+    "doc_gardening_issue_found": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data",
+        "data.path",
+        "data.issue_type"
+      ]
+    },
+    "zera_command_resolved": {
+      "required": [
+        "status",
+        "command_id",
+        "client_id"
+      ],
+      "optional": [
+        "loop",
+        "candidate_class",
+        "workflow_type",
+        "decision",
+        "rollback_path",
+        "approval_route",
+        "risk_level",
+        "target_layer",
+        "governance_impact",
+        "data"
+      ]
+    },
+    "runtime_provider_completed": {
+      "required": [
+        "status",
+        "runtime_provider"
+      ],
+      "optional": [
+        "runtime_profile",
+        "output_status",
+        "message",
+        "data"
+      ]
+    },
+    "runtime_recovery_attempted": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "runtime_provider",
+        "recovery_state",
+        "failure_type",
+        "degraded_mode",
+        "next_action",
+        "data"
+      ]
+    },
+    "runtime_degraded_mode_entered": {
+      "required": [
+        "status",
+        "runtime_provider"
+      ],
+      "optional": [
+        "failure_type",
+        "attempted",
+        "recovered",
+        "next_action",
+        "recovery_state",
+        "recovery_trace",
+        "data"
+      ]
+    },
+    "skill_selection_metadata": {
+      "required": [
+        "status",
+        "skill_name"
+      ],
+      "optional": [
+        "mode",
+        "message",
+        "data"
+      ]
+    },
+    "eggent_design_route_decision": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "task_type",
+        "complexity",
+        "message",
+        "data"
+      ]
+    },
+    "eggent_auto_flow": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "auto_update_cycle_completed": {
+      "required": [
+        "status"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "catalog_update_result": {
+      "required": [
+        "status",
+        "catalog_update_status"
+      ],
+      "optional": [
+        "message",
+        "data.error"
+      ]
+    },
+    "profile_context_injected": {
+      "required": [
+        "status",
+        "profile_context_size_bytes"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "context_budget_warn": {
+      "required": [
+        "status",
+        "profile_context_size_bytes",
+        "threshold_bytes"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "context_budget_exceeded": {
+      "required": [
+        "status",
+        "original_size_bytes",
+        "truncated_size_bytes",
+        "hard_threshold_bytes"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "runtime_workflow_missing": {
+      "required": [
+        "status",
+        "task_type",
+        "complexity"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "memory_write_blocked": {
+      "required": [
+        "status",
+        "key",
+        "scope"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "memory_write_completed": {
+      "required": [
+        "status",
+        "key",
+        "scope"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "persona_docs_loaded": {
+      "required": [
+        "status",
+        "docs_loaded",
+        "total_docs",
+        "context_size_bytes"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "memory_retrieval_via_policy": {
+      "required": [
+        "status",
+        "items_retrieved",
+        "query",
+        "scopes"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    },
+    "provider_state_transition": {
+      "required": [
+        "status",
+        "runtime_provider",
+        "provider_state_from",
+        "provider_state_to",
+        "reason"
+      ],
+      "optional": [
+        "message",
+        "data"
+      ]
+    }
+  },
+  "legacy_compat": {
+    "accepted_for_migration": true,
+    "legacy_envelope_patterns": [
+      "{schema_version, entry:{...}}",
+      "{ts:number, event_type, payload}"
+    ],
+    "migration_target": "Trace Event v2"
+  }
+}

@@ -1,0 +1,20 @@
+version: "1.0"
+assembly_order:
+  - "identity.md"
+  - "constitution.md"
+  - "safety.md"
+  - "relationship_boundaries.md"
+  - "tone.md"
+mode_injection:
+  enabled: true
+  source_file: "modes.yaml"
+  strategy: "append-selected-mode-constraints"
+runtime_overrides:
+  allow_profile_overrides: true
+  permitted_fields:
+    - "channel"
+    - "memory_policy"
+  forbidden_fields:
+    - "constitution"
+    - "safety"
+    - "relationship_boundaries"

@@ -1,0 +1,60 @@
+# Import Governance Policy — Antigravity Core v4.2
+# Rules for importing upstream agent packs into the canonical registry.
+
+---
+version: "1.0.0"
+
+phases:
+  quarantine:
+    description: "All imported agents start in quarantined status"
+    rules:
+      - new_imports_must_be_placed_in: "agents/imported/{source_name}/"
+      - status_must_be: quarantined
+      - must_create: "import_status.yaml manifest"
+      - must_run_collision_check: true
+
+  review:
+    description: "Manual review of quarantined agents"
+    rules:
+      - reviewer_must_check:
+          - collision_with_canonical_agents
+          - schema_compliance
+          - mission_clarity
+          - runtime_capability_fit
+      - approved_agents_get_status: active
+      - rejected_agents_get_status: rejected
+      - must_update_index: true
+
+  activation:
+    description: "Activating reviewed agents"
+    rules:
+      - must_have_adapter_mappings: true
+      - must_be_in_index: true
+      - must_have_clear_mission: true
+      - must_not_overlap_canonical_agents: true
+
+collision_resolution:
+  if_overlap_detected:
+    - keep_canonical_version
+    - OR rename imported with prefix (e.g., wshobson-code-reviewer)
+    - OR merge if complementary
+  if_duplicate_import:
+    - reject_second_import
+    - log_in_attempt
+
+import_requirements:
+  - import_status_yaml
+  - collision_report
+  - source_attribution
+  - agent_count
+  - review_status
+
+deprecation:
+  imported_agents_can_be_deprecated_by:
+    - source_withdraws_pack
+    - collision_unresolvable
+    - schema_incompatible
+  deprecated_agents_must:
+    - keep_files_but_mark_status_deprecated
+    - remove_from_active_index
+    - document_replacement

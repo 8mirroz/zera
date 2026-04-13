@@ -1,0 +1,334 @@
+# Auto-generated agent index — 2026-04-08
+# Source: configs/registry/agents/
+# Do not edit manually. Run registry linter to regenerate.
+
+agents:
+  # === core ===
+  - id: core-orchestrator
+    path: agents/core/core-orchestrator.md
+    status: active
+    category: core
+
+  - id: core-memory-steward
+    path: agents/core/core-memory-steward.md
+    status: active
+    category: core
+
+  - id: core-task-router
+    path: agents/core/core-task-router.md
+    status: active
+    category: core
+
+  # === execution ===
+  - id: execution-builder
+    path: agents/execution/execution-builder.md
+    status: active
+    category: execution
+
+  - id: execution-integrator
+    path: agents/execution/execution-integrator.md
+    status: active
+    category: execution
+
+  # === review ===
+  - id: review-critic
+    path: agents/review/review-critic.md
+    status: active
+    category: review
+
+  - id: review-qa-auditor
+    path: agents/review/review-qa-auditor.md
+    status: active
+    category: review
+
+  - id: review-security-audit
+    path: agents/review/review-security-audit.md
+    status: active
+    category: review
+
+  # === research ===
+  - id: research-repo-scout
+    path: agents/research/research-repo-scout.md
+    status: active
+    category: research
+
+  - id: research-competitor-scanner
+    path: agents/research/research-competitor-scanner.md
+    status: active
+    category: research
+
+  - id: research-source-analyst
+    path: agents/research/research-source-analyst.md
+    status: active
+    category: research
+
+  # === architecture ===
+  - id: architecture-system-designer
+    path: agents/architecture/architecture-system-designer.md
+    status: active
+    category: architecture
+
+  - id: architecture-config-designer
+    path: agents/architecture/architecture-config-designer.md
+    status: active
+    category: architecture
+
+  - id: architecture-systems-architect
+    path: agents/architecture/architecture-systems-architect.md
+    status: active
+    category: architecture
+
+  # === imported/wshobson (QUARANTINED — see import_status.yaml) ===
+  - id: wshobson-ruby-pro
+    path: agents/imported/wshobson/ruby-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-php-pro
+    path: agents/imported/wshobson/php-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-ui-designer
+    path: agents/imported/wshobson/ui-designer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-design-system-architect
+    path: agents/imported/wshobson/design-system-architect.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-accessibility-expert
+    path: agents/imported/wshobson/accessibility-expert.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-tdd-orchestrator
+    path: agents/imported/wshobson/tdd-orchestrator.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-code-reviewer
+    path: agents/imported/wshobson/code-reviewer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-rust-pro
+    path: agents/imported/wshobson/rust-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-golang-pro
+    path: agents/imported/wshobson/golang-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-cpp-pro
+    path: agents/imported/wshobson/cpp-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-c-pro
+    path: agents/imported/wshobson/c-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-startup-analyst
+    path: agents/imported/wshobson/startup-analyst.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-posix-shell-pro
+    path: agents/imported/wshobson/posix-shell-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-bash-pro
+    path: agents/imported/wshobson/bash-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-python-pro
+    path: agents/imported/wshobson/python-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-typescript-pro
+    path: agents/imported/wshobson/typescript-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-javascript-pro
+    path: agents/imported/wshobson/javascript-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-cloud-architect
+    path: agents/imported/wshobson/cloud-architect.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-kubernetes-architect
+    path: agents/imported/wshobson/kubernetes-architect.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-terraform-specialist
+    path: agents/imported/wshobson/terraform-specialist.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-devops-troubleshooter
+    path: agents/imported/wshobson/devops-troubleshooter.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-security-auditor
+    path: agents/imported/wshobson/security-auditor.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-incident-responder
+    path: agents/imported/wshobson/incident-responder.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-architect-review
+    path: agents/imported/wshobson/architect-review.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-mobile-developer
+    path: agents/imported/wshobson/mobile-developer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-ios-developer
+    path: agents/imported/wshobson/ios-developer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-flutter-expert
+    path: agents/imported/wshobson/flutter-expert.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-unity-developer
+    path: agents/imported/wshobson/unity-developer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-prompt-engineer
+    path: agents/imported/wshobson/prompt-engineer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-ai-engineer
+    path: agents/imported/wshobson/ai-engineer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-ml-engineer
+    path: agents/imported/wshobson/ml-engineer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-data-scientist
+    path: agents/imported/wshobson/data-scientist.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-data-engineer
+    path: agents/imported/wshobson/data-engineer.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-quant-analyst
+    path: agents/imported/wshobson/quant-analyst.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-java-pro
+    path: agents/imported/wshobson/java-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-csharp-pro
+    path: agents/imported/wshobson/csharp-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-dotnet-architect
+    path: agents/imported/wshobson/dotnet-architect.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-fastapi-pro
+    path: agents/imported/wshobson/fastapi-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  - id: wshobson-django-pro
+    path: agents/imported/wshobson/django-pro.md
+    status: quarantined
+    category: imported
+    import_source: wshobson
+
+  # ... remaining wshobson agents (117 total, all quarantined)
+  # Full listing available in: agents/imported/wshobson/
+
+summary:
+  total_agents: 131
+  active: 14
+  quarantined: 117
+  categories:
+    core: 3
+    execution: 2
+    review: 3
+    research: 3
+    architecture: 3
+    imported: 117
+    design: 0
+    data: 0
+    growth: 0
+    ops: 0
+    domain: 0

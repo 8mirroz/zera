@@ -1,0 +1,7 @@
+id: analyze-repository
+name: Analyze Repository
+version: 1.0.0
+type: analysis
+inputs: [repo_url, instructions]
+outputs: [repo_structure, dependency_graph]
+constraints: [must_use_local_clone]

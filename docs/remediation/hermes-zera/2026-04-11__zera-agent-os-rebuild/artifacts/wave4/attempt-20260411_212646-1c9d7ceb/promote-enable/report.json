@@ -1,0 +1,12 @@
+{
+  "command": "promote-enable",
+  "attempt_id": "attempt-20260411_212646-1c9d7ceb",
+  "scope": "full",
+  "ttl_minutes": 30,
+  "enabled_at": "2026-04-11T21:26:46.937448+00:00",
+  "expires_at": "2026-04-11T21:56:46.937342+00:00",
+  "snapshot_id": "snapshot-20260412_002646-pre-promote",
+  "hermes_version_before": "Hermes Agent v0.8.0 (2026.4.8)\nProject: /Users/user/.local/share/hermes-agent\nPython: 3.11.15\nOpenAI SDK: 2.31.0\nUpdate available: 103 commits behind — run 'hermes update'",
+  "policy_report": "/Users/user/antigravity-core/docs/remediation/hermes-zera/2026-04-11__zera-agent-os-rebuild/artifacts/wave4/attempt-20260411_212646-1c9d7ceb/promote-policy-check/report.json",
+  "timestamp": "2026-04-11T21:26:46.937570+00:00"
+}

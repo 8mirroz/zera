@@ -1,0 +1,11 @@
+id: model-prober
+name: Model Prober (Runtime Overlay)
+version: 1.0.0
+type: system
+status: deprecated
+deprecated_reason: "exec_path references sandbox/tooling/model_prober.py which was deleted from the repository"
+deprecated_date: "2026-04-08"
+description: Measures latency and health of LLM providers and updates the runtime configuration overlay.
+exec_path: null
+outputs: [.agent/runtime/model_ovl.yaml]
+replacement: "Use model_providers.json health checks and router fallback chains instead"

@@ -1,0 +1,31 @@
+# Wrapper: review-critic for Hermes AI runtime
+# Wraps the canonical agent with runtime-specific tool bindings
+
+---
+agent_id: review-critic
+runtime: hermes
+wrapper_version: "1.0.0"
+
+tool_bindings:
+  document_read: enabled
+  document_generation: enabled
+  analysis: enabled
+  filesystem_write: disabled
+  terminal: disabled
+  web_research: disabled
+
+execution_constraints:
+  allow_network: false
+  allow_file_write: false
+  allow_terminal: false
+  mode: reviewer
+
+context_handling:
+  budget: large
+  mode: reviewer
+  stage_breaks: [read-requirements, read-artifacts, analyze, report]
+
+output_handling:
+  format: markdown
+  destination: outputs/review/
+  include_metadata: true

@@ -1,0 +1,26 @@
+{
+  "frontend-design": {
+    "success": 8,
+    "failed": 0,
+    "task_affinity": {
+      "T6": 1.8000000000000007
+    }
+  },
+  "systematic-debugging": {
+    "success": 0,
+    "failed": 4,
+    "task_affinity": {
+      "T2": 0.20000000000000007
+    }
+  },
+  "technical-writing": {
+    "success": 0,
+    "failed": 0,
+    "task_affinity": {}
+  },
+  "write-a-prd": {
+    "success": 0,
+    "failed": 0,
+    "task_affinity": {}
+  }
+}

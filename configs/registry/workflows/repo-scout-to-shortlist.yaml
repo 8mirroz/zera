@@ -1,0 +1,18 @@
+id: repo-scout-to-shortlist
+name: Repository Scout to Shortlist
+version: 1.0.0
+entry_agent: research-repo-scout
+stages:
+  - id: analyze-repo
+    agent: research-source-analyst
+    outputs: [repo_metrics, code_quality_score]
+  - id: compare-competitors
+    agent: research-competitor-scanner
+    outputs: [comparison_matrix]
+  - id: compile
+    agent: review-qa-auditor
+    outputs: [final_shortlist]
+completion_criteria:
+  - "Repositories have been cloned and analyzed"
+  - "Comparison matrix highlights pros and cons"
+  - "Final shortlist contains top recommendations"

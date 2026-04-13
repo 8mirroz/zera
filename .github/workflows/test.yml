@@ -1,0 +1,233 @@
+name: Reliability Platform
+
+on:
+  push:
+    branches: [main, develop, "feat/**"]
+  pull_request:
+    branches: [main, develop]
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contract:
+    name: Contract Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run contract suite
+        run: make test-contract
+
+  governance:
+    name: Governance Gate
+    needs: contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run governance suite
+        run: make test-governance
+
+  smoke:
+    name: Smoke Gate
+    needs: contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run smoke suite
+        run: make test-smoke
+
+  unit:
+    name: Unit Gate
+    needs: [contract, governance, smoke]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run unit suite
+        run: make test-unit
+
+  doctor:
+    name: Doctor Sweep
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run doctor suite
+        run: make doctor
+
+      - name: Reliability report
+        if: always()
+        run: make reliability-report
+
+  nightly-integration:
+    name: Nightly Integration and Regression
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: [contract, governance, smoke, unit]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: repos/mcp/servers/package-lock.json
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run integration suite
+        run: make test-integration
+
+      - name: Run regression suite
+        run: make test-regression
+
+      - name: Reliability report
+        if: always()
+        run: make reliability-report
+
+  benchmark:
+    name: Benchmark Gate
+    if: github.event_name == 'schedule' || github.ref == 'refs/heads/main'
+    needs: [contract, governance, smoke, unit]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/uv
+            repos/packages/agent-os/.venv
+          key: uv-${{ runner.os }}-${{ hashFiles('repos/packages/agent-os/uv.lock') }}
+          restore-keys: uv-${{ runner.os }}-
+
+      - name: Install uv environment
+        run: |
+          pip install uv --quiet
+          cd repos/packages/agent-os && uv sync --quiet
+
+      - name: Run benchmark suite
+        run: make test-benchmark
+
+      - name: Reliability report
+        if: always()
+        run: make reliability-report

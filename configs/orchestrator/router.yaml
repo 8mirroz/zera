@@ -1,0 +1,231 @@
+# Antigravity Core Router Configuration
+# Version: 4.2 — Unified Registry Edition
+# Source of truth for: task routing, tier definitions, model selection, workflow assignment
+# Completion gates: configs/orchestrator/completion_gates.yaml
+# Model aliases: configs/orchestrator/models.yaml
+# Role contracts: configs/orchestrator/role_contracts/
+# Registry: configs/registry/
+# DO NOT duplicate routing logic in routing.yaml or BUILD_PROFILE.md — this file wins.
+
+version: "4.2"
+
+routing:
+  tiers:
+    C1:
+      name: "Trivial"
+      description: "1 file, <50 lines, no deps, no logic change"
+      workflow: "configs/registry/workflows/path-fast.yaml"
+      primary_model: "$MODEL_LOCAL_COMPACT"
+      fallback_chain: ["$MODEL_FAST_PRIMARY", "$MODEL_LOCAL_MULTIPURPOSE"]
+      max_tools: 8
+      runtime: "agent_os_python"
+
+    C2:
+      name: "Simple"
+      description: "1-3 files, single module, local logic only"
+      workflow: "configs/registry/workflows/path-fast.yaml"
+      primary_model: "$MODEL_LOCAL_MULTIPURPOSE"
+      fallback_chain: ["$MODEL_FAST_PRIMARY", "$MODEL_LOCAL_COMPACT"]
+      max_tools: 12
+      runtime: "agent_os_python"
+
+    C3:
+      name: "Medium"
+      description: "3-10 files, tests required, integration touchpoints"
+      workflow: "configs/registry/workflows/path-quality.yaml"
+      primary_model: "$MODEL_ENGINEER_PRIMARY"
+      fallback_chain: ["$MODEL_ENGINEER_STABILITY", "$MODEL_ENGINEER_POWER"]
+      max_tools: 20
+      runtime: "agent_os_python"
+      ralph_loop:
+        enabled: true
+        iterations: 3
+
+    C4:
+      name: "Complex"
+      description: "Cross-domain, architecture + data + UI, API changes"
+      workflow: "configs/registry/workflows/path-swarm.yaml"
+      primary_model: "$MODEL_ARCHITECT_PRIMARY"
+      fallback_chain: ["$MODEL_ARCHITECT_STABILITY", "$MODEL_ARCHITECT_POWER"]
+      max_tools: 35
+      runtime: "agent_os_python"
+      ralph_loop:
+        enabled: true
+        iterations: 5
+      human_audit_required: true
+
+    C5:
+      name: "Critical"
+      description: "Security, production infra, payments, high uncertainty"
+      workflow: "configs/registry/workflows/path-swarm.yaml"
+      primary_model: "$MODEL_ARCHITECT_PRIMARY"
+      fallback_chain: ["$MODEL_ARCHITECT_STABILITY", "$MODEL_ARCHITECT_POWER"]
+      max_tools: 50
+      runtime: "agent_os_python"
+      human_audit_required: true
+      council_required: true
+
+  ralph_loop:
+    global_enabled: true
+    min_complexity: "C3"
+    scoring_threshold: 0.85
+    max_iterations_cap: 7
+
+  handoff_safeguards:
+    max_chain_depth: 2
+    forbid_cycles: true
+    require_contract: true
+    contract_schema: "configs/registry/schemas/task.schema.yaml"
+
+  roles:
+    contracts_path: "configs/orchestrator/role_contracts/"
+    enforce_contracts: true
+    conflict_detection:
+      enabled: true
+      auto_resolve: true
+      escalation_on_repeat: true
+
+memory:
+  working_memory:
+    max_entries: 50
+    ttl_hours: 24
+    path: ".agent/memory/working_memory.json"
+  retrieval:
+    engine: "hybrid"
+    semantic_backend: "lightrag"
+    index_path: ".agent/memory/indexes/"
+    min_confidence: 0.3
+    fallback_to_general: true
+  unified_fabric:
+    enabled: true
+    bridge_package: "@antigravity/memory-bridge"
+    systems:
+      - design-memory
+      - lightrag
+      - bm25
+      - obsidian
+    sync_policy:
+      design_to_lightrag: "on_decision_record"
+      design_to_bm25: "on_decision_record"
+      design_to_obsidian: "daily"
+
+adaptation:
+  enabled: true
+  retro_capture: true
+  pattern_cache_path: ".agent/memory/patterns/"
+  self_learning_loop:
+    enabled: true
+    target_dir: "docs/ki/"
+    min_complexity: "C3"
+
+# Motion-Aware Task Routing
+# Activates GSAP/Framer Motion/CSS capability based on task keywords
+motion_awareness:
+  enabled: true
+  capability_spec: "configs/capabilities/gsap_motion.yaml"
+  skills_path: ".agent/skills/"
+  
+  # GSAP Activation Keywords
+  # When ANY of these appear in task description → activate GSAP capability
+  gsap_triggers:
+    - "premium motion"
+    - "cinematic animation"
+    - "luxury UI"
+    - "scroll storytelling"
+    - "scroll-driven"
+    - "scroll choreography"
+    - "stagger reveal"
+    - "staggered animation"
+    - "ordered reveal"
+    - "pinned section"
+    - "pin and scrub"
+    - "sticky scroll"
+    - "hero sequence"
+    - "hero animation"
+    - "opening animation"
+    - "magnetic button"
+    - "cursor follow"
+    - "physics easing"
+    - "text split"
+    - "character animation"
+    - "word reveal"
+    - "parallax"
+    - "depth effect"
+    - "layered scroll"
+    - "timeline choreography"
+  
+  # Framer Motion Activation Keywords
+  framer_triggers:
+    - "page transition"
+    - "modal animation"
+    - "state-driven animation"
+    - "micro-interaction"
+    - "gesture"
+    - "drag and drop"
+    - "list reordering"
+    - "layout animation"
+    - "simple reveal"
+    - "toggle animation"
+  
+  # CSS-Only Keywords (prefer CSS over JS animation libraries)
+  css_triggers:
+    - "hover state"
+    - "focus ring"
+    - "loading spinner"
+    - "simple fade"
+    - "transition"
+    - "pulse effect"
+    - "basic animation"
+    - "enterprise minimal"
+  
+  # Deactivation Conditions
+  # GSAP is NOT activated even if keywords match when:
+  deactivation_conditions:
+    - task_tier: "C1"
+      reason: "Trivial tasks don't require complex animation systems"
+    - target_type: "enterprise dashboard"
+      reason: "Minimal motion preference for admin interfaces"
+    - performance_budget_exceeded: true
+      reason: "Page already at animation capacity"
+    - accessibility_risk: true
+      reason: "Motion flagged as risky for target audience"
+  
+  # Routing Rules
+  routing_rules:
+    # Priority 1: GSAP triggers (highest complexity)
+    - if: "any(gsap_triggers in task_description)"
+      then:
+        activate_capability: "motion_engine:gsap"
+        required_skills:
+          - "gsap-animation.md"
+          - "gsap-performance-guardrails.md"
+        optional_skills:
+          - "gsap-scrolltrigger.md"
+          - "gsap-vs-framer-motion.md"
+        workflow: ".agent/workflows/gsap-implementation.md"
+        validation: ".agent/workflows/gsap-production-validation.md"
+        min_tier: "C2"
+        quality_gate: "motion_system"
+    
+    # Priority 2: Framer Motion triggers
+    - if: "any(framer_triggers in task_description) and not any(gsap_triggers in task_description)"
+      then:
+        activate_capability: "motion_engine:framer"
+        required_skills:
+          - "framer-motion-patterns.md"
+        workflow: ".agent/workflows/framer-implementation.md"
+        quality_gate: "motion_system"
+    
+    # Priority 3: CSS triggers (default, lowest complexity)
+    - if: "any(css_triggers in task_description) and not any(gsap_triggers or framer_triggers in task_description)"
+      then:
+        activate_capability: "motion_engine:css"
+        required_skills: []
+        workflow: null
+        quality_gate: "standard"
+    
+    # Default: No motion capability activated
+    - if: "default"
+      then:
+        activate_capability: null
+        motion_system: false

@@ -1,0 +1,273 @@
+{
+  "status": "ok",
+  "generated_at": "2026-04-08T01:35:12.028537+00:00",
+  "trace_file": "/Users/user/antigravity-core/logs/agent_traces.jsonl",
+  "allow_legacy": false,
+  "normalization": {
+    "lines_total": 18698,
+    "v2_rows": 18698,
+    "legacy_rows": 0,
+    "invalid_rows": 0,
+    "events_emitted_after_normalization": 18698,
+    "normalization_errors_count": 0
+  },
+  "event_counts": {
+    "agent_run_completed": 2575,
+    "agent_run_started": 2587,
+    "approval_gate_triggered": 25,
+    "autonomy_decision": 138,
+    "background_job_completed": 225,
+    "background_job_started": 225,
+    "benchmark_run_completed": 2413,
+    "eggent_auto_flow": 60,
+    "eggent_design_route_decision": 133,
+    "eggent_escalation_decision": 37,
+    "eggent_route_decision": 15,
+    "eval_run_completed": 21,
+    "goal_stack_updated": 113,
+    "memory_retrieval_scored": 9,
+    "persona_eval_scored": 60,
+    "policy_violation_detected": 2,
+    "proof_of_action_recorded": 12,
+    "ralph_iteration_scored": 4,
+    "retro_written": 7,
+    "route_decision": 2421,
+    "runtime_provider_fallback": 15,
+    "runtime_provider_selected": 2562,
+    "runtime_recovery_attempted": 3,
+    "self_reflection_written": 32,
+    "skill_selection_metadata": 3,
+    "stop_signal_honored": 11,
+    "stop_signal_received": 11,
+    "task_run_summary": 2419,
+    "tool_call": 9,
+    "verification_result": 2551
+  },
+  "kpis": {
+    "pass_rate": {
+      "value": 0.9659,
+      "numerator": 2464,
+      "denominator": 2551,
+      "source": "verification_result"
+    },
+    "tool_success_rate": {
+      "value": 0.6667,
+      "numerator": 6,
+      "denominator": 9,
+      "source": "tool_call"
+    },
+    "capture_coverage": {
+      "value": 0.0066,
+      "numerator": 6,
+      "denominator": 909,
+      "source": "retro_written + triage_decision/task_run_summary (C3+)"
+    },
+    "escalation_rate": {
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 2419,
+      "source": "task_run_summary"
+    },
+    "policy_compliance_rate": {
+      "value": 0.9993,
+      "numerator": 2757,
+      "denominator": 2759,
+      "source": "policy_violation_detected"
+    },
+    "ralph_best_of_n_uplift": {
+      "value": null,
+      "runs_with_multistep_ralph": 0,
+      "runs_with_any_ralph_signal": 4,
+      "source": "ralph_iteration_scored"
+    },
+    "flake_rate": {
+      "value": null,
+      "source": "verification_result",
+      "note": "Requires explicit nondeterministic/flake signal in verification_result.data"
+    },
+    "runtime_provider_fallback_success": {
+      "value": 1.0,
+      "numerator": 15,
+      "denominator": 15,
+      "source": "runtime_provider_fallback"
+    },
+    "background_job_success_rate": {
+      "value": 1.0,
+      "numerator": 225,
+      "denominator": 225,
+      "source": "background_job_started/background_job_completed"
+    },
+    "persona_eval_pass_rate": {
+      "value": 1.0,
+      "numerator": 60,
+      "denominator": 60,
+      "source": "persona_eval_scored"
+    },
+    "memory_retrieval_hit_rate": {
+      "value": 1.0,
+      "numerator": 9,
+      "denominator": 9,
+      "source": "memory_retrieval_scored"
+    },
+    "autonomy_gate_rate": {
+      "value": 0.1812,
+      "numerator": 25,
+      "denominator": 138,
+      "source": "autonomy_decision/approval_gate_triggered"
+    },
+    "stop_signal_compliance": {
+      "value": 1.0,
+      "numerator": 11,
+      "denominator": 11,
+      "source": "stop_signal_received/stop_signal_honored"
+    },
+    "proof_of_action_coverage": {
+      "value": 0.0533,
+      "numerator": 12,
+      "denominator": 225,
+      "source": "proof_of_action_recorded/background_job_completed"
+    },
+    "budget_limit_hit_rate": {
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 138,
+      "source": "budget_limit_hit/autonomy_decision"
+    },
+    "self_reflection_valid_rate": {
+      "value": 0.9412,
+      "numerator": 32,
+      "denominator": 34,
+      "source": "self_reflection_written/policy_violation_detected(reflection_validation)"
+    },
+    "self_reflection_rejection_rate": {
+      "value": 0.0588,
+      "numerator": 2,
+      "denominator": 34,
+      "source": "policy_violation_detected(reflection_validation)"
+    },
+    "self_reflection_schema_coverage": {
+      "value": 0.0,
+      "numerator": 0,
+      "denominator": 32,
+      "source": "self_reflection_written.data(schema_name,schema_version)"
+    }
+  },
+  "run_counters": {
+    "runs_seen": 2759,
+    "runs_with_retro": 7,
+    "runs_eligible_capture_c3plus": 909,
+    "task_summary_total": 2419,
+    "task_summary_success": 2419,
+    "task_summary_fail": 0,
+    "task_summary_escalated": 0,
+    "fallback_total": 15,
+    "background_started": 225,
+    "background_completed": 225,
+    "persona_eval_total": 60,
+    "memory_retrieval_total": 9,
+    "autonomy_decision_total": 138,
+    "stop_signal_received_total": 11,
+    "stop_signal_honored_total": 11,
+    "proof_of_action_total": 12,
+    "self_reflection_written_total": 32,
+    "self_reflection_rejected_total": 2
+  },
+  "errors": [],
+  "dimensions": {
+    "task_type": {
+      "T1": 407,
+      "T2": 603,
+      "T3": 619,
+      "T4": 812,
+      "T5": 2,
+      "T6": 195,
+      "T7": 2417,
+      "escalation": 37
+    },
+    "complexity": {
+      "C1": 514,
+      "C2": 2618,
+      "C3": 1065,
+      "C4": 806,
+      "C5": 52
+    },
+    "model_tier": {
+      "free": 5,
+      "specialist": 1807,
+      "worker": 3020
+    },
+    "model": {
+      "benchmark-orchestrator": 21,
+      "deepseek-v3-free": 3,
+      "deepseek/deepseek-r1:free": 1,
+      "deepseek/deepseek-v3:free": 10,
+      "google/gemini-2.0-flash-exp:free": 19,
+      "openrouter/qwen/qwen3.6-plus-preview:free": 1,
+      "openrouter/qwen/qwen3.6-plus:free": 3,
+      "qwen/qwen3.5-plus-02-15": 1506,
+      "qwen/qwen3.6-plus-preview:free": 1200,
+      "qwen/qwen3.6-plus:free": 4521
+    },
+    "event_type": {
+      "agent_run_completed": 2575,
+      "agent_run_started": 2587,
+      "approval_gate_triggered": 25,
+      "autonomy_decision": 138,
+      "background_job_completed": 225,
+      "background_job_started": 225,
+      "benchmark_run_completed": 2413,
+      "eggent_auto_flow": 60,
+      "eggent_design_route_decision": 133,
+      "eggent_escalation_decision": 37,
+      "eggent_route_decision": 15,
+      "eval_run_completed": 21,
+      "goal_stack_updated": 113,
+      "memory_retrieval_scored": 9,
+      "persona_eval_scored": 60,
+      "policy_violation_detected": 2,
+      "proof_of_action_recorded": 12,
+      "ralph_iteration_scored": 4,
+      "retro_written": 7,
+      "route_decision": 2421,
+      "runtime_provider_fallback": 15,
+      "runtime_provider_selected": 2562,
+      "runtime_recovery_attempted": 3,
+      "self_reflection_written": 32,
+      "skill_selection_metadata": 3,
+      "stop_signal_honored": 11,
+      "stop_signal_received": 11,
+      "task_run_summary": 2419,
+      "tool_call": 9,
+      "verification_result": 2551
+    },
+    "component": {
+      "agent": 10621,
+      "eval": 2528,
+      "memory": 122,
+      "policy": 185,
+      "ralph": 4,
+      "recovery": 3,
+      "retro": 6,
+      "router": 2669,
+      "tool": 9,
+      "verifier": 2551
+    },
+    "runtime_provider": {
+      "agent_os_python": 9865,
+      "claw_code": 86,
+      "zeroclaw": 1196
+    },
+    "persona_version": {
+      "zera-v1": 1269
+    },
+    "mode": {
+      "plan": 958
+    },
+    "background_job_type": {
+      "goal_review": 172,
+      "memory_consolidation": 104,
+      "rhythm_check_in": 104,
+      "self_reflection": 104
+    }
+  }
+}

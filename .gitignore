@@ -1,0 +1,17 @@
+node_modules/
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+.DS_Store
+dist/
+build/
+*.log
+/logs/
+/outputs/
+/tmp/
+
+# Obsidian Vault — track content, exclude workspace state
+/vault/.obsidian/workspace.json
+/vault/.obsidian/workspace.json.local
+/vault/.obsidian/workspace-mobile.json

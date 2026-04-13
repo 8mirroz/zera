@@ -1,0 +1,49 @@
+# Local Override Policy — Antigravity Core v4.2
+# Defines what can be locally customized vs what is synced from upstream.
+
+---
+version: "1.0.0"
+
+protected_paths:
+  # These should NEVER be modified locally — they define canonical behavior
+  - configs/registry/agents/
+  - configs/registry/skills/
+  - configs/registry/workflows/
+  - configs/registry/personas/
+  - configs/registry/indexes/
+  - configs/schemas/
+  - configs/orchestrator/router.yaml
+  - configs/orchestrator/models.yaml
+  - configs/orchestrator/permissions.yaml
+
+customizable_paths:
+  # These CAN be modified locally without breaking upstream sync
+  - configs/personas/zera/
+  - configs/adapters/antigravity/templates/
+  - configs/adapters/hermes/templates/
+  - configs/adapters/antigravity/wrappers/
+  - configs/adapters/hermes/wrappers/
+  - .agent/skills/
+  - .agent/memory/
+  - .agent/workflows/
+  - Zera/
+
+sync_rules:
+  on_upstream_pull:
+    - protected_paths: overwrite_local_if_conflicts_exist
+    - customizable_paths: keep_local_changes
+    - configs/adapters/: merge_templates_preserve_local
+  on_local_edit:
+    - if_in_protected: require_pull_request_and_review
+    - if_in_customizable: allow_direct_edit
+
+conflict_resolution:
+  priority:
+    1. canonical_registry_integrity  # Always prefer correct canonical state
+    2. local_customizations         # Preserve local changes where safe
+    3. upstream_updates             # Incorporate upstream updates last
+
+local_customization_log:
+  # Track significant local modifications for rollback reference
+  file: configs/policies/local_changes.log
+  format: "YYYY-MM-DD | path | reason | author"

@@ -1,0 +1,62 @@
+version: "2026-04-09"
+policy:
+  direct_vendor_adapt_allowed: true
+  isolated_gpl_components_only: true
+  concept_reference_quarantine: true
+  discovery_index_only: true
+imports:
+  - artifact_id: "superclaude-framework-command-taxonomy"
+    source_repo: "https://github.com/SuperClaude-Org/SuperClaude_Framework"
+    license: "MIT"
+    import_lane: "direct_vendor_adapt"
+    exact_files_modules_reused: []
+    target_internal_subsystem: "zera_command_registry"
+    governance_impact: "adjacent"
+    clean_room_required: false
+    rollback_path: "remove taxonomy-derived command metadata from zera_command_registry.yaml"
+    owner: "zera-platform"
+    review_status: "approved_for_selective_adaptation"
+  - artifact_id: "claude-code-open-provider-bridge-patterns"
+    source_repo: "https://github.com/Davincible/claude-code-open"
+    license: "MIT"
+    import_lane: "direct_vendor_adapt"
+    exact_files_modules_reused: []
+    target_internal_subsystem: "zera_client_profiles"
+    governance_impact: "adjacent"
+    clean_room_required: false
+    rollback_path: "remove provider-bridge derived adapter metadata and revert to canonical client profiles"
+    owner: "zera-platform"
+    review_status: "approved_for_selective_adaptation"
+  - artifact_id: "claurst-branching-mechanics"
+    source_repo: "https://github.com/kuberwastaken/claurst"
+    license: "GPL-3.0"
+    import_lane: "isolated_optional_component_only"
+    exact_files_modules_reused: []
+    target_internal_subsystem: "zera_branching_policy"
+    governance_impact: "adjacent"
+    clean_room_required: false
+    rollback_path: "disable optional isolated component and fall back to internal branch manifests"
+    owner: "zera-platform"
+    review_status: "quarantined_to_optional_boundary"
+  - artifact_id: "open-claude-code-workflow-oracle"
+    source_repo: "https://github.com/ruvnet/open-claude-code"
+    license: "MIT"
+    import_lane: "concept_reference_quarantine"
+    exact_files_modules_reused: []
+    target_internal_subsystem: "zera_research_registry"
+    governance_impact: "none"
+    clean_room_required: true
+    rollback_path: "remove conceptual references from research registry"
+    owner: "zera-platform"
+    review_status: "reference_only"
+  - artifact_id: "awesome-claude-code-discovery-feed"
+    source_repo: "https://github.com/hesreallyhim/awesome-claude-code"
+    license: "CC-BY-NC-ND-4.0"
+    import_lane: "discovery_index_only"
+    exact_files_modules_reused: []
+    target_internal_subsystem: "zera_research_registry"
+    governance_impact: "none"
+    clean_room_required: true
+    rollback_path: "remove discovery feed entries and candidate links"
+    owner: "zera-platform"
+    review_status: "approved_for_discovery_only"

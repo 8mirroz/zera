@@ -1,0 +1,125 @@
+version: "2026-03-11"
+scheduler_profiles:
+  telegram-edge:
+    cadence_policy: "steady"
+    quiet_hours: "23:00-08:00"
+    max_parallel_jobs: 2
+    jitter_budget_seconds: 5
+  local-dev:
+    cadence_policy: "debug"
+    quiet_hours: "00:00-00:00"
+    max_parallel_jobs: 1
+    jitter_budget_seconds: 30
+jobs:
+  rhythm_check_in:
+    cadence_minutes: 1440
+    daily_cap: 1
+    retry_limit: 2
+    concurrency_limit: 1
+    quiet_hours: "23:00-08:00"
+    stop_condition: "user_suppressed"
+    escalation_rule: "notify_operator"
+    user_suppressible: true
+    staleness_minutes: 1440
+    budget_profile: "zera-standard"
+  goal_review:
+    cadence_minutes: 720
+    daily_cap: 2
+    retry_limit: 2
+    concurrency_limit: 1
+    quiet_hours: "23:00-08:00"
+    stop_condition: "goal_completed"
+    escalation_rule: "queue_review"
+    user_suppressible: true
+    staleness_minutes: 1440
+    budget_profile: "zera-standard"
+  memory_consolidation:
+    cadence_minutes: 360
+    daily_cap: 4
+    retry_limit: 3
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "queue_review"
+    user_suppressible: false
+    staleness_minutes: 1440
+    budget_profile: "operator-standard"
+  self_reflection:
+    cadence_minutes: 720
+    daily_cap: 2
+    retry_limit: 1
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "queue_review"
+    user_suppressible: false
+    staleness_minutes: 1440
+    budget_profile: "operator-standard"
+  pending_task_follow_up:
+    cadence_minutes: 180
+    daily_cap: 4
+    retry_limit: 3
+    concurrency_limit: 1
+    quiet_hours: "23:00-08:00"
+    stop_condition: "task_closed"
+    escalation_rule: "notify_operator"
+    user_suppressible: true
+    staleness_minutes: 720
+    budget_profile: "operator-standard"
+  dormant_plan_resurfacing:
+    cadence_minutes: 4320
+    daily_cap: 1
+    retry_limit: 1
+    concurrency_limit: 1
+    quiet_hours: "23:00-08:00"
+    stop_condition: "plan_reactivated"
+    escalation_rule: "approval_required"
+    user_suppressible: true
+    staleness_minutes: 4320
+    budget_profile: "zera-standard"
+  harness_gardening:
+    cadence_minutes: 1440
+    daily_cap: 1
+    retry_limit: 1
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "queue_review"
+    user_suppressible: false
+    staleness_minutes: 1440
+    budget_profile: "operator-standard"
+    mode: "diagnostic_only"
+  auto_update_cycle:
+    cadence_minutes: 60
+    daily_cap: 24
+    retry_limit: 2
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "queue_review"
+    user_suppressible: false
+    staleness_minutes: 60
+    budget_profile: "operator-standard"
+    description: "Runs AutoUpdateEngine: kill-switch check, drift, ritual pruning, memory eval"
+  drift_detection:
+    cadence_minutes: 360
+    daily_cap: 4
+    retry_limit: 1
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "queue_review"
+    user_suppressible: false
+    staleness_minutes: 360
+    budget_profile: "operator-standard"
+  kill_switch_check:
+    cadence_minutes: 30
+    daily_cap: 48
+    retry_limit: 1
+    concurrency_limit: 1
+    quiet_hours: "00:00-00:00"
+    stop_condition: "manual_stop"
+    escalation_rule: "disable_policy"
+    user_suppressible: false
+    staleness_minutes: 30
+    budget_profile: "operator-standard"

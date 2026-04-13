@@ -1,0 +1,7 @@
+id: compile-shortlist
+name: Compile Shortlist
+version: 1.0.0
+type: export
+inputs: [fit_scores, threshold]
+outputs: [shortlist]
+constraints: [limit_10]

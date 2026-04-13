@@ -1,0 +1,14 @@
+[Unit]
+Description=ZeroClaw Zera Background Daemon
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/Users/user/zera
+EnvironmentFile=/Users/user/zera/scripts/ops/ops/zeroclaw/.env
+ExecStart=/usr/bin/env python3 /Users/user/zera/repos/packages/agent-os/scripts/swarmctl.py background-daemon --limit 10
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

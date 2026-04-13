@@ -1,0 +1,132 @@
+{
+  "generated_at": "2026-04-10T20:04:05.619668Z",
+  "governance_gates": [
+    {
+      "gate": "benchmark_strict_truth_gate",
+      "condition": "strict benchmark gate passes with canonical coverage and no provenance blockers",
+      "enforced_by": "configs/tooling/analyze_benchmark.py --strict",
+      "last_result": {
+        "command": "python3 configs/tooling/analyze_benchmark.py --strict",
+        "exit_code": 2,
+        "status": "fail",
+        "failed_checks": [
+          "score",
+          "pass_rate",
+          "report_confidence",
+          "canonical_coverage",
+          "duplicate_cases",
+          "real_trace_case_mix"
+        ],
+        "evidence_files": [
+          "docs/ki/benchmark_gate.json",
+          "docs/ki/benchmark_latest.json"
+        ]
+      }
+    },
+    {
+      "gate": "validator_false_green_guard",
+      "condition": "MCP validator returns non-zero on missing servers or routing mismatches",
+      "enforced_by": "scripts/test_mcp_profiles.py",
+      "last_result": {
+        "command": "python3 scripts/test_mcp_profiles.py",
+        "exit_code": 1,
+        "status": "fail",
+        "failed_checks": [
+          "missing_servers",
+          "routing_mismatch"
+        ],
+        "evidence_files": [
+          "/tmp/mcp_profiles.out"
+        ]
+      }
+    },
+    {
+      "gate": "provider_parity",
+      "condition": "all enabled providers are registered and instantiable",
+      "enforced_by": "RuntimeRegistry.provider_parity_report + check_provider_health.py",
+      "last_result": {
+        "command": "python3 scripts/validation/check_provider_health.py",
+        "exit_code": 0,
+        "status": "pass",
+        "failed_checks": [],
+        "evidence_files": [
+          "docs/remediation/hermes-zera/2026-04-10__stabilization-program/artifacts/provider_parity.json"
+        ]
+      }
+    },
+    {
+      "gate": "workflow_model_alias_integrity",
+      "condition": "active workflow references resolve to existing files",
+      "enforced_by": "workflow_model_alias_validator.py --json",
+      "last_result": {
+        "command": "python3 repos/packages/agent-os/scripts/workflow_model_alias_validator.py --json",
+        "exit_code": 1,
+        "status": "fail",
+        "failed_checks": [
+          "missing_workflow_files"
+        ],
+        "evidence_files": [
+          "/tmp/workflow_validator.json"
+        ]
+      }
+    },
+    {
+      "gate": "trace_schema_parity",
+      "condition": "canonical and mirror schemas are identical for event contract",
+      "enforced_by": "test_trace_schema_mirror.py",
+      "last_result": {
+        "command": "python3 -m pytest -q repos/packages/agent-os/tests/test_trace_schema_mirror.py repos/packages/agent-os/tests/test_trace_validator.py",
+        "exit_code": 0,
+        "status": "pass",
+        "failed_checks": [],
+        "evidence_files": [
+          "docs/remediation/hermes-zera/2026-04-10__stabilization-program/artifacts/trace_schema_v2.json"
+        ]
+      }
+    },
+    {
+      "gate": "trace_schema_field_compliance",
+      "condition": "runtime-emitted events include all required fields",
+      "enforced_by": "verify_trace_coverage.py",
+      "last_result": {
+        "command": "python3 repos/packages/agent-os/scripts/verify_trace_coverage.py",
+        "exit_code": 1,
+        "status": "fail",
+        "failed_checks": [
+          "missing_required_fields"
+        ],
+        "evidence_files": [
+          "/tmp/trace_coverage.out"
+        ]
+      }
+    }
+  ],
+  "rerun_requirements": {
+    "benchmark_rerun": "after analyzer/routing/provider changes",
+    "persona_eval_rerun": "after persona docs/router/eval changes",
+    "memory_contamination_check": "after memory policy/retrieval changes",
+    "tool_contract_rerun": "after mcp profile, workflow catalog, or registry changes"
+  },
+  "autonomy_ladder": {
+    "supervised": {
+      "min_composite": 0,
+      "allowed": true
+    },
+    "bounded_automation": {
+      "min_composite": 65,
+      "allowed": false
+    },
+    "delegated_execution": {
+      "min_composite": 75,
+      "allowed": false
+    },
+    "scheduled_loops": {
+      "min_composite": 85,
+      "allowed": false
+    },
+    "adaptive_semi_autonomy": {
+      "min_composite": 90,
+      "allowed": false
+    }
+  }
+}

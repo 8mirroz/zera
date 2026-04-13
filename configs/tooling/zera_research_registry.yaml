@@ -1,0 +1,73 @@
+version: "2026-04-09"
+default_trust_score: 0.55
+source_card:
+  required_fields:
+    - source_id
+    - source_url
+    - source_type
+    - license
+    - import_lane
+    - trust_score
+    - reverse_engineered_risk
+    - clean_room_required
+    - extracted_components
+    - allowed_usage_scope
+research_modes:
+  ecosystem_mining:
+    allowed_commands: ["zera:research", "zera:foundry-ingest"]
+  workflow_mining:
+    allowed_commands: ["zera:research", "zera:evolve-capability"]
+  provider_bridge_mining:
+    allowed_commands: ["zera:research", "zera:architect"]
+  failure_analysis:
+    allowed_commands: ["zera:critic", "zera:retro"]
+  command_ux_mining:
+    allowed_commands: ["zera:architect", "zera:foundry-ingest"]
+  autonomy_governance_risk_mining:
+    allowed_commands: ["zera:governance-check", "zera:critic"]
+known_sources:
+  SuperClaude_Framework:
+    source_url: "https://github.com/SuperClaude-Org/SuperClaude_Framework"
+    source_type: "external_repo"
+    license: "MIT"
+    import_lane: "direct_vendor_adapt"
+    trust_score: 0.84
+    reverse_engineered_risk: "low"
+    clean_room_required: false
+    allowed_usage_scope: "command_ux, workflow_shells, mode decomposition"
+  claude-code-open:
+    source_url: "https://github.com/Davincible/claude-code-open"
+    source_type: "external_repo"
+    license: "MIT"
+    import_lane: "direct_vendor_adapt"
+    trust_score: 0.8
+    reverse_engineered_risk: "low"
+    clean_room_required: false
+    allowed_usage_scope: "provider_bridge, routing helpers, model transport utilities"
+  claurst:
+    source_url: "https://github.com/kuberwastaken/claurst"
+    source_type: "external_repo"
+    license: "GPL-3.0"
+    import_lane: "isolated_optional_component_only"
+    trust_score: 0.66
+    reverse_engineered_risk: "low"
+    clean_room_required: false
+    allowed_usage_scope: "isolated branch runtime, optional plugin, reference mechanics"
+  open-claude-code:
+    source_url: "https://github.com/ruvnet/open-claude-code"
+    source_type: "external_repo"
+    license: "MIT"
+    import_lane: "concept_reference_quarantine"
+    trust_score: 0.42
+    reverse_engineered_risk: "high"
+    clean_room_required: true
+    allowed_usage_scope: "comparison only"
+  awesome-claude-code:
+    source_url: "https://github.com/hesreallyhim/awesome-claude-code"
+    source_type: "curated_index"
+    license: "CC-BY-NC-ND-4.0"
+    import_lane: "discovery_index_only"
+    trust_score: 0.7
+    reverse_engineered_risk: "low"
+    clean_room_required: true
+    allowed_usage_scope: "candidate discovery only"

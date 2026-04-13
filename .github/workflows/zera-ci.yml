@@ -1,0 +1,33 @@
+name: zera-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Zera governance checks
+        run: |
+          python3 scripts/validation/check_zera_hardening.py --json
+
+      - name: Zera targeted tests
+        run: |
+          cd repos/packages/agent-os
+          uv run pytest \
+            tests/test_zera_client_profile_validation.py \
+            tests/test_zera_hardening_assets.py \
+            tests/test_zera_hybrid_pilot_contracts.py \
+            tests/test_zera_hybrid_pilot_runtime_telemetry.py \
+            tests/test_zera_runtime_parity.py

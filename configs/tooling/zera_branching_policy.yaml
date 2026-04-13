@@ -1,0 +1,50 @@
+version: "2026-04-09"
+storage:
+  branch_dir: "${VAULT_PATH}/research/branches"
+  merge_dir: "${VAULT_PATH}/research/branch-merges"
+  rejection_dir: "${VAULT_PATH}/research/rejections"
+defaults:
+  ttl_minutes: 90
+  stable_memory_write_allowed: false
+  personality_promotion_allowed: false
+  merge_requires_candidate_classification: true
+required_manifest_fields:
+  - branch_id
+  - branch_type
+  - parent_run_id
+  - source_command
+  - origin_prompt
+  - allowed_tools
+  - max_turns
+  - ttl_minutes
+  - merge_policy
+  - candidate_emission_allowed
+  - stable_memory_write_allowed
+  - personality_promotion_allowed
+branch_types:
+  strategy_branch:
+    allowed_commands: ["zera:plan", "zera:architect", "zera:branch"]
+    max_turns: 8
+    merge_policy: "summary_with_candidate_cards"
+    candidate_emission_allowed: true
+  research_branch:
+    allowed_commands: ["zera:research", "zera:foundry-ingest", "zera:evolve-capability"]
+    max_turns: 10
+    merge_policy: "source_card_then_candidate_cards"
+    candidate_emission_allowed: true
+  red_team_branch:
+    allowed_commands: ["zera:critic", "zera:governance-check", "zera:branch"]
+    max_turns: 6
+    merge_policy: "review_only"
+    candidate_emission_allowed: true
+  execution_branch:
+    allowed_commands: ["zera:plan", "zera:evolve-capability"]
+    max_turns: 5
+    merge_policy: "rollback_ready_summary"
+    candidate_emission_allowed: true
+  persona_sensitivity_branch:
+    allowed_commands: ["zera:calibrate", "zera:evolve-personality", "zera:branch"]
+    max_turns: 6
+    merge_policy: "review_only"
+    candidate_emission_allowed: true
+    requires_persona_review: true

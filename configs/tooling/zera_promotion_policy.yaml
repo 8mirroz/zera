@@ -1,0 +1,116 @@
+# Zera Promotion Policy — Wave 12 (Final)
+# Version: 12.0.0
+# Complete production-grade control plane
+
+version: "12.0.0"
+description: >
+  Waves 2-12: Complete control plane with evidence binding,
+  MCP integrity, Agent OS runtime health, role contract compliance,
+  workflow integrity, memory quality, and observability.
+
+gates:
+  swarmctl_doctor:
+    required: true
+    warning_only: false
+  check_zera_hardening:
+    required: true
+  trace_validator:
+    required: true
+  test_mcp_profiles:
+    required: true
+  shadow_smoke:
+    required: true
+  rollback_snapshot:
+    required: true
+  gateway_check:
+    required: true
+
+gateway:
+  mode: disabled_allowed
+  disabled_intent_required: true
+  required_adapters: []
+
+artifact_schema:
+  required: true
+  path: "configs/tooling/zera_promotion_artifact_schema.json"
+  max_report_age_minutes: 60
+  evidence_chain_validation: true
+
+snapshot:
+  root: "~/.hermes/profiles/.backups/zera-promote-snapshots"
+
+test_isolation:
+  real_runtime_writes_forbidden: true
+  hermes_root_forbidden: "~/.hermes"
+  remediation_forbidden: "docs/remediation"
+
+rehearsal:
+  required_before_real_promote: true
+  no_mutate_code_rehearsal_required: true
+  max_ttl_minutes: 10
+  bounded_cycle_required: true
+  no_mutate_env_enforced: true
+
+rate_limiting:
+  max_attempts_per_hour: 3
+  window_minutes: 60
+
+provider_health:
+  check_before_promotion: true
+  ping_timeout_seconds: 30
+
+mcp_integrity:
+  protocol_test_required: true
+  security_audit_required: true
+  deployment_workflow_required: true
+  test_harness_path: "scripts/mcp_test_harness.py"
+  security_tests_path: "scripts/mcp_security_tests.py"
+  deploy_script_path: "scripts/mcp-deploy.sh"
+  minimum_handshake_pass: true
+  minimum_tool_discovery_pass: true
+  minimum_unknown_tool_rejection_pass: true
+  minimum_graceful_shutdown_pass: true
+
+agent_os_runtime:
+  test_collection_errors: 0
+  test_pass_rate_min: 0.90
+  python_39_compatible: true
+  missing_external_scripts_skipped: true
+
+role_contracts:
+  compliance_checker: "scripts/role_contract_checker.py"
+  required_validity: true      # All contracts must be valid
+  allowed_tools_required: true  # All contracts must have allowed_tools
+
+workflow_integrity:
+  checker: "scripts/workflow_and_memory_checker.py"
+  all_valid_required: true     # All workflows must be valid
+  workflows_dir: ".agent/workflows"
+
+memory_quality:
+  checker: "scripts/workflow_and_memory_checker.py"
+  no_duplicates_required: true
+  no_invalid_json_required: true
+  memory_file: ".agent/memory/memory.jsonl"
+
+observability:
+  structured_logging_required: true
+  metrics_module_recommended: true
+  alert_rules_recommended: true
+  health_checks_recommended: true
+
+promotion:
+  require_active_window: true
+  max_ttl_minutes: 120
+  default_ttl_minutes: 30
+  require_policy_check_before_enable: true
+  require_snapshot_before_enable: true
+  auto_disable_on_expiry: true
+  input_validation_required: true
+
+rollback:
+  must_displace_current_profile: true
+  must_restore_vault_state: true
+  must_restore_cron_jobs: true
+  must_disable_promotion_after_rollback: true
+  refuse_internal_snapshots: true

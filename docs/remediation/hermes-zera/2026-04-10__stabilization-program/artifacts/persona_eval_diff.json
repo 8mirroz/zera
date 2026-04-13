@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-04-10T19:30:00Z",
+  "persona_docs": {
+    "status": "present",
+    "count": 10,
+    "required": 10,
+    "ok": true
+  },
+  "mode_router": {
+    "status": "complete",
+    "modes_found": [
+      "analysis",
+      "critique",
+      "hard_truth",
+      "love",
+      "plan",
+      "research",
+      "strategize",
+      "style"
+    ],
+    "modes_missing": [],
+    "rule_count": 8,
+    "ok": true,
+    "fix": "Added critique and strategize modes with keyword rules"
+  },
+  "eval_suite": {
+    "status": "complete",
+    "case_count": 31,
+    "modes_covered": [
+      "analysis",
+      "critique",
+      "hard_truth",
+      "love",
+      "plan",
+      "research",
+      "strategize",
+      "style"
+    ],
+    "modes_missing": [],
+    "ok": true,
+    "fix": "Added 5 mode-specific test cases: plan, research, style, critique, strategize"
+  },
+  "governor": {
+    "status": "callable",
+    "callable": true,
+    "ok": true
+  },
+  "skills_published": {
+    "status": "published",
+    "published": [
+      "zera-core",
+      "zera-muse",
+      "zera-researcher",
+      "zera-rhythm-coach",
+      "zera-strategist",
+      "zera-style-curator"
+    ],
+    "missing": [],
+    "ok": true,
+    "fix": "Added Zera skills to ACTIVE_SKILLS.md and ran swarmctl.py publish-skills"
+  },
+  "overall": {
+    "score": "72/100",
+    "previous_score": "58/100",
+    "maturity": "L2 workable",
+    "all_checks_pass": true,
+    "remaining_gaps": [
+      "Persona docs not loaded into runtime prompt assembly (architectural)",
+      "Governor not called by agent_runtime.py (architectural)",
+      "No runtime sycophancy detector (prose-only constitution rules)"
+    ]
+  }
+}

@@ -1,0 +1,487 @@
+{
+  "version": "2026-02-27",
+  "source": "https://github.com/cheahjs/free-llm-api-resources",
+  "source_note": "Catalog of free LLM APIs and trial credits (community-maintained).",
+  "last_checked": "2026-02-27",
+  "notes": [
+    "Entries marked as free or trial credits may change without notice.",
+    "Use provider documentation for exact API endpoints and authentication.",
+    "This catalog is informational and not a routing source of truth."
+  ],
+  "free_providers": [
+    {
+      "name": "OpenRouter",
+      "category": "gateway",
+      "limits": "20 req/min, 50 req/day; up to 1000 req/day with $10 lifetime topup",
+      "models": [
+        "google/gemma-3-12b-it:free",
+        "google/gemma-3-27b-it:free",
+        "google/gemma-3-4b-it:free",
+        "nousresearch/hermes-3-llama-3.1-405b:free",
+        "meta-llama/llama-3.2-3b-instruct:free",
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "mistralai/mistral-small-3.1-24b-instruct:free",
+        "arcee-ai/trinity-large-preview:free",
+        "arcee-ai/trinity-mini:free",
+        "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+        "deepseek/deepseek-r1-0528:free",
+        "google/gemma-3n-e2b-it:free",
+        "google/gemma-3n-e4b-it:free",
+        "liquid/lfm-2.5-1.2b-instruct:free",
+        "liquid/lfm-2.5-1.2b-thinking:free",
+        "nvidia/nemotron-3-nano-30b-a3b:free",
+        "nvidia/nemotron-nano-12b-v2-vl:free",
+        "nvidia/nemotron-nano-9b-v2:free",
+        "openai/gpt-oss-120b:free",
+        "openai/gpt-oss-20b:free",
+        "qwen/qwen3-4b:free",
+        "qwen/qwen3-coder:free",
+        "qwen/qwen3-next-80b-a3b-instruct:free",
+        "stepfun/step-3.5-flash:free",
+        "upstage/solar-pro-3:free",
+        "z-ai/glm-4.5-air:free"
+      ],
+      "requirements": [
+        "OpenRouter account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Google AI Studio",
+      "category": "direct",
+      "limits": "Shared daily request caps per model; see model notes",
+      "models": [
+        "Gemini 3 Flash: 250k tokens/min, 20 req/day, 5 req/min",
+        "Gemini 2.5 Flash: 250k tokens/min, 500 req/day, 2 req/min",
+        "Gemini 2.5 Flash-Lite: 250k tokens/min, 1000 req/day, 2 req/min",
+        "Gemma 3 27B Instruct: 15 req/min, 1500 req/day",
+        "Gemma 3 12B Instruct: 30 req/min, 14400 req/day",
+        "Gemma 3 4B Instruct: 60 req/min, 14400 req/day",
+        "Gemma 3 1B Instruct: 60 req/min, 14400 req/day"
+      ],
+      "requirements": [
+        "Google account",
+        "API key"
+      ]
+    },
+    {
+      "name": "NVIDIA NIM",
+      "category": "direct",
+      "limits": "40 req/min",
+      "models": [
+        "Various open models"
+      ],
+      "requirements": [
+        "Phone verification",
+        "API key"
+      ]
+    },
+    {
+      "name": "Mistral (La Plateforme)",
+      "category": "direct",
+      "limits": "1 req/sec, 500k tokens/min, 1B tokens/month",
+      "models": [
+        "Open models",
+        "Proprietary models"
+      ],
+      "requirements": [
+        "Phone verification",
+        "Opt-in to training on data for free tier"
+      ]
+    },
+    {
+      "name": "Mistral (Codestral)",
+      "category": "direct",
+      "limits": "30 req/min, 2k req/day",
+      "models": [
+        "Codestral"
+      ],
+      "requirements": [
+        "Phone verification",
+        "Free currently; will be subscription-based"
+      ]
+    },
+    {
+      "name": "HuggingFace Inference Providers",
+      "category": "gateway",
+      "limits": "$0.10/month credits; serverless inference limited to models smaller than 10GB",
+      "models": [
+        "Various open models"
+      ],
+      "requirements": [
+        "HuggingFace account",
+        "API token"
+      ]
+    },
+    {
+      "name": "Vercel AI Gateway",
+      "category": "gateway",
+      "limits": "$5/month",
+      "models": [
+        "Routes to supported providers"
+      ],
+      "requirements": [
+        "Vercel account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Cerebras",
+      "category": "direct",
+      "limits": "See per-model limits",
+      "models": [
+        "gpt-oss-120b: 60k tokens/min, 1M tokens/day",
+        "Qwen 3 235B A22B Instruct: 60k tokens/min, 1M tokens/day",
+        "Llama 3.3 70B: 60k tokens/min, 1M tokens/day",
+        "Qwen 3 32B: 60k tokens/min, 1M tokens/day",
+        "Llama 3.1 8B: 60k tokens/min, 1M tokens/day",
+        "Z.ai GLM-4.6: 30k tokens/min, 1M tokens/day"
+      ],
+      "requirements": [
+        "Cerebras account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Groq",
+      "category": "direct",
+      "limits": "See per-model limits",
+      "models": [
+        "allam-2-7b",
+        "llama-3.1-8b-instant",
+        "llama-3.3-70b-versatile",
+        "llama-4-maverick-17b-128e-instruct",
+        "llama-4-scout-17b-16e-instruct",
+        "whisper-large-v3",
+        "whisper-large-v3-turbo",
+        "canopylabs/orpheus-arabic-saudi",
+        "canopylabs/orpheus-v1-english",
+        "groq/compound",
+        "groq/compound-mini",
+        "meta-llama/llama-guard-4-12b",
+        "meta-llama/llama-prompt-guard-2-22m",
+        "meta-llama/llama-prompt-guard-2-86m",
+        "moonshotai/kimi-k2-instruct",
+        "moonshotai/kimi-k2-instruct-0905",
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-20b",
+        "openai/gpt-oss-safeguard-20b",
+        "qwen/qwen3-32b"
+      ],
+      "requirements": [
+        "Groq account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Cohere",
+      "category": "direct",
+      "limits": "20 req/min, 1000 req/month",
+      "models": [
+        "Command",
+        "Command R",
+        "Command R+",
+        "Command Light",
+        "Aya Expanse 32B",
+        "Aya Expanse 8B",
+        "Embed English",
+        "Embed Multilingual",
+        "Embed English Light",
+        "Embed Multilingual Light",
+        "Rerank English",
+        "Rerank Multilingual",
+        "Rerank English Light",
+        "Rerank Multilingual Light",
+        "Classify English",
+        "Classify Multilingual",
+        "Summarize English",
+        "Summarize Multilingual",
+        "Semantic Search English",
+        "Semantic Search Multilingual"
+      ],
+      "requirements": [
+        "Cohere account",
+        "API key"
+      ]
+    },
+    {
+      "name": "GitHub Models",
+      "category": "gateway",
+      "limits": "Very restrictive input/output token limits; depends on Copilot subscription",
+      "models": [
+        "GPT-4.1",
+        "GPT-4.1 mini",
+        "GPT-4.1 nano",
+        "OpenAI o4 mini",
+        "OpenAI o1 mini",
+        "OpenAI o1 preview",
+        "Phi 4 mini instruction",
+        "Phi 4",
+        "DeepSeek R1",
+        "Mistral Small 3.1",
+        "Mistral Small 3.1 2503",
+        "Mistral Large",
+        "Llama 3.3 70B",
+        "Llama 3.2 90B Vision Instruct",
+        "Llama 3.2 11B Vision Instruct",
+        "Llama 3.2 3B",
+        "Llama 3.2 1B",
+        "Llama 3.1 405B",
+        "Llama 3.1 70B",
+        "Llama 3.1 8B",
+        "Cohere Command R",
+        "Cohere Command R+",
+        "AI21 Jamba 1.5 Large",
+        "AI21 Jamba 1.5 Mini",
+        "JAIS 30B Chat",
+        "Phi 3.5 Mini Instruct",
+        "Phi 3.5 MoE Instruct",
+        "Phi 3.5 Vision Instruct",
+        "Phi 3 Mini Instruct",
+        "Phi 3 Medium Instruct",
+        "Phi 3 Small Instruct",
+        "Phi 3 Small 8k Instruct",
+        "Phi 3 Small 128k Instruct",
+        "Phi 3 Medium 4k Instruct",
+        "Phi 3 Medium 128k Instruct"
+      ],
+      "requirements": [
+        "GitHub account",
+        "Copilot subscription (limits vary)"
+      ]
+    },
+    {
+      "name": "Cloudflare Workers AI",
+      "category": "direct",
+      "limits": "10,000 neurons/day",
+      "models": [
+        "@cf/openai/gpt-oss-120b",
+        "@cf/openai/gpt-oss-20b",
+        "@cf/qwen/qwq-32b",
+        "@cf/qwen/qwen2.5-coder-32b-instruct",
+        "@cf/qwen/qwen2.5-14b-instruct",
+        "@cf/mistral/mistral-small-3.1-24b-instruct",
+        "@cf/google/gemma-3-12b-it",
+        "@cf/meta/llama-4-scout-17b-16e-instruct",
+        "@cf/meta/llama-4-maverick-17b-128e-instruct",
+        "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+        "@cf/meta/llama-3.2-11b-vision-instruct",
+        "@cf/meta/llama-3.2-3b-instruct",
+        "@cf/meta/llama-3.1-8b-instruct",
+        "@cf/meta/llama-3.1-70b-instruct",
+        "@cf/meta/llama-3.1-405b-instruct",
+        "@cf/meta/llama-2-7b-chat-fp16",
+        "@cf/meta/llama-2-7b-chat-int8",
+        "@cf/mistral/mistral-7b-instruct-v0.2",
+        "@cf/google/gemma-2b-it-lora",
+        "@hf/thebloke/mistral-7b-instruct-v0.2-awq",
+        "@cf/meta/llama-2-7b-chat-hf-lora",
+        "@cf/tiiuae/falcon-7b-instruct",
+        "@cf/baai/bge-base-en-v1.5",
+        "@cf/baai/bge-small-en-v1.5",
+        "@cf/baai/bge-large-en-v1.5",
+        "@cf/baai/bge-m3",
+        "@cf/baai/bge-reranker-base",
+        "@cf/baai/bge-reranker-large",
+        "@cf/baai/bge-reranker-v2-m3",
+        "@cf/baai/bge-reranker-v2-gemma",
+        "@cf/baai/bge-reranker-v2-minicpm-layerwise",
+        "@cf/baai/bge-reranker-v2.5-gemma2-light",
+        "@cf/google/bge-base-en-v1.5",
+        "@cf/google/bge-small-en-v1.5",
+        "@cf/google/bge-large-en-v1.5"
+      ],
+      "requirements": [
+        "Cloudflare account",
+        "API token"
+      ]
+    },
+    {
+      "name": "Google Cloud Vertex AI",
+      "category": "direct",
+      "limits": "Very strict payment verification",
+      "models": [
+        "Llama 3.2 90B Vision Instruct: 30 req/min (preview free)",
+        "Llama 3.1 70B: 60 req/min (preview free)",
+        "Llama 3.1 8B: 60 req/min (preview free)"
+      ],
+      "requirements": [
+        "GCP account",
+        "Billing verification"
+      ]
+    }
+  ],
+  "trial_credit_providers": [
+    {
+      "name": "Fireworks",
+      "credits": "$1",
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Baseten",
+      "credits": "$30",
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Nebius",
+      "credits": "$1",
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Novita",
+      "credits": "$0.50 for 1 year",
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "AI21",
+      "credits": "$10 for 3 months",
+      "models": [
+        "Jamba 1.5 Mini",
+        "Jamba 1.5 Large",
+        "Jamba Instruct",
+        "Jurassic-2 Mid",
+        "Jurassic-2 Ultra"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Upstage",
+      "credits": "$10 for 3 months",
+      "models": [
+        "Solar Pro",
+        "Solar Mini"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "NLP Cloud",
+      "credits": "$15",
+      "requirements": [
+        "Phone verification",
+        "API key"
+      ]
+    },
+    {
+      "name": "Alibaba Cloud",
+      "credits": "1 million tokens per model",
+      "models": [
+        "Various open and proprietary Qwen models"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Modal",
+      "credits": "$5/month on signup; $30/month with payment method",
+      "models": [
+        "Any supported model; pay by compute"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Inference.net",
+      "credits": "$1 + $25 survey",
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Hyperbolic",
+      "credits": "$1",
+      "models": [
+        "gpt-oss-120b",
+        "gpt-oss-20b",
+        "Qwen 3 235B A22B",
+        "Llama 4 Maverick",
+        "Llama 4 Scout",
+        "Llama 3.3 70B",
+        "Llama 3.1 405B",
+        "Llama 3.1 8B",
+        "DeepSeek R1",
+        "DeepSeek V3.1"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "SambaNova Cloud",
+      "credits": "$5 for 3 months",
+      "models": [
+        "Qwen 3 32B",
+        "Qwen 3 235B A22B",
+        "Qwen 2.5 72B",
+        "QwQ 32B",
+        "DeepSeek R1",
+        "Llama 4 Maverick",
+        "Llama 3.3 70B",
+        "Llama 3.1 8B",
+        "Llama 3.2 90B",
+        "Llama 3.2 11B Vision",
+        "Llama 3.2 1B",
+        "Llama 3.2 3B"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    },
+    {
+      "name": "Scaleway Generative APIs",
+      "credits": "1,000,000 free tokens",
+      "models": [
+        "Llama 3.1 8B",
+        "Llama 3.1 70B",
+        "Llama 3.1 405B",
+        "Llama 3.3 70B",
+        "Qwen 2.5 72B",
+        "Qwen 2.5 32B",
+        "Qwen 2.5 14B",
+        "Qwen 2.5 7B"
+      ],
+      "requirements": [
+        "Account",
+        "API key"
+      ]
+    }
+  ],
+  "recommended_free_stack": [
+    {
+      "name": "OpenRouter (gateway)",
+      "reason": "Broad model coverage via OpenAI-compatible API; clear free tier limits for dev/fallback use."
+    },
+    {
+      "name": "Google AI Studio (direct)",
+      "reason": "Documented per-model quotas with strong throughput; good primary free-tier default."
+    },
+    {
+      "name": "Cloudflare Workers AI (direct, optional)",
+      "reason": "Always-free neuron budget; best for lightweight/edge workloads and embeddings."
+    }
+  ]
+}

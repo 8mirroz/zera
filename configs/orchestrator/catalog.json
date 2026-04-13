@@ -1,0 +1,1677 @@
+{
+  "state_hash": "abf388c0af2ddadfcfeb624b8bd0ccd0",
+  "skills": [
+    {
+      "name": "zera-style-curator",
+      "path": ".agent/skills/zera-style-curator/SKILL.md",
+      "triggers": [],
+      "description": "Refined aesthetic and lifestyle guidance aligned to user preferences and context."
+    },
+    {
+      "name": "using-git-worktrees",
+      "path": ".agent/skills/using-git-worktrees/SKILL.md",
+      "triggers": [],
+      "description": "Use when starting a new complex task to isolate changes from the main working directory."
+    },
+    {
+      "name": "ui-premium",
+      "path": ".agent/skills/ui-premium/SKILL.md",
+      "triggers": [],
+      "description": "Create premium interfaces using the unified Antigravity design-system package."
+    },
+    {
+      "name": "zera-core",
+      "path": ".agent/skills/zera-core/SKILL.md",
+      "triggers": [],
+      "description": "Core operating behavior for Zera persona (truthfulness, care, anti-sycophancy, action orientation)."
+    },
+    {
+      "name": "zera-muse",
+      "path": ".agent/skills/zera-muse/SKILL.md",
+      "triggers": [],
+      "description": "Creative support mode for ideation while preserving practicality and coherence."
+    },
+    {
+      "name": "test-driven-development",
+      "path": ".agent/skills/test-driven-development/SKILL.md",
+      "triggers": [],
+      "description": "Use when writing logic that needs to be robust, or when fixing bugs (reproduction test first)."
+    },
+    {
+      "name": "telegram-miniapp",
+      "path": ".agent/skills/telegram-miniapp/SKILL.md",
+      "triggers": [],
+      "description": "Develop Telegram Mini Apps using React and native SDKs"
+    },
+    {
+      "name": "zera-strategist",
+      "path": ".agent/skills/zera-strategist/SKILL.md",
+      "triggers": [],
+      "description": "Strategic planning mode for turning goals into prioritized execution paths."
+    },
+    {
+      "name": "write-a-prd",
+      "path": ".agent/skills/write-a-prd/SKILL.md",
+      "triggers": [],
+      "description": "Create a PRD through user interview, codebase exploration, and module design, then submit as a GitHub issue. Use when user wants to write a PRD, create a product requirements document, or plan a new feature."
+    },
+    {
+      "name": "systematic-debugging",
+      "path": ".agent/skills/systematic-debugging/SKILL.md",
+      "triggers": [],
+      "description": "Use when investigating a reproducible bug, failing test, or runtime error. Prevents random trial-and-error."
+    },
+    {
+      "name": "design-system-architect",
+      "path": ".agent/skills/design-system-architect/SKILL.md",
+      "triggers": [],
+      "description": "Generate and maintain design systems with token governance, page overrides, and adaptive source routing."
+    },
+    {
+      "name": "triage-issue",
+      "path": ".agent/skills/triage-issue/SKILL.md",
+      "triggers": [],
+      "description": "Investigate a bug by exploring the codebase, identify root cause, and file a GitHub issue with a TDD-based fix plan. Use when user reports a bug, wants to file an issue, mentions \"triage\", or wants to investigate and plan a fix."
+    },
+    {
+      "name": "telegram-bot",
+      "path": ".agent/skills/telegram-bot/SKILL.md",
+      "triggers": [],
+      "description": "Develop Telegram Bots using aiogram 3.x patterns"
+    },
+    {
+      "name": "prd-to-plan",
+      "path": ".agent/skills/prd-to-plan/SKILL.md",
+      "triggers": [],
+      "description": "Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. Use when user has a PRD and wants an implementation plan, or mentions \"turn PRD into plan\"."
+    },
+    {
+      "name": "ubiquitous-language",
+      "path": ".agent/skills/ubiquitous-language/SKILL.md",
+      "triggers": [],
+      "description": "Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Use when user wants to define domain terms, build a glossary, harden terminology, or mentions \"domain model\", \"DDD\", \"ubiquitous language\"."
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "path": ".agent/skills/dispatching-parallel-agents/SKILL.md",
+      "triggers": [],
+      "description": "Use when you have multiple independent tasks (e.g. creating 5 separate component files) to speed up execution."
+    },
+    {
+      "name": "executing-plans",
+      "path": ".agent/skills/executing-plans/SKILL.md",
+      "triggers": [],
+      "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "path": ".agent/skills/finishing-a-development-branch/SKILL.md",
+      "triggers": [],
+      "description": "Use when development is complete and verified. Merges worktree changes back to main branch."
+    },
+    {
+      "name": "visual-intelligence",
+      "path": ".agent/skills/visual-intelligence/SKILL.md",
+      "triggers": [],
+      "description": "Extract design DNA, trends, and aesthetic parameters from visual sources (Pinterest) using Perplexity Sonar Pro."
+    },
+    {
+      "name": "git-guardrails",
+      "path": ".agent/skills/git-guardrails/SKILL.md",
+      "triggers": [],
+      "description": "Set up Claude Code hooks to block dangerous git commands before they execute. Use when setting up a new project, hardening CI safety, or user mentions \"git guardrails\", \"protect from force push\", \"block dangerous git\"."
+    },
+    {
+      "name": "brainstorming",
+      "path": ".agent/skills/brainstorming/SKILL.md",
+      "triggers": [],
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+    },
+    {
+      "name": "e-commerce",
+      "path": ".agent/skills/e-commerce/SKILL.md",
+      "triggers": [],
+      "description": "E-commerce patterns for Web and Mini Apps"
+    },
+    {
+      "name": "telegram-payments",
+      "path": ".agent/skills/telegram-payments/SKILL.md",
+      "triggers": [],
+      "description": "Integration patterns for Telegram Stars and TON Connect"
+    },
+    {
+      "name": "writing-plans",
+      "path": ".agent/skills/writing-plans/SKILL.md",
+      "triggers": [],
+      "description": "Use when you need to create a plan for implementation, after design is mostly settled"
+    },
+    {
+      "name": "design-an-interface",
+      "path": ".agent/skills/design-an-interface/SKILL.md",
+      "triggers": [],
+      "description": "Generate multiple radically different interface designs for a module using parallel sub-agents. Use when user wants to design an API, explore interface options, compare module shapes, or mentions \"design it twice\"."
+    },
+    {
+      "name": "requesting-code-review",
+      "path": ".agent/skills/requesting-code-review/SKILL.md",
+      "triggers": [],
+      "description": "Use when you want a second opinion on your code before human review."
+    },
+    {
+      "name": "receiving-code-review",
+      "path": ".agent/skills/receiving-code-review/SKILL.md",
+      "triggers": [],
+      "description": "How to process and apply feedback from code reviews (human or agent)."
+    },
+    {
+      "name": "zera-researcher",
+      "path": ".agent/skills/zera-researcher/SKILL.md",
+      "triggers": [],
+      "description": "Source-aware research mode for reliable synthesis and decision support."
+    },
+    {
+      "name": "react-doctor-analyzer",
+      "path": ".agent/skills/react-doctor-analyzer/SKILL.md",
+      "triggers": [],
+      "description": "Assess and automatically heal React/Next.js projects by fixing performance, architecture, React warnings, and dead code using millionco react-doctor CLI tool."
+    },
+    {
+      "name": "grill-me",
+      "path": ".agent/skills/grill-me/SKILL.md",
+      "triggers": [],
+      "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions \"grill me\"."
+    },
+    {
+      "name": "subagent-driven-development",
+      "path": ".agent/skills/subagent-driven-development/SKILL.md",
+      "triggers": [],
+      "description": "Use when a task is complex (C5) and requires high quality. Orchestrates specialized sub-agents."
+    },
+    {
+      "name": "claude-code-patterns",
+      "path": ".agent/skills/claude-code-patterns/SKILL.md",
+      "triggers": [],
+      "description": "Адаптированные паттерны из awesome-claude-code для локальной (offline-first) интеграции в Antigravity: CLAUDE.md, slash-commands, hooks и review workflows.\n"
+    },
+    {
+      "name": "memfree-engine",
+      "path": ".agent/skills/memfree-engine/SKILL.md",
+      "triggers": [],
+      "description": "Hybrid AI Search Engine (Internet + Project Context + Docs)"
+    },
+    {
+      "name": "zera-style-curator",
+      "path": "configs/skills/zera-style-curator/SKILL.md",
+      "triggers": [],
+      "description": "Refined aesthetic and lifestyle guidance aligned to user preferences and context."
+    },
+    {
+      "name": "ui-premium",
+      "path": "configs/skills/ui-premium/SKILL.md",
+      "triggers": [],
+      "description": "Create premium interfaces using the unified Antigravity design-system package."
+    },
+    {
+      "name": "zera-core",
+      "path": "configs/skills/zera-core/SKILL.md",
+      "triggers": [],
+      "description": "Core operating behavior for Zera persona (truthfulness, care, anti-sycophancy, action orientation)."
+    },
+    {
+      "name": "zera-muse",
+      "path": "configs/skills/zera-muse/SKILL.md",
+      "triggers": [],
+      "description": "Creative support mode for ideation while preserving practicality and coherence."
+    },
+    {
+      "name": "telegram-miniapp",
+      "path": "configs/skills/telegram-miniapp/SKILL.md",
+      "triggers": [],
+      "description": "Develop Telegram Mini Apps using React and native SDKs"
+    },
+    {
+      "name": "zera-strategist",
+      "path": "configs/skills/zera-strategist/SKILL.md",
+      "triggers": [],
+      "description": "Strategic planning mode for turning goals into prioritized execution paths."
+    },
+    {
+      "name": "design-system-architect",
+      "path": "configs/skills/design-system-architect/SKILL.md",
+      "triggers": [],
+      "description": "Generate and maintain design systems with token governance, page overrides, and adaptive source routing."
+    },
+    {
+      "name": "telegram-bot",
+      "path": "configs/skills/telegram-bot/SKILL.md",
+      "triggers": [],
+      "description": "Develop Telegram Bots using aiogram 3.x patterns"
+    },
+    {
+      "name": "visual-intelligence",
+      "path": "configs/skills/visual-intelligence/SKILL.md",
+      "triggers": [],
+      "description": "Extract design DNA, trends, and aesthetic parameters from visual sources (Pinterest) using Perplexity Sonar Pro."
+    },
+    {
+      "name": "e-commerce",
+      "path": "configs/skills/e-commerce/SKILL.md",
+      "triggers": [],
+      "description": "E-commerce patterns for Web and Mini Apps"
+    },
+    {
+      "name": "telegram-payments",
+      "path": "configs/skills/telegram-payments/SKILL.md",
+      "triggers": [],
+      "description": "Integration patterns for Telegram Stars and TON Connect"
+    },
+    {
+      "name": "zera-researcher",
+      "path": "configs/skills/zera-researcher/SKILL.md",
+      "triggers": [],
+      "description": "Source-aware research mode for reliable synthesis and decision support."
+    },
+    {
+      "name": "using-git-worktrees",
+      "path": "configs/skills/superpowers/using-git-worktrees/SKILL.md",
+      "triggers": [],
+      "description": "Use when starting a new complex task to isolate changes from the main working directory."
+    },
+    {
+      "name": "test-driven-development",
+      "path": "configs/skills/superpowers/test-driven-development/SKILL.md",
+      "triggers": [],
+      "description": "Use when writing logic that needs to be robust, or when fixing bugs (reproduction test first)."
+    },
+    {
+      "name": "write-a-prd",
+      "path": "configs/skills/superpowers/write-a-prd/SKILL.md",
+      "triggers": [],
+      "description": "Create a PRD through user interview, codebase exploration, and module design, then submit as a GitHub issue. Use when user wants to write a PRD, create a product requirements document, or plan a new feature."
+    },
+    {
+      "name": "systematic-debugging",
+      "path": "configs/skills/superpowers/systematic-debugging/SKILL.md",
+      "triggers": [],
+      "description": "Use when investigating a reproducible bug, failing test, or runtime error. Prevents random trial-and-error."
+    },
+    {
+      "name": "triage-issue",
+      "path": "configs/skills/superpowers/triage-issue/SKILL.md",
+      "triggers": [],
+      "description": "Investigate a bug by exploring the codebase, identify root cause, and file a GitHub issue with a TDD-based fix plan. Use when user reports a bug, wants to file an issue, mentions \"triage\", or wants to investigate and plan a fix."
+    },
+    {
+      "name": "prd-to-plan",
+      "path": "configs/skills/superpowers/prd-to-plan/SKILL.md",
+      "triggers": [],
+      "description": "Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. Use when user has a PRD and wants an implementation plan, or mentions \"turn PRD into plan\"."
+    },
+    {
+      "name": "ubiquitous-language",
+      "path": "configs/skills/superpowers/ubiquitous-language/SKILL.md",
+      "triggers": [],
+      "description": "Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Use when user wants to define domain terms, build a glossary, harden terminology, or mentions \"domain model\", \"DDD\", \"ubiquitous language\"."
+    },
+    {
+      "name": "using-superpowers",
+      "path": "configs/skills/superpowers/using-superpowers/SKILL.md",
+      "triggers": [],
+      "description": "Meta-skill. Use to find the right tool for the job."
+    },
+    {
+      "name": "dispatching-parallel-agents",
+      "path": "configs/skills/superpowers/dispatching-parallel-agents/SKILL.md",
+      "triggers": [],
+      "description": "Use when you have multiple independent tasks (e.g. creating 5 separate component files) to speed up execution."
+    },
+    {
+      "name": "executing-plans",
+      "path": "configs/skills/superpowers/executing-plans/SKILL.md",
+      "triggers": [],
+      "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "path": "configs/skills/superpowers/finishing-a-development-branch/SKILL.md",
+      "triggers": [],
+      "description": "Use when development is complete and verified. Merges worktree changes back to main branch."
+    },
+    {
+      "name": "git-guardrails",
+      "path": "configs/skills/superpowers/git-guardrails/SKILL.md",
+      "triggers": [],
+      "description": "Set up Claude Code hooks to block dangerous git commands before they execute. Use when setting up a new project, hardening CI safety, or user mentions \"git guardrails\", \"protect from force push\", \"block dangerous git\"."
+    },
+    {
+      "name": "brainstorming",
+      "path": "configs/skills/superpowers/brainstorming/SKILL.md",
+      "triggers": [],
+      "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+    },
+    {
+      "name": "writing-plans",
+      "path": "configs/skills/superpowers/writing-plans/SKILL.md",
+      "triggers": [],
+      "description": "Use when you need to create a plan for implementation, after design is mostly settled"
+    },
+    {
+      "name": "design-an-interface",
+      "path": "configs/skills/superpowers/design-an-interface/SKILL.md",
+      "triggers": [],
+      "description": "Generate multiple radically different interface designs for a module using parallel sub-agents. Use when user wants to design an API, explore interface options, compare module shapes, or mentions \"design it twice\"."
+    },
+    {
+      "name": "requesting-code-review",
+      "path": "configs/skills/superpowers/requesting-code-review/SKILL.md",
+      "triggers": [],
+      "description": "Use when you want a second opinion on your code before human review."
+    },
+    {
+      "name": "receiving-code-review",
+      "path": "configs/skills/superpowers/receiving-code-review/SKILL.md",
+      "triggers": [],
+      "description": "How to process and apply feedback from code reviews (human or agent)."
+    },
+    {
+      "name": "writing-skills",
+      "path": "configs/skills/superpowers/writing-skills/SKILL.md",
+      "triggers": [],
+      "description": "Use when you want to teach the system a new trick."
+    },
+    {
+      "name": "react-doctor-analyzer",
+      "path": "configs/skills/superpowers/react-doctor-analyzer/SKILL.md",
+      "triggers": [],
+      "description": "Assess and automatically heal React/Next.js projects by fixing performance, architecture, React warnings, and dead code using millionco react-doctor CLI tool."
+    },
+    {
+      "name": "grill-me",
+      "path": "configs/skills/superpowers/grill-me/SKILL.md",
+      "triggers": [],
+      "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions \"grill me\"."
+    },
+    {
+      "name": "subagent-driven-development",
+      "path": "configs/skills/superpowers/subagent-driven-development/SKILL.md",
+      "triggers": [],
+      "description": "Use when a task is complex (C5) and requires high quality. Orchestrates specialized sub-agents."
+    },
+    {
+      "name": "claude-code-patterns",
+      "path": "configs/skills/superpowers/claude-code-patterns/SKILL.md",
+      "triggers": [],
+      "description": "Адаптированные паттерны из awesome-claude-code для локальной (offline-first) интеграции в Antigravity: CLAUDE.md, slash-commands, hooks и review workflows.\n"
+    },
+    {
+      "name": "memfree-engine",
+      "path": "configs/skills/memfree-engine/SKILL.md",
+      "triggers": [],
+      "description": "Hybrid AI Search Engine (Internet + Project Context + Docs)"
+    }
+  ],
+  "rules": [
+    {
+      "name": "GLOBAL_RULES",
+      "path": "RULES.md",
+      "type": "global",
+      "role": "entrypoint_doc",
+      "layer": "L2",
+      "priority": 0,
+      "required": true,
+      "status": "active",
+      "source_of_truth": false
+    },
+    {
+      "name": "WORKSPACE_STANDARD",
+      "path": "configs/rules/WORKSPACE_STANDARD.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 10,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "AGENT_ONLY",
+      "path": "configs/rules/AGENT_ONLY.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 20,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "ENGINEERING_STANDARDS",
+      "path": "configs/rules/ENGINEERING_STANDARDS.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 30,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "BUILD_PROFILE",
+      "path": "configs/rules/BUILD_PROFILE.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 40,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "GLOBAL_RULE_RU",
+      "path": "configs/rules/GLOBAL_RULE_RU.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 50,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "TASK_ROUTING",
+      "path": "configs/rules/TASK_ROUTING.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 60,
+      "required": true,
+      "status": "active",
+      "source_of_truth": false
+    },
+    {
+      "name": "SECURITY_RULES",
+      "path": "configs/rules/SECURITY_RULES.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 70,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "META_PROMPT",
+      "path": "configs/rules/META_PROMPT.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 80,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "QWEN",
+      "path": "configs/rules/QWEN.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 90,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "LEGACY_CODE_PROTECTION",
+      "path": "configs/rules/LEGACY_CODE_PROTECTION.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 100,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    },
+    {
+      "name": "ANTI_CHAOS",
+      "path": "configs/rules/ANTI_CHAOS.md",
+      "type": "domain_rule",
+      "role": "rule_document",
+      "layer": "L2",
+      "priority": 110,
+      "required": true,
+      "status": "active",
+      "source_of_truth": true
+    }
+  ],
+  "workflows": [
+    {
+      "name": "error-healing",
+      "path": ".agent/workflows/error-healing.md",
+      "description": "Systematic debugging workflow for failures and regressions."
+    },
+    {
+      "name": "explore",
+      "path": ".agent/workflows/explore.md",
+      "description": "深度探索复杂问题，通过\"向外搜索 + 向内发散\"双向螺旋产出结构化洞察，适用于技术调研、方案选型和头脑风暴。"
+    },
+    {
+      "name": "drift-validator",
+      "path": ".agent/workflows/drift-validator.md",
+      "description": "Validate that configs, runtime state, docs, and validators still agree."
+    },
+    {
+      "name": "validate",
+      "path": ".agent/workflows/validate.md",
+      "description": ""
+    },
+    {
+      "name": "infa",
+      "path": ".agent/workflows/infa.md",
+      "description": "Show system information and available workflows."
+    },
+    {
+      "name": "repo-memory-refresh",
+      "path": ".agent/workflows/repo-memory-refresh.md",
+      "description": "Refresh repository memory before planning or execution."
+    },
+    {
+      "name": "triage",
+      "path": ".agent/workflows/triage.md",
+      "description": "Classify incoming tasks by type, complexity, risk, and required gates."
+    },
+    {
+      "name": "self-learning-retro",
+      "path": ".agent/workflows/self-learning-retro.md",
+      "description": "Retrospective loop for extracting reliable process improvements."
+    },
+    {
+      "name": "change",
+      "path": ".agent/workflows/change.md",
+      "description": "处理微调级变更请求，通过 7 问题法严格评估，仅允许修改已有任务的细节，禁止创建新任务或添加新功能。需要新任务时引导用户运行 /genesis。"
+    },
+    {
+      "name": "challenge",
+      "path": ".agent/workflows/challenge.md",
+      "description": "对项目决策进行系统性挑战，通过三维度审查框架（系统设计、运行模拟、工程实现）深度分析，用证据证明风险真实存在，产出分级问题清单。"
+    },
+    {
+      "name": "genesis",
+      "path": ".agent/workflows/genesis.md",
+      "description": "从 0 到代码的项目启动全流程，将模糊想法转化为清晰的 PRD、架构文档和 ADR，适用于新项目立项、重大功能重构或架构升级。"
+    },
+    {
+      "name": "project-bootstrap-guided",
+      "path": ".agent/workflows/project-bootstrap-guided.md",
+      "description": "Guided project bootstrap with checkpoints and validation."
+    },
+    {
+      "name": "build-memory-capture",
+      "path": ".agent/workflows/build-memory-capture.md",
+      "description": "Capture durable lessons after a completed task."
+    },
+    {
+      "name": "critic",
+      "path": ".agent/workflows/critic.md",
+      "description": ""
+    },
+    {
+      "name": "kilo-mode-routing",
+      "path": ".agent/workflows/kilo-mode-routing.md",
+      "description": "Role-based planning, coding, debugging, and review flow."
+    },
+    {
+      "name": "craft",
+      "path": ".agent/workflows/craft.md",
+      "description": "创建高质量的工作流、技能和提示词，融合行业最佳实践与实战经验，提供 Workflow/Skill/Prompt 三种模式的标准框架。"
+    },
+    {
+      "name": "qwen-orchestration",
+      "path": ".agent/workflows/qwen-orchestration.md",
+      "description": ""
+    },
+    {
+      "name": "session-memory",
+      "path": ".agent/workflows/session-memory.md",
+      "description": "Управление памятью сессии — запись контекста при старте и сохранение summary перед сжатием. Предотвращает деградацию точности при \"Session compressed N times\"."
+    },
+    {
+      "name": "swarm-review",
+      "path": ".agent/workflows/swarm-review.md",
+      "description": "Final review gate for multi-file or C3+ changes."
+    },
+    {
+      "name": "multi-agent-routing",
+      "path": ".agent/workflows/multi-agent-routing.md",
+      "description": "Standard multi-agent routing for complex execution."
+    },
+    {
+      "name": "swarm-plan",
+      "path": ".agent/workflows/swarm-plan.md",
+      "description": "Plan coordinated multi-agent or multi-lane execution."
+    },
+    {
+      "name": "multi-agent-routing-v3-free-first",
+      "path": ".agent/workflows/multi-agent-routing-v3-free-first.md",
+      "description": "Free-first multi-agent routing with premium escalation gates."
+    },
+    {
+      "name": "design-system",
+      "path": ".agent/workflows/design-system.md",
+      "description": "为单个系统设计详细的技术文档，通过调研最佳实践和深度思考产出完整的 System Design，包含架构图、接口设计和 Trade-offs 讨论。"
+    },
+    {
+      "name": "axel",
+      "path": ".agent/workflows/axel.md",
+      "description": "Architecture-first execution flow for high-uncertainty changes."
+    },
+    {
+      "name": "ai-bot-kb",
+      "path": ".agent/workflows/ai-bot-kb.md",
+      "description": "Knowledge-base workflow for AI bot and RAG systems."
+    },
+    {
+      "name": "task-blueprint-selection",
+      "path": ".agent/workflows/task-blueprint-selection.md",
+      "description": "Select the best local implementation blueprint for the task."
+    },
+    {
+      "name": "scout",
+      "path": ".agent/workflows/scout.md",
+      "description": "探测系统风险、隐藏耦合和\"改了就炸\"的暗坑，通过 Git 热点分析和 Gap Analysis 产出风险报告，适用于接手遗留项目或重大变更前。"
+    },
+    {
+      "name": "polyglot-autoevo-routing",
+      "path": ".agent/workflows/polyglot-autoevo-routing.md",
+      "description": "Route multi-language work across bounded lanes."
+    },
+    {
+      "name": "blueprint",
+      "path": ".agent/workflows/blueprint.md",
+      "description": "将架构设计拆解为可执行的 WBS 任务清单，每个任务带验收标准和验证说明，生成 Mermaid 依赖图，前提是已完成 /genesis。"
+    },
+    {
+      "name": "ralph-loop",
+      "path": ".agent/workflows/ralph-loop.md",
+      "description": "Bounded evolutionary optimization loop."
+    }
+  ],
+  "configs": [
+    {
+      "name": "build_memory_entry_schema",
+      "path": "configs/tooling/build_memory_entry_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_external_imports",
+      "path": "configs/tooling/zera_external_imports.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "runtime_slo_targets",
+      "path": "configs/tooling/runtime_slo_targets.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "polyglot_handoff_contract",
+      "path": "configs/tooling/polyglot_handoff_contract.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "mcp_design_sources",
+      "path": "configs/tooling/mcp_design_sources.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "self-refusal-rules",
+      "path": "configs/tooling/self-refusal-rules.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "tool_execution_policy",
+      "path": "configs/tooling/tool_execution_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "PROMPT_TEMPLATES_OPTIMIZED",
+      "path": "configs/tooling/PROMPT_TEMPLATES_OPTIMIZED.md",
+      "ext": ".md",
+      "layer": "tooling"
+    },
+    {
+      "name": "memory_evaluation",
+      "path": "configs/tooling/memory_evaluation.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "strategy-genome-library",
+      "path": "configs/tooling/strategy-genome-library.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "ritual-detection-rules",
+      "path": "configs/tooling/ritual-detection-rules.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "metrics_dashboard_template",
+      "path": "configs/tooling/metrics_dashboard_template.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "model_ab_config",
+      "path": "configs/tooling/model_ab_config.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "qwen_context_agent",
+      "path": "configs/tooling/qwen_context_agent.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "runtime_providers",
+      "path": "configs/tooling/runtime_providers.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "memory_mesh",
+      "path": "configs/tooling/memory_mesh.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "confidence-calibration-rules",
+      "path": "configs/tooling/confidence-calibration-rules.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "workflow_sets_catalog",
+      "path": "configs/tooling/workflow_sets_catalog.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "agent-pool.config",
+      "path": "configs/tooling/agent-pool.config.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_mode_router",
+      "path": "configs/tooling/zera_mode_router.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "reflection_agent_system",
+      "path": "configs/tooling/reflection_agent_system.md",
+      "ext": ".md",
+      "layer": "tooling"
+    },
+    {
+      "name": "optional_adapters",
+      "path": "configs/tooling/optional_adapters.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "self_reflection_schema",
+      "path": "configs/tooling/self_reflection_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "execution-graph-examples",
+      "path": "configs/tooling/execution-graph-examples.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_promotion_policy",
+      "path": "configs/tooling/zera_promotion_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "drift-detection-rules",
+      "path": "configs/tooling/drift-detection-rules.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "strategy-selection-engine",
+      "path": "configs/tooling/strategy-selection-engine.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_promotion_artifact_schema",
+      "path": "configs/tooling/zera_promotion_artifact_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_branching_policy",
+      "path": "configs/tooling/zera_branching_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "agent_os_trace_schema",
+      "path": "configs/tooling/agent_os_trace_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "test_suite_matrix",
+      "path": "configs/tooling/test_suite_matrix.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "background_jobs",
+      "path": "configs/tooling/background_jobs.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "autonomy_scenario_bank",
+      "path": "configs/tooling/autonomy_scenario_bank.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "persona_eval_suite",
+      "path": "configs/tooling/persona_eval_suite.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "free_model_quality_gate",
+      "path": "configs/tooling/free_model_quality_gate.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "redteam_agent_failure_suite",
+      "path": "configs/tooling/redteam_agent_failure_suite.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "meta-retro-template",
+      "path": "configs/tooling/meta-retro-template.md",
+      "ext": ".md",
+      "layer": "tooling"
+    },
+    {
+      "name": "skill_store",
+      "path": "configs/tooling/skill_store.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_command_registry",
+      "path": "configs/tooling/zera_command_registry.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_growth_governance",
+      "path": "configs/tooling/zera_growth_governance.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "build_memory_index_schema",
+      "path": "configs/tooling/build_memory_index_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_evolution_state.schema",
+      "path": "configs/tooling/zera_evolution_state.schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "source_trust_policy",
+      "path": "configs/tooling/source_trust_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "benchmark_config",
+      "path": "configs/tooling/benchmark_config.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "network_policy",
+      "path": "configs/tooling/network_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "free_llm_api_catalog",
+      "path": "configs/tooling/free_llm_api_catalog.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_client_profiles",
+      "path": "configs/tooling/zera_client_profiles.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zeroclaw_profiles",
+      "path": "configs/tooling/zeroclaw_profiles.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "policy-pruning-engine",
+      "path": "configs/tooling/policy-pruning-engine.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "memory_write_policy",
+      "path": "configs/tooling/memory_write_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "budget_policy",
+      "path": "configs/tooling/budget_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "assumption-tracking-schema",
+      "path": "configs/tooling/assumption-tracking-schema.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "benchmark_suite",
+      "path": "configs/tooling/benchmark_suite.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "integration_contracts",
+      "path": "configs/tooling/integration_contracts.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "project_bootstrap_contract",
+      "path": "configs/tooling/project_bootstrap_contract.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "project_bootstrap_template_catalog",
+      "path": "configs/tooling/project_bootstrap_template_catalog.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "test_reliability_program",
+      "path": "configs/tooling/test_reliability_program.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "mcp_design_sources.example",
+      "path": "configs/tooling/mcp_design_sources.example.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "handoff_contract",
+      "path": "configs/tooling/handoff_contract.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "trace_schema",
+      "path": "configs/tooling/trace_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "imported_background_jobs",
+      "path": "configs/tooling/imported_background_jobs.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "notebooklm_integration",
+      "path": "configs/tooling/notebooklm_integration.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "context-pack-schemas",
+      "path": "configs/tooling/context-pack-schemas.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "model_providers",
+      "path": "configs/tooling/model_providers.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "debug_surface_map",
+      "path": "configs/tooling/debug_surface_map.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "self-analysis-engine",
+      "path": "configs/tooling/self-analysis-engine.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "prompt-ir-schema",
+      "path": "configs/tooling/prompt-ir-schema.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "cli_tools",
+      "path": "configs/tooling/cli_tools.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "repo_memory_catalog_schema",
+      "path": "configs/tooling/repo_memory_catalog_schema.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "routing-matrix",
+      "path": "configs/tooling/routing-matrix.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "mcp_profiles",
+      "path": "configs/tooling/mcp_profiles.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "efficiency-charter",
+      "path": "configs/tooling/efficiency-charter.md",
+      "ext": ".md",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_research_registry",
+      "path": "configs/tooling/zera_research_registry.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "autonomy_policy",
+      "path": "configs/tooling/autonomy_policy.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "zera_skill_foundry",
+      "path": "configs/tooling/zera_skill_foundry.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "kill-switches",
+      "path": "configs/tooling/kill-switches.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "evaluation-harness",
+      "path": "configs/tooling/evaluation-harness.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "runtime_benchmark_matrix",
+      "path": "configs/tooling/runtime_benchmark_matrix.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "task_blueprint_contract",
+      "path": "configs/tooling/task_blueprint_contract.json",
+      "ext": ".json",
+      "layer": "tooling"
+    },
+    {
+      "name": "wiki_core",
+      "path": "configs/tooling/wiki_core.yaml",
+      "ext": ".yaml",
+      "layer": "tooling"
+    },
+    {
+      "name": "observability",
+      "path": "configs/global/observability.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "routing_policy",
+      "path": "configs/global/routing_policy.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "region_profiles",
+      "path": "configs/global/region_profiles.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "integration_scoring",
+      "path": "configs/global/integration_scoring.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "workflow_graphs",
+      "path": "configs/global/workflow_graphs.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "identity_portability",
+      "path": "configs/global/identity_portability.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "quality_gates",
+      "path": "configs/global/quality_gates.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "connectors_registry",
+      "path": "configs/global/connectors_registry.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "memory_policy",
+      "path": "configs/global/memory_policy.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "platform_mode",
+      "path": "configs/global/platform_mode.yaml",
+      "ext": ".yaml",
+      "layer": "global"
+    },
+    {
+      "name": "research_pack",
+      "path": "configs/vertical_packs/research_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    },
+    {
+      "name": "strategy_pack",
+      "path": "configs/vertical_packs/strategy_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    },
+    {
+      "name": "estimator_pack",
+      "path": "configs/vertical_packs/estimator_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    },
+    {
+      "name": "pdf_pack",
+      "path": "configs/vertical_packs/pdf_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    },
+    {
+      "name": "coding_pack",
+      "path": "configs/vertical_packs/coding_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    },
+    {
+      "name": "excel_pack",
+      "path": "configs/vertical_packs/excel_pack.yaml",
+      "ext": ".yaml",
+      "layer": "vertical_pack"
+    }
+  ],
+  "docs": [
+    {
+      "name": "ADAPTATION_SYSTEM_V1_2026-04-07",
+      "title": "KI: Adaptation System — Система адаптации агента",
+      "path": "docs/ki/ADAPTATION_SYSTEM_V1_2026-04-07.md",
+      "status": "unknown",
+      "description": "**Версия:** 1.0 | **Дата:** 2026-04-07 | **Статус:** Active"
+    },
+    {
+      "name": "AGENT_EXPERIENCE_GRAPH",
+      "title": "🧠 Agent Experience & Mastery Graph",
+      "path": "docs/ki/AGENT_EXPERIENCE_GRAPH.md",
+      "status": "unknown",
+      "description": "Этот отчет генерируется автоматически на основе логов выполнения задач. Он отражает реальное «мастерство» Агента в использовании различных навыков."
+    },
+    {
+      "name": "AGENT_HARNESS_MAP",
+      "title": "Agent Harness Map",
+      "path": "docs/ki/AGENT_HARNESS_MAP.md",
+      "status": "canonical",
+      "description": "Короткая карта для agent-first работы в Antigravity Core. Это не замена `RULES.md`;"
+    },
+    {
+      "name": "AGENT_OS_V2_RU",
+      "title": "Agent OS v2 (Antigravity Core)",
+      "path": "docs/ki/AGENT_OS_V2_RU.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-16"
+    },
+    {
+      "name": "ANTIGRAVITY_ATLAS",
+      "title": "🗺️ Antigravity Atlas v2 (Adaptive Knowledge Mesh) 🧬⚡",
+      "path": "docs/ki/ANTIGRAVITY_ATLAS.md",
+      "status": "unknown",
+      "description": "Эта карта объединяет все возможности системы. Всё взаимосвязано и постоянно эволюционирует."
+    },
+    {
+      "name": "ANTIGRAVITY_CORE_V4_OPTIMIZATION_2026-02-24",
+      "title": "KI_CAPTURE_ANTIGRAVITY_CORE_V4_OPTIMIZATION_2026-02-24",
+      "path": "docs/ki/ANTIGRAVITY_CORE_V4_OPTIMIZATION_2026-02-24.md",
+      "status": "unknown",
+      "description": "- task_id: f474523b-d12e-4149-9d37-2a3e96b6caf8"
+    },
+    {
+      "name": "ANTIGRAVITY_V3_1_SYNC_CAPTURE_2026-02-22",
+      "title": "KI_CAPTURE_ANTIGRAVITY_V3_1_SYNC_AND_QWEN_INTEGRATION_2026-02-22",
+      "path": "docs/ki/ANTIGRAVITY_V3_1_SYNC_CAPTURE_2026-02-22.md",
+      "status": "unknown",
+      "description": "- task_id: f14540"
+    },
+    {
+      "name": "BUILD_MEMORY_LIBRARY_ARCHITECTURE_V1_RU",
+      "title": "BUILD_MEMORY_LIBRARY_ARCHITECTURE_V1_RU",
+      "path": "docs/ki/BUILD_MEMORY_LIBRARY_ARCHITECTURE_V1_RU.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-22"
+    },
+    {
+      "name": "CHANGELOG_2026-04-09",
+      "title": "Changelog",
+      "path": "docs/ki/CHANGELOG_2026-04-09.md",
+      "status": "unknown",
+      "description": "- Fixed `scripts/run_quality_checks.sh` root resolution and profile normalization."
+    },
+    {
+      "name": "CLI_INTEGRATION_SUMMARY",
+      "title": "CLI Tools Integration Summary",
+      "path": "docs/ki/CLI_INTEGRATION_SUMMARY.md",
+      "status": "unknown",
+      "description": "**Date:** 2026-03-11"
+    },
+    {
+      "name": "CLI_TOOLS_AUDIT_2026-03-11",
+      "title": "CLI Tools Audit Report",
+      "path": "docs/ki/CLI_TOOLS_AUDIT_2026-03-11.md",
+      "status": "unknown",
+      "description": "**Date:** 2026-03-11"
+    },
+    {
+      "name": "CODE_REVIEW_PLAN",
+      "title": "Global Code Review Plan (Pre-Commit)",
+      "path": "docs/ki/CODE_REVIEW_PLAN.md",
+      "status": "unknown",
+      "description": "This document defines the **mandatory code review process** that must be completed **before every commit** in the Antigravity Core workspace."
+    },
+    {
+      "name": "COGNITIVE_ARCHITECTURE_ANALYSIS_2026-03-11",
+      "title": "Cognitive Architecture Analysis Report",
+      "path": "docs/ki/COGNITIVE_ARCHITECTURE_ANALYSIS_2026-03-11.md",
+      "status": "unknown",
+      "description": "**Project:** antigravity-core"
+    },
+    {
+      "name": "COGNITIVE_ARCHITECTURE_ANALYSIS_V2_INDUSTRIAL_2026-03-11",
+      "title": "Cognitive Architecture Analysis — Industry Standards Enhanced",
+      "path": "docs/ki/COGNITIVE_ARCHITECTURE_ANALYSIS_V2_INDUSTRIAL_2026-03-11.md",
+      "status": "unknown",
+      "description": "**Project:** antigravity-core"
+    },
+    {
+      "name": "DESIGN_SYSTEM_OVERVIEW_RU",
+      "title": "Наша дизайн-система: простое и подробное объяснение",
+      "path": "docs/ki/DESIGN_SYSTEM_OVERVIEW_RU.md",
+      "status": "unknown",
+      "description": "> Этот документ объясняет, как устроена наша дизайн-система, на человеческом языке."
+    },
+    {
+      "name": "ENGINEERING_AUDIT_REPORT_2026-04-08",
+      "title": "Antigravity Experience Mesh: Engineering Audit & Optimization Report 🛠️🤖🧠",
+      "path": "docs/ki/ENGINEERING_AUDIT_REPORT_2026-04-08.md",
+      "status": "unknown",
+      "description": "> **Status**: ✅ VALIDATED & OPTIMIZED"
+    },
+    {
+      "name": "HERMES_PROFILE_CONSOLIDATION_2026-04-09",
+      "title": "Консолидация профилей Hermes: antigravity + zera → единый Zera",
+      "path": "docs/ki/HERMES_PROFILE_CONSOLIDATION_2026-04-09.md",
+      "status": "unknown",
+      "description": "**Дата:** 9 апреля 2026"
+    },
+    {
+      "name": "INDUSTRY_STANDARDS_BENCHMARK_2026-03-11",
+      "title": "Industry Standards Benchmark Report",
+      "path": "docs/ki/INDUSTRY_STANDARDS_BENCHMARK_2026-03-11.md",
+      "status": "unknown",
+      "description": "**Project:** antigravity-core"
+    },
+    {
+      "name": "KI-mcp-env-timeout",
+      "title": "Ошибка: контекстный дедлайн (context deadline exceeded) и ошибка переменных окружения при старте MCP",
+      "path": "docs/ki/KI-mcp-env-timeout.md",
+      "status": "unknown",
+      "description": "При старте системы Antigravity, MCP сервера инициализировались с ошибками (в логах `context deadline exceeded` для npx серверов) и падали процессы (например, `stitch`, `google-developer-knowledge`, `supabase-mcp-server`)"
+    },
+    {
+      "name": "KI_CAPTURE_HERMES_MCP_ACCESS_2026-04-10",
+      "title": "KI_CAPTURE_HERMES_MCP_ACCESS_2026-04-10",
+      "path": "docs/ki/KI_CAPTURE_HERMES_MCP_ACCESS_2026-04-10.md",
+      "status": "unknown",
+      "description": "- **task_id**: a7adbbcf-6b8b-4d75-b41a-8c2851e772d7"
+    },
+    {
+      "name": "KI_CAPTURE_OMNI_LOOP_V5_2026-04-08",
+      "title": "KI_CAPTURE_OMNI_LOOP_V5_2026-04-08",
+      "path": "docs/ki/KI_CAPTURE_OMNI_LOOP_V5_2026-04-08.md",
+      "status": "unknown",
+      "description": "- task_id: T-97676-OMNI"
+    },
+    {
+      "name": "KI_CAPTURE_V4_ROUTING_STABILIZATION_2026-03-11",
+      "title": "KI_CAPTURE_V4_ROUTING_STABILIZATION_2026-03-11",
+      "path": "docs/ki/KI_CAPTURE_V4_ROUTING_STABILIZATION_2026-03-11.md",
+      "status": "unknown",
+      "description": "- task_id: 71dbb94b-bbc7-42a5-b857-069f0b7daeee"
+    },
+    {
+      "name": "KI_HYBRID_INTEL_INTEGRATION_2026-04-08",
+      "title": "KI_HYBRID_INTEL_INTEGRATION_2026-04-08",
+      "path": "docs/ki/KI_HYBRID_INTEL_INTEGRATION_2026-04-08.md",
+      "status": "unknown",
+      "description": "- task_id: v4-migration-phase-1-2"
+    },
+    {
+      "name": "LIGHTRAG_INTEGRATION",
+      "title": "LightRAG Integration Guide",
+      "path": "docs/ki/LIGHTRAG_INTEGRATION.md",
+      "status": "unknown",
+      "description": "```bash"
+    },
+    {
+      "name": "MCP_PROFILE_POLICY_RU",
+      "title": "MCP_PROFILE_POLICY_RU (COMPAT / ACTIVE FOR MCP PROFILES)",
+      "path": "docs/ki/MCP_PROFILE_POLICY_RU.md",
+      "status": "unknown",
+      "description": "Политика профилирования MCP. Документ актуален для **MCP-профилей**, но не является источником истины для маршрутизации моделей/оркестрации v4."
+    },
+    {
+      "name": "METRICS_DASHBOARD_V1_RU",
+      "title": "Metrics Dashboard V1",
+      "path": "docs/ki/METRICS_DASHBOARD_V1_RU.md",
+      "status": "unknown",
+      "description": "Обязательные метрики системы Antigravity OS v3 (на основе `AGENT_OS_TRACE_FILE`):"
+    },
+    {
+      "name": "MODEL_ROUTING_POLICY_RU",
+      "title": "MODEL_ROUTING_POLICY_RU (DEPRECATED / COMPAT)",
+      "path": "docs/ki/MODEL_ROUTING_POLICY_RU.md",
+      "status": "unknown",
+      "description": "Этот документ сохранен как совместимый исторический слой."
+    },
+    {
+      "name": "NANO_BANANA2_PROMPT_FEED_OBSIDIAN_AUTOMATION_2026-04-08_RU",
+      "title": "Nano Banana 2 Prompt Feed -> Obsidian Automation",
+      "path": "docs/ki/NANO_BANANA2_PROMPT_FEED_OBSIDIAN_AUTOMATION_2026-04-08_RU.md",
+      "status": "unknown",
+      "description": "Дата: 2026-04-08"
+    },
+    {
+      "name": "OPENROUTER_REPORT_RU",
+      "title": "Отчет об интеграции OpenRouter: Стратегия \"Free First\" (2026)",
+      "path": "docs/ki/OPENROUTER_REPORT_RU.md",
+      "status": "unknown",
+      "description": "Этот отчет подготовлен по вашему запросу на приоритизацию бесплатных моделей с возможностью редкого использования бюджетных опций."
+    },
+    {
+      "name": "QWEN_EFFICIENCY_CARD",
+      "title": "QWEN Agent Efficiency Card",
+      "path": "docs/ki/QWEN_EFFICIENCY_CARD.md",
+      "status": "unknown",
+      "description": "**Version:** 1.0 | **Status:** Active | **Updated:** 2026-02-22"
+    },
+    {
+      "name": "QWEN_NEO_INTEGRATION_EFFICIENCY_2026-02-22",
+      "title": "QWEN Agent Integration Efficiency Report",
+      "path": "docs/ki/QWEN_NEO_INTEGRATION_EFFICIENCY_2026-02-22.md",
+      "status": "unknown",
+      "description": "**Document ID:** `KI/QWEN-NEO-2026-02-22`"
+    },
+    {
+      "name": "QWEN_TEST_REPORT_2026-02-22",
+      "title": "QWEN Agent Efficiency Test Report",
+      "path": "docs/ki/QWEN_TEST_REPORT_2026-02-22.md",
+      "status": "unknown",
+      "description": "**Report ID:** `TEST/QWEN-EFFICIENCY/2026-02-22`"
+    },
+    {
+      "name": "RECOVERY_RESILIENCE_INTEGRATION_PROPOSAL",
+      "title": "Recovery & Resilience Integration Proposal",
+      "path": "docs/ki/RECOVERY_RESILIENCE_INTEGRATION_PROPOSAL.md",
+      "status": "unknown",
+      "description": "**Author:** Council Member (System Resilience)"
+    },
+    {
+      "name": "REPO_MEMORY_NAVIGATION_V1_RU",
+      "title": "REPO_MEMORY_NAVIGATION_V1_RU",
+      "path": "docs/ki/REPO_MEMORY_NAVIGATION_V1_RU.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-22"
+    },
+    {
+      "name": "ROUTING_CONSUMERS_INVENTORY_2026-02-23",
+      "title": "ROUTING_CONSUMERS_INVENTORY_2026-02-23",
+      "path": "docs/ki/ROUTING_CONSUMERS_INVENTORY_2026-02-23.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-23"
+    },
+    {
+      "name": "RULES_ENTRY_ARCH_AUDIT_2026-04-12",
+      "title": "RULES Entry Architecture Audit (2026-04-12)",
+      "path": "docs/ki/RULES_ENTRY_ARCH_AUDIT_2026-04-12.md",
+      "status": "canonical",
+      "description": "`RULES.md` is retained as a human entrypoint, but machine consumers must treat"
+    },
+    {
+      "name": "RULES_SOURCE_OF_TRUTH_MATRIX_2026-02-23",
+      "title": "RULES_SOURCE_OF_TRUTH_MATRIX_2026-02-23",
+      "path": "docs/ki/RULES_SOURCE_OF_TRUTH_MATRIX_2026-02-23.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-23"
+    },
+    {
+      "name": "SELF_LEARNING_STRENGTHS_AUDIT_2026-04-09",
+      "title": "Анализ силы скриптов самообучения Zera",
+      "path": "docs/ki/SELF_LEARNING_STRENGTHS_AUDIT_2026-04-09.md",
+      "status": "unknown",
+      "description": "**Дата:** 9 апреля 2026"
+    },
+    {
+      "name": "SKILLS_AND_RULES_AUDIT_2026-03-11",
+      "title": "Skills and Rules Audit Report",
+      "path": "docs/ki/SKILLS_AND_RULES_AUDIT_2026-03-11.md",
+      "status": "unknown",
+      "description": "**Project:** antigravity-core"
+    },
+    {
+      "name": "SKILLS_WORKFLOWS_PIPELINE_MAP_2026-02-23",
+      "title": "SKILLS_WORKFLOWS_PIPELINE_MAP_2026-02-23",
+      "path": "docs/ki/SKILLS_WORKFLOWS_PIPELINE_MAP_2026-02-23.md",
+      "status": "unknown",
+      "description": "Дата: 2026-02-23"
+    },
+    {
+      "name": "UI_LIBRARIES_REGISTRY_RU",
+      "title": "UI Library Registry",
+      "path": "docs/ki/UI_LIBRARIES_REGISTRY_RU.md",
+      "status": "unknown",
+      "description": "This registry provides a curated list of UI libraries and resources to accelerate premium design development."
+    },
+    {
+      "name": "WAVE_2_SHADOW_UPGRADE_AND_CONTROLLED_PROMOTE",
+      "title": "Wave 2+3 — Hermes Shadow Upgrade + Controlled Full Promote (Hardened)",
+      "path": "docs/ki/WAVE_2_SHADOW_UPGRADE_AND_CONTROLLED_PROMOTE.md",
+      "status": "unknown",
+      "description": "**Date:** 2026-04-11 (Wave 2), 2026-04-11 (Wave 3 hardening)"
+    },
+    {
+      "name": "WAVE_5_RUNTIME_EVIDENCE_INTEGRITY",
+      "title": "Wave 5 — Hermetic Tests, Real Rehearsal, Runtime Evidence Integrity",
+      "path": "docs/ki/WAVE_5_RUNTIME_EVIDENCE_INTEGRITY.md",
+      "status": "unknown",
+      "description": "**Date:** 2026-04-11"
+    },
+    {
+      "name": "ZERA_SELF_EVOLUTION_LOOP_GUIDE_2026-04-09",
+      "title": "Zera Self-Evolution Loop — Руководство",
+      "path": "docs/ki/ZERA_SELF_EVOLUTION_LOOP_GUIDE_2026-04-09.md",
+      "status": "unknown",
+      "description": "**Дата:** 9 апреля 2026"
+    },
+    {
+      "name": "ZEROCLAW_ARCHITECTURE_ANALYSIS_2026-03-21",
+      "title": "Анализ архитектуры ZeroClaw",
+      "path": "docs/ki/ZEROCLAW_ARCHITECTURE_ANALYSIS_2026-03-21.md",
+      "status": "unknown",
+      "description": "**Дата:** 21 марта 2026"
+    },
+    {
+      "name": "ZEROCLAW_MIGRATION_REPORT_2026-03-21",
+      "title": "Миграция ZeroClaw → Agent OS Python",
+      "path": "docs/ki/ZEROCLAW_MIGRATION_REPORT_2026-03-21.md",
+      "status": "unknown",
+      "description": "**Дата:** 21 марта 2026"
+    },
+    {
+      "name": "benchmark_20260225",
+      "title": "Benchmark Report: 2026-02-25 01:23:05",
+      "path": "docs/ki/benchmark_20260225.md",
+      "status": "unknown",
+      "description": "- **Composite Score**: 0.96"
+    },
+    {
+      "name": "benchmark_latest",
+      "title": "Benchmark Report: 2026-04-10 23:07:35",
+      "path": "docs/ki/benchmark_latest.md",
+      "status": "unknown",
+      "description": "- **Run ID**: `d736ea14-257e-46d5-913b-e258443d05c0`"
+    },
+    {
+      "name": "immunity_import_healing",
+      "title": "🛡️ Immunity Report: Import Path Healing (v5 Refactor)",
+      "path": "docs/ki/immunity_import_healing.md",
+      "status": "unknown",
+      "description": "Импорты модулей `profile_manager`, `agent_os.*` и `swarmctl` ломались в IDE и (в случае `profile_manager`) в рантайме `agent_runtime.py`."
+    },
+    {
+      "name": "multi_agent_analysis_2026_RU",
+      "title": "🌌 KI: Сравнительный анализ Antigravity v4 vs SOTA 2026",
+      "path": "docs/ki/multi_agent_analysis_2026_RU.md",
+      "status": "unknown",
+      "description": "> [!INFO]"
+    },
+    {
+      "name": "omniroute-integration",
+      "title": "🌌 OmniRoute Integration — Knowledge Item",
+      "path": "docs/ki/omniroute-integration.md",
+      "status": "unknown",
+      "description": "OmniRoute is an AI gateway providing smart routing, auto-fallbacks, and unified API access. In the Antigravity ecosystem, it serves as a central hub for multi-provider LLM management."
+    },
+    {
+      "name": "retro-2026-04-08-self-learning",
+      "title": "Self-Learning Retro — 2026-04-08",
+      "path": "docs/ki/retro-2026-04-08-self-learning.md",
+      "status": "unknown",
+      "description": "- **Trigger:** Manual  invocation"
+    },
+    {
+      "name": "retro_zera-governance-hardening-2026-04-08",
+      "title": "Retrospective — Zera Governance Hardening & Intelligence Intake",
+      "path": "docs/ki/retro_zera-governance-hardening-2026-04-08.md",
+      "status": "unknown",
+      "description": "**Task ID:** zera-governance-hardening-2026-04-08"
+    },
+    {
+      "name": "test_alignment_v4",
+      "title": "Test Suite Alignment Complete",
+      "path": "docs/ki/test_alignment_v4.md",
+      "status": "unknown",
+      "description": ""
+    },
+    {
+      "name": "transformation_2026_q1",
+      "title": "KI: Трансформация Antigravity Core — Q1 2026",
+      "path": "docs/ki/transformation_2026_q1.md",
+      "status": "unknown",
+      "description": "10-фазная трансформация монорепозитория агентной платформы, выполненная в марте 2026."
+    },
+    {
+      "name": "zera-hermes-telegram-profile-sync-2026-04-09",
+      "title": "KI: Zera/Hermes/Telegram Profile Sync (2026-04-09)",
+      "path": "docs/ki/zera-hermes-telegram-profile-sync-2026-04-09.md",
+      "status": "unknown",
+      "description": "- Telegram responses intermittently showed generic Hermes identity (\"Hermes Agent, Nous Research\") instead of Zera persona."
+    }
+  ],
+  "wiki": [],
+  "validation": {
+    "missing_paths": [],
+    "stale_docs": []
+  },
+  "experience": []
+}

@@ -1,0 +1,18 @@
+{
+  "version_pin": "0.3.4",
+  "python_bin": "/Users/user/.antigravity/venvs/notebooklm-py-0.3.4-arm64/bin/python3",
+  "install_extras": "browser,cookies",
+  "default_retry": 3,
+  "default_timeout": 300,
+  "research_mode_default": "deep",
+  "auth_precedence_policy": [
+    "--storage",
+    "NOTEBOOKLM_AUTH_JSON",
+    "NOTEBOOKLM_HOME/storage_state.json"
+  ],
+  "notes": {
+    "auth_model": "env-first",
+    "ci_policy": "NOTEBOOKLM_AUTH_JSON required in CI",
+    "local_policy": "notebooklm login with isolated NOTEBOOKLM_HOME"
+  }
+}

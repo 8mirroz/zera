@@ -1,0 +1,4 @@
+# Directory: ops/
+# Status: RESERVED — no agents defined yet
+# Reserved for: operations agents (SRE, deployment, monitoring)
+# Note: Do not remove — this category is declared in the agent schema enum.

@@ -1,0 +1,146 @@
+{
+  "https://pinterest.com/design/minimalism": {
+    "visual_dna": {
+      "description": "Analysis of Pinterest's Minimalism board design language. The style exhibits clean, simple aesthetics focused on clarity and functionality.",
+      "color_palette": {
+        "primary": {
+          "hex": "#FFFFFF",
+          "role": "Background, primary content areas, emphasizing cleanliness"
+        },
+        "secondary": {
+          "hex": "#232323",
+          "role": "Text, icons, elements requiring strong contrast, providing visual hierarchy"
+        },
+        "accent": {
+          "hex": "#EFEFEF",
+          "role": "Subtle dividers, card backgrounds, background elements. Provides subtle contrast without distraction"
+        },
+        "grayscale_range": [
+          {
+            "hex": "#767676",
+            "role": "Secondary text, muted icons. Used where less emphasis is needed."
+          },
+          {
+            "hex": "#D1D1D1",
+            "role": "Separator lines, disabled states (lighter than the previous gray)."
+          }
+        ]
+      },
+      "typography": {
+        "font_families": [
+          {
+            "family": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\", sans-serif",
+            "fallback": "sans-serif",
+            "role": "Primary font for headings, body text, and UI elements. Promotes readability and a modern feel."
+          }
+        ],
+        "font_weights": [
+          "400",
+          "500",
+          "600",
+          "700"
+        ],
+        "notes": "Font weights vary based on the content priority. Bolder weights for headings and important information, lighter weights for contextual details."
+      },
+      "visual_language": {
+        "radii": {
+          "default": "8px",
+          "variations": [
+            "0px",
+            "16px",
+            "32px"
+          ],
+          "role": "Used in card corners, buttons, and other UI elements. The default radius is subtle and modern."
+        },
+        "shadows": {
+          "use": true,
+          "values": [
+            "0 1px 2px rgba(0, 0, 0, 0.15)",
+            "0 2px 4px rgba(0, 0, 0, 0.1)"
+          ],
+          "role": "Subtle shadows enhance depth and separation of elements, making the UI feel more layered and tangible."
+        },
+        "spacing": "Generous use of whitespace around elements.",
+        "vibe": "Clean, functional, and modern. Emphasizes simplicity and readability, avoids unnecessary ornamentation. Promotes content visibility and user-friendliness."
+      },
+      "performance": {
+        "animations": {
+          "presence": "Subtle and minimal.",
+          "transitions": [
+            "Fade-in/Fade-out",
+            "Scale transforms",
+            "Expand and collapse"
+          ],
+          "details": "Focus is on smooth transitions rather than flashy animations. Intended to enhance user experience without being distracting. Animations are used sparingly to draw attention to important changes or interactions."
+        }
+      }
+    }
+  },
+  "https://dribbble.com/shots/popular": {
+    "visualDNA": {
+      "colorPalette": {
+        "primary": "#EA4C89",
+        "secondary": "#444444",
+        "tertiary": "#999999",
+        "background": "#F2F2F2",
+        "surface": "#FFFFFF",
+        "accent": "#7EA6E0",
+        "additional": "#DBE2E9",
+        "roles": {
+          "primary": "Main brand color/interactive elements",
+          "secondary": "Primary text",
+          "tertiary": "Secondary text/icons",
+          "background": "Page background",
+          "surface": "Card/container background",
+          "accent": "Highlights, call-to-actions",
+          "additional": "Background of card/container backgrounds"
+        }
+      },
+      "typography": {
+        "families": [
+          "Roboto",
+          "Inter",
+          "System-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji"
+        ],
+        "weights": [
+          "400",
+          "500",
+          "700"
+        ],
+        "roles": {
+          "400": "Body Copy",
+          "500": "Medium emphasis",
+          "700": "Headings and Titles"
+        }
+      },
+      "visualLanguage": {
+        "radii": {
+          "small": "4px",
+          "medium": "8px",
+          "large": "12px",
+          "xlarge": "20px"
+        },
+        "shadows": {
+          "light": "0px 1px 2px rgba(0, 0, 0, 0.1)",
+          "medium": "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          "large": "0px 10px 15px rgba(0, 0, 0, 0.1)"
+        },
+        "vibe": "Clean, modern, playful, approachable, professional with a design-focused aesthetic.",
+        "elements": {
+          "cards": "Rounded corners, subtle shadows, clean layouts",
+          "icons": "Line icons primarily, filled icons secondary",
+          "buttons": "Rounded corners, distinct color variations, hover effects",
+          "layout": "Centered content, whitespace-driven design, grid-based layouts"
+        }
+      },
+      "performance": {
+        "animations": {
+          "hovers": "Subtle color changes and scale enlargements on hover, button and image transitions",
+          "loading": "Simple loading spinners or progress bars",
+          "scroll": "Smooth scroll animations may be used, mostly simple transitions."
+        },
+        "notes": "Animations are likely simple and performant to maintain a smooth user experience. Overly complex animations are unlikely."
+      }
+    }
+  }
+}

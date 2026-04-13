@@ -1,0 +1,81 @@
+version: "2026-03-11"
+artifact: "drift-detection-rules"
+status: "baseline-first-draft"
+
+signals:
+  - strategy_success_rate_drop
+  - regression_rate_increase
+  - unknown_error_share_increase
+  - pattern_mismatch_increase
+  - router_confidence_mismatch
+  - persona_boundary_drift
+  - governance_mutation_attempt_increase
+  - unclassified_candidate_rate_increase
+  - personality_delta_budget_breach
+  - memory_hoarding_increase
+  - zera_command_registry_drift
+  - zera_branch_policy_drift
+  - zera_client_parity_drift
+  - zera_governor_budget_breach
+  - zera_source_import_foundry_drift
+  - zera_runtime_telemetry_drift
+  - zera_branch_merge_classification_drift
+
+detection_windows:
+  short_window_runs: 25
+  medium_window_runs: 50
+  long_window_runs: 100
+  weekly_review_required: true
+
+responses:
+  pattern_apply_success_rate_drop:
+    - reduce_prior_for_legacy_signatures
+    - refresh_signature_library
+  unknown_error_share_increase:
+    - increase_research_activation
+    - expand_signature_capture
+  direct_patch_regression_increase:
+    - raise_verification_intensity
+    - route_more_tasks_to_plan_then_patch
+  router_confidence_mismatch:
+    - lower_confidence_thresholds
+    - require_critic_step_for_high_novelty
+  persona_boundary_drift:
+    - freeze_personality_promotions
+    - require_operator_review_for_next_cycle
+  governance_mutation_attempt_increase:
+    - freeze_all_promotions
+    - require_governance_audit
+  unclassified_candidate_rate_increase:
+    - freeze_auto_promotion
+    - raise_classification_review_intensity
+  personality_delta_budget_breach:
+    - rollback_latest_personality_delta
+    - freeze_personality_promotions
+  memory_hoarding_increase:
+    - tighten_memory_write_thresholds
+    - prune_unstable_memory_candidates
+  zera_command_registry_drift:
+    - freeze_auto_selection
+    - refresh_command_registry_contract
+  zera_branch_policy_drift:
+    - freeze_branch_promotion
+    - review_branch_manifests
+  zera_client_parity_drift:
+    - freeze_client_specific_overrides
+    - revalidate adapter parity
+  zera_governor_budget_breach:
+    - rollback_latest_personality_or_command_delta
+    - freeze_personality_promotions
+  zera_source_import_foundry_drift:
+    - quarantine_new_imports
+    - revalidate source trust and import provenance
+  zera_runtime_telemetry_drift:
+    - refresh_telemetry_schema_contract
+    - freeze_auto_selection_until_telemetry_is_restored
+  zera_branch_merge_classification_drift:
+    - freeze_branch_merges
+    - require_candidate_classification_audit
+
+related_source_of_truth:
+  - "./runtime_benchmark_matrix.json"

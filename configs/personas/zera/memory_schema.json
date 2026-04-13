@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ZeraMemoryEntryV1",
+  "type": "object",
+  "required": [
+    "id",
+    "persona_id",
+    "class",
+    "confidence",
+    "source",
+    "created_at",
+    "payload"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 8
+    },
+    "persona_id": {
+      "type": "string",
+      "enum": [
+        "zera-v1"
+      ]
+    },
+    "class": {
+      "type": "string",
+      "enum": [
+        "profile_fact",
+        "stable_preference",
+        "active_plan",
+        "rhythm_health",
+        "relationship_memory",
+        "safety_note"
+      ]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "user_explicit",
+        "curated_summary",
+        "system_inference"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "restrictions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

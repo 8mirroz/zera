@@ -1,0 +1,50 @@
+version: 1
+
+# ==============================================================================
+# MEMORY AUDIT & OBSERVABILITY SCHEMA
+# Role: Tracking system health, precision, and drift.
+# ==============================================================================
+
+audit_log_contract:
+  event_types:
+    - memory_write_attempted
+    - memory_write_accepted
+    - memory_write_rejected
+    - memory_retrieval_hit
+    - memory_retrieval_miss
+    - memory_promoted
+    - memory_archived
+    - memory_invalidated
+    - conflict_detected
+    - conflict_resolved
+
+  required_log_fields:
+    - timestamp
+    - event_type
+    - actor_agent       # [hermes, coder, librarian, etc.]
+    - memory_id
+    - target_layer
+    - scope_id
+    - outcome           # [success, failure, warning]
+    - reason            # Rationale for decision
+    - source_ref        # Linked trace ID or file
+
+metrics_definitions:
+  retrieval_precision:
+    description: "Ratio of successfully used memory items to total retrieved."
+    target: 0.90
+  memory_pollution_ratio:
+    description: "Ratio of 'stale' or 'noisy' entries in project layer."
+    target_max: 0.07
+  promotion_velocity:
+    description: "Average days from session capture to project promotion."
+  conflict_density:
+    description: "Number of arbitration events per 100 writes."
+
+observability_levels:
+  debug:
+    include: ["*"]
+  production:
+    include: ["memory_promoted", "memory_write_rejected", "conflict_detected"]
+  audit_only:
+    include: ["memory_write_accepted", "memory_invalidated"]

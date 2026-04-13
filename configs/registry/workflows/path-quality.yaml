@@ -1,0 +1,20 @@
+id: quality-path-to-completion
+name: Quality Path (C3)
+version: 1.0.0
+entry_agent: core-orchestrator
+stages:
+  - id: build
+    agent: execution-builder
+    outputs: [initial_code]
+  - id: improve
+    agent: execution-builder
+    outputs: [refined_code]
+  - id: review
+    agent: review-critic
+    outputs: [review_notes]
+  - id: archive
+    agent: core-memory-steward
+    outputs: [ki_entry]
+completion_criteria:
+  - "Code passes review"
+  - "Knowledge Item is documented"

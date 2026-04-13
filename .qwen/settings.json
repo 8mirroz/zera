@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(hermes *)",
+      "Bash(qwen *)"
+    ]
+  },
+  "$version": 3
+}

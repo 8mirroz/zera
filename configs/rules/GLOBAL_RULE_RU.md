@@ -1,0 +1,1 @@
+/Users/user/antigravity-core/configs/rules/GLOBAL_RULE_RU.md

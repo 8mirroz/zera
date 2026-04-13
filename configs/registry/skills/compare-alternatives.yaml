@@ -1,0 +1,7 @@
+id: compare-alternatives
+name: Compare Alternatives
+version: 1.0.0
+type: analysis
+inputs: [candidate_list, criteria]
+outputs: [comparison_matrix]
+constraints: [score_fit_required]

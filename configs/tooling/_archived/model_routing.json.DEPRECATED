@@ -1,0 +1,5 @@
+This legacy marker is kept for backward-compatibility with validation tests.
+Canonical routing lives in:
+- configs/orchestrator/router.yaml
+- configs/orchestrator/models.yaml
+- configs/tooling/zera_mode_router.json

@@ -1,0 +1,12 @@
+id: obsidian-dna-inject
+name: Obsidian DNA Injector
+version: 1.0.0
+type: context
+status: deprecated
+deprecated_reason: "exec_path references sandbox/tooling/dna_injector.py which was deleted from the repository"
+deprecated_date: "2026-04-08"
+description: Extracts project-specific architectural decisions and insights from Obsidian and injects them into the agent's DNA.
+exec_path: null
+inputs: [agent_id, task_keywords]
+outputs: [context_snippet]
+replacement: "Use wiki-ingest-source + writeback-answer skills instead"

@@ -1,0 +1,30 @@
+# Wrapper: research-repo-scout for Hermes AI runtime
+# Wraps the canonical agent with runtime-specific tool bindings
+
+---
+agent_id: research-repo-scout
+runtime: hermes
+wrapper_version: "1.0.0"
+
+tool_bindings:
+  web_research: enabled
+  document_read: enabled
+  document_generation: enabled
+  filesystem_write: disabled
+  terminal: disabled
+
+execution_constraints:
+  allow_network: true
+  allow_file_write: false
+  allow_terminal: false
+  mode: planner
+
+context_handling:
+  budget: large
+  mode: planner
+  stage_breaks: [discover, analyze, score, report]
+
+output_handling:
+  format: markdown
+  destination: outputs/research/
+  include_metadata: true

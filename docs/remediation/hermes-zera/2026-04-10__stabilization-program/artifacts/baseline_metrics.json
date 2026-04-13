@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-04-10T20:20:00Z",
+  "snapshot_type": "audit_baseline_plus_current_reference",
+  "baseline": {
+    "composite_score": 52,
+    "maturity": "L2 workable",
+    "known_truth_blockers": [
+      "benchmark gate trust",
+      "validator false-green",
+      "provider/runtime drift",
+      "workflow reference drift",
+      "success-washing",
+      "trace schema drift",
+      "persona runtime enforcement gap",
+      "memory layering gap"
+    ]
+  },
+  "latest_validation": {
+    "benchmark_strict": {
+      "status": "fail",
+      "exit_code": 2
+    },
+    "mcp_profiles": {
+      "status": "fail",
+      "exit_code": 1
+    },
+    "workflow_model_alias_validator": {
+      "status": "fail",
+      "exit_code": 1
+    },
+    "provider_health": {
+      "status": "pass",
+      "exit_code": 0,
+      "parity_ok": true
+    },
+    "trace_schema_runtime_validation": {
+      "status": "fail",
+      "exit_code": 1
+    }
+  }
+}

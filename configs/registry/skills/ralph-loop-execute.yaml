@@ -1,0 +1,12 @@
+id: ralph-loop-execute
+name: Ralph's Loop Execution
+version: 1.1.0
+type: orchestration
+inputs: [initial_solution, iterations, complexity, acceptance_criteria]
+outputs: [best_solution, comparison_log, verification_summary]
+constraints: [min_iterations_3, max_iterations_7]
+comparison_mode: score_then_select
+verification_required: true
+knowledge_capture:
+  writeback: true
+  target: wiki/_briefs

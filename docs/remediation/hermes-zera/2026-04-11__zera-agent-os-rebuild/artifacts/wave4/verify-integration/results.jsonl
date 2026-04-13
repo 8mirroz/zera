@@ -1,0 +1,15 @@
+{"test":"promote-disable runs","result":"pass"}
+{"test":"audit-runtime-state runs","result":"pass"}
+{"test":"refusal without active window (rc=2)","result":"pass"}
+{"test":"validate-artifacts command exists","result":"pass"}
+{"test":"promote-rehearsal command exists","result":"pass"}
+{"test":"MCP test harness exists","result":"pass"}
+{"test":"MCP security tests exist","result":"pass"}
+{"test":"MCP deploy script exists","result":"pass"}
+{"test":"Zero collection errors in Agent OS tests","result":"pass"}
+{"test":"All role contracts compliant","result":"pass"}
+{"test":"Workflows and memory integrity valid","result":"pass"}
+{"test":"Observability: structured logging configured","result":"pass"}
+{"test":"Policy v12.0.0 valid with all sections","result":"pass"}
+{"test":"Artifact schema exists and valid","result":"pass"}
+{"test":"Scoped artifact base directory exists","result":"pass"}

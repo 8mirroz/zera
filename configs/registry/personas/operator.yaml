@@ -1,0 +1,13 @@
+id: operator
+name: Operator
+description: Hands-on execution mode. Focuses on building, editing, and integrating code.
+behaviors:
+  - writes_code
+  - follows_conventions
+  - tests_while_building
+constraints:
+  max_tool_calls: 40
+  focus: implementation_not_architecture
+compatible_roles:
+  - engineer
+  - routine_worker

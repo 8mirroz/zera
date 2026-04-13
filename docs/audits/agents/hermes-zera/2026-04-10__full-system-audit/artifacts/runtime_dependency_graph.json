@@ -1,0 +1,67 @@
+{
+  "audit_id": "2026-04-10__full-system-audit",
+  "generated_at": "2026-04-10T13:46:04Z",
+  "nodes": [
+    {"id": "user_input", "kind": "entrypoint"},
+    {"id": "scripts/zera-command.sh", "kind": "bridge"},
+    {"id": "scripts/zera_command_runtime.py", "kind": "runtime_bridge"},
+    {"id": "agent_os.zera_command_os", "kind": "resolver"},
+    {"id": "agent_os.persona_mode_router", "kind": "mode_router"},
+    {"id": "agent_os.agent_runtime", "kind": "dispatcher"},
+    {"id": "agent_os.runtime_registry", "kind": "provider_registry"},
+    {"id": "agent_os.runtime_providers.agent_os_python", "kind": "provider"},
+    {"id": "agent_os.runtime_providers.zeroclaw", "kind": "provider"},
+    {"id": "agent_os.runtime_providers.claw_code", "kind": "provider"},
+    {"id": "configs/personas/zera/*", "kind": "persona_contract"},
+    {"id": "configs/tooling/zera_command_registry.yaml", "kind": "canonical_config"},
+    {"id": "configs/tooling/zera_client_profiles.yaml", "kind": "canonical_config"},
+    {"id": "configs/tooling/runtime_providers.json", "kind": "canonical_config"},
+    {"id": "configs/tooling/zeroclaw_profiles.json", "kind": "profile_config"},
+    {"id": "configs/global/memory_policy.yaml", "kind": "policy_config"},
+    {"id": "configs/tooling/memory_write_policy.yaml", "kind": "policy_config"},
+    {"id": "configs/orchestrator/user_profile.json", "kind": "l1_memory"},
+    {"id": "logs/agent_traces.jsonl", "kind": "trace_sink"},
+    {"id": ".agent/runtime/background-jobs.json", "kind": "background_queue"},
+    {"id": ".agent/memory/memory.jsonl", "kind": "memory_store"},
+    {"id": "docs/ki/benchmark_latest.json", "kind": "derived_report"}
+  ],
+  "edges": [
+    {"from": "user_input", "to": "scripts/zera-command.sh", "label": "cli invocation"},
+    {"from": "scripts/zera-command.sh", "to": "scripts/zera_command_runtime.py", "label": "uv run python bridge"},
+    {"from": "scripts/zera_command_runtime.py", "to": "agent_os.zera_command_os", "label": "catalog/resolve/render"},
+    {"from": "agent_os.zera_command_os", "to": "configs/tooling/zera_command_registry.yaml", "label": "load commands"},
+    {"from": "agent_os.zera_command_os", "to": "configs/tooling/zera_client_profiles.yaml", "label": "load clients"},
+    {"from": "agent_os.zera_command_os", "to": "agent_os.persona_mode_router", "label": "mode fallback"},
+    {"from": "agent_os.persona_mode_router", "to": "configs/tooling/zera_mode_router.json", "label": "keyword rules"},
+    {"from": "scripts/zera_command_runtime.py", "to": "logs/agent_traces.jsonl", "label": "emit_zera_command_event"},
+    {"from": "agent_os.agent_runtime", "to": "configs/orchestrator/user_profile.json", "label": "L1 memory injection"},
+    {"from": "agent_os.agent_runtime", "to": "agent_os.zera_command_os", "label": "pre-provider command enrichment"},
+    {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_registry", "label": "provider resolution"},
+    {"from": "agent_os.runtime_registry", "to": "configs/tooling/runtime_providers.json", "label": "provider config"},
+    {"from": "agent_os.runtime_registry", "to": "configs/tooling/zeroclaw_profiles.json", "label": "runtime profile data"},
+    {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.agent_os_python", "label": "default reachable provider"},
+    {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.zeroclaw", "label": "T7 override when enabled"},
+    {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.claw_code", "label": "override/fallback when enabled"},
+    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agent/runtime/background-jobs.json", "label": "background job emission"},
+    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agent/memory/memory.jsonl", "label": "memory operations"},
+    {"from": "agent_os.runtime_providers.agent_os_python", "to": "logs/agent_traces.jsonl", "label": "start/verification/completed only"},
+    {"from": "logs/agent_traces.jsonl", "to": "docs/ki/benchmark_latest.json", "label": "analyze_benchmark.py derived metrics"}
+  ],
+  "broken_edges": [
+    {
+      "from": "agent_os.runtime_registry",
+      "to": "agent_os.runtime_providers.mlx_lm",
+      "label": "declared in runtime_providers.json but not registered in _builtin_factories"
+    },
+    {
+      "from": ".agent/config/workflow_sets.active.json",
+      "to": ".agent/workflows/*",
+      "label": "indexes reference absent workflow files"
+    }
+  ],
+  "critical_paths": [
+    "repo_native Zera command path resolves and emits telemetry",
+    "agent_runtime default path terminates in agent_os_python no-op provider",
+    "T7/zeroclaw path can emit autonomy/background events when enabled"
+  ]
+}

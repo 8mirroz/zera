@@ -1,0 +1,405 @@
+{
+  "version": "2026-02-27",
+  "provider_topology": "hybrid",
+  "router_mode_default": "hybrid",
+  "compat_precedence": "v4-primary",
+  "heavy_model_min_complexity": "C4",
+  "transport_routing": {
+    "default": "gateway-first",
+    "per_complexity": {
+      "C1": "direct-first",
+      "C2": "direct-first",
+      "C3": "direct-first",
+      "C4": "gateway-first",
+      "C5": "gateway-first"
+    },
+    "mode_overrides": {
+      "local_cli": "direct-only",
+      "ci": "gateway-first",
+      "swarm": "gateway-first"
+    },
+    "channel_overrides": {
+      "cli_qwen": "direct-only",
+      "api_router": "gateway-first"
+    }
+  },
+  "budgets": {
+    "currency": "USD",
+    "per_complexity": {
+      "free": {
+        "max_total_tokens": 10000,
+        "max_input_tokens": 8000,
+        "max_output_tokens": 2000,
+        "max_cost_usd": 0.0
+      },
+      "C1": {
+        "max_total_tokens": 10000,
+        "max_input_tokens": 8000,
+        "max_output_tokens": 2000,
+        "max_cost_usd": 0.15
+      },
+      "C2": {
+        "max_total_tokens": 20000,
+        "max_input_tokens": 15000,
+        "max_output_tokens": 5000,
+        "max_cost_usd": 0.3
+      },
+      "C3": {
+        "max_total_tokens": 40000,
+        "max_input_tokens": 28000,
+        "max_output_tokens": 12000,
+        "max_cost_usd": 0.8
+      },
+      "C4": {
+        "max_total_tokens": 80000,
+        "max_input_tokens": 56000,
+        "max_output_tokens": 24000,
+        "max_cost_usd": 2.5
+      },
+      "C5": {
+        "max_total_tokens": 120000,
+        "max_input_tokens": 84000,
+        "max_output_tokens": 36000,
+        "max_cost_usd": 4.0
+      }
+    }
+  },
+  "tiers": {
+    "free": {
+      "aliases": {
+        "qwen3-local": [
+          "ollama/qwen3:4b"
+        ],
+        "gemini-flash-free": [
+          "google/gemini-2.0-flash-exp:free"
+        ],
+        "deepseek-v3-free": [
+          "deepseek/deepseek-v3:free"
+        ],
+        "deepseek-r1-free": [
+          "deepseek/deepseek-r1:free"
+        ],
+        "llama-70b-free": [
+          "meta-llama/llama-3.3-70b-instruct:free"
+        ],
+        "qwen-7b-free": [
+          "qwen/qwen-2.5-7b-instruct:free"
+        ],
+        "qwen-coder-free": [
+          "qwen/qwen-2.5-coder-32b-instruct:free"
+        ],
+        "qwen-72b-free": [
+          "qwen/qwen-2.5-72b-instruct:free"
+        ],
+        "minimax-m2.5-free": [
+          "minimax/minimax-m2.5-free"
+        ],
+        "giga-potato-free": [
+          "giga-potato-free"
+        ],
+        "giga-potato-thinking-free": [
+          "giga-potato-thinking-free"
+        ],
+        "trinity-large-free": [
+          "arcee-ai/trinity-large-free"
+        ],
+        "trinity-large-preview-free": [
+          "arcee-ai/trinity-large-preview:free"
+        ],
+        "trinity-mini-free": [
+          "arcee-ai/trinity-mini:free"
+        ],
+        "dolphin-mistral-24b-venice-free": [
+          "cognitivecomputations/dolphin-mistral-24b-venice-edition:free"
+        ],
+        "gemma-3n-e2b-free": [
+          "google/gemma-3n-e2b-it:free"
+        ],
+        "gemma-3n-e4b-free": [
+          "google/gemma-3n-e4b-it:free"
+        ],
+        "lfm-2.5-1.2b-instruct-free": [
+          "liquid/lfm-2.5-1.2b-instruct:free"
+        ],
+        "lfm-2.5-1.2b-thinking-free": [
+          "liquid/lfm-2.5-1.2b-thinking:free"
+        ],
+        "nemotron-3-nano-30b-free": [
+          "nvidia/nemotron-3-nano-30b-a3b:free"
+        ],
+        "nemotron-nano-12b-v2-vl-free": [
+          "nvidia/nemotron-nano-12b-v2-vl:free"
+        ],
+        "nemotron-nano-9b-v2-free": [
+          "nvidia/nemotron-nano-9b-v2:free"
+        ],
+        "gpt-oss-120b-free": [
+          "openai/gpt-oss-120b:free"
+        ],
+        "gpt-oss-20b-free": [
+          "openai/gpt-oss-20b:free"
+        ],
+        "qwen3-4b-free": [
+          "qwen/qwen3-4b:free"
+        ],
+        "qwen3-coder-free": [
+          "qwen/qwen3-coder:free"
+        ],
+        "qwen3-next-80b-a3b-instruct-free": [
+          "qwen/qwen3-next-80b-a3b-instruct:free"
+        ],
+        "qwen3.6-plus-free": [
+          "qwen/qwen3.6-plus:free"
+        ],
+        "qwen3.6-plus-preview-free": [
+          "qwen/qwen3.6-plus-preview:free"
+        ],
+        "qwen3.5-plus-02-15": [
+          "qwen/qwen3.5-plus-02-15"
+        ],
+        "step-3.5-flash-free": [
+          "stepfun/step-3.5-flash:free"
+        ],
+        "solar-pro-3-free": [
+          "upstage/solar-pro-3:free"
+        ],
+        "glm-4.5-air-free": [
+          "z-ai/glm-4.5-air:free"
+        ],
+        "gemma-3-12b-it-free": [
+          "google/gemma-3-12b-it:free"
+        ],
+        "gemma-3-27b-it-free": [
+          "google/gemma-3-27b-it:free"
+        ],
+        "gemma-3-4b-it-free": [
+          "google/gemma-3-4b-it:free"
+        ],
+        "hermes-3-llama-3.1-405b-free": [
+          "nousresearch/hermes-3-llama-3.1-405b:free"
+        ],
+        "llama-3.2-3b-instruct-free": [
+          "meta-llama/llama-3.2-3b-instruct:free"
+        ],
+        "mistral-small-3.1-24b-instruct-free": [
+          "mistralai/mistral-small-3.1-24b-instruct:free"
+        ],
+        "deepseek-r1-0528-free": [
+          "deepseek/deepseek-r1-0528:free"
+        ],
+        "minicpm-v-local": [
+          "ollama/minicpm-v:latest"
+        ],
+        "qwen3.5-9b-local": [
+          "ollama/qwen3.5:9b-q4_K_M"
+        ],
+        "qwen3.5-4b-local": [
+          "ollama/qwen3.5:4b-q4_K_M"
+        ],
+        "gemma4-2b-local": [
+          "ollama/gemma4:e2b"
+        ],
+        "gemma4-4b-local": [
+          "ollama/gemma4:e4b"
+        ],
+        "llama3.1-8b-local": [
+          "ollama/llama3.1:8b"
+        ],
+        "qwen2.5-coder-7b-local": [
+          "ollama/qwen2.5-coder:7b"
+        ],
+        "bonsai-local": [
+          "ollama/bonsai"
+        ]
+      },
+      "gateway_models": [
+        "openrouter/qwen/qwen3.6-plus:free",
+        "openrouter/qwen/qwen3.6-plus-preview:free",
+        "openrouter/qwen/qwen3.5-plus-02-15",
+        "openrouter/qwen/qwen3-coder-next",
+        "openrouter/google/gemini-2.0-flash-exp:free",
+        "openrouter/google/gemma-3-27b-it:free",
+        "openrouter/meta-llama/llama-3.3-70b-instruct:free",
+        "openrouter/qwen/qwen3-next-80b-a3b-instruct:free",
+        "openrouter/qwen/qwen3-coder:free",
+        "openrouter/openai/gpt-oss-20b:free",
+        "openrouter/deepseek/deepseek-r1:free",
+        "openrouter/google/gemma-3-12b-it:free",
+        "openrouter/google/gemma-3-4b-it:free",
+        "openrouter/nousresearch/hermes-3-llama-3.1-405b:free",
+        "openrouter/meta-llama/llama-3.2-3b-instruct:free",
+        "openrouter/mistralai/mistral-small-3.1-24b-instruct:free",
+        "openrouter/arcee-ai/trinity-large-preview:free",
+        "openrouter/arcee-ai/trinity-mini:free",
+        "openrouter/cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+        "openrouter/deepseek/deepseek-r1-0528:free",
+        "openrouter/google/gemma-3n-e2b-it:free",
+        "openrouter/google/gemma-3n-e4b-it:free",
+        "openrouter/liquid/lfm-2.5-1.2b-instruct:free",
+        "openrouter/liquid/lfm-2.5-1.2b-thinking:free",
+        "openrouter/nvidia/nemotron-3-nano-30b-a3b:free",
+        "openrouter/nvidia/nemotron-nano-12b-v2-vl:free",
+        "openrouter/nvidia/nemotron-nano-9b-v2:free",
+        "openrouter/openai/gpt-oss-120b:free",
+        "openrouter/qwen/qwen3-4b:free",
+        "openrouter/stepfun/step-3.5-flash:free",
+        "openrouter/upstage/solar-pro-3:free",
+        "openrouter/z-ai/glm-4.5-air:free"
+      ],
+      "direct_models": [
+        "qwen/qwen3.6-plus:free",
+        "qwen/qwen3.6-plus-preview:free",
+        "qwen/qwen3.5-plus-02-15",
+        "qwen/qwen3-coder-next",
+        "ollama/qwen3:4b",
+        "google/gemini-2.0-flash-exp:free",
+        "deepseek/deepseek-v3:free",
+        "deepseek/deepseek-r1:free",
+        "meta-llama/llama-3.3-70b-instruct:free",
+        "qwen/qwen-2.5-7b-instruct:free",
+        "qwen/qwen-2.5-coder-32b-instruct:free",
+        "qwen/qwen-2.5-72b-instruct:free",
+        "minimax/minimax-m2.5:free",
+        "giga-potato:free",
+        "giga-potato-thinking:free",
+        "arcee-ai/trinity-large:free",
+        "ollama/minicpm-v:latest",
+        "ollama/qwen3.5:9b-q4_K_M",
+        "ollama/gemma4:e2b",
+        "ollama/gemma4:e4b",
+        "ollama/qwen3.5:4b-q4_K_M",
+        "ollama/llama3.1:8b",
+        "ollama/qwen2.5-coder:7b",
+        "ollama/bonsai",
+        "mlx:mlx-community/Llama-3.2-3B-Instruct-4bit",
+        "mlx:mlx-community/quantized-gemma-2b-it",
+        "mlx:mlx-community/gemma-4-26b-a4b-it-4bit"
+      ],
+      "quality_gate": {
+        "enabled": true,
+        "strategy": "best_of_n",
+        "max_candidates": 3,
+        "candidate_source": "gateway_models",
+        "score_floor": 0.7,
+        "tie_breaker": "lowest_latency_then_lowest_cost",
+        "judge_model_tier": "light",
+        "score_dimensions": [
+          "correctness",
+          "instruction_following",
+          "format_compliance",
+          "safety"
+        ],
+        "failure_policy": "fallback_to_next_model"
+      }
+    },
+    "light": {
+      "aliases": {
+        "qwen36-plus-preview-free": [
+          "qwen/qwen3.6-plus-preview:free"
+        ],
+        "qwen3-coder-next": [
+          "qwen/qwen3-coder-next"
+        ],
+        "kimi-fast": [
+          "moonshotai/kimi-k2-instruct"
+        ],
+        "glm5-fast": [
+          "zai/glm-5-air"
+        ],
+        "gemini-fast": [
+          "google/gemini-2.5-flash"
+        ]
+      },
+      "gateway_models": [
+        "openrouter/qwen/qwen3.6-plus-preview:free",
+        "openrouter/qwen/qwen3-coder-next",
+        "openrouter/google/gemini-2.5-flash",
+        "openrouter/qwen/qwen-2.5-7b-instruct",
+        "openrouter/microsoft/phi-3-mini-128k-instruct"
+      ],
+      "direct_models": [
+        "qwen/qwen3.6-plus-preview:free",
+        "qwen/qwen3-coder-next",
+        "moonshotai/kimi-k2-instruct",
+        "zai/glm-5-air",
+        "google/gemini-2.5-flash"
+      ]
+    },
+    "quality": {
+      "aliases": {
+        "qwen35-plus": [
+          "qwen/qwen3.5-plus-02-15"
+        ],
+        "qwen3-coder-next": [
+          "qwen/qwen3-coder-next"
+        ],
+        "kimi": [
+          "moonshotai/kimi-k2"
+        ],
+        "gemini-pro": [
+          "google/gemini-2.5-pro"
+        ],
+        "glm5": [
+          "z-ai/glm-5"
+        ],
+        "gemma-4-31b-external": [
+          "google/gemma-4-31b-it"
+        ]
+      },
+      "gateway_models": [
+        "openrouter/qwen/qwen3.5-plus-02-15",
+        "openrouter/qwen/qwen3-coder-next",
+        "openrouter/google/gemini-2.5-pro",
+        "openrouter/deepseek/deepseek-v3",
+        "openrouter/mistralai/mistral-medium",
+        "openrouter/z-ai/glm-5",
+        "ezai/anthropic/claude-3-5-sonnet",
+        "ezai/openai/gpt-4o"
+      ],
+      "direct_models": [
+        "qwen/qwen3.5-plus-02-15",
+        "qwen/qwen3-coder-next",
+        "zai/glm-5",
+        "moonshotai/kimi-k2",
+        "google/gemini-2.5-pro",
+        "google/gemma-4-31b-it"
+      ]
+    },
+    "reasoning": {
+      "aliases": {
+        "qwen36-plus-preview-free": [
+          "qwen/qwen3.6-plus-preview:free"
+        ],
+        "qwen35-plus": [
+          "qwen/qwen3.5-plus-02-15"
+        ],
+        "gpt-5.3": [
+          "openai/gpt-5.3"
+        ],
+        "opus": [
+          "anthropic/claude-opus-4.1"
+        ],
+        "gpt-5.2": [
+          "openai/gpt-5.2"
+        ]
+      },
+      "gateway_models": [
+        "openrouter/qwen/qwen3.6-plus-preview:free",
+        "openrouter/qwen/qwen3.5-plus-02-15",
+        "openrouter/openai/gpt-5.3",
+        "openrouter/anthropic/claude-opus-4.1",
+        "openrouter/openai/gpt-5.2",
+        "openrouter/z-ai/glm-5",
+        "ezai/anthropic/claude-3-5-opus"
+      ],
+      "direct_models": [
+        "qwen/qwen3.6-plus-preview:free",
+        "qwen/qwen3.5-plus-02-15",
+        "openai/gpt-5.3",
+        "anthropic/claude-opus-4.1",
+        "openai/gpt-5.2"
+      ]
+    }
+  },
+  "free_api_catalog_ref": "configs/tooling/free_llm_api_catalog.json"
+}

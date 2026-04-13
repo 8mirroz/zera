@@ -1,0 +1,213 @@
+version: "2026-04-08"
+program_ref: "configs/tooling/test_reliability_program.yaml"
+artifacts_root: "outputs/reliability"
+
+suites:
+  unit:
+    blocking: true
+    trigger: ["ci", "manual"]
+    timeout_seconds: 1800
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl"]
+    buckets:
+      - id: "agent-os-core-unit"
+        owner: "agent-os"
+        kind: "pytest_glob"
+        cwd: "repos/packages/agent-os"
+        include_globs:
+          - "tests/test_*.py"
+        exclude:
+          - pattern: "tests/test_swarmctl_*.py"
+            reason: "Moved into explicit swarmctl reliability buckets"
+            owner: "reliability-platform"
+            sunset_date: "2026-06-30"
+          - pattern: "tests/test_notebooklm_doctor.py"
+            reason: "Doctor-only surface"
+            owner: "reliability-platform"
+            sunset_date: "2026-06-30"
+          - pattern: "tests/test_self_reflection_validation_integration.py"
+            reason: "Integration-only validation flow"
+            owner: "reliability-platform"
+            sunset_date: "2026-06-30"
+          - pattern: "tests/test_telegram_runtime_bridge.py"
+            reason: "Integration-only runtime bridge"
+            owner: "reliability-platform"
+            sunset_date: "2026-06-30"
+          - pattern: "tests/test_persona_eval.py"
+            reason: "Governance-only persona evaluation surface"
+            owner: "reliability-platform"
+            sunset_date: "2026-06-30"
+      - id: "swarmctl-fast"
+        owner: "agent-os"
+        kind: "pytest_list"
+        cwd: "repos/packages/agent-os"
+        include:
+          - "tests/test_swarmctl_approval_and_stop.py"
+          - "tests/test_swarmctl_background_status.py"
+          - "tests/test_swarmctl_notebooklm_router.py"
+          - "tests/test_swarmctl_runtime_routing.py"
+        debug_command: "make debug-test TEST=test_swarmctl_runtime_routing.py"
+
+  contract:
+    blocking: true
+    trigger: ["pre-commit", "ci", "manual"]
+    timeout_seconds: 900
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl"]
+    buckets:
+      - id: "reliability-platform-contract"
+        owner: "reliability-platform"
+        kind: "shell"
+        command: "cd repos/packages/agent-os && uv run python ../../../scripts/validation/check_reliability_platform.py --json"
+        debug_command: "cd repos/packages/agent-os && uv run python ../../../scripts/validation/check_reliability_platform.py --json"
+      - id: "registry-contract"
+        owner: "registry"
+        kind: "shell"
+        command: "python3 scripts/validation/lint_registry.py"
+        allowed_exit_codes: [0, 2]
+        quarantine:
+          owner: "registry"
+          reason: "Known registry warning debt blocks rollout until orphaned index entries and missing skill references are cleaned up."
+          exit_condition: "Remove warning-only debt from configs/registry and restore exit code 0."
+          sunset_date: "2026-05-15"
+      - id: "root-json-contract"
+        owner: "tooling"
+        kind: "shell"
+        command: "python3 -m json.tool configs/tooling/mcp_profiles.json >/dev/null && python3 -m json.tool configs/tooling/model_providers.json >/dev/null"
+      - id: "mcp-profile-contract"
+        owner: "tooling"
+        kind: "shell"
+        command: "python3 scripts/test_mcp_profiles.py"
+
+  integration:
+    blocking: false
+    trigger: ["nightly", "manual"]
+    timeout_seconds: 2400
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl"]
+    buckets:
+      - id: "mcp-server-typescript"
+        owner: "mcp-servers"
+        kind: "shell"
+        command: "cd repos/mcp/servers && npm ci --quiet && cd src/filesystem && npm test && cd ../everything && npm test && cd ../memory && npm test"
+      - id: "swarmctl-integration"
+        owner: "agent-os"
+        kind: "pytest_list"
+        cwd: "repos/packages/agent-os"
+        include:
+          - "tests/test_swarmctl_run_integration.py"
+          - "tests/test_swarmctl_background_daemon.py"
+          - "tests/test_swarmctl_background_controls.py"
+          - "tests/test_swarmctl_telegram_readiness.py"
+          - "tests/test_self_reflection_validation_integration.py"
+          - "tests/test_telegram_runtime_bridge.py"
+        debug_command: "make debug-test TEST=test_swarmctl_run_integration.py"
+
+  smoke:
+    blocking: true
+    trigger: ["local", "pre-commit", "ci", "manual"]
+    timeout_seconds: 600
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl"]
+    buckets:
+      - id: "agent-os-smoke"
+        owner: "agent-os"
+        kind: "pytest_list"
+        cwd: "repos/packages/agent-os"
+        include:
+          - "tests/test_zera_client_profile_validation.py"
+          - "tests/test_zera_hardening_assets.py"
+          - "tests/test_zera_hybrid_pilot_contracts.py"
+          - "tests/test_zera_hybrid_pilot_runtime_telemetry.py"
+          - "tests/test_zera_runtime_parity.py"
+      - id: "root-script-smoke"
+        owner: "root-scripts"
+        kind: "shell"
+        command: "bash -n scripts/cli_tools_check.sh && bash -n scripts/run_quality_checks.sh && bash -n scripts/zera-command.sh && python3 -m py_compile scripts/zera_command_runtime.py && bash -n scripts/zera-self-evolution.sh && bash -n scripts/zera-evolve.sh && bash -n scripts/zera-agent-intelligence.sh && bash -n scripts/zera-autonomous-launcher.sh"
+
+  doctor:
+    blocking: false
+    trigger: ["nightly", "manual"]
+    timeout_seconds: 1200
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl", "doctor-summary.json"]
+    buckets:
+      - id: "swarmctl-doctor"
+        owner: "agent-os"
+        kind: "shell"
+        command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py doctor"
+        json_command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py harness-report --task 'reliability doctor summary'"
+      - id: "wiki-doctor"
+        owner: "wiki-core"
+        kind: "shell"
+        command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py wiki doctor --config ../../../../configs/tooling/wiki_core.yaml --json"
+      - id: "notebooklm-doctor"
+        owner: "agent-os"
+        kind: "shell"
+        command: "cd repos/packages/agent-os && uv run python scripts/swarmctl.py notebooklm-doctor --json"
+
+  benchmark:
+    blocking: false
+    trigger: ["scheduled", "manual"]
+    timeout_seconds: 1200
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl", "benchmark-summary.json"]
+    buckets:
+      - id: "benchmark-report"
+        owner: "reliability-platform"
+        kind: "shell"
+        command: "python3 configs/tooling/analyze_benchmark.py --config configs/tooling/benchmark_config.json --suite-manifest configs/tooling/benchmark_suite.json"
+      - id: "benchmark-gate"
+        owner: "reliability-platform"
+        kind: "shell"
+        command: "python3 configs/tooling/analyze_benchmark.py --config configs/tooling/benchmark_config.json --suite-manifest configs/tooling/benchmark_suite.json --strict"
+
+  governance:
+    blocking: true
+    trigger: ["pre-commit", "ci", "manual"]
+    timeout_seconds: 1200
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl", "governance-summary.json"]
+    buckets:
+      - id: "zera-hardening-validator"
+        owner: "zera-governance"
+        kind: "shell"
+        command: "python3 scripts/validation/check_zera_hardening.py --json"
+      - id: "zera-governance-tests"
+        owner: "zera-governance"
+        kind: "pytest_list"
+        cwd: "repos/packages/agent-os"
+        include:
+          - "tests/test_zera_hardening_assets.py"
+          - "tests/test_zera_hybrid_pilot_contracts.py"
+          - "tests/test_zera_hybrid_pilot_runtime_telemetry.py"
+          - "tests/test_autonomy_policy.py"
+          - "tests/test_background_jobs.py"
+          - "tests/test_persona_eval.py"
+          - "tests/test_security_policy_runtime.py"
+
+  regression:
+    blocking: false
+    trigger: ["nightly", "manual"]
+    timeout_seconds: 2400
+    expected_artifacts: ["suite-manifest.json", "failure-summary.json", "events.jsonl"]
+    buckets:
+      - id: "swarmctl-heavy"
+        owner: "agent-os"
+        kind: "pytest_list"
+        cwd: "repos/packages/agent-os"
+        include:
+          - "tests/test_swarmctl_algorithm.py"
+          - "tests/test_swarmctl_swarm.py"
+          - "tests/test_swarmctl_benchmark.py"
+          - "tests/test_swarmctl_doctor.py"
+          - "tests/test_swarmctl_governance_cli.py"
+          - "tests/test_swarmctl_notebooklm.py"
+          - "tests/test_swarmctl_trace_coverage.py"
+          - "tests/test_swarmctl_wiki.py"
+        debug_command: "make debug-test TEST=test_swarmctl_doctor.py"
+
+profiles:
+  local-quick:
+    suites: ["smoke"]
+  pre-commit:
+    suites: ["contract", "smoke", "governance"]
+  ci-required:
+    suites: ["contract", "governance", "smoke", "unit"]
+  nightly:
+    suites: ["integration", "doctor", "regression", "benchmark"]
+  all-non-benchmark:
+    suites: ["contract", "governance", "smoke", "unit", "integration", "doctor", "regression"]

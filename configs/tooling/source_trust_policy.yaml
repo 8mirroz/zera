@@ -1,0 +1,20 @@
+version: "2026-03-11"
+default_tier: "Tier C"
+tiers:
+  Tier A:
+    allowed_for_capability_promotion: true
+    allowed_for_default_policy_changes: true
+  Tier B:
+    allowed_for_capability_promotion: true
+    allowed_for_default_policy_changes: false
+  Tier C:
+    allowed_for_capability_promotion: false
+    allowed_for_default_policy_changes: false
+rules:
+  reddit: "Tier C"
+  youtube: "Tier C"
+  habr: "Tier B"
+  official_docs: "Tier A"
+  github_repo: "Tier A"
+  cve: "Tier A"
+  incident_report: "Tier A"

@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-04-10T16:30:00Z",
+  "memory_layer_status": {
+    "declared_layers": ["ephemeral", "session", "working", "preference", "semantic", "project", "governance", "blocked"],
+    "enforced_layers": [],
+    "note": "MemoryPolicyLayer exists but is never called by agent_runtime.py"
+  },
+  "actual_distribution": {
+    "general": "~93%",
+    "session_only": "~91%",
+    "scope_tagged": "~7%",
+    "source": "Audit analysis of .agent/memory/memory.jsonl"
+  },
+  "write_policy": {
+    "policy_layer_exists": true,
+    "policy_layer_called": false,
+    "schema_validation": false,
+    "staleness_check": false,
+    "dedup": false,
+    "scope_classification": false
+  },
+  "retrieval": {
+    "engine_declared": "hybrid (BM25 + LightRAG)",
+    "engine_active": "BM25 only",
+    "confidence_threshold_gates_routing": false,
+    "precision_tracked": false,
+    "recall_tracked": false
+  },
+  "context_budget": {
+    "tracker_exists": false,
+    "token_allocation_per_category": false,
+    "compaction_triggers": false,
+    "profile_injection_scoped": false
+  },
+  "gaps": [
+    "MemoryPolicyLayer not integrated into runtime",
+    "Profile injection bypasses all policy gates",
+    "No context budget management",
+    "Hybrid retrieval not active (BM25 only)",
+    "No retrieval precision/recall tracking",
+    "No memory contamination checks"
+  ],
+  "recommended_actions": [
+    "Integrate MemoryPolicyLayer into agent_runtime.run()",
+    "Scope profile injection with session boundaries",
+    "Add context budget tracker",
+    "Activate LightRAG retrieval or remove declaration",
+    "Add retrieval quality events to telemetry"
+  ]
+}

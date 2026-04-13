@@ -1,0 +1,184 @@
+{
+  "generated_at": "2026-04-10T12:00:00Z",
+  "audit_version": "2.0",
+  "total_nodes_indexed": 259,
+  "classification": {
+    "runtime_canonical": [
+      "configs/personas/zera/manifest.yaml",
+      "configs/personas/zera/identity.md",
+      "configs/personas/zera/constitution.md",
+      "configs/personas/zera/tone.md",
+      "configs/personas/zera/safety.md",
+      "configs/personas/zera/relationship_boundaries.md",
+      "configs/personas/zera/modes.yaml",
+      "configs/personas/zera/prompt_assembly.yaml",
+      "configs/personas/zera/memory_schema.json",
+      "configs/personas/zera/eval_cases.json",
+      "configs/tooling/zera_command_registry.yaml",
+      "configs/tooling/zera_client_profiles.yaml",
+      "configs/tooling/zera_mode_router.json",
+      "configs/tooling/zera_branching_policy.yaml",
+      "configs/tooling/zera_research_registry.yaml",
+      "configs/tooling/zera_skill_foundry.yaml",
+      "configs/tooling/zera_external_imports.yaml",
+      "configs/tooling/zera_growth_governance.json",
+      "configs/tooling/runtime_providers.json",
+      "configs/tooling/zeroclaw_profiles.json",
+      "configs/tooling/source_trust_policy.yaml",
+      "configs/tooling/autonomy_policy.yaml",
+      "configs/tooling/background_jobs.yaml",
+      "configs/tooling/mcp_profiles.json",
+      "configs/tooling/trace_schema.json",
+      "configs/tooling/benchmark_suite.json",
+      "configs/tooling/benchmark_config.json",
+      "configs/tooling/evaluation-harness.yaml",
+      "configs/tooling/drift-detection-rules.yaml",
+      "configs/orchestrator/router.yaml",
+      "configs/orchestrator/routing.yaml",
+      "configs/orchestrator/models.yaml",
+      "configs/orchestrator/completion_gates.yaml",
+      "configs/orchestrator/user_profile.json",
+      "repos/packages/agent-os/src/agent_os/agent_runtime.py",
+      "repos/packages/agent-os/src/agent_os/zera_command_os.py",
+      "repos/packages/agent-os/src/agent_os/runtime_registry.py",
+      "repos/packages/agent-os/src/agent_os/persona_mode_router.py",
+      "repos/packages/agent-os/src/agent_os/observability.py",
+      "repos/packages/agent-os/src/agent_os/memory_store.py",
+      "repos/packages/agent-os/src/agent_os/memory_policy_layer.py",
+      "repos/packages/agent-os/src/agent_os/persona_eval.py",
+      "scripts/zera-command.sh",
+      "scripts/zera_command_runtime.py",
+      "logs/agent_traces.jsonl"
+    ],
+    "runtime_consumed_secondary": [
+      "configs/orchestrator/role_contracts/*.yaml",
+      "configs/orchestrator/phases.yaml",
+      "configs/orchestrator/permissions.yaml",
+      "configs/orchestrator/budgets.yaml",
+      "configs/orchestrator/defaults.yaml",
+      "configs/tooling/kill-switches.yaml",
+      "configs/tooling/tool_execution_policy.yaml",
+      "configs/tooling/confidence-calibration-rules.yaml",
+      "configs/tooling/self-refusal-rules.yaml",
+      "configs/tooling/redteam_agent_failure_suite.json",
+      "configs/tooling/persona_eval_suite.json",
+      "configs/tooling/runtime_benchmark_matrix.json",
+      "configs/tooling/runtime_slo_targets.json"
+    ],
+    "derived_generated": [
+      "docs/ki/benchmark_latest.md",
+      "docs/ki/benchmark_latest.json",
+      "docs/ki/benchmark_history.json",
+      "docs/ki/benchmark_anomalies.json",
+      "docs/ki/benchmark_gate.json",
+      "configs/orchestrator/catalog.json",
+      ".agent/skills/.active_set_manifest.json",
+      "outputs/reliability/**"
+    ],
+    "narrative_only": [
+      "Zera/HERMES_SOUL.md",
+      "Zera/HERMES_INTEGRATION.md",
+      "Zera/intro Zera.md",
+      "Zera/SELF_EVOLUTION_PROTOCOL.md",
+      "Zera/INFINITE_LOOP_ALGORITHMS.md",
+      "Zera/AUTONOMOUS_CONFIGURATION.md",
+      "Zera/DEVELOPMENT_SUMMARY.md",
+      "Zera/AGENT_INTELLIGENCE_RESULT.md",
+      "Zera/IMPLEMENTATION_RESULT.md",
+      "Zera/INTEGRATION_PRIORITIES.md",
+      "Zera/ZERA_SELF_EVOLUTION_WORKFLOW.md",
+      "Zera/ZERA_OBSIDIAN_5_PROPOSALS.md",
+      "Zera/CLI_TOOLS_STATUS.md",
+      "docs/guides/hermes-agent-integration-guide.md",
+      "docs/guides/ZEROCLAW_ZERA_INTEGRATION_2026-03-11.md",
+      "docs/ki/HERMES_PROFILE_CONSOLIDATION_2026-04-09.md",
+      "docs/ki/zera-hermes-telegram-profile-sync-2026-04-09.md",
+      "docs/ki/ZERA_SELF_EVOLUTION_LOOP_GUIDE_2026-04-09.md"
+    ],
+    "legacy_or_ambiguous": [
+      "configs/tooling/model_routing.json.DEPRECATED",
+      "scripts/test_mcp_profiles.py.bak",
+      "configs/tooling/eggent_algorithm_matrix.json",
+      "configs/tooling/polyglot_execution_matrix.json",
+      "configs/tooling/notebooklm_agent_router_templates.json",
+      "configs/tooling/suite_manifest.json",
+      "configs/tooling/plugin_schema.json",
+      "configs/tooling/repo_aliases_policy.json",
+      "logs/benchmark-latest.json"
+    ],
+    "dead_references": [
+      ".agent/workflows/multi-agent-routing.md",
+      ".agent/workflows/* (entire directory empty)",
+      "configs/registry/workflows/path-fast.yaml",
+      "configs/registry/workflows/path-quality.yaml",
+      "configs/registry/workflows/path-swarm.yaml",
+      "configs/registry/schemas/task.schema.yaml",
+      "configs/capabilities/gsap_motion.yaml",
+      ".agent/skills/gsap-animation.md",
+      ".agent/skills/gsap-performance-guardrails.md",
+      ".agent/skills/gsap-scrolltrigger.md",
+      ".agent/skills/gsap-vs-framer-motion.md"
+    ],
+    "orphan_configs": [
+      "configs/tooling/model_routing.json.DEPRECATED",
+      "configs/tooling/eggent_algorithm_matrix.json",
+      "configs/tooling/polyglot_execution_matrix.json",
+      "configs/tooling/notebooklm_agent_router_templates.json",
+      "configs/tooling/suite_manifest.json",
+      "configs/tooling/plugin_schema.json",
+      "configs/tooling/repo_aliases_policy.json"
+    ]
+  },
+  "drift_zones": [
+    {
+      "zone": "runtime_provider_registry",
+      "evidence": "runtime_providers.json declares mlx_lm enabled; RuntimeRegistry has no factory",
+      "severity": "high"
+    },
+    {
+      "zone": "workflow_catalog",
+      "evidence": ".agent/workflows/* empty; workflow_sets_catalog.json references non-existent files",
+      "severity": "high"
+    },
+    {
+      "zone": "skill_publication",
+      "evidence": "ZERA_ACTIVE_SKILLS.md declares 6 skills; .agent/skills/ publishes none",
+      "severity": "medium"
+    },
+    {
+      "zone": "benchmark_validity",
+      "evidence": "benchmark_latest.json reports pass; all 13 expected cases missing; 120 cases are repeats",
+      "severity": "critical"
+    },
+    {
+      "zone": "operator_profile_parity",
+      "evidence": "~/.hermes/profiles/ and ~/.gemini/antigravity/ operate outside repo governance",
+      "severity": "medium"
+    },
+    {
+      "zone": "memory_policy_enforcement",
+      "evidence": "MemoryPolicyLayer exists but agent_runtime.py never imports it",
+      "severity": "high"
+    },
+    {
+      "zone": "persona_enforcement",
+      "evidence": "All 8 constitutional rules are prose-only; no runtime guardrails",
+      "severity": "critical"
+    },
+    {
+      "zone": "motion_awareness",
+      "evidence": "router.yaml declares full motion routing; zero files or code back it",
+      "severity": "medium"
+    },
+    {
+      "zone": "registry_workflows",
+      "evidence": "configs/registry/ does not exist; RegistryWorkflowResolver silently returns None",
+      "severity": "medium"
+    },
+    {
+      "zone": "external_cron",
+      "evidence": "~/.hermes/profiles/zera/cron/jobs.json operates outside repo governance",
+      "severity": "high"
+    }
+  ]
+}

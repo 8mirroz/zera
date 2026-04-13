@@ -1,0 +1,233 @@
+{
+  "generated_at": "2026-04-10T12:00:00Z",
+  "audit_version": "2.0",
+  "risks": [
+    {
+      "id": "RISK-001",
+      "title": "Benchmark system produces contradictory signals",
+      "root_cause": "RC-7: Case identity normalization broken; repeats inflate coverage",
+      "severity": "critical",
+      "likelihood": "certain",
+      "blast_radius": "all release gating decisions",
+      "affected_nodes": [
+        "analyze_benchmark.py",
+        "benchmark_latest.json",
+        "benchmark_anomalies.json",
+        "benchmark_gate.json"
+      ],
+      "mitigation": "Normalize case IDs, separate canonical from sample traces, fail on missing canonical IDs",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-002",
+      "title": "Runtime success signals emitted without verification",
+      "root_cause": "RC-2: Telemetry conflates selected/executed/verified states",
+      "severity": "high",
+      "likelihood": "certain",
+      "blast_radius": "operator confidence, downstream health monitoring, benchmark validity",
+      "affected_nodes": [
+        "agent_runtime.py",
+        "agent_os_python.py",
+        "observability.py"
+      ],
+      "mitigation": "Split lifecycle states, hard-fail unverifiable completion",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-003",
+      "title": "Declarative config surface exceeds executable enforcement",
+      "root_cause": "RC-1: Policy corpus added faster than code consumers",
+      "severity": "critical",
+      "likelihood": "certain",
+      "blast_radius": "all subsystems with declared-but-unenforced policies",
+      "affected_nodes": [
+        "configs/tooling/*",
+        "configs/personas/zera/*",
+        "RuntimeRegistry",
+        "persona_eval.py"
+      ],
+      "mitigation": "Reduce or validate every declarative surface against live consumers",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-004",
+      "title": "Persona documents are governance artifacts, not runtime inputs",
+      "root_cause": "RC-5: ZeraCommandOS injects metadata headers, not persona content",
+      "severity": "critical",
+      "likelihood": "certain",
+      "blast_radius": "all Zera persona integrity claims",
+      "affected_nodes": [
+        "configs/personas/zera/*.md",
+        "ZeraCommandOS",
+        "agent_runtime.py"
+      ],
+      "mitigation": "Load persona docs into runtime prompt assembly or demote to operator reference",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-005",
+      "title": "Anti-sycophancy has zero runtime enforcement",
+      "root_cause": "RC-5: Constitution rules are prose-only constraints",
+      "severity": "high",
+      "likelihood": "likely",
+      "blast_radius": "Zera response quality under flattery/emotional pressure",
+      "affected_nodes": [
+        "configs/personas/zera/constitution.md",
+        "persona_eval.py"
+      ],
+      "mitigation": "Implement programmatic sycophancy detector or promote constitution to executable contracts",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-006",
+      "title": "Memory policy layer bypassed by runtime",
+      "root_cause": "RC-6: agent_runtime.py never imports MemoryPolicyLayer",
+      "severity": "high",
+      "likelihood": "certain",
+      "blast_radius": "memory discipline, persona contamination, cross-session bleed",
+      "affected_nodes": [
+        "agent_runtime.py",
+        "memory_policy_layer.py",
+        "user_profile.json"
+      ],
+      "mitigation": "Route all memory operations through MemoryPolicyLayer",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-007",
+      "title": "Persona governor exists but never called",
+      "root_cause": "RC-10: evaluate_governor() has no caller in execution path",
+      "severity": "high",
+      "likelihood": "likely",
+      "blast_radius": "long-session persona drift, emotional closeness escalation",
+      "affected_nodes": [
+        "zera_command_os.py::evaluate_governor",
+        "zera_growth_governance.json"
+      ],
+      "mitigation": "Call evaluate_governor() at persona config load time",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-008",
+      "title": "MCP validator returns success on failure",
+      "root_cause": "Exit code always 0 regardless of routing mismatch",
+      "severity": "critical",
+      "likelihood": "certain",
+      "blast_radius": "tool quality assessment, operator confidence",
+      "affected_nodes": [
+        "scripts/test_mcp_profiles.py"
+      ],
+      "mitigation": "Exit non-zero on any mismatch",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-009",
+      "title": "Runtime provider declared but not registered",
+      "root_cause": "mlx_lm in runtime_providers.json but no factory in RuntimeRegistry",
+      "severity": "high",
+      "likelihood": "certain",
+      "blast_radius": "provider selection reliability",
+      "affected_nodes": [
+        "runtime_providers.json",
+        "runtime_registry.py"
+      ],
+      "mitigation": "Add contract test: every enabled provider must have a factory",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-010",
+      "title": "External cron operates outside repo governance",
+      "root_cause": "RC-4: hermes-sync-config.sh is advisory only",
+      "severity": "medium",
+      "likelihood": "likely",
+      "blast_radius": "Hermes/Gemini parity, Zera behavior consistency",
+      "affected_nodes": [
+        "~/.hermes/profiles/zera/cron/jobs.json",
+        "scripts/hermes-sync-config.sh"
+      ],
+      "mitigation": "Add blocking parity healthcheck",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-011",
+      "title": "Motion-aware routing has zero executable backing",
+      "root_cause": "RC-8: Config written as design spec, no implementation",
+      "severity": "medium",
+      "likelihood": "certain",
+      "blast_radius": "false capability expectations for motion tasks",
+      "affected_nodes": [
+        "router.yaml motion_awareness block"
+      ],
+      "mitigation": "Implement or remove the config block",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-012",
+      "title": "Registry workflow resolution silently fails",
+      "root_cause": "RC-9: configs/registry/ does not exist, exception caught silently",
+      "severity": "medium",
+      "likelihood": "certain",
+      "blast_radius": "workflow context loss for all tasks",
+      "affected_nodes": [
+        "agent_runtime.py",
+        "registry_workflows.py"
+      ],
+      "mitigation": "Emit warn event or remove call path",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-013",
+      "title": "Mode collapsing to 100% plan mode",
+      "root_cause": "Keyword-based router collapses all traffic to plan mode",
+      "severity": "medium",
+      "likelihood": "certain",
+      "blast_radius": "Zera persona never exercises full range of modes",
+      "affected_nodes": [
+        "persona_mode_router.py",
+        "zera_mode_router.json"
+      ],
+      "mitigation": "Improve mode routing with semantic understanding or confidence thresholds",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-014",
+      "title": "Self-evolution loop lacks runtime gating",
+      "root_cause": "RC-10: Self-evolution operates as external script without review",
+      "severity": "high",
+      "likelihood": "likely",
+      "blast_radius": "persona config integrity, long-term behavior stability",
+      "affected_nodes": [
+        "self_evolution_loop.py",
+        "scripts/zera-self-evolution.sh"
+      ],
+      "mitigation": "Gate self-evolution changes through review pipeline",
+      "status": "identified"
+    },
+    {
+      "id": "RISK-015",
+      "title": "Context injection without budget tracking",
+      "root_cause": "No context budget manager exists",
+      "severity": "medium",
+      "likelihood": "likely",
+      "blast_radius": "context window overflow risk, token cost unpredictability",
+      "affected_nodes": [
+        "agent_runtime.py",
+        "profile_manager.py"
+      ],
+      "mitigation": "Add context budget tracking and warn events",
+      "status": "identified"
+    }
+  ],
+  "risk_summary": {
+    "critical": 4,
+    "high": 6,
+    "medium": 5,
+    "low": 0,
+    "total": 15
+  },
+  "top_3_by_blast_radius": [
+    "RISK-001",
+    "RISK-003",
+    "RISK-004"
+  ]
+}

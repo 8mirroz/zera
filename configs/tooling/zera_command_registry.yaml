@@ -1,0 +1,269 @@
+version: "2026-04-09"
+default_command: "zera:plan"
+operator_model: "mixed"
+ambient_auto_suggestion:
+  enabled: true
+  require_visible_explanation: true
+  require_telemetry: true
+  only_for_risk_levels: ["low", "medium"]
+mode_defaults:
+  love: "zera:calibrate"
+  plan: "zera:plan"
+  analysis: "zera:critic"
+  hard_truth: "zera:critic"
+  style: "zera:architect"
+  research: "zera:research"
+commands:
+  zera:plan:
+    intent_class: "planning"
+    mode_binding: "plan"
+    loop_binding: "capability"
+    candidate_class: "workflow_improvement"
+    workflow_type: "execution_planning"
+    action_class_expectation: "plan_generation"
+    tool_profile: "architect"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "planning can degrade to analytical guidance if planning surface is constrained"
+    approval_route: "allow_low_risk_after_eval"
+    risk_level: "low"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "decision_reason", "confidence", "rollback_path"]
+    rollback_path: "revert to zera:critic and operator-visible planning response"
+    aliases: ["plan", "roadmap", "next steps", "priorities"]
+    inference_keywords: ["plan", "roadmap", "schedule", "priorities", "next steps"]
+  zera:research:
+    intent_class: "research"
+    mode_binding: "research"
+    loop_binding: "capability"
+    candidate_class: "research_target"
+    workflow_type: "evidence_collection"
+    action_class_expectation: "research_refresh"
+    tool_profile: "research"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      network: "limited"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "research degrades to analysis when external retrieval is unavailable"
+    approval_route: "allow_low_risk_after_eval"
+    risk_level: "medium"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "source_count", "decision_reason", "rollback_path"]
+    rollback_path: "downgrade to analysis-only review with no external source promotion"
+    aliases: ["research", "compare", "sources", "evidence", "benchmark"]
+    inference_keywords: ["research", "compare", "sources", "evidence", "benchmark", "look up"]
+  zera:architect:
+    intent_class: "design"
+    mode_binding: "analysis"
+    loop_binding: "capability"
+    candidate_class: "orchestration_pattern_update"
+    workflow_type: "system_design"
+    action_class_expectation: "plan_generation"
+    tool_profile: "architect"
+    model_transport_tier: "tier_3_premium"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:plan"
+      reason: "architecture can degrade to planning under constrained reasoning/runtime"
+    approval_route: "review_required"
+    risk_level: "medium"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "decision_reason", "rollback_path"]
+    rollback_path: "downgrade to zera:plan and require explicit architectural review"
+    aliases: ["architect", "design", "system design"]
+    inference_keywords: ["architect", "design", "system", "interface", "architecture"]
+  zera:branch:
+    intent_class: "branching"
+    mode_binding: "analysis"
+    loop_binding: "mixed"
+    candidate_class: "mixed_ambiguous_candidate"
+    workflow_type: "branch_creation"
+    action_class_expectation: "propose"
+    tool_profile: "swarm"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "branching can degrade to explicit alternative analysis if branch runtime is unavailable"
+    approval_route: "review_required"
+    risk_level: "medium"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "branch_type", "decision_reason", "rollback_path"]
+    rollback_path: "discard branch artifacts and revert to single-thread analysis"
+    aliases: ["branch", "alternatives", "red team"]
+    inference_keywords: ["alternative", "branch", "fork", "red team", "counterfactual"]
+  zera:critic:
+    intent_class: "analysis"
+    mode_binding: "analysis"
+    loop_binding: "capability"
+    candidate_class: "workflow_improvement"
+    workflow_type: "critical_review"
+    action_class_expectation: "propose"
+    tool_profile: "code-review"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:plan"
+      reason: "critical review can degrade to planning if analysis mode is unavailable"
+    approval_route: "allow_low_risk_after_eval"
+    risk_level: "low"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "decision_reason", "rollback_path"]
+    rollback_path: "revert to zera:plan with explicit assumptions"
+    aliases: ["critic", "analyze", "why", "root cause", "tradeoff"]
+    inference_keywords: ["analyze", "why", "root cause", "tradeoff", "review", "critic"]
+  zera:calibrate:
+    intent_class: "persona_calibration"
+    mode_binding: "love"
+    loop_binding: "personality"
+    candidate_class: "tone_calibration"
+    workflow_type: "persona_calibration"
+    action_class_expectation: "propose"
+    tool_profile: "core"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "none"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "persona calibration degrades to bounded analytical support if emotional mode is constrained"
+    approval_route: "review_required"
+    risk_level: "high"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "personality_axis", "decision_reason", "rollback_path"]
+    rollback_path: "rollback latest personality delta and freeze personality promotions"
+    aliases: ["calibrate", "tone", "support", "warmth"]
+    inference_keywords: ["support", "warmth", "tone", "overwhelmed", "lonely", "care"]
+  zera:evolve-capability:
+    intent_class: "capability_evolution"
+    mode_binding: "research"
+    loop_binding: "capability"
+    candidate_class: "workflow_improvement"
+    workflow_type: "bounded_capability_evolution"
+    action_class_expectation: "self_reflection"
+    tool_profile: "swarm"
+    model_transport_tier: "tier_3_premium"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "limited"
+    allowed_clients: ["repo_native", "hermes"]
+    fallback:
+      degrade_to: "zera:research"
+      reason: "capability evolution degrades to research-only mode when execution surfaces are limited"
+    approval_route: "allow_low_risk_after_eval"
+    risk_level: "medium"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "candidate_class", "decision_reason", "rollback_path"]
+    rollback_path: "discard candidate promotion artifacts and restore last governance snapshot"
+    aliases: ["evolve capability", "improve workflow", "self improve"]
+    inference_keywords: ["evolve capability", "improve workflow", "self improve", "optimize execution"]
+  zera:evolve-personality:
+    intent_class: "personality_evolution"
+    mode_binding: "love"
+    loop_binding: "personality"
+    candidate_class: "tone_calibration"
+    workflow_type: "bounded_personality_evolution"
+    action_class_expectation: "self_reflection"
+    tool_profile: "research"
+    model_transport_tier: "tier_3_premium"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes"]
+    fallback:
+      degrade_to: "zera:calibrate"
+      reason: "personality evolution degrades to bounded calibration when full evolution surface is unavailable"
+    approval_route: "review_required"
+    risk_level: "high"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "personality_axis", "decision_reason", "rollback_path"]
+    rollback_path: "rollback latest personality delta and freeze personality loop"
+    aliases: ["evolve personality", "calibrate persona"]
+    inference_keywords: ["evolve personality", "calibrate persona", "too cold", "too warm", "tone drift"]
+  zera:governance-check:
+    intent_class: "governance_audit"
+    mode_binding: "analysis"
+    loop_binding: "governance"
+    candidate_class: "governance_affecting_candidate"
+    workflow_type: "governance_audit"
+    action_class_expectation: "propose"
+    tool_profile: "config"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "governance checks degrade to analytical review if dedicated audit tooling is unavailable"
+    approval_route: "operator_only"
+    risk_level: "critical"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "governance_surface", "decision_reason", "rollback_path"]
+    rollback_path: "freeze promotions and require operator governance review"
+    aliases: ["governance", "policy audit", "safety audit"]
+    inference_keywords: ["governance", "policy audit", "safety audit", "approval boundaries"]
+  zera:retro:
+    intent_class: "retrospective"
+    mode_binding: "analysis"
+    loop_binding: "capability"
+    candidate_class: "workflow_improvement"
+    workflow_type: "retrospective"
+    action_class_expectation: "self_reflection"
+    tool_profile: "core"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:critic"
+      reason: "retro degrades to analytical summary when richer retrospective scaffolding is unavailable"
+    approval_route: "allow_low_risk_after_eval"
+    risk_level: "low"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "decision_reason", "rollback_path"]
+    rollback_path: "drop retrospective artifact without promotion"
+    aliases: ["retro", "retrospective", "what changed"]
+    inference_keywords: ["retro", "retrospective", "what changed", "what improved", "reflection"]
+  zera:foundry-ingest:
+    intent_class: "foundry_intake"
+    mode_binding: "research"
+    loop_binding: "capability"
+    candidate_class: "skill_refinement"
+    workflow_type: "foundry_intake"
+    action_class_expectation: "research_refresh"
+    tool_profile: "research"
+    model_transport_tier: "tier_2_balanced"
+    required_capabilities:
+      filesystem: "limited"
+      repo_editing: "none"
+    allowed_clients: ["repo_native", "hermes", "gemini"]
+    fallback:
+      degrade_to: "zera:research"
+      reason: "foundry intake degrades to research if foundry pipeline is unavailable"
+    approval_route: "review_required"
+    risk_level: "medium"
+    telemetry_schema:
+      required_fields: ["command_id", "client_id", "mode", "loop", "source_license", "import_lane", "decision_reason", "rollback_path"]
+    rollback_path: "quarantine imported pattern and remove candidate card"
+    aliases: ["foundry", "ingest", "import pattern"]
+    inference_keywords: ["ingest", "import pattern", "skill candidate", "foundry", "reuse pattern"]

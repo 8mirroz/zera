@@ -1,0 +1,120 @@
+{
+  "version": "2026-03-11",
+  "profiles": {
+    "zera-telegram-prod": {
+      "channel": "telegram",
+      "persona_id": "zera-v1",
+      "persona_version": "zera-v1",
+      "memory_policy": "companion-curated-v1",
+      "autonomy_mode": "bounded_initiative",
+      "approval_policy": "zera-standard",
+      "background_profile": "zera-companion",
+      "scheduler_profile": "telegram-edge",
+      "operator_visibility": "approval_summary",
+      "cost_budget_usd": 0.02,
+      "max_actions": 4,
+      "proof_required": true,
+      "budget_profile": "zera-standard",
+      "network_policy": "telegram-webhook-only",
+      "workspace_scope": "workspace_only",
+      "tool_allowlist": [
+        "memory_read",
+        "memory_write",
+        "background_queue",
+        "goal_stack"
+      ],
+      "execution_mode": "stdio_json",
+      "timeout_seconds": 20,
+      "command": [
+        "python3",
+        "repos/packages/agent-os/scripts/zeroclaw_exec_adapter.py",
+        "--profile",
+        "zera-telegram-prod"
+      ],
+      "native_command": [
+        "__ZEROCLAW_BIN__",
+        "run",
+        "--stdio",
+        "--profile",
+        "zera-telegram-prod"
+      ],
+      "description": "Primary ZeroClaw profile for Zera companion on Telegram + edge runtime."
+    },
+    "zera-edge-local": {
+      "channel": "edge",
+      "persona_id": "zera-v1",
+      "persona_version": "zera-v1",
+      "memory_policy": "companion-curated-v1",
+      "autonomy_mode": "bounded_initiative",
+      "approval_policy": "zera-standard",
+      "background_profile": "zera-companion",
+      "scheduler_profile": "local-dev",
+      "operator_visibility": "approval_summary",
+      "cost_budget_usd": 0.02,
+      "max_actions": 4,
+      "proof_required": true,
+      "budget_profile": "zera-standard",
+      "network_policy": "local-dev-restricted",
+      "workspace_scope": "workspace_only",
+      "tool_allowlist": [
+        "memory_read",
+        "memory_write",
+        "background_queue",
+        "goal_stack"
+      ],
+      "execution_mode": "stdio_json",
+      "timeout_seconds": 15,
+      "command": [
+        "python3",
+        "repos/packages/agent-os/scripts/zeroclaw_exec_adapter.py",
+        "--profile",
+        "zera-edge-local"
+      ],
+      "native_command": [
+        "__ZEROCLAW_BIN__",
+        "run",
+        "--stdio",
+        "--profile",
+        "zera-edge-local"
+      ],
+      "description": "Local edge smoke profile for ZeroClaw runtime validation."
+    },
+    "generic-c1-c2-worker": {
+      "channel": "cli",
+      "persona_id": "antigravity-default",
+      "persona_version": "antigravity-default-v1",
+      "memory_policy": "runtime-default",
+      "autonomy_mode": "approval_only",
+      "approval_policy": "operator-standard",
+      "background_profile": "worker-maintenance",
+      "scheduler_profile": "local-dev",
+      "operator_visibility": "summary",
+      "cost_budget_usd": 0.01,
+      "max_actions": 2,
+      "proof_required": false,
+      "budget_profile": "operator-standard",
+      "network_policy": "local-dev-restricted",
+      "workspace_scope": "workspace_only",
+      "tool_allowlist": [
+        "memory_read",
+        "background_queue"
+      ],
+      "execution_mode": "stdio_json",
+      "timeout_seconds": 10,
+      "command": [
+        "python3",
+        "repos/packages/agent-os/scripts/zeroclaw_exec_adapter.py",
+        "--profile",
+        "generic-c1-c2-worker"
+      ],
+      "native_command": [
+        "__ZEROCLAW_BIN__",
+        "run",
+        "--stdio",
+        "--profile",
+        "generic-c1-c2-worker"
+      ],
+      "description": "Low-cost lightweight runtime profile for simple tasks."
+    }
+  }
+}

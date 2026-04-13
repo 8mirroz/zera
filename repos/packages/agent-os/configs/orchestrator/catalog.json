@@ -1,0 +1,22 @@
+{
+  "state_hash": "9a96ef567da3356c9a5e10f74d0f501a",
+  "skills": [],
+  "rules": [],
+  "workflows": [],
+  "configs": [],
+  "docs": [
+    {
+      "name": "ANTIGRAVITY_ATLAS",
+      "title": "🗺️ Antigravity Atlas v2 (Adaptive Knowledge Mesh) 🧬⚡",
+      "path": "docs/ki/ANTIGRAVITY_ATLAS.md",
+      "status": "unknown",
+      "description": "Эта карта объединяет все возможности системы. Всё взаимосвязано и постоянно эволюционирует."
+    }
+  ],
+  "wiki": [],
+  "validation": {
+    "missing_paths": [],
+    "stale_docs": []
+  },
+  "experience": []
+}
