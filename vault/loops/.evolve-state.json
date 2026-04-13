@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "idle",
+  "current_cycle": 0,
+  "current_algorithm": "karpathy",
+  "next_algorithm": "rsi",
+  "algorithm_order": [
+    "karpathy",
+    "rsi",
+    "darwin-goedel",
+    "pantheon",
+    "self-improving",
+    "karpathy-swarm",
+    "ralph",
+    "agentic-ci",
+    "self-driving",
+    "meta-learning"
+  ],
+  "last_run": null,
+  "last_error": null,
+  "consecutive_errors": 0,
+  "last_report": null,
+  "updated_at": "2026-04-11T19:15:24.224269+00:00"
+}

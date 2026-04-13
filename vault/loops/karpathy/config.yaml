@@ -1,0 +1,38 @@
+---
+name: karpathy-loop
+version: "1.0"
+created: 2026-04-08
+source: karpathy/autoresearch
+status: active
+
+# Core parameters
+target_file: "configs/orchestrator/router.yaml"
+metric: "first_pass_success_rate"
+metric_direction: "higher_is_better"
+time_budget_minutes: 5
+max_iterations: 50
+stopping_criteria:
+  - "iterations >= max_iterations"
+  - "score >= 0.90"
+  - "plateau_detected (delta < 0.01 for 5 iterations)"
+  - "manual_stop"
+
+# What the agent can modify
+allowed_changes:
+  - "model aliases and routing"
+  - "tier thresholds"
+  - "max_tools limits"
+  - "feature flags"
+  - "memory retrieval params"
+
+# What the agent CANNOT change
+forbidden_changes:
+  - "security policies"
+  - "API keys"
+  - "completion gates (safety)"
+  - "role contracts"
+
+# Logging
+log_file: "/Users/user/zera/vault/loops/karpathy/results.jsonl"
+progress_file: "/Users/user/zera/vault/loops/karpathy/progress.md"
+best_config: "/Users/user/zera/vault/loops/karpathy/best-config.yaml"

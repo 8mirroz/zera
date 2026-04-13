@@ -1,0 +1,40 @@
+---
+name: karpathy-swarm
+version: "1.0"
+created: 2026-04-08
+source: karpathy/autoresearch (swarm variant)
+status: active
+
+# Parallel agents, each optimizes different aspect
+agents:
+  - name: agent-router
+    target: "configs/orchestrator/router.yaml"
+    metric: "routing_accuracy"
+
+  - name: agent-models
+    target: "configs/orchestrator/models.yaml"
+    metric: "model_quality_score"
+
+  - name: agent-mcp
+    target: "configs/tooling/mcp_profiles.json"
+    metric: "mcp_tool_effectiveness"
+
+  - name: agent-skills
+    target: "configs/skills/"
+    metric: "skill_match_rate"
+
+  - name: agent-workflows
+    target: ".agent/workflows/"
+    metric: "workflow_efficiency"
+
+# Swarm coordination
+sync_interval_iterations: 10
+share_winners: true
+archive_failures: true
+spawn_new_for_promising: true
+
+max_agents: 5
+max_iterations_per_agent: 20
+
+log_file: "/Users/user/zera/vault/loops/swarm/results.jsonl"
+shared_knowledge: "/Users/user/zera/vault/loops/swarm/shared-findings.md"

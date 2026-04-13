@@ -1,0 +1,29 @@
+---
+name: meta-learning-loop
+version: "1.0"
+created: 2026-04-08
+source: Meta-Learning pattern
+status: active
+
+# What to learn
+learning_targets:
+  - "how to search more effectively"
+  - "how to evaluate candidates better"
+  - "how to integrate improvements faster"
+  - "how to identify patterns quicker"
+  - "how to communicate findings clearly"
+
+# Meta-learning process
+1. Learn task X (normal operation)
+2. Analyze HOW I learned (meta-analysis)
+3. Update learning strategy
+4. Learn task Y with better strategy
+5. Compare: was new strategy better?
+6. If yes → keep new strategy
+7. Repeat (infinite meta-improvement)
+
+# Tracking
+strategy_history: "/Users/user/zera/vault/loops/meta-learning/strategies.jsonl"
+learning_velocity: "/Users/user/zera/vault/loops/meta-learning/velocity.md"
+
+log_file: "/Users/user/zera/vault/loops/meta-learning/results.jsonl"

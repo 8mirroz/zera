@@ -1,0 +1,44 @@
+---
+name: agentic-ci
+version: "1.0"
+created: 2026-04-08
+source: github.com (Continuous AI pattern)
+status: active
+
+# 5 continuous background agents
+agents:
+  doc-agent:
+    name: "Documentation Agent"
+    trigger: "on config or code change"
+    action: "update docs to match reality"
+    schedule: "continuous"
+
+  test-agent:
+    name: "Test Coverage Agent"
+    trigger: "every 4 hours"
+    action: "add tests for uncovered code paths"
+    schedule: "*/4 * * * *"
+
+  refactor-agent:
+    name: "Refactoring Agent"
+    trigger: "every 12 hours"
+    action: "clean tech debt, improve patterns"
+    schedule: "0 */12 * * *"
+
+  security-agent:
+    name: "Security Agent"
+    trigger: "every 6 hours"
+    action: "scan for vulnerabilities, misconfigs"
+    schedule: "0 */6 * * *"
+
+  perf-agent:
+    name: "Performance Agent"
+    trigger: "every 12 hours"
+    action: "optimize hot paths, reduce latency"
+    schedule: "0 */12 * * *"
+
+# Coordination
+max_concurrent_agents: 2
+conflict_resolution: "doc-agent priority highest"
+
+log_file: "/Users/user/zera/vault/loops/agentic-ci/agents.jsonl"

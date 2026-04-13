@@ -1,0 +1,40 @@
+---
+name: pantheon-os
+version: "1.0"
+created: 2026-04-08
+source: aristoteleo/PantheonOS
+status: active
+
+# Agent roles (mapping to Zera capabilities)
+agents:
+  researcher:
+    role: "discover patterns from repos, papers, configs"
+    schedule: "every 12 hours"
+    output: "/Users/user/zera/vault/loops/pantheon/research-findings.md"
+
+  builder:
+    role: "implement improvements discovered by researcher"
+    schedule: "after researcher completes"
+    output: "/Users/user/zera/vault/loops/pantheon/implementation.md"
+
+  critic:
+    role: "evaluate quality of implementations"
+    schedule: "after builder completes"
+    output: "/Users/user/zera/vault/loops/pantheon/critique.md"
+
+  evaluator:
+    role: "measure impact on system metrics"
+    schedule: "after critic approves"
+    output: "/Users/user/zera/vault/loops/pantheon/evaluation.md"
+
+  evolver:
+    role: "update agent code/prompts based on results"
+    schedule: "after evaluator confirms improvement"
+    output: "/Users/user/zera/vault/loops/pantheon/evolution.md"
+
+# Cycle parameters
+max_cycles_per_day: 2
+min_improvement: 0.05
+rollback_on_failure: true
+
+log_file: "/Users/user/zera/vault/loops/pantheon/cycles.jsonl"

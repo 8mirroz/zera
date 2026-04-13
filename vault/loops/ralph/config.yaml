@@ -1,0 +1,36 @@
+---
+name: ralph-loop-infinite
+version: "2.0"
+created: 2026-04-08
+source: antigravity-core (extended)
+status: active
+
+# Extended from existing Ralph Loop
+# Original: max 7 iterations, stops at 0.70 score
+# Infinite: no hard cap, continuous improvement
+
+max_iterations: 0  # 0 = infinite
+scoring_weights:
+  correctness: 0.35
+  speed: 0.20
+  code_quality: 0.20
+  token_efficiency: 0.15
+  tool_success_rate: 0.10
+
+# Stopping (only manual or plateau)
+stopping_criteria:
+  - "manual_stop"
+  - "plateau_50_iterations (delta < 0.001)"
+  - "budget_exhausted"
+
+# Scope
+targets:
+  - "configs/orchestrator/"
+  - "configs/tooling/"
+  - ".agent/workflows/"
+
+# Knowledge accumulation
+knowledge_base: "/Users/user/zera/vault/loops/ralph/knowledge.md"
+best_solutions: "/Users/user/zera/vault/loops/ralph/best-solutions/"
+
+log_file: "/Users/user/zera/vault/loops/ralph/results.jsonl"

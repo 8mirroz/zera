@@ -1,0 +1,28 @@
+---
+name: darwin-goedel-machine
+version: "1.0"
+created: 2026-04-08
+source: schmidhuber-group/darwin-goedel-machine
+status: active
+
+# Gödel Machine: prove improvement before accepting
+mutation_types:
+  - "prompt_optimization"
+  - "workflow_restructuring"
+  - "skill_addition"
+  - "config_tuning"
+  - "memory_reorganization"
+
+proof_requirements:
+  min_score_improvement: 0.03
+  min_test_coverage: 0.8
+  no_regressions: true
+  safety_check: true
+
+generation: 0
+population_size: 5
+mutation_rate: 0.2
+crossover_rate: 0.1
+
+log_file: "/Users/user/zera/vault/loops/darwin-goedel/evolution.jsonl"
+best_genome: "/Users/user/zera/vault/loops/darwin-goedel/best-genome.yaml"

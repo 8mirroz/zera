@@ -1,0 +1,48 @@
+enabled: true
+vault_root: "."
+system_root: "."
+project_root: "."
+inbox_root: "09_Inbox"
+index_output: ".agent/memory/obsidian/indexes/zera_local_index.json"
+
+taxonomy:
+  allowed_note_types:
+    - memory
+    - pattern
+    - lesson
+    - capability
+    - report
+    - stage
+    - roadmap
+    - persona
+  candidate_note_type: candidate_memory
+  major_note_types:
+    - capability
+    - persona
+    - pattern
+
+frontmatter:
+  required_fields:
+    - type
+    - created
+    - status
+    - tags
+
+governance:
+  statuses:
+    - draft
+    - reviewed
+    - verified
+    - deprecated
+  review_cycles:
+    - weekly
+    - monthly
+    - quarterly
+  default_owner: zera
+  default_status: draft
+  default_review_cycle: weekly
+
+paths:
+  canonical_notes:
+    - "00-overview.md"
+    - "06-agents/zera-persona.md"

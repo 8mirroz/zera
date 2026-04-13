@@ -12,7 +12,7 @@ if [[ ! -d "$DEFAULT_ROOT/configs" ]]; then
   DEFAULT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 fi
 REPO_ROOT="${ZERA_REPO_ROOT:-$DEFAULT_ROOT}"
-VAULT="${VAULT_PATH:-$HOME/antigravity-vault}"
+VAULT="${VAULT_PATH:-$REPO_ROOT/vault}"
 CONTROL_DIR="$VAULT/research/_control"
 REPORT_DIR="$VAULT/research/reports"
 BRANCH_DIR="$VAULT/research/branches"

@@ -1,0 +1,30 @@
+---
+name: rsi-loop
+version: "1.0"
+created: 2026-04-08
+source: clawinfra/rsi-loop
+status: active
+
+# Core parameters
+analysis_scope:
+  - "Zera SOUL.md effectiveness"
+  - "Antigravity Core config quality"
+  - "Hermes cron job performance"
+  - "Vault organization"
+  - "Skill coverage"
+
+min_improvement_threshold: 0.05
+max_iterations: 30
+cooldown_hours: 2
+
+# Scoring dimensions (0-10)
+dimensions:
+  knowledge_coverage: 10
+  response_quality: 10
+  autonomy_effectiveness: 8
+  tool_utilization: 8
+  memory_quality: 8
+  config_optimization: 7
+
+log_file: "/Users/user/zera/vault/loops/rsi/results.jsonl"
+memory_file: "/Users/user/zera/vault/loops/rsi/self-knowledge.md"

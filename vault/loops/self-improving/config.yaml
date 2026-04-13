@@ -1,0 +1,34 @@
+---
+name: self-improving-agent
+version: "1.0"
+created: 2026-04-08
+source: addyosmani/self-improving-agents
+status: active
+
+# Scan targets
+scan_paths:
+  - "configs/orchestrator/"
+  - "configs/tooling/"
+  - ".agent/workflows/"
+  - ".agent/config/"
+  - "scripts/"
+
+# What to look for
+patterns:
+  - "TODO comments"
+  - "FIXME comments"
+  - "Deprecated configs"
+  - "Inconsistent formatting"
+  - "Missing documentation"
+  - "Outdated references"
+  - "Inefficient patterns"
+  - "Security concerns"
+
+# Fix parameters
+auto_fix_enabled: true
+max_fixes_per_cycle: 5
+require_test: true
+require_commit_message: true
+require_pr_for_complex: true
+
+log_file: "/Users/user/zera/vault/loops/self-improving/fixes.jsonl"

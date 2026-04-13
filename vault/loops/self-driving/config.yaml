@@ -1,0 +1,41 @@
+---
+name: self-driving-loop
+version: "1.0"
+created: 2026-04-08
+source: Self-Driving Business pattern
+status: active
+
+# Metrics to optimize
+metrics:
+  task_success_rate:
+    target: 0.95
+    current: 0.85
+    weight: 3
+
+  response_time_seconds:
+    target: 30
+    current: 45
+    weight: 2
+
+  token_efficiency:
+    target: 0.70
+    current: 0.55
+    weight: 2
+
+  user_satisfaction:
+    target: 0.90
+    current: 0.80
+    weight: 3
+
+# A/B Testing
+ab_test_duration_hours: 24
+min_sample_size: 10
+confidence_threshold: 0.95
+
+# Deployment
+auto_deploy_winners: true
+auto_rollback_losers: true
+max_concurrent_tests: 3
+
+log_file: "/Users/user/zera/vault/loops/self-driving/experiments.jsonl"
+metrics_history: "/Users/user/zera/vault/loops/self-driving/metrics.jsonl"

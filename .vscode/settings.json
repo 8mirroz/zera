@@ -1,0 +1,11 @@
+{
+  "terminal.integrated.profiles.osx": {
+    "Zera": {
+      "path": "zsh",
+      "args": ["-l"],
+      "overrideName": true,
+      "icon": "heart"
+    }
+  },
+  "terminal.integrated.defaultProfile.osx": "Zera"
+}
