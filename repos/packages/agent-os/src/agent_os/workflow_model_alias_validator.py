@@ -9,14 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-SRC_DIR = SCRIPT_DIR.parent / "src"
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from active_set_lib import parse_active_skills_md
+from agent_os.active_set_lib import parse_active_skills_md
 from agent_os.yaml_compat import parse_simple_yaml
 
 

@@ -2,10 +2,23 @@ import json
 import logging
 import math
 import re
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
+
+
+# Lazy-initialized trace emitter
+_emitter: Any = None
+
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 class TfIdfScorer:
     """Lightweight TF-IDF search on pure Python."""
@@ -214,23 +227,58 @@ class AssetRegistry:
         return results
 
     def get_asset_by_name(self, name: str) -> Optional[Dict[str, Any]]:
-        target = str(name or "").lower()
-        for category in self.catalog.values():
-            if not isinstance(category, list):
-                continue
-            for asset in category:
-                if isinstance(asset, dict) and str(asset.get("name", "")).lower() == target:
-                    return asset
-        return None
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"resolve_asset:{name}", tier="C1", component="asset_registry")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, asset_id=name)
+
+        try:
+            target = str(name or "").lower()
+            result = None
+            for category in self.catalog.values():
+                if not isinstance(category, list):
+                    continue
+                for asset in category:
+                    if isinstance(asset, dict) and str(asset.get("name", "")).lower() == target:
+                        result = asset
+                        break
+                if result is not None:
+                    break
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             asset_id=name, resolved=result is not None)
+            return result
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def register_asset(self, category: str, asset: Dict[str, Any]) -> None:
-        key = str(category or "").strip()
-        if key not in self.catalog or not isinstance(self.catalog.get(key), list):
-            self.catalog[key] = []
-        self.catalog[key].append(dict(asset))
-        # Invalidate existing scorer to force re-init on next use
-        if key in self.scorers:
-            del self.scorers[key]
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        asset_id = str(asset.get("name", "unknown"))
+        ctx = TraceContext.root(task_id=f"register_asset:{asset_id}", tier="C1", component="asset_registry")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, asset_id=asset_id, asset_type=category)
+
+        try:
+            key = str(category or "").strip()
+            if key not in self.catalog or not isinstance(self.catalog.get(key), list):
+                self.catalog[key] = []
+            self.catalog[key].append(dict(asset))
+            # Invalidate existing scorer to force re-init on next use
+            if key in self.scorers:
+                del self.scorers[key]
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             asset_id=asset_id, asset_type=category)
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def list_by_category(self, category: str) -> List[Dict[str, Any]]:
         key = str(category or "").strip()

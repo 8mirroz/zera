@@ -1,0 +1,155 @@
+# Completion Gates — Antigravity Core
+# Version: 4.2
+# Referenced by: configs/orchestrator/router.yaml
+# Defines the Definition of Done gates for each task tier (C1–C5).
+# A task is DONE only when all applicable gates pass. No exceptions.
+
+version: "4.2"
+
+# ─── Universal Gates (apply to ALL tiers) ─────────────────────────────────────
+
+universal_gates:
+  error_handling:
+    required: true
+    description: "All failure modes addressed with meaningful, actionable error messages"
+    verification: "Code review + manual inspection"
+
+  documentation:
+    required: true
+    locations:
+      - "docs/adr/"        # Architectural decisions (when architecture changes)
+      - "docs/ki/"         # New system knowledge (when behavior changes)
+      - "docs/patterns/"   # Reusable patterns (C4+)
+    description: "Behavior changes require updated documentation"
+    verification: "Check affected docs exist and are current"
+
+  quality_checks:
+    required: true
+    checks:
+      - "lint passes"
+      - "format is clean"
+      - "no syntax warnings"
+    verification: "Use release-checklist skill or run_quality_checks.sh"
+
+  minimum_test:
+    required: true
+    description: "At least one happy-path test or verification script exists"
+    verification: "Test exists and passes"
+
+# ─── Tier-Gated Gates ────────────────────────────────────────────────────────
+# Gates escalate by tier. Higher tiers inherit all lower-tier requirements.
+
+tier_gates:
+  C1:
+    inherits: ["universal_gates"]
+    additional: []
+    human_audit: false
+    council_review: false
+
+  C2:
+    inherits: ["universal_gates"]
+    additional:
+      - name: "tests_pass"
+        required: true
+        description: "All applicable tests pass"
+        verification: "make test or equivalent"
+    human_audit: false
+    council_review: false
+
+  C3:
+    inherits: ["universal_gates"]
+    additional:
+      - name: "tests_pass"
+        required: true
+        description: "All tests pass (unit + integration)"
+        verification: "make test-all or equivalent"
+      - name: "retrospective"
+        required: true
+        description: "Retrospective written summarizing what was learned"
+        output_location: "docs/ki/ or docs/retrospectives/"
+      - name: "code_review"
+        required: true
+        description: "Code review evidence collected (agent or human)"
+        verification: "Review notes or PR comments linked"
+    human_audit: false
+    council_review: false
+
+  C4:
+    inherits: ["universal_gates"]
+    additional:
+      - name: "tests_pass"
+        required: true
+        description: "All tests pass (unit + integration + e2e if applicable)"
+      - name: "retrospective"
+        required: true
+        description: "Retrospective written"
+      - name: "code_review"
+        required: true
+        description: "Code review evidence collected"
+      - name: "pattern_extraction"
+        required: true
+        description: "Reusable pattern extracted to docs/patterns/"
+        output_location: "docs/patterns/"
+      - name: "human_audit"
+        required: true
+        description: "Human reviewer approved the implementation"
+        verification: "Audit log entry in docs/audits/"
+    human_audit: true
+    council_review: false
+
+  C5:
+    inherits: ["universal_gates"]
+    additional:
+      - name: "tests_pass"
+        required: true
+        description: "All tests pass with full coverage"
+      - name: "retrospective"
+        required: true
+        description: "Comprehensive retrospective"
+      - name: "code_review"
+        required: true
+        description: "Multi-agent or human code review"
+      - name: "pattern_extraction"
+        required: true
+        description: "Patterns extracted and cataloged"
+      - name: "human_audit"
+        required: true
+        description: "Human audit completed"
+      - name: "adr_update"
+        required: true
+        description: "Architecture Decision Record created or updated"
+        output_location: "docs/adr/"
+      - name: "council_review"
+        required: true
+        description: "Council review passed (senior reviewers)"
+        verification: "Council approval recorded"
+    human_audit: true
+    council_review: true
+
+# ─── Gate Failure Behavior ───────────────────────────────────────────────────
+
+failure_policy:
+  on_gate_failure:
+    action: "block_completion"
+    log_to: "logs/gate_failures.jsonl"
+    notify: true
+    retry_allowed: true
+    max_retries: 3
+
+  escalation:
+    C4_on_repeat_failure: "escalate_to_human"
+    C5_on_repeat_failure: "escalate_to_council"
+
+# ─── Verification Commands ───────────────────────────────────────────────────
+
+verification_commands:
+  universal:
+    lint: "ruff check repos/ && mypy repos/"
+    format: "ruff format --check repos/"
+    quality: "bash scripts/run_quality_checks.sh"
+
+  tier_specific:
+    C2: "make test"
+    C3: "make test-all"
+    C4: "make test-all && bash scripts/run_quality_checks.sh"
+    C5: "make test-all && bash scripts/run_quality_checks.sh && python3 scripts/intake/scheduler.py --scope full"

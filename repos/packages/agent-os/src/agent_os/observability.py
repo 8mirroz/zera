@@ -130,6 +130,20 @@ def _utc_now_iso() -> str:
     return datetime.now(tz=timezone.utc).isoformat()
 
 
+def _default_trace_path() -> str:
+    """Resolve trace file path by walking up to find the repo root.
+
+    Walks up to 5 parent directories looking for the canonical repo structure
+    (configs/ and repos/ directories). Falls back to CWD/logs/ if not found.
+    """
+    current = Path.cwd()
+    for _ in range(5):
+        if (current / "configs").exists() and (current / "repos").exists():
+            return str(current / "logs" / "agent_traces.jsonl")
+        current = current.parent
+    return str(Path.cwd() / "logs" / "agent_traces.jsonl")
+
+
 def _default_component(event_type: str) -> str:
     if event_type.startswith("triage_"):
         return "triage"
@@ -192,7 +206,7 @@ def _normalize_event_row(event_type: str, payload: dict[str, Any]) -> dict[str, 
 def emit_event(event_type: str, payload: dict[str, Any]) -> None:
     trace_path = os.getenv("AGENT_OS_TRACE_FILE")
     if not trace_path:
-        trace_path = str(Path("logs") / "agent_traces.jsonl")
+        trace_path = _default_trace_path()
 
     row = _normalize_event_row(event_type, payload)
     path = Path(trace_path)

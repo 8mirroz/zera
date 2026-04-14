@@ -15,14 +15,11 @@ from pathlib import Path
 from typing import Any, Iterable
 from uuid import uuid4
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-SRC_DIR = SCRIPT_DIR.parent / "src"
+SRC_DIR = Path(__file__).resolve().parent.parent / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from active_set_lib import parse_active_skills_md, publish_active_set, sha256_tree
+from agent_os.active_set_lib import parse_active_skills_md, publish_active_set, sha256_tree
 from agent_os.agent_runtime import AgentRuntime
 from agent_os.approval_engine import ApprovalEngine
 from agent_os.background_jobs import BackgroundJobRegistry
@@ -57,12 +54,12 @@ from agent_os.stop_controller import StopController
 from agent_os.tool_runner import ToolRunner
 from agent_os.wiki_core import WikiCore
 from agent_os.yaml_compat import parse_simple_yaml
-from notebooklm_doctor import run_notebooklm_doctor
-from notebooklm_router_prompt import build_router_packet
-from skill_drift_validator import build_report as build_skill_drift_report
-from trace_metrics_materializer import materialize_metrics as materialize_trace_metrics
-from trace_validator import validate_trace_file as validate_trace_jsonl
-from workflow_model_alias_validator import build_report as build_workflow_model_alias_report
+from agent_os.notebooklm_doctor import run_notebooklm_doctor
+from agent_os.notebooklm_router_prompt import build_router_packet
+from agent_os.skill_drift_validator import build_report as build_skill_drift_report
+from agent_os.trace_metrics_materializer import materialize_metrics as materialize_trace_metrics
+from agent_os.trace_validator import validate_trace_file as validate_trace_jsonl
+from agent_os.workflow_model_alias_validator import build_report as build_workflow_model_alias_report
 
 
 def _repo_root() -> Path:
@@ -773,7 +770,7 @@ def _maybe_memory_recommendations(
     if os.getenv("AGENT_OS_MEMORY_RECOMMENDATIONS", "").strip().lower() not in {"1", "true", "yes", "on"}:
         return None
     try:
-        from memory_query_adapter import query_memory_layers  # local script import; lazy to avoid default overhead
+        from agent_os.memory_query_adapter import query_memory_layers  # local package import; lazy to avoid default overhead
 
         return query_memory_layers(
             repo_root,
@@ -4880,6 +4877,130 @@ def cmd_task_bounce(args: argparse.Namespace) -> int:
     return 0 if "error" not in result else 2
 
 
+def _format_trace_details(event: dict) -> str:
+    """Extract a concise details string from a trace event."""
+    parts = []
+    if event.get("model"):
+        parts.append(f"model={event['model']}")
+    if event.get("tool_name"):
+        parts.append(f"tool={event['tool_name']}")
+    if event.get("span_id"):
+        parts.append(f"span={event['span_id'][:8]}")
+    if event.get("parent_span_id"):
+        parts.append(f"parent={event['parent_span_id'][:8]}")
+    if event.get("duration_ms") is not None:
+        parts.append(f"duration={event['duration_ms']}ms")
+    if event.get("tokens"):
+        tokens = event["tokens"]
+        if isinstance(tokens, dict):
+            parts.append(f"tokens_in={tokens.get('input', '?')} tokens_out={tokens.get('output', '?')}")
+        else:
+            parts.append(f"tokens={tokens}")
+    msg = event.get("message") or event.get("error") or event.get("detail")
+    if msg:
+        msg_str = str(msg)[:120]
+        parts.append(msg_str)
+    return ", ".join(parts) if parts else ""
+
+
+def _print_trace_tree(events: list[dict]) -> None:
+    """Print trace as a tree showing parent→child relationships."""
+    by_parent: dict[str, list[dict]] = {}
+    for ev in events:
+        parent = ev.get("parent_span_id") or "root"
+        by_parent.setdefault(parent, []).append(ev)
+
+    def _render(parent_id: str, depth: int) -> None:
+        children = by_parent.get(parent_id, [])
+        for ev in sorted(children, key=lambda e: e.get("timestamp", "")):
+            ts = ev.get("timestamp", "?")[:23]
+            level = ev.get("level", "INFO")
+            component = ev.get("component", ev.get("source", "?"))
+            event_type = ev.get("event_type", ev.get("event", "?"))
+            indent = "  " * depth
+            prefix = f"[{ts}] [{level}] [{component}] {event_type}"
+            details = _format_trace_details(ev)
+            if details:
+                print(f"{indent}{prefix} — {details}")
+            else:
+                print(f"{indent}{prefix}")
+            span_id = ev.get("span_id", "")
+            if span_id in by_parent:
+                _render(span_id, depth + 1)
+
+    _render("root", 0)
+    # Also render any orphans (spans whose parent never appeared)
+    all_span_ids = {ev.get("span_id") for ev in events}
+    all_parent_ids = {ev.get("parent_span_id") for ev in events if ev.get("parent_span_id")}
+    orphans = all_parent_ids - all_span_ids - {"root", None}
+    for orphan_parent in sorted(orphans):
+        if orphan_parent in by_parent:
+            print(f"\n(orphan subtree, parent={orphan_parent[:8]})")
+            _render(orphan_parent, 0)
+
+
+def _print_trace_timeline(events: list[dict]) -> None:
+    """Print trace as a chronological timeline."""
+    sorted_events = sorted(events, key=lambda e: e.get("timestamp", ""))
+    for ev in sorted_events:
+        ts = ev.get("timestamp", "?")[:23]
+        level = ev.get("level", "INFO")
+        component = ev.get("component", ev.get("source", "?"))
+        event_type = ev.get("event_type", ev.get("event", "?"))
+        details = _format_trace_details(ev)
+        if details:
+            print(f"[{ts}] [{level}] [{component}] {event_type} — {details}")
+        else:
+            print(f"[{ts}] [{level}] [{component}] {event_type}")
+    print(f"\n{len(sorted_events)} events total")
+
+
+def cmd_trace(args: argparse.Namespace) -> int:
+    """Display trace for a task."""
+    trace_dir = _repo_root() / "logs"
+    task_id = args.task_id
+    use_json = getattr(args, "json", False)
+    show_tree = getattr(args, "tree", False)
+    limit = getattr(args, "limit", 1000)
+
+    if not trace_dir.exists():
+        print(f"Logs directory not found: {trace_dir}")
+        return 1
+
+    events: list[dict] = []
+    for trace_file in sorted(trace_dir.glob("agent_traces_*.jsonl")):
+        for line in trace_file.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                event = json.loads(line)
+                if event.get("task_id") == task_id:
+                    events.append(event)
+                    if len(events) >= limit:
+                        break
+            except json.JSONDecodeError:
+                continue
+        if len(events) >= limit:
+            break
+
+    if not events:
+        print(f"No traces found for task: {task_id}")
+        return 1
+
+    if use_json:
+        print(json.dumps(events, ensure_ascii=False, indent=2))
+        return 0
+
+    if show_tree:
+        _print_trace_tree(events)
+    else:
+        _print_trace_timeline(events)
+
+    return 0
+
+
+# ─── Main ────────────────────────────────────────────────────────────
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="swarmctl", description="Agent OS v2 utilities")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -5236,6 +5357,14 @@ def main() -> int:
     p_task_bounce.add_argument("task_id")
     p_task_bounce.add_argument("--reason", required=True)
     p_task_bounce.set_defaults(fn=cmd_task_bounce)
+
+    # Trace viewer
+    p_trace = sub.add_parser("trace", help="Display trace for a task")
+    p_trace.add_argument("task_id", help="Task ID to trace")
+    p_trace.add_argument("--json", action="store_true", help="Output as JSON")
+    p_trace.add_argument("--tree", action="store_true", help="Show parent->child tree")
+    p_trace.add_argument("--limit", type=int, default=1000, help="Max events to show")
+    p_trace.set_defaults(fn=cmd_trace)
 
     args = parser.parse_args()
     return int(args.fn(args))

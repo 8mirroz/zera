@@ -1,0 +1,11 @@
+{
+  "include": ["**/*.py"],
+  "extraPaths": [
+    "repos/packages/agent-os/src"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/node_modules",
+    ".venv"
+  ]
+}

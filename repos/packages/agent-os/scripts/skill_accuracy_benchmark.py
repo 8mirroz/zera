@@ -6,9 +6,13 @@ import argparse
 from pathlib import Path
 
 def run_matcher(task_text):
+    # Smart skill matching was moved to the agent_os package
+    # We use -m to run it as a module, assuming src is in PYTHONPATH
+    # or we can point to the absolute path.
+    # Given the existing structure, we'll point to the new location.
     cmd = [
         "python3", 
-        "repos/packages/agent-os/scripts/smart_skill_matching.py", 
+        "repos/packages/agent-os/src/agent_os/smart_skill_matching.py", 
         task_text, 
         "--json"
     ]

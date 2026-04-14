@@ -3,10 +3,23 @@ from __future__ import annotations
 import subprocess
 import time
 from dataclasses import asdict
+from typing import Any
 
 from .contracts import ToolInput, ToolOutput
 from .exceptions import PermissionDeniedError, ToolExecutionError, ToolNotFoundError, ToolTimeoutError
-from .observability import emit_event
+
+# ---------------------------------------------------------------------------
+# Lazy-initialized structured trace emitter
+# ---------------------------------------------------------------------------
+
+_emitter: Any = None
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 
 class ToolRunner:
@@ -26,6 +39,15 @@ class ToolRunner:
         if mode not in {"read", "write"}:
             raise PermissionDeniedError(f"Unsupported mode: {mode}")
 
+        # --- trace: tool execution start ---
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(
+            task_id=f"tool-{tool_input.tool_name}",
+            tier="C2",
+            component="tool_runner",
+        )
+        # --- end trace ---
+
         retries = 1 if mode == "read" else 0
         timeout = self._timeout_for(tool_input.tool_name)
         attempt = 0
@@ -34,6 +56,16 @@ class ToolRunner:
 
         while attempt <= retries:
             attempt += 1
+            # --- trace: tool_call event ---
+            _get_emitter().tool_call(
+                ctx,
+                tool_name=tool_input.tool_name,
+                mode=mode,
+                attempt=attempt,
+                args_count=len(tool_input.args),
+                run_id=tool_input.correlation_id,
+            )
+            # --- end trace ---
             try:
                 proc = subprocess.run(
                     [tool_input.tool_name, *tool_input.args],
@@ -59,22 +91,17 @@ class ToolRunner:
                     artifacts=[],
                     exit_code=proc.returncode,
                 )
-                emit_event(
-                    "tool_call",
-                    {
-                        "run_id": tool_input.correlation_id,
-                        "component": "tool",
-                        "tool_name": tool_input.tool_name,
-                        "status": "ok",
-                        "duration_ms": duration_ms,
-                        "message": f"Tool {tool_input.tool_name} completed successfully",
-                        "data": {
-                            "mode": mode,
-                            "args_count": len(tool_input.args),
-                            "attempt": attempt,
-                        },
-                    },
+                # --- trace: tool_result event (ok) ---
+                _get_emitter().tool_result(
+                    ctx,
+                    tool_name=tool_input.tool_name,
+                    status="ok",
+                    duration_ms=duration_ms,
+                    mode=mode,
+                    attempt=attempt,
+                    run_id=tool_input.correlation_id,
                 )
+                # --- end trace ---
                 return output
 
             last_error = ToolExecutionError(
@@ -91,23 +118,18 @@ class ToolRunner:
                 artifacts=[],
                 exit_code=proc.returncode,
             )
-            emit_event(
-                "tool_call",
-                {
-                    "run_id": tool_input.correlation_id,
-                    "component": "tool",
-                    "tool_name": tool_input.tool_name,
-                    "status": "error",
-                    "duration_ms": duration_ms,
-                    "message": f"Tool {tool_input.tool_name} failed with exit code {proc.returncode}",
-                    "data": {
-                        "mode": mode,
-                        "args_count": len(tool_input.args),
-                        "attempt": attempt,
-                        "exit_code": proc.returncode,
-                    },
-                },
+            # --- trace: tool_result event (error) ---
+            _get_emitter().tool_result(
+                ctx,
+                tool_name=tool_input.tool_name,
+                status="error",
+                duration_ms=duration_ms,
+                mode=mode,
+                attempt=attempt,
+                exit_code=proc.returncode,
+                run_id=tool_input.correlation_id,
             )
+            # --- end trace ---
             return output
 
         if last_error is not None:

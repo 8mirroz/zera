@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from dataclasses import asdict, replace
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -9,11 +10,23 @@ from typing import Any, Dict, List, Optional
 from .contracts import AgentInput, AgentOutput
 from .background_job_dispatcher import enqueue_background_jobs_from_output
 from .exceptions import RuntimeProviderExecutionError, RuntimeProviderUnavailableError
-from .observability import emit_event
 from .recovery import RecoveryState, RecoveryStateMachine, classify_failure, plan_recovery
 from .registry_workflows import RegistryWorkflowResolver
 from .runtime_registry import RuntimeRegistry
 from .zera_command_os import ZeraCommandOS
+
+# ---------------------------------------------------------------------------
+# Lazy-initialized structured trace emitter
+# ---------------------------------------------------------------------------
+
+_emitter: Any = None
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 # Phase 2 Governance Engines
 from .arbitration_engine import ArbitrationEngine
@@ -144,7 +157,22 @@ class AgentRuntime:
 
     def run(self, agent_input: AgentInput) -> AgentOutput:
         """Main execution loop with pre-flight, provider run, and post-flight validation."""
-        
+        # --- trace: agent start ---
+        t_start = time.perf_counter()
+        from .trace_context import TraceContext
+        agent_id = str(agent_input.run_id or "unknown")
+        task_id = str(getattr(agent_input, "objective", "") or agent_id)[:80]
+        complexity = "C2"
+        if isinstance(agent_input.route_decision, dict):
+            complexity = str(agent_input.route_decision.get("complexity", "C2"))
+        ctx = TraceContext.root(
+            task_id=task_id,
+            tier=complexity,
+            component="agent_runtime",
+        )
+        _get_emitter().task_start(ctx, agent_id=agent_id, task_id=task_id, tier=complexity, run_id=agent_id)
+        # --- end trace ---
+
         # 1. Profile Injection
         if profile_ctx := self._get_profile_context():
             agent_input = replace(agent_input, objective=profile_ctx + agent_input.objective)
@@ -164,7 +192,7 @@ class AgentRuntime:
                 risk_report=risk_report,
                 run_id=agent_input.run_id
             )
-            emit_event("connector_pending_approval", {"ticket_id": ticket_id, "reason": risk_report["reason"]})
+            _get_emitter().task_end(ctx, duration_ms=(time.perf_counter() - t_start) * 1000, status="blocked", agent_id=agent_id, ticket_id=ticket_id, run_id=agent_id)
             return AgentOutput(
                 status="blocked",
                 diff_summary=f"Execution paused: {risk_report['reason']}\n\n[ACTION REQUIRED] Created Approval Ticket #{ticket_id}. Please resolve to continue.",
@@ -173,7 +201,7 @@ class AgentRuntime:
                 next_action=f"Approve ticket {ticket_id} to authorize this intent class."
             )
         elif risk_report["action"] == "block":
-            emit_event("connector_blocked", {"reason": risk_report["reason"], "risk_score": risk_report["risk_score"]})
+            _get_emitter().task_error(ctx, error_type="connector_blocked", error_message=risk_report.get("reason", ""), agent_id=agent_id, run_id=agent_id)
             return AgentOutput(
                 status="blocked",
                 diff_summary=f"Execution blocked by ConnectorGater: {risk_report['reason']}",
@@ -208,8 +236,9 @@ class AgentRuntime:
                 output.status = "validation_failed"
                 output.diff_summary += "\n\n[ERROR] Synchronous Quality Gates Failed. See metadata for details."
 
-            emit_event("runtime_provider_completed", {"provider": runtime_provider_name, "status": output.status})
-            
+            elapsed_ms = (time.perf_counter() - t_start) * 1000
+            _get_emitter().task_end(ctx, duration_ms=elapsed_ms, status=output.status, agent_id=agent_id, provider=runtime_provider_name, run_id=agent_id)
+
             # Background Job Handling (Fix: using keyword arguments)
             if resolution.get("background_jobs_supported"):
                 enqueue_background_jobs_from_output(
@@ -223,8 +252,15 @@ class AgentRuntime:
 
             return output
 
+        except TimeoutError as timeout_exc:
+            elapsed_ms = (time.perf_counter() - t_start) * 1000
+            _get_emitter().task_error(ctx, error_type="timeout", error_message=str(timeout_exc), agent_id=agent_id, run_id=agent_id)
+            return self._fallback_or_fail(agent_input, resolution, timeout_exc, ctx)
+
         except Exception as exc:
-            return self._fallback_or_fail(agent_input, resolution, exc)
+            elapsed_ms = (time.perf_counter() - t_start) * 1000
+            _get_emitter().task_error(ctx, error_type=type(exc).__name__, error_message=str(exc), agent_id=agent_id, run_id=agent_id)
+            return self._fallback_or_fail(agent_input, resolution, exc, ctx)
 
     def _get_profile_context(self) -> str:
         if not ProfileManager: return ""
@@ -233,14 +269,33 @@ class AgentRuntime:
             return pm.get_summary_context() + "\n"
         except Exception: return ""
 
-    def _fallback_or_fail(self, agent_input: AgentInput, resolution: dict, error: Exception) -> AgentOutput:
+    def _fallback_or_fail(
+        self,
+        agent_input: AgentInput,
+        resolution: dict,
+        error: Exception,
+        ctx: Any = None,
+    ) -> AgentOutput:
         fallback_chain = list(resolution.get("runtime_fallback_chain") or [])
         for fallback_provider in fallback_chain:
             try:
                 provider = self.runtime_registry.get_provider(fallback_provider)
                 return provider.run(agent_input, repo_root=self.repo_root)
-            except Exception: continue
-        
+            except Exception:
+                continue
+
+        # If no ctx was passed in, create one now for the final error emit
+        if ctx is None:
+            from .trace_context import TraceContext
+            task_id = str(getattr(agent_input, "objective", "") or str(agent_input.run_id or "unknown"))[:80]
+            complexity = "C2"
+            if isinstance(agent_input.route_decision, dict):
+                complexity = str(agent_input.route_decision.get("complexity", "C2"))
+            ctx = TraceContext.root(task_id=task_id, tier=complexity, component="agent_runtime")
+
+        _agent_id = str(agent_input.run_id or "unknown")
+        _get_emitter().task_error(ctx, error_type=type(error).__name__, error_message=str(error), agent_id=_agent_id, run_id=_agent_id)
+
         # Fix: correctly initialized AgentOutput
         return AgentOutput(
             status="failed",

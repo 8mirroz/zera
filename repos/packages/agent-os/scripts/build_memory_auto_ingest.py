@@ -10,8 +10,13 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from build_memory_library import repo_root, utc_now_iso, register_entry, rebuild_indexes, sync_memory_store, dump_json, load_entries
-from trace_metrics_materializer import _normalize_trace_rows, SUCCESS_STATUSES
+SCRIPT_DIR = Path(__file__).resolve().parent
+SRC_DIR = SCRIPT_DIR.parent / "src"
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from agent_os.build_memory_library import repo_root, utc_now_iso, register_entry, rebuild_indexes, sync_memory_store, dump_json, load_entries
+from agent_os.trace_metrics_materializer import _normalize_trace_rows, SUCCESS_STATUSES
 
 def _fingerprint(run_id: str, task_type: str, complexity: str, model: str | None) -> str:
     base = "|".join([run_id, task_type, complexity, model or ""])

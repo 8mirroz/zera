@@ -1,0 +1,1144 @@
+{
+  "generated_at": "2026-04-14T06:01:29.313814+00:00",
+  "goal": "max_speed_and_free_solutions",
+  "top_fast_free": [
+    {
+      "path": "repos/packages/agent-os",
+      "compact_alias": "pkg:aos",
+      "path_alias": "r/pkg/agent-os",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "requirements.txt",
+        "scripts",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/design-system",
+      "compact_alias": "pkg:dsy",
+      "path_alias": "r/pkg/design-system",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "scripts",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-runtime-ops",
+      "compact_alias": "pkg:tro",
+      "path_alias": "r/pkg/telegram-runtime-ops",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-observability",
+      "compact_alias": "pkg:tob",
+      "path_alias": "r/pkg/telegram-observability",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-payment-ledger",
+      "compact_alias": "pkg:tpl",
+      "path_alias": "r/pkg/telegram-payment-ledger",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-provider-mocks",
+      "compact_alias": "pkg:tpm",
+      "path_alias": "r/pkg/telegram-provider-mocks",
+      "speed_free_score": 70,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/mcp-profile-manager",
+      "compact_alias": "pkg:mpm",
+      "path_alias": "r/pkg/mcp-profile-manager",
+      "speed_free_score": 60,
+      "tags": [
+        "fast-free-priority",
+        "package.json",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-contracts",
+      "compact_alias": "pkg:tcn",
+      "path_alias": "r/pkg/telegram-contracts",
+      "speed_free_score": 60,
+      "tags": [
+        "fast-free-priority",
+        "packages",
+        "pkg",
+        "repo-catalog"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-bot-core-py",
+      "compact_alias": "pkg:tbcp",
+      "path_alias": "r/pkg/telegram-bot-core-py",
+      "speed_free_score": 55,
+      "tags": [
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-miniapp-core-ts",
+      "compact_alias": "pkg:tmct",
+      "path_alias": "r/pkg/telegram-miniapp-core-ts",
+      "speed_free_score": 55,
+      "tags": [
+        "package.json",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/packages/telegram-payments-core",
+      "compact_alias": "pkg:tpc",
+      "path_alias": "r/pkg/telegram-payments-core",
+      "speed_free_score": 55,
+      "tags": [
+        "packages",
+        "pkg",
+        "pyproject.toml",
+        "repo-catalog",
+        "src"
+      ]
+    },
+    {
+      "path": "repos/mcp/lightrag",
+      "compact_alias": "mcp:lgh",
+      "path_alias": "r/mcp/lightrag",
+      "speed_free_score": 55,
+      "tags": [
+        "mcp",
+        "package.json",
+        "repo-catalog",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/packages/mcp_context",
+      "compact_alias": "pkg:mcn",
+      "path_alias": "r/pkg/mcp-context",
+      "speed_free_score": 45,
+      "tags": [
+        "package.json",
+        "packages",
+        "pkg",
+        "repo-catalog",
+        "src",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "path": "repos/apps/zera-telegram",
+      "compact_alias": "app:ztl",
+      "path_alias": "r/app/zera-telegram",
+      "speed_free_score": 25,
+      "tags": [
+        "app",
+        "apps",
+        "repo-catalog",
+        "requirements.txt"
+      ]
+    }
+  ],
+  "by_domain": {
+    "packages": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-contracts",
+        "path": "repos/packages/telegram-contracts",
+        "slug": "telegram-contracts",
+        "compact_alias": "pkg:tcn",
+        "path_alias": "r/pkg/telegram-contracts",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "mcp": [
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      }
+    ],
+    "apps": [
+      {
+        "repo_id": "repo::app::zera-telegram",
+        "path": "repos/apps/zera-telegram",
+        "slug": "zera-telegram",
+        "compact_alias": "app:ztl",
+        "path_alias": "r/app/zera-telegram",
+        "speed_free_score": 25,
+        "navigation_priority": 75,
+        "reuse_priority": 30
+      }
+    ]
+  },
+  "by_tag": {
+    "fast-free-priority": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-contracts",
+        "path": "repos/packages/telegram-contracts",
+        "slug": "telegram-contracts",
+        "compact_alias": "pkg:tcn",
+        "path_alias": "r/pkg/telegram-contracts",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      }
+    ],
+    "packages": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-contracts",
+        "path": "repos/packages/telegram-contracts",
+        "slug": "telegram-contracts",
+        "compact_alias": "pkg:tcn",
+        "path_alias": "r/pkg/telegram-contracts",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "pkg": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-contracts",
+        "path": "repos/packages/telegram-contracts",
+        "slug": "telegram-contracts",
+        "compact_alias": "pkg:tcn",
+        "path_alias": "r/pkg/telegram-contracts",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "pyproject.toml": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      }
+    ],
+    "repo-catalog": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-contracts",
+        "path": "repos/packages/telegram-contracts",
+        "slug": "telegram-contracts",
+        "compact_alias": "pkg:tcn",
+        "path_alias": "r/pkg/telegram-contracts",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 55
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::app::zera-telegram",
+        "path": "repos/apps/zera-telegram",
+        "slug": "zera-telegram",
+        "compact_alias": "app:ztl",
+        "path_alias": "r/app/zera-telegram",
+        "speed_free_score": 25,
+        "navigation_priority": 75,
+        "reuse_priority": 30
+      }
+    ],
+    "requirements.txt": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::app::zera-telegram",
+        "path": "repos/apps/zera-telegram",
+        "slug": "zera-telegram",
+        "compact_alias": "app:ztl",
+        "path_alias": "r/app/zera-telegram",
+        "speed_free_score": 25,
+        "navigation_priority": 75,
+        "reuse_priority": 30
+      }
+    ],
+    "scripts": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      }
+    ],
+    "src": [
+      {
+        "repo_id": "repo::pkg::agent-os",
+        "path": "repos/packages/agent-os",
+        "slug": "agent-os",
+        "compact_alias": "pkg:aos",
+        "path_alias": "r/pkg/agent-os",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::design-system",
+        "path": "repos/packages/design-system",
+        "slug": "design-system",
+        "compact_alias": "pkg:dsy",
+        "path_alias": "r/pkg/design-system",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 85
+      },
+      {
+        "repo_id": "repo::pkg::telegram-runtime-ops",
+        "path": "repos/packages/telegram-runtime-ops",
+        "slug": "telegram-runtime-ops",
+        "compact_alias": "pkg:tro",
+        "path_alias": "r/pkg/telegram-runtime-ops",
+        "speed_free_score": 70,
+        "navigation_priority": 75,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-observability",
+        "path": "repos/packages/telegram-observability",
+        "slug": "telegram-observability",
+        "compact_alias": "pkg:tob",
+        "path_alias": "r/pkg/telegram-observability",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payment-ledger",
+        "path": "repos/packages/telegram-payment-ledger",
+        "slug": "telegram-payment-ledger",
+        "compact_alias": "pkg:tpl",
+        "path_alias": "r/pkg/telegram-payment-ledger",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-provider-mocks",
+        "path": "repos/packages/telegram-provider-mocks",
+        "slug": "telegram-provider-mocks",
+        "compact_alias": "pkg:tpm",
+        "path_alias": "r/pkg/telegram-provider-mocks",
+        "speed_free_score": 70,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-bot-core-py",
+        "path": "repos/packages/telegram-bot-core-py",
+        "slug": "telegram-bot-core-py",
+        "compact_alias": "pkg:tbcp",
+        "path_alias": "r/pkg/telegram-bot-core-py",
+        "speed_free_score": 55,
+        "navigation_priority": 65,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::pkg::telegram-payments-core",
+        "path": "repos/packages/telegram-payments-core",
+        "slug": "telegram-payments-core",
+        "compact_alias": "pkg:tpc",
+        "path_alias": "r/pkg/telegram-payments-core",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "package.json": [
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::telegram-miniapp-core-ts",
+        "path": "repos/packages/telegram-miniapp-core-ts",
+        "slug": "telegram-miniapp-core-ts",
+        "compact_alias": "pkg:tmct",
+        "path_alias": "r/pkg/telegram-miniapp-core-ts",
+        "speed_free_score": 55,
+        "navigation_priority": 55,
+        "reuse_priority": 75
+      },
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "tsconfig.json": [
+      {
+        "repo_id": "repo::pkg::mcp-profile-manager",
+        "path": "repos/packages/mcp-profile-manager",
+        "slug": "mcp-profile-manager",
+        "compact_alias": "pkg:mpm",
+        "path_alias": "r/pkg/mcp-profile-manager",
+        "speed_free_score": 60,
+        "navigation_priority": 75,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      },
+      {
+        "repo_id": "repo::pkg::mcp-context",
+        "path": "repos/packages/mcp_context",
+        "slug": "mcp-context",
+        "compact_alias": "pkg:mcn",
+        "path_alias": "r/pkg/mcp-context",
+        "speed_free_score": 45,
+        "navigation_priority": 65,
+        "reuse_priority": 65
+      }
+    ],
+    "mcp": [
+      {
+        "repo_id": "repo::mcp::lightrag",
+        "path": "repos/mcp/lightrag",
+        "slug": "lightrag",
+        "compact_alias": "mcp:lgh",
+        "path_alias": "r/mcp/lightrag",
+        "speed_free_score": 55,
+        "navigation_priority": 70,
+        "reuse_priority": 65
+      }
+    ],
+    "app": [
+      {
+        "repo_id": "repo::app::zera-telegram",
+        "path": "repos/apps/zera-telegram",
+        "slug": "zera-telegram",
+        "compact_alias": "app:ztl",
+        "path_alias": "r/app/zera-telegram",
+        "speed_free_score": 25,
+        "navigation_priority": 75,
+        "reuse_priority": 30
+      }
+    ],
+    "apps": [
+      {
+        "repo_id": "repo::app::zera-telegram",
+        "path": "repos/apps/zera-telegram",
+        "slug": "zera-telegram",
+        "compact_alias": "app:ztl",
+        "path_alias": "r/app/zera-telegram",
+        "speed_free_score": 25,
+        "navigation_priority": 75,
+        "reuse_priority": 30
+      }
+    ]
+  },
+  "recommended_start_points": {
+    "skills": [],
+    "workflows": [],
+    "packages": [
+      "pkg:aos",
+      "pkg:dsy",
+      "pkg:tro",
+      "pkg:tob",
+      "pkg:tpl"
+    ],
+    "mcp": [
+      "mcp:lgh"
+    ]
+  }
+}

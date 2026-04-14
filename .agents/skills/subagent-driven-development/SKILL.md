@@ -30,7 +30,16 @@ Decompose a complex task into specialized roles executed by sub-agents.
 - **Task**: "Review the changes in [files]."
 - **Output**: List of issues to fix.
 
+### 4. Drift Audit (Mandatory)
+- **Call**: `run_command` with `python3 repos/packages/agent-os/scripts/drift_check.py`.
+- **Requirement**: Must return `status: pass`. If `violation`, the implementer must fix before merge.
+- **Reference**: Managed by `DriftValidatorNode`.
+
+## Governance
+This skill operates under the **Master Zera Constitution v2.0**. All sub-agents are role-isolated with a `concurrency_limit: 1` during critical implementation phases.
+
 ## When to Use
-- **Critical Features** (Payments, Auth).
+- **Critical Features** (Payments, Auth, Governance).
 - **Complex Refactoring**.
 - **Security Sensitive** changes.
+- **High Drift Risk** scenarios.

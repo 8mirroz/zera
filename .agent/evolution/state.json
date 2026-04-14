@@ -1,0 +1,248 @@
+{
+  "total_cycles": 2,
+  "successful_cycles": 1,
+  "failed_cycles": 0,
+  "skipped_cycles": 0,
+  "candidates_promoted": 0,
+  "candidates_rolled_back": 0,
+  "current_cycle": 2,
+  "current_loop_algorithm": "rsi",
+  "loop_algorithm_index": 1,
+  "last_cycle_at": "2026-04-14T06:13:45.650836+00:00",
+  "last_cycle_status": "completed",
+  "last_error": "",
+  "started_at": "2026-04-14T06:11:26.468985+00:00",
+  "freeze_active": false,
+  "freeze_reason": "",
+  "personality_changes": 0,
+  "consecutive_regressions": 0,
+  "loop_stats": {
+    "karpathy": {
+      "trials": 1,
+      "reward_sum": 0.35,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 1,
+      "last_reward": 0.35,
+      "last_cycle": 1
+    },
+    "rsi": {
+      "trials": 1,
+      "reward_sum": 0.6495,
+      "successes": 1,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.6495,
+      "last_cycle": 2
+    },
+    "darwin-goedel": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "pantheon": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "self-improving": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "karpathy-swarm": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "ralph": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "agentic-ci": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "self-driving": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "meta-learning": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    }
+  },
+  "class_stats": {
+    "research_target": {
+      "trials": 1,
+      "reward_sum": 0.6495,
+      "successes": 1,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.6495,
+      "last_cycle": 2
+    },
+    "skill_refinement": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "tool_usage_refinement": {
+      "trials": 1,
+      "reward_sum": 0.35,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 1,
+      "last_reward": 0.35,
+      "last_cycle": 1
+    },
+    "workflow_improvement": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "orchestration_pattern_update": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "memory_policy_refinement": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "tone_calibration": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "boundary_tightening": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "proactivity_adjustment": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "refusal_behavior_adjustment": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "autonomy_behavior_adjustment": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "governance_affecting_candidate": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "mixed_ambiguous_candidate": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "command_recipe": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    },
+    "branch_template": {
+      "trials": 0,
+      "reward_sum": 0.0,
+      "successes": 0,
+      "promotions": 0,
+      "failures": 0,
+      "last_reward": 0.0,
+      "last_cycle": 0
+    }
+  }
+}

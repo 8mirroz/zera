@@ -5,15 +5,22 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
+try:
+    import jsonschema
+    HAS_JSONSCHEMA = True
+except ImportError:
+    HAS_JSONSCHEMA = False
+
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def utc_now_iso() -> str:
@@ -30,7 +37,24 @@ def dump_json(path: Path, data: Any) -> None:
 
 
 def policy(root: Path) -> dict[str, Any]:
-    return load_json(root / "configs/tooling/repo_aliases_policy.json")
+    path = root / "configs/tooling/repo_aliases_policy.json"
+    if not path.exists():
+        # V2.0 Robust Defaults
+        return {
+            "domain_codes": {
+                "packages": "pkg",
+                "skills": "sk",
+                "workflows": "wf",
+                "mcp": "mcp",
+                "apps": "app"
+            },
+            "alias_generation": {
+                "compact_token_prefix_len": 3,
+                "compact_max_tokens": 3,
+                "initials_max_tokens": 4
+            }
+        }
+    return load_json(path)
 
 
 def catalog_root(root: Path) -> Path:
@@ -38,7 +62,11 @@ def catalog_root(root: Path) -> Path:
 
 
 def ensure_catalog_structure(root: Path) -> None:
-    (catalog_root(root) / "indexes").mkdir(parents=True, exist_ok=True)
+    cat = catalog_root(root)
+    (cat / "indexes").mkdir(parents=True, exist_ok=True)
+    (cat / "schemas").mkdir(parents=True, exist_ok=True)
+    (cat / "templates").mkdir(parents=True, exist_ok=True)
+    (cat / "audit/validation_reports").mkdir(parents=True, exist_ok=True)
 
 
 def split_tokens(name: str) -> list[str]:
@@ -100,10 +128,33 @@ def top_level_signals(repo_dir: Path) -> dict[str, Any]:
     has_skills = (repo_dir / "skills").exists()
     has_assets = (repo_dir / "assets").exists()
     has_src = (repo_dir / "src").exists()
+    has_tests = any(n in top for n in ("tests", "test", "__tests__"))
+
     tech_markers = []
-    for marker in ("package.json", "pyproject.toml", "requirements.txt", "tsconfig.json", "Cargo.toml"):
+    stack = []
+    for marker, lang in {
+        "package.json": "javascript",
+        "pyproject.toml": "python",
+        "requirements.txt": "python",
+        "tsconfig.json": "typescript",
+        "Cargo.toml": "rust",
+        "go.mod": "go",
+        "MAINTAINERS": "core-infra"
+    }.items():
         if marker in top:
             tech_markers.append(marker)
+            stack.append(lang)
+
+    # Complexity estimation
+    if top_file_count + top_dir_count > 50:
+        complexity = "C4"
+    elif top_file_count + top_dir_count > 20:
+        complexity = "C3"
+    elif top_file_count + top_dir_count > 5:
+        complexity = "C2"
+    else:
+        complexity = "C1"
+
     return {
         "has_git": has_git,
         "has_readme": has_readme,
@@ -111,14 +162,16 @@ def top_level_signals(repo_dir: Path) -> dict[str, Any]:
         "has_skills": has_skills,
         "has_assets": has_assets,
         "has_src": has_src,
+        "has_tests": has_tests,
         "tech_markers": tech_markers,
+        "tech_stack": sorted(list(set(stack))),
         "top_file_count": top_file_count,
         "top_dir_count": top_dir_count,
+        "complexity_tier": complexity,
     }
 
 
 def score_repo(domain: str, slug: str, signals: dict[str, Any]) -> dict[str, int]:
-    # Heuristic ranking for "speed + free/open-source + reusability".
     score = 0
     nav = 40
     reuse = 30
@@ -127,9 +180,12 @@ def score_repo(domain: str, slug: str, signals: dict[str, Any]) -> dict[str, int
         score += 20
         reuse += 25
     if signals.get("has_readme"):
-        score += 10
+        score += 15
         nav += 10
     if signals.get("has_scripts"):
+        score += 10
+        reuse += 10
+    if signals.get("has_tests"):
         score += 10
         reuse += 10
     if signals.get("has_skills") or "skills" in slug:
@@ -257,7 +313,7 @@ def build_repo_records(root: Path) -> tuple[list[dict[str, Any]], dict[str, list
 
         records.append(
             {
-                "repo_id": f"repo::{domain}::{slug}",
+                "repo_id": f"repo::{domain_code}::{slug}",
                 "domain": domain,
                 "domain_code": domain_code,
                 "slug": slug,
@@ -270,6 +326,7 @@ def build_repo_records(root: Path) -> tuple[list[dict[str, Any]], dict[str, list
                 "signals": signals,
                 "scores": scores,
                 "tags": sorted(set(tags)),
+                "tech_stack": signals.get("tech_stack", []),
                 "updated_at": utc_now_iso(),
             }
         )
@@ -343,6 +400,29 @@ def rank_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         ),
         reverse=True,
     )
+
+
+def validate_catalog_entry(root: Path, entry: dict[str, Any]) -> list[str]:
+    schema_path = catalog_root(root) / "schemas/repo.schema.json"
+    if not schema_path.exists():
+        return []
+    errors = []
+    try:
+        schema = load_json(schema_path)
+        if HAS_JSONSCHEMA:
+            from jsonschema import validate, ValidationError
+            try:
+                validate(instance=entry, schema=schema)
+            except ValidationError as ve:
+                errors.append(f"schema violation: {ve.message}")
+        else:
+            required = schema.get("required", [])
+            for field in required:
+                if field not in entry:
+                    errors.append(f"missing required field: {field}")
+    except Exception as e:
+        errors.append(f"validation system error: {str(e)}")
+    return errors
 
 
 def write_indexes(root: Path, records: list[dict[str, Any]], alias_index: dict[str, str], warnings: list[dict[str, str]]) -> dict[str, Any]:
@@ -427,10 +507,28 @@ def write_indexes(root: Path, records: list[dict[str, Any]], alias_index: dict[s
 
 def refresh(root: Path) -> dict[str, Any]:
     records, alias_index, warnings = build_repo_records(root)
+    
+    # Validation step
+    validation_errors = []
+    for r in records:
+        errs = validate_catalog_entry(root, r)
+        if errs:
+            validation_errors.append({"repo_id": r["repo_id"], "errors": errs})
+
     result = write_indexes(root, records, alias_index, warnings)
+    result["validation_errors_count"] = len(validation_errors)
     result["top_fast_free_aliases"] = [
         r["aliases"]["compact_alias"] for r in rank_records(records)[:10]
     ]
+    
+    val_report = {
+        "generated_at": utc_now_iso(),
+        "ok_count": len(records) - len(validation_errors),
+        "error_count": len(validation_errors),
+        "errors": validation_errors
+    }
+    dump_json(catalog_root(root) / "audit/validation_reports/last_run.json", val_report)
+    
     return result
 
 
@@ -509,64 +607,40 @@ def sync_memory(root: Path) -> dict[str, Any]:
             continue
         try:
             row = json.loads(line)
-        except Exception:
-            continue
-        key = row.get("key")
-        if isinstance(key, str):
-            existing_keys.add(key)
+            key = row.get("key")
+            if isinstance(key, str):
+                existing_keys.add(key)
+        except: continue
 
-    rows_to_append: list[dict[str, Any]] = []
-    for r in records:
-        key = r["stable_key"]
-        if key not in existing_keys:
-            rows_to_append.append(
-                {
-                    "id": str(uuid4()),
-                    "key": key,
-                    "payload": {
-                        "source": "repo_memory_catalog",
-                        "repo_id": r["repo_id"],
-                        "path": r["path"],
-                        "domain": r["domain"],
-                        "slug": r["slug"],
-                        "aliases": r["aliases"],
-                        "scores": r["scores"],
-                        "tags": r["tags"],
-                        "updated_at": r["updated_at"],
-                    }
-                }
-            )
-        for alias in r["aliases"]["all"]:
-            alias_key = f"repo_catalog:alias:{alias}"
-            if alias_key in existing_keys:
-                continue
-            rows_to_append.append(
-                {
-                    "id": str(uuid4()),
-                    "key": alias_key,
-                    "payload": {
-                        "source": "repo_memory_catalog",
-                        "alias": alias,
-                        "repo_id": r["repo_id"],
-                        "path": r["path"],
-                        "compact_alias": r["aliases"]["compact_alias"],
-                        "path_alias": r["aliases"]["path_alias"],
-                        "speed_free_score": r["scores"]["speed_free_score"],
-                        "tags": r["tags"],
-                    }
-                }
-            )
-
+    written = 0
     with memory_file.open("a", encoding="utf-8") as f:
-        for row in rows_to_append:
+        for r in records:
+            key = r["stable_key"]
+            if key in existing_keys:
+                continue
+            row = {
+                "id": str(uuid4()),
+                "key": key,
+                "payload": {
+                    "source": "repo_memory_catalog",
+                    "id": r["repo_id"],
+                    "path": r["path"],
+                    "domain": r["domain"],
+                    "slug": r["slug"],
+                    "aliases": r["aliases"],
+                    "score": r["scores"]["speed_free_score"],
+                    "tags": r["tags"],
+                    "tech_stack": r.get("tech_stack", []),
+                    "updated_at": r["updated_at"],
+                }
+            }
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
+            written += 1
 
     return {
         "status": "ok",
-        "repo_records": len(records),
-        "aliases": len(aliases),
-        "memory_rows_written": len(rows_to_append),
-        "memory_file": ".agent/memory/memory.jsonl"
+        "synced_repos": written,
+        "memory_file": str(memory_file.relative_to(root))
     }
 
 

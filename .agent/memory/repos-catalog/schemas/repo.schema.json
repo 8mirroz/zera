@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Repo Memory Catalog Entry",
+  "type": "object",
+  "required": [
+    "repo_id",
+    "domain",
+    "slug",
+    "path",
+    "stable_key",
+    "aliases",
+    "signals",
+    "scores",
+    "updated_at"
+  ],
+  "properties": {
+    "repo_id": { "type": "string", "pattern": "^repo::[a-z0-9-]+::[a-z0-9-]+$" },
+    "domain": { "type": "string" },
+    "domain_code": { "type": "string" },
+    "slug": { "type": "string" },
+    "display_name": { "type": "string" },
+    "path": { "type": "string" },
+    "stable_key": { "type": "string" },
+    "aliases": {
+      "type": "object",
+      "required": ["path_alias", "compact_alias", "all"],
+      "properties": {
+        "path_alias": { "type": "string" },
+        "compact_alias": { "type": "string" },
+        "initials_alias": { "type": "string" },
+        "all": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "signals": {
+      "type": "object",
+      "properties": {
+        "has_git": { "type": "boolean" },
+        "has_readme": { "type": "boolean" },
+        "has_scripts": { "type": "boolean" },
+        "has_skills": { "type": "boolean" },
+        "has_assets": { "type": "boolean" },
+        "has_src": { "type": "boolean" },
+        "tech_markers": { "type": "array", "items": { "type": "string" } },
+        "top_file_count": { "type": "integer" },
+        "top_dir_count": { "type": "integer" },
+        "complexity_tier": { "enum": ["C1", "C2", "C3", "C4", "C5"] }
+      }
+    },
+    "scores": {
+      "type": "object",
+      "properties": {
+        "speed_free_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "navigation_priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "reuse_priority": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "tech_stack": { "type": "array", "items": { "type": "string" } },
+    "license": { "type": "string" },
+    "summary": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

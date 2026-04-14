@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity.local/schemas/build-memory-index-v3.schema.json",
+  "version": "2026-03-11",
+  "schema_version": 3,
+  "description": "Production index schema for Build Memory Library — search facets, integrity policies, lifecycle management, fingerprint dedup, and migration guards",
+
+  "indexes": {
+    "global_index": {
+      "path": ".agent/memory/build-library/indexes/global_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "entries_count",
+        "errors_count",
+        "top_ranked",
+        "by_kind",
+        "by_tag",
+        "by_status",
+        "by_cost_class",
+        "entries"
+      ],
+      "sort_default": "weighted_total_desc",
+      "facets": ["kind", "status", "tags", "problem_types", "tier", "cost_class", "models", "providers"]
+    },
+    "projects_index": {
+      "path": ".agent/memory/build-library/indexes/projects_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "entries_count_total",
+        "errors_count",
+        "projects"
+      ],
+      "sort_default": "project_name_asc"
+    },
+    "best_library_snapshot": {
+      "path": ".agent/memory/build-library/indexes/best_library_snapshot.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "global_top",
+        "project_top",
+        "top_by_problem_type",
+        "top_by_kind",
+        "top_by_tier"
+      ],
+      "max_per_category": 10,
+      "include_decay_adjusted": true
+    },
+    "validation_report": {
+      "path": ".agent/memory/build-library/indexes/validation_report.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "ok_entries_count",
+        "error_entries_count",
+        "errors"
+      ],
+      "description": "Entry validation results produced by rebuild_indexes()"
+    },
+    "lineage_index": {
+      "path": ".agent/memory/build-library/indexes/lineage_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "roots",
+        "trees",
+        "orphans"
+      ],
+      "description": "Tracks parent/child/fork/merge relationships across entries"
+    },
+    "decay_index": {
+      "path": ".agent/memory/build-library/indexes/decay_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "entries_with_active_decay",
+        "entries_below_floor",
+        "next_decay_pass_at"
+      ],
+      "description": "Tracks decay state for scheduled decay passes"
+    },
+    "fingerprint_index": {
+      "path": ".agent/memory/build-library/indexes/fingerprint_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "fingerprints"
+      ],
+      "description": "Maps fingerprint → entry_id for dedup lookups by auto_ingest.py"
+    },
+    "search_text_index": {
+      "path": ".agent/memory/build-library/indexes/search_text_index.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "entries_with_search_text",
+        "token_count_total"
+      ],
+      "description": "Backing index for full-text _search_text queries"
+    },
+    "status_transition_log": {
+      "path": ".agent/memory/build-library/indexes/status_transition_log.json",
+      "contents": [
+        "generated_at",
+        "schema_version",
+        "transitions"
+      ],
+      "description": "Append-only log of all status transitions for audit",
+      "append_only": true
+    }
+  },
+
+  "policies": {
+    "rebuild_on_entry_change": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Rebuild affected indexes when any entry is created, updated, or deleted",
+      "affected_indexes": ["global_index", "projects_index", "best_library_snapshot", "validation_report", "lineage_index", "fingerprint_index", "search_text_index"]
+    },
+    "decay_pass": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Periodically recompute decay factors for all entries with decay enabled",
+      "schedule": "daily",
+      "affected_indexes": ["decay_index", "best_library_snapshot"],
+      "action": "For each entry with decay.enabled, recalculate current_factor based on strategy and last_accessed_at"
+    },
+    "promotion_pass": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Evaluate promotion rules after validation events or on schedule",
+      "schedule": "on_validation_event",
+      "action": "Check promote_after_validations and gold_threshold; apply status transitions if met",
+      "affected_indexes": ["global_index", "best_library_snapshot", "status_transition_log"]
+    },
+    "demotion_pass": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Demote entries whose decay factor drops below demote_on_decay_below",
+      "schedule": "daily",
+      "action": "Set status to deprecated for entries below threshold; record in status_transition_log",
+      "affected_indexes": ["global_index", "decay_index", "status_transition_log"]
+    },
+    "dedup_on_register": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Check fingerprint_index before inserting a new entry; reject or merge duplicates",
+      "action": "Compute fingerprint, lookup in fingerprint_index. If exists: reject with DUPLICATE_ENTRY error and return existing entry_id",
+      "affected_indexes": ["fingerprint_index"]
+    },
+    "archive_cleanup": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Remove archived entries that have exceeded their TTL",
+      "schedule": "monthly",
+      "action": "For entries with status=archived and lifecycle.ttl_days set, delete if (now - lifecycle.updated_at) > ttl_days",
+      "affected_indexes": ["global_index", "projects_index", "fingerprint_index"]
+    },
+    "migration_guard": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Reject entries whose schema_version is below minimum_supported_version",
+      "minimum_supported_version": 2,
+      "action": "On register, check entry schema_version >= minimum_supported_version; reject with SCHEMA_VERSION_TOO_OLD if not"
+    },
+    "integrity_check": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Validate index consistency against entry data",
+      "schedule": "weekly",
+      "checks": [
+        "entry_count matches actual entries on disk",
+        "all entry_ids in indexes exist on disk",
+        "lineage references are bidirectional",
+        "no orphaned child references",
+        "status_transition_log is append-only",
+        "fingerprint_index has no stale entries",
+        "all fingerprints are unique"
+      ]
+    },
+    "snapshot_retention": {
+      "enabled": true,
+      "dry_run": false,
+      "description": "Keep historical best_library_snapshot versions for rollback",
+      "max_snapshots": 30,
+      "path": ".agent/memory/build-library/indexes/snapshots/"
+    }
+  },
+
+  "search": {
+    "supported_queries": [
+      "by_kind",
+      "by_tag",
+      "by_status",
+      "by_problem_type",
+      "by_tier",
+      "by_cost_class",
+      "by_model",
+      "by_provider",
+      "by_score_range",
+      "by_lineage_root",
+      "by_fingerprint",
+      "by_project_slug",
+      "full_text"
+    ],
+    "sort_options": [
+      "weighted_total_desc",
+      "decay_adjusted_desc",
+      "created_at_desc",
+      "access_count_desc",
+      "confidence_desc",
+      "sample_size_desc"
+    ],
+    "default_sort": "decay_adjusted_desc",
+    "filter_combinators": ["AND", "OR"],
+    "default_combinator": "AND",
+    "default_limit": 20,
+    "max_limit": 200
+  },
+
+  "migration": {
+    "v2_to_v3": {
+      "date": "2026-03-11",
+      "changes": [
+        "Added indexes: fingerprint_index, validation_report, search_text_index",
+        "Added policies: dedup_on_register, archive_cleanup, migration_guard",
+        "Added enabled/dry_run flags to all policies",
+        "Added sort_options and filter_combinators to search",
+        "Added errors_count to global_index and projects_index contents",
+        "Added append_only flag to status_transition_log",
+        "Added search queries: by_fingerprint, by_project_slug",
+        "Added migration block"
+      ]
+    }
+  }
+}

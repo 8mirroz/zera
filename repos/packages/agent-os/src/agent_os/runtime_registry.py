@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from pathlib import Path
 from datetime import datetime, timezone
 from enum import Enum
@@ -16,6 +17,18 @@ from .runtime_providers import (
     ZeroClawRuntimeProvider,
 )
 from .source_trust import evaluate_source_tier_policy, load_source_trust_policy
+
+
+# Lazy-initialized trace emitter
+_emitter: Any = None
+
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 
 class ProviderState(str, Enum):
@@ -345,119 +358,154 @@ class RuntimeRegistry:
         source_tier: str | None = None,
         requests_capability_promotion: bool = False,
     ) -> dict[str, Any]:
-        source = "default"
-        runtime_provider_requested = str(requested_provider).strip() if requested_provider else self.default_provider
-        runtime_profile = str(requested_profile).strip() if requested_profile else None
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"runtime_resolve:{task_type}", tier="C2", component="runtime_registry")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, task_type=task_type, complexity=complexity,
+                           requested_provider=requested_provider, requested_profile=requested_profile)
 
-        if requested_provider:
-            source = "forced"
-        else:
-            for row in self._routing_overrides:
-                if not isinstance(row, dict):
-                    continue
-                if not self._override_match(row, task_type=task_type, complexity=complexity):
-                    continue
-                forced_provider = str(row.get("provider") or "").strip()
-                if forced_provider:
-                    runtime_provider_requested = forced_provider
-                if runtime_profile is None:
-                    profile_from_row = str(row.get("profile") or "").strip()
-                    runtime_profile = profile_from_row or None
-                source = "routing_override"
-                break
+        try:
+            source = "default"
+            runtime_provider_requested = str(requested_provider).strip() if requested_provider else self.default_provider
+            runtime_profile = str(requested_profile).strip() if requested_profile else None
 
-        fallback_chain = self._fallback_chain(runtime_provider_requested)
-        candidates = [runtime_provider_requested, *fallback_chain]
+            if requested_provider:
+                source = "forced"
+            else:
+                for row in self._routing_overrides:
+                    if not isinstance(row, dict):
+                        continue
+                    if not self._override_match(row, task_type=task_type, complexity=complexity):
+                        continue
+                    forced_provider = str(row.get("provider") or "").strip()
+                    if forced_provider:
+                        runtime_provider_requested = forced_provider
+                    if runtime_profile is None:
+                        profile_from_row = str(row.get("profile") or "").strip()
+                        runtime_profile = profile_from_row or None
+                    source = "routing_override"
+                    break
 
-        selected_provider = None
-        for candidate in candidates:
-            if self.is_available(candidate):
-                selected_provider = candidate
-                break
+            fallback_chain = self._fallback_chain(runtime_provider_requested)
+            candidates = [runtime_provider_requested, *fallback_chain]
 
-        if selected_provider is None:
-            default_chain = [self.default_provider, *self._fallback_chain(self.default_provider), "agent_os_python"]
-            for candidate in default_chain:
+            selected_provider = None
+            for candidate in candidates:
                 if self.is_available(candidate):
                     selected_provider = candidate
                     break
 
-        if selected_provider is None:
-            selected_provider = "agent_os_python"
+            if selected_provider is None:
+                default_chain = [self.default_provider, *self._fallback_chain(self.default_provider), "agent_os_python"]
+                for candidate in default_chain:
+                    if self.is_available(candidate):
+                        selected_provider = candidate
+                        break
 
-        source_policy_eval = evaluate_source_tier_policy(
-            self.source_trust_policy,
-            source_tier=source_tier,
-            requests_capability_promotion=bool(requests_capability_promotion),
-        )
-        if source_policy_eval["blocked"]:
-            runtime_profile = None
-            if selected_provider != self.default_provider and self.is_available(self.default_provider):
-                selected_provider = self.default_provider
-            reason = f"{source_policy_eval['reason']}; runtime constrained to {selected_provider}"
-        elif selected_provider != runtime_provider_requested:
-            reason = f"{runtime_provider_requested} disabled/unavailable/unregistered; fallback to {selected_provider}"
-        else:
-            reason = f"{selected_provider} selected via {source}"
+            if selected_provider is None:
+                selected_provider = "agent_os_python"
 
-        profile_data: dict[str, Any] = {}
-        if runtime_profile:
-            all_profiles = self.zeroclaw_profiles.get("profiles", {})
-            if isinstance(all_profiles, dict):
-                row = all_profiles.get(runtime_profile, {})
-                if isinstance(row, dict):
-                    profile_data = row
-        provider_row = self._provider_row(selected_provider)
-        if not profile_data and runtime_profile:
-            inline_profiles = provider_row.get("profiles", {})
-            if isinstance(inline_profiles, dict):
-                inline_profile = inline_profiles.get(runtime_profile, {})
-                if isinstance(inline_profile, dict):
-                    profile_data = inline_profile
-        stop_conditions = self._normalize_string_list(provider_row.get("stop_conditions", []))
-        max_chain_length = provider_row.get("max_chain_length")
-        max_cost_usd_per_run = profile_data.get("cost_budget_usd", provider_row.get("max_cost_usd_per_run"))
+            source_policy_eval = evaluate_source_tier_policy(
+                self.source_trust_policy,
+                source_tier=source_tier,
+                requests_capability_promotion=bool(requests_capability_promotion),
+            )
+            if source_policy_eval["blocked"]:
+                runtime_profile = None
+                if selected_provider != self.default_provider and self.is_available(self.default_provider):
+                    selected_provider = self.default_provider
+                reason = f"{source_policy_eval['reason']}; runtime constrained to {selected_provider}"
+            elif selected_provider != runtime_provider_requested:
+                reason = f"{runtime_provider_requested} disabled/unavailable/unregistered; fallback to {selected_provider}"
+            else:
+                reason = f"{selected_provider} selected via {source}"
 
-        return {
-            "runtime_provider_requested": runtime_provider_requested,
-            "runtime_provider": selected_provider,
-            "runtime_profile": runtime_profile,
-            "runtime_fallback_chain": fallback_chain,
-            "runtime_source": source,
-            "runtime_reason": reason,
-            "runtime_profile_data": profile_data,
-            "capabilities": self._normalize_string_list(provider_row.get("capabilities", [])),
-            "autonomy_level": str(provider_row.get("autonomy_level") or "approval_only"),
-            "background_jobs_supported": bool(provider_row.get("background_jobs_supported", False)),
-            "approval_gates": self._normalize_string_list(provider_row.get("approval_gates", [])),
-            "resource_limits": self._normalize_dict(provider_row.get("resource_limits", {})),
-            "network_policy": str(profile_data.get("network_policy") or provider_row.get("network_policy") or "") or None,
-            "max_chain_length": int(max_chain_length) if max_chain_length not in (None, "") else None,
-            "max_cost_usd_per_run": float(max_cost_usd_per_run) if max_cost_usd_per_run not in (None, "") else None,
-            "stop_conditions": stop_conditions,
-            "autonomy_mode": str(profile_data.get("autonomy_mode") or provider_row.get("autonomy_level") or "approval_only"),
-            "approval_policy": str(profile_data.get("approval_policy") or "standard"),
-            "background_profile": str(profile_data.get("background_profile") or "") or None,
-            "scheduler_profile": str(profile_data.get("scheduler_profile") or "") or None,
-            "persona_version": str(profile_data.get("persona_version") or profile_data.get("persona_id") or "") or None,
-            "operator_visibility": str(profile_data.get("operator_visibility") or "summary"),
-            "cost_budget_usd": float(profile_data.get("cost_budget_usd")) if profile_data.get("cost_budget_usd") not in (None, "") else (float(provider_row.get("max_cost_usd_per_run")) if provider_row.get("max_cost_usd_per_run") not in (None, "") else None),
-            "max_actions": int(profile_data.get("max_actions")) if profile_data.get("max_actions") not in (None, "") else (int(max_chain_length) if max_chain_length not in (None, "") else None),
-            "stop_token": str(profile_data.get("stop_token") or "") or None,
-            "proof_required": bool(profile_data.get("proof_required", False)),
-            "source_tier": source_policy_eval.get("source_tier"),
-            "requests_capability_promotion": source_policy_eval.get("requests_capability_promotion"),
-            "source_tier_policy": source_policy_eval,
-        }
+            profile_data: dict[str, Any] = {}
+            if runtime_profile:
+                all_profiles = self.zeroclaw_profiles.get("profiles", {})
+                if isinstance(all_profiles, dict):
+                    row = all_profiles.get(runtime_profile, {})
+                    if isinstance(row, dict):
+                        profile_data = row
+            provider_row = self._provider_row(selected_provider)
+            if not profile_data and runtime_profile:
+                inline_profiles = provider_row.get("profiles", {})
+                if isinstance(inline_profiles, dict):
+                    inline_profile = inline_profiles.get(runtime_profile, {})
+                    if isinstance(inline_profile, dict):
+                        profile_data = inline_profile
+            stop_conditions = self._normalize_string_list(provider_row.get("stop_conditions", []))
+            max_chain_length = provider_row.get("max_chain_length")
+            max_cost_usd_per_run = profile_data.get("cost_budget_usd", provider_row.get("max_cost_usd_per_run"))
+
+            result = {
+                "runtime_provider_requested": runtime_provider_requested,
+                "runtime_provider": selected_provider,
+                "runtime_profile": runtime_profile,
+                "runtime_fallback_chain": fallback_chain,
+                "runtime_source": source,
+                "runtime_reason": reason,
+                "runtime_profile_data": profile_data,
+                "capabilities": self._normalize_string_list(provider_row.get("capabilities", [])),
+                "autonomy_level": str(provider_row.get("autonomy_level") or "approval_only"),
+                "background_jobs_supported": bool(provider_row.get("background_jobs_supported", False)),
+                "approval_gates": self._normalize_string_list(provider_row.get("approval_gates", [])),
+                "resource_limits": self._normalize_dict(provider_row.get("resource_limits", {})),
+                "network_policy": str(profile_data.get("network_policy") or provider_row.get("network_policy") or "") or None,
+                "max_chain_length": int(max_chain_length) if max_chain_length not in (None, "") else None,
+                "max_cost_usd_per_run": float(max_cost_usd_per_run) if max_cost_usd_per_run not in (None, "") else None,
+                "stop_conditions": stop_conditions,
+                "autonomy_mode": str(profile_data.get("autonomy_mode") or provider_row.get("autonomy_level") or "approval_only"),
+                "approval_policy": str(profile_data.get("approval_policy") or "standard"),
+                "background_profile": str(profile_data.get("background_profile") or "") or None,
+                "scheduler_profile": str(profile_data.get("scheduler_profile") or "") or None,
+                "persona_version": str(profile_data.get("persona_version") or profile_data.get("persona_id") or "") or None,
+                "operator_visibility": str(profile_data.get("operator_visibility") or "summary"),
+                "cost_budget_usd": float(profile_data.get("cost_budget_usd")) if profile_data.get("cost_budget_usd") not in (None, "") else (float(provider_row.get("max_cost_usd_per_run")) if provider_row.get("max_cost_usd_per_run") not in (None, "") else None),
+                "max_actions": int(profile_data.get("max_actions")) if profile_data.get("max_actions") not in (None, "") else (int(max_chain_length) if max_chain_length not in (None, "") else None),
+                "stop_token": str(profile_data.get("stop_token") or "") or None,
+                "proof_required": bool(profile_data.get("proof_required", False)),
+                "source_tier": source_policy_eval.get("source_tier"),
+                "requests_capability_promotion": source_policy_eval.get("requests_capability_promotion"),
+                "source_tier_policy": source_policy_eval,
+            }
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             provider_id=selected_provider, capabilities=result["capabilities"],
+                             fallback_chain=fallback_chain)
+            return result
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def get_provider(self, name: str) -> RuntimeProvider:
-        if not self.is_enabled(name):
-            raise RuntimeProviderUnavailableError(f"Runtime provider '{name}' is disabled")
-        if name in self._instances:
-            return self._instances[name]
-        factory = self._builtin_factories.get(name)
-        if factory is None:
-            raise RuntimeProviderUnavailableError(f"Runtime provider '{name}' is not registered")
-        instance = factory()
-        self._instances[name] = instance
-        return instance
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"get_provider:{name}", tier="C2", component="runtime_registry")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, provider_id=name, operation="get_provider")
+
+        try:
+            if not self.is_enabled(name):
+                raise RuntimeProviderUnavailableError(f"Runtime provider '{name}' is disabled")
+            if name in self._instances:
+                duration_ms = (time.perf_counter() - t0) * 1000
+                emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                                 provider_id=name, provider_state="cached")
+                return self._instances[name]
+            factory = self._builtin_factories.get(name)
+            if factory is None:
+                raise RuntimeProviderUnavailableError(f"Runtime provider '{name}' is not registered")
+            instance = factory()
+            self._instances[name] = instance
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             provider_id=name, provider_state="initialized")
+            return instance
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise

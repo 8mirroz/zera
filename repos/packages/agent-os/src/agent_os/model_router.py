@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
@@ -13,6 +14,23 @@ try:
     import yaml as _yaml_mod
 except ImportError:
     _yaml_mod = None
+
+# ---------------------------------------------------------------------------
+# Lazy-initialized structured trace emitter
+# ---------------------------------------------------------------------------
+
+_emitter: Any = None
+
+def _get_emitter() -> Any:
+    global _emitter
+    # In test mode (AGENT_OS_TRACE_FILE set), always create fresh emitter
+    if os.getenv("AGENT_OS_TRACE_FILE"):
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        return StructuredTraceEmitter(TraceSink())
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 
 def _safe_yaml_load(text: str) -> dict[str, Any]:
@@ -244,11 +262,11 @@ class UnifiedRouter(ModelRouter):
 
     def route(self, routing_topic: str, complexity_or_context: str | dict = None, **kwargs) -> dict:
         """Route a task to the appropriate model based on v4 logic.
-        
+
         Args:
             routing_topic: T1-T7 or specific topic string
             complexity_or_context: Backward compatible complexity string or context dict
-            
+
         Returns:
             dict with routing decision
         """
@@ -261,6 +279,21 @@ class UnifiedRouter(ModelRouter):
         else:
             context = kwargs.get("context", kwargs)
             complexity = "C2"
+
+        # --- trace: route decision start ---
+        t_start = time.perf_counter()
+        task_id = context.get("task_id", routing_topic)
+        norm_complexity = self._normalize_complexity(complexity)
+        if isinstance(context.get("complexity"), str):
+            norm_complexity = self._normalize_complexity(context.get("complexity"))
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(
+            task_id=str(task_id),
+            tier=norm_complexity,
+            component="router",
+        )
+        _get_emitter().task_start(ctx, model_selection=True, task_type=routing_topic, complexity=norm_complexity)
+        # --- end trace ---
 
         context = context or {}
         complexity = self._normalize_complexity(complexity)
@@ -375,6 +408,21 @@ class UnifiedRouter(ModelRouter):
             "reviewer_model": tier_row.get("reviewer_model"),
             "orchestrator_model": tier_row.get("orchestrator_model"),
         }
+
+        # --- trace: model selection + route decision end ---
+        elapsed_ms = (time.perf_counter() - t_start) * 1000
+        _get_emitter().task_end(
+            ctx,
+            duration_ms=elapsed_ms,
+            status="completed",
+            selected_model=primary_model,
+            model_tier=model_tier,
+            reason=route_reason,
+            fallback_chain=fallback_chain,
+            orchestration_path=orchestration_path,
+        )
+        # --- end trace ---
+
         return {
             "task_type": routing_topic,
             "complexity": complexity,
@@ -425,12 +473,29 @@ class UnifiedRouter(ModelRouter):
         Returns:
             dict with next complexity tier and model
         """
+        # --- trace: fallback event ---
+        task_id = f"escalate-{current_tier}"
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=task_id, tier=current_tier, component="router")
+        _get_emitter().task_start(ctx, escalation=True, from_tier=current_tier, escalation_reason=reason)
+        # --- end trace ---
+
         tiers = ["C1", "C2", "C3", "C4", "C5"]
         try:
             idx = tiers.index(current_tier)
             next_tier = tiers[min(idx + 1, len(tiers) - 1)]
         except ValueError:
             next_tier = "C3"
+
+        # --- trace: fallback event end ---
+        _get_emitter().fallback(
+            ctx,
+            from_model=current_tier,
+            to_model=next_tier,
+            reason=f"Escalated from {current_tier}: {reason}",
+            level="warning",
+        )
+        # --- end trace ---
 
         return {
             "escalated_tier": next_tier,

@@ -14,7 +14,12 @@ from uuid import uuid4
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    # Try to find .zera_root or current path if it contains /zera/
+    cwd = Path.cwd()
+    if "zera" in cwd.parts:
+        idx = cwd.parts.index("zera")
+        return Path(*cwd.parts[:idx+1])
+    return Path(__file__).resolve().parents[2]
 
 
 def utc_now_iso() -> str:

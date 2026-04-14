@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import time
 from pathlib import Path
 from typing import Any
 
@@ -9,6 +10,19 @@ try:  # pragma: no cover - optional dependency in some minimal environments
     import yaml
 except Exception:  # pragma: no cover
     yaml = None
+
+# ---------------------------------------------------------------------------
+# Lazy-initialized structured trace emitter
+# ---------------------------------------------------------------------------
+
+_emitter: Any = None
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 
 class RegistryWorkflowResolver:
@@ -76,17 +90,43 @@ class RegistryWorkflowResolver:
         key = str(skill_id or "").strip()
         if not key:
             return {}
+        # --- trace: skill loading ---
+        t_start = time.perf_counter()
+        from .trace_context import TraceContext
+        skill_ctx = TraceContext.root(task_id=f"skill-{key}", tier="C2", component="registry_workflows")
+        _get_emitter().task_start(skill_ctx, skill_id=key)
+        # --- end trace ---
+
         if key not in self._skill_cache:
             path = self.repo_root / self._SKILL_DIR / f"{key}.yaml"
             self._skill_cache[key] = self._load_yaml(path)
+
+        loaded = bool(self._skill_cache.get(key))
+        elapsed_ms = (time.perf_counter() - t_start) * 1000
+        _get_emitter().task_end(skill_ctx, duration_ms=elapsed_ms, status="completed" if loaded else "not_found", skill_id=key, loaded=loaded)
+        # --- end trace ---
+
         return self._skill_cache[key]
 
     def resolve(self, *, task_type: str, complexity: str, orchestration_path: str | None) -> dict[str, Any] | None:
+        # --- trace: workflow resolution start ---
+        t_start = time.perf_counter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(
+            task_id=f"resolve-{task_type}",
+            tier=complexity,
+            component="registry_workflows",
+        )
+        _get_emitter().task_start(ctx, workflow_resolution=True, task_type=task_type)
+        # --- end trace ---
+
         workflow_path = self.workflow_path_for_complexity(complexity)
         if not workflow_path:
+            _get_emitter().task_end(ctx, duration_ms=(time.perf_counter() - t_start) * 1000, status="no_workflow_found")
             return None
         workflow = self.load_workflow(workflow_path)
         if not workflow:
+            _get_emitter().task_end(ctx, duration_ms=(time.perf_counter() - t_start) * 1000, status="workflow_empty")
             return None
 
         stages = workflow.get("stages") if isinstance(workflow.get("stages"), list) else []
@@ -105,6 +145,19 @@ class RegistryWorkflowResolver:
         iteration_skill = self.load_skill(iteration_skill_id)
         knowledge_policy = workflow.get("knowledge_policy") if isinstance(workflow.get("knowledge_policy"), dict) else {}
         effective_path = str(orchestration_path or self.workflow_ref_to_path_name(workflow_path) or "").strip() or None
+
+        # --- trace: workflow resolution end ---
+        elapsed_ms = (time.perf_counter() - t_start) * 1000
+        _get_emitter().task_end(
+            ctx,
+            duration_ms=elapsed_ms,
+            status="completed",
+            workflow_path=workflow_path,
+            resolved_name=workflow.get("name"),
+            handoff_skill_id=handoff_skill_id,
+            iteration_skill_id=iteration_skill_id,
+        )
+        # --- end trace ---
 
         return {
             "workflow_id": workflow.get("id"),

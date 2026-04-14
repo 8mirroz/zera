@@ -10,10 +10,25 @@
 
 set -euo pipefail
 
-HERMES_DIR="$HOME/.hermes/profiles"
+# --- CONFIGURATION ---
+HERMES_DIR="${HERMES_DIR:-$HOME/.hermes/profiles}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+HERMES_BIN="${HERMES_BIN:-}"
+
+# Auto-detect hermes binary
+if [[ -z "$HERMES_BIN" ]]; then
+    if command -v hermes &>/dev/null; then
+        HERMES_BIN="hermes"
+    elif [[ -x "$HOME/.local/bin/hermes" ]]; then
+        HERMES_BIN="$HOME/.local/bin/hermes"
+    fi
+fi
+
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
 
 echo "═══ Hermes Profile Consolidation ═══"
 echo "Timestamp: $TIMESTAMP"
@@ -56,38 +71,55 @@ fi
 echo ""
 echo "📝 Updating repository references..."
 
+portable_sed() {
+    local pattern="$1"
+    local file="$2"
+    if [[ ! -f "$file" ]]; then return 0; fi
+    # Use python for portable in-place edit without backup issues
+    python3 -c "
+import sys, re
+from pathlib import Path
+pattern = sys.argv[1]
+file_path = Path(sys.argv[2])
+target, replacement = pattern.split('|')[1:3]
+content = file_path.read_text()
+new_content = content.replace(target, replacement)
+file_path.write_text(new_content)
+" "|$pattern" "$file"
+}
+
 # Update adapter.yaml — change profile_config_path from antigravity to zera
 ADAPTER_YAML="$REPO_ROOT/configs/adapters/hermes/adapter.yaml"
-if [ -f "$ADAPTER_YAML" ]; then
-    sed -i '' 's|profiles/antigravity/config.yaml|profiles/zera/config.yaml|g' "$ADAPTER_YAML"
+if [[ -f "$ADAPTER_YAML" ]]; then
+    portable_sed "profiles/antigravity/config.yaml|profiles/zera/config.yaml" "$ADAPTER_YAML"
     echo "  ✓ adapter.yaml updated"
 fi
 
 # Update zera_client_profiles.yaml
 CLIENT_PROFILES="$REPO_ROOT/configs/tooling/zera_client_profiles.yaml"
-if [ -f "$CLIENT_PROFILES" ]; then
-    sed -i '' 's|profiles/antigravity/config.yaml|profiles/zera/config.yaml|g' "$CLIENT_PROFILES"
+if [[ -f "$CLIENT_PROFILES" ]]; then
+    portable_sed "profiles/antigravity/config.yaml|profiles/zera/config.yaml" "$CLIENT_PROFILES"
     echo "  ✓ zera_client_profiles.yaml updated"
 fi
 
 # Update zera_command_runtime.py
 ZERA_RUNTIME="$REPO_ROOT/scripts/zera_command_runtime.py"
-if [ -f "$ZERA_RUNTIME" ]; then
-    sed -i '' 's|-p antigravity|-p zera|g' "$ZERA_RUNTIME"
+if [[ -f "$ZERA_RUNTIME" ]]; then
+    portable_sed "-p antigravity|-p zera" "$ZERA_RUNTIME"
     echo "  ✓ zera_command_runtime.py updated"
 fi
 
 # Update scout_daemon.py
 SCOUT_DAEMON="$REPO_ROOT/scripts/scout_daemon.py"
-if [ -f "$SCOUT_DAEMON" ]; then
-    sed -i '' 's|profiles/antigravity/|profiles/zera/|g' "$SCOUT_DAEMON"
+if [[ -f "$SCOUT_DAEMON" ]]; then
+    portable_sed "profiles/antigravity/|profiles/zera/" "$SCOUT_DAEMON"
     echo "  ✓ scout_daemon.py updated"
 fi
 
 # Update beta_manager.py if it references antigravity profile path
 BETA_MANAGER="$REPO_ROOT/scripts/beta_manager.py"
-if [ -f "$BETA_MANAGER" ]; then
-    sed -i '' 's|profiles/antigravity|profiles/zera|g' "$BETA_MANAGER"
+if [[ -f "$BETA_MANAGER" ]]; then
+    portable_sed "profiles/antigravity|profiles/zera" "$BETA_MANAGER"
     echo "  ✓ beta_manager.py updated"
 fi
 
@@ -103,6 +135,13 @@ if [ -f "$MODELS_YAML" ]; then
     fi
 fi
 
+# --- TRAPS ---
+cleanup() {
+    :
+}
+trap cleanup EXIT
+trap 'echo -e "\nInterrupted"; exit 130' INT TERM
+
 # 6. Summary
 echo ""
 echo "═══ Consolidation Summary ═══"
@@ -110,21 +149,12 @@ echo ""
 echo "✅ Unified profile: ~/.hermes/profiles/zera/config.yaml"
 echo "📦 Backups: ~/.hermes/profiles/.backups/$TIMESTAMP/"
 echo ""
-echo "📝 Updated repo files:"
-echo "   • configs/adapters/hermes/adapter.yaml"
-echo "   • configs/tooling/zera_client_profiles.yaml"
-echo "   • scripts/zera_command_runtime.py"
-echo "   • scripts/scout_daemon.py"
-echo "   • scripts/beta_manager.py"
+if [[ -n "$HERMES_BIN" ]]; then
+    echo "🧪 Testing zera profile..."
+    "$HERMES_BIN" -p zera status 2>/dev/null | head -n 5 || echo "  ⚠️  zera profile test failed"
+fi
 echo ""
 echo "⚠️  Manual steps remaining:"
 echo "   1. Review ~/.hermes/profiles/zera/config.yaml"
-echo "   2. Test: hermes -p zera status"
-echo "   3. If ok, remove: ~/.hermes/profiles/antigravity/"
-echo "   4. Update docs/ki/ references"
-echo ""
-echo "🧪 Test commands:"
-echo "   hermes -p zera status"
-echo "   hermes -p zera chat -q 'hello'"
-echo "   hermes -p zera --model"
+echo "   2. Remove: ~/.hermes/profiles/antigravity/ (if everything is OK)"
 echo ""

@@ -1,0 +1,427 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://antigravity.local/schemas/build-memory-entry-v3.schema.json",
+  "version": "2026-03-11",
+  "schema_version": 3,
+  "description": "Production schema for Antigravity Build Memory Library entries — aligned with build_memory_library.py, with lifecycle, lineage, decay/promotion, fingerprinting, and conditional constraints",
+
+  "x-forbidden-fields": [
+    "_override_score",
+    "bypass_validation",
+    "disable_decay",
+    "force_promote",
+    "hidden_entry",
+    "skip_integrity_check"
+  ],
+
+  "required_fields": [
+    "entry_id",
+    "scope",
+    "kind",
+    "title",
+    "summary",
+    "status",
+    "tags",
+    "settings",
+    "algorithm",
+    "scores",
+    "provenance"
+  ],
+
+  "optional_fields": [
+    "description",
+    "project_slug",
+    "problem_types",
+    "tier",
+    "cost_class",
+    "models",
+    "contexts",
+    "evidence",
+    "trace_refs",
+    "ki_refs",
+    "pattern_refs",
+    "anti_patterns",
+    "notes",
+    "fingerprint",
+    "lifecycle",
+    "lineage",
+    "decay",
+    "promotion",
+    "search_facets",
+    "attachments",
+    "annotations",
+    "superseded_by",
+    "aliases"
+  ],
+
+  "computed_fields": [
+    "_search_text",
+    "scores.weighted_total",
+    "lineage.generation",
+    "decay.current_factor"
+  ],
+
+  "field_definitions": {
+    "entry_id": {
+      "type": "string",
+      "format": "uuid-v4",
+      "pattern": "^buildmem-[0-9a-f-]+$",
+      "description": "Globally unique identifier, prefixed with buildmem-"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["global", "project"],
+      "description": "Whether the entry is available globally or scoped to a project"
+    },
+    "project_slug": {
+      "type": "string",
+      "description": "Required when scope=project, must be null/absent when scope=global"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["build", "combo", "algorithm", "playbook", "routing-profile", "experiment", "snapshot", "template"],
+      "description": "Classification of the entry type"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200,
+      "description": "Human-readable title"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Brief explanation of what this entry captures"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "Extended prose description"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "candidate", "validated", "gold", "deprecated", "archived"],
+      "description": "Current lifecycle status"
+    },
+    "tags": {
+      "type": "array",
+      "items": "string",
+      "minItems": 1,
+      "maxItems": 50,
+      "description": "Searchable classification tags"
+    },
+    "problem_types": {
+      "type": "array",
+      "items": { "enum": ["T1", "T2", "T3", "T4", "T5", "T6", "T7"] },
+      "maxItems": 7,
+      "description": "Problem types this entry applies to"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["light", "quality", "reasoning"],
+      "description": "Compute tier"
+    },
+    "cost_class": {
+      "type": "string",
+      "enum": ["free", "low", "medium", "high"],
+      "description": "Approximate cost classification"
+    },
+    "models": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 20,
+      "description": "Model identifiers used in this entry"
+    },
+    "contexts": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 20,
+      "description": "Context labels or environment tags"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Model/runtime settings captured with this entry"
+    },
+    "algorithm": {
+      "type": "object",
+      "description": "Algorithm or strategy definition; may include workflow, strategy keys"
+    },
+    "scores": {
+      "type": "object",
+      "description": "Performance scores (each 0.0–1.0)",
+      "properties": {
+        "effectiveness": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "speed": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "stability": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "cost_efficiency": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "maintainability": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "reusability": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "novelty": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Optional dimension for experimental entries" },
+        "weighted_total": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Auto-computed from score_weights_default" },
+        "confidence": { "type": "number", "minimum": 0.0, "maximum": 1.0, "description": "Evidence confidence, not weighted rank" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Evidence backing this entry's scores",
+      "properties": {
+        "sample_size": { "type": "integer", "minimum": 0, "description": "Number of samples/runs supporting the scores" },
+        "methodology": { "type": "string", "maxLength": 500 },
+        "date_range": {
+          "type": "object",
+          "properties": {
+            "from": { "type": "string", "format": "iso-8601" },
+            "to": { "type": "string", "format": "iso-8601" }
+          }
+        },
+        "benchmark_refs": { "type": "array", "items": "string", "maxItems": 20 }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["captured_at", "source"],
+      "properties": {
+        "captured_at": { "type": "string", "format": "iso-8601" },
+        "source": { "type": "string", "description": "Origin system, e.g. antigravity-internal" },
+        "links": { "type": "array", "items": "string", "maxItems": 20 },
+        "created_by": { "type": "string" },
+        "source_session": { "type": "string" },
+        "source_task": { "type": "string" },
+        "evidence_refs": { "type": "array", "items": "string", "maxItems": 100 }
+      }
+    },
+    "trace_refs": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 50,
+      "description": "References to trace events that produced this entry"
+    },
+    "ki_refs": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 50,
+      "description": "References to knowledge items"
+    },
+    "pattern_refs": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 50,
+      "description": "References to pattern definitions"
+    },
+    "anti_patterns": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 20,
+      "description": "Known anti-patterns or failure modes"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Free-form notes"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256 dedup fingerprint: hash(kind|title|algorithm_hash)"
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "created_at": { "type": "string", "format": "iso-8601" },
+        "updated_at": { "type": "string", "format": "iso-8601" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "status_history": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string" },
+              "changed_at": { "type": "string", "format": "iso-8601" },
+              "reason": { "type": "string" }
+            }
+          }
+        },
+        "last_accessed_at": { "type": "string", "format": "iso-8601" },
+        "access_count": { "type": "integer", "minimum": 0 },
+        "ttl_days": { "type": "integer", "description": "Time-to-live; null means no expiry" }
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "parent_id": { "type": "string", "description": "Entry this was derived from" },
+        "child_ids": { "type": "array", "items": "string" },
+        "fork_of": { "type": "string" },
+        "merge_sources": { "type": "array", "items": "string" },
+        "generation": { "type": "integer", "minimum": 0, "description": "Lineage depth (0 = root), auto-computed" }
+      }
+    },
+    "decay": {
+      "type": "object",
+      "description": "Controls automatic score decay for stale entries",
+      "properties": {
+        "enabled": { "type": "boolean", "default": true },
+        "strategy": { "type": "string", "enum": ["linear", "exponential", "step"], "default": "linear" },
+        "half_life_days": { "type": "integer", "default": 90 },
+        "floor": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.1 },
+        "last_decay_at": { "type": "string", "format": "iso-8601" },
+        "current_factor": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 1.0 }
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "description": "Rules for automatic status promotion",
+      "properties": {
+        "auto_promote": { "type": "boolean", "default": false },
+        "promote_after_validations": { "type": "integer", "default": 3 },
+        "gold_threshold": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.85 },
+        "gold_min_access_count": { "type": "integer", "default": 10 },
+        "demote_on_decay_below": { "type": "number", "minimum": 0.0, "maximum": 1.0, "default": 0.3 }
+      }
+    },
+    "search_facets": {
+      "type": "object",
+      "description": "Pre-computed facets for fast index lookups",
+      "properties": {
+        "models": { "type": "array", "items": "string" },
+        "providers": { "type": "array", "items": "string" },
+        "languages": { "type": "array", "items": "string" },
+        "frameworks": { "type": "array", "items": "string" },
+        "domains": { "type": "array", "items": "string" }
+      }
+    },
+    "superseded_by": {
+      "type": "string",
+      "description": "If deprecated, points to the replacement entry"
+    },
+    "aliases": {
+      "type": "array",
+      "items": "string",
+      "maxItems": 10,
+      "description": "Alternative names for search matching"
+    },
+    "attachments": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "path": { "type": "string" },
+          "mime_type": { "type": "string" }
+        }
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "description": "Free-form key-value metadata for tooling extensions"
+    },
+    "_search_text": {
+      "type": "string",
+      "description": "Auto-computed: lowercase concatenation of title, summary, notes, tags, problem_types, algorithm.workflow, algorithm.strategy"
+    }
+  },
+
+  "field_constraints": {
+    "scope": ["global", "project"],
+    "kind": ["build", "combo", "algorithm", "playbook", "routing-profile", "experiment", "snapshot", "template"],
+    "status": ["draft", "candidate", "validated", "gold", "deprecated", "archived"],
+    "problem_types": ["T1", "T2", "T3", "T4", "T5", "T6", "T7"],
+    "tiers": ["light", "quality", "reasoning"],
+    "cost_class": ["free", "low", "medium", "high"]
+  },
+
+  "score_weights_default": {
+    "effectiveness": 0.25,
+    "speed": 0.20,
+    "stability": 0.20,
+    "cost_efficiency": 0.15,
+    "maintainability": 0.10,
+    "reusability": 0.10
+  },
+
+  "conditional_constraints": [
+    {
+      "description": "Gold entries must have sufficient evidence",
+      "if": { "status": "gold" },
+      "then": {
+        "required": ["evidence"],
+        "evidence": { "sample_size": { "minimum": 5 } }
+      }
+    },
+    {
+      "description": "Project scope requires project_slug",
+      "if": { "scope": "project" },
+      "then": { "required": ["project_slug"] }
+    },
+    {
+      "description": "Global scope must not have project_slug",
+      "if": { "scope": "global" },
+      "then": { "forbidden": ["project_slug"] }
+    },
+    {
+      "description": "Deprecated entries should reference replacement",
+      "if": { "status": "deprecated" },
+      "then": { "recommended": ["superseded_by"] }
+    }
+  ],
+
+  "integrity": {
+    "entry_id_unique": true,
+    "entry_id_prefix": "buildmem-",
+    "scores_range": [0.0, 1.0],
+    "weighted_total_auto_compute": true,
+    "lineage_parent_must_exist": true,
+    "superseded_by_must_exist": true,
+    "fingerprint_unique": true,
+    "status_transitions": {
+      "draft": ["candidate", "archived"],
+      "candidate": ["validated", "deprecated", "archived"],
+      "validated": ["gold", "deprecated", "archived"],
+      "gold": ["deprecated", "archived"],
+      "deprecated": ["archived"],
+      "archived": []
+    }
+  },
+
+  "migration": {
+    "v1_to_v2": {
+      "date": "2026-03-11",
+      "changes": [
+        "Added lifecycle, lineage as required fields",
+        "Added decay, promotion, search_facets as optional",
+        "Added status values: draft, archived",
+        "Added kind values: experiment, snapshot, template",
+        "Added integrity block with status_transitions"
+      ]
+    },
+    "v2_to_v3": {
+      "date": "2026-03-11",
+      "changes": [
+        "Moved lifecycle, lineage from required to optional (align with library.py)",
+        "Added optional: project_slug, models, contexts, evidence, trace_refs, ki_refs, pattern_refs, anti_patterns, notes, fingerprint",
+        "Added computed_fields list",
+        "Added x-forbidden-fields",
+        "Added conditional_constraints",
+        "Added fingerprint field for dedup",
+        "Added evidence.sample_size for ranking",
+        "Added _search_text computed field definition",
+        "Added provenance.captured_at and provenance.source as required provenance sub-fields",
+        "Added array bounds (maxItems) on all array fields",
+        "Added migration block"
+      ]
+    },
+    "minimum_supported_version": 2
+  },
+
+  "notes": [
+    "Scores are normalized to 0.0–1.0",
+    "weighted_total is auto-computed from score_weights_default if omitted",
+    "confidence is evidence confidence, not weighted rank",
+    "decay.current_factor multiplies weighted_total at query time",
+    "promotion rules are evaluated after each validation event",
+    "lineage.generation is auto-incremented from parent",
+    "_search_text is built from: title, summary, notes, tags, problem_types, algorithm.workflow, algorithm.strategy"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "insights": [
+    {
+      "timestamp": "2026-04-14T06:13:45.650335+00:00",
+      "cycle_number": 2,
+      "loop_algorithm": "rsi",
+      "candidate_class": "research_target",
+      "score": 0.499,
+      "status": "approved",
+      "reward": 0.6495,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    }
+  ],
+  "updated_at": "2026-04-14T06:13:45.650345+00:00"
+}

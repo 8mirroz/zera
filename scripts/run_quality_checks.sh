@@ -1,62 +1,80 @@
 #!/usr/bin/env bash
-# Thin entrypoint for the reliability platform pre-commit profile.
 set -euo pipefail
 
-if git rev-parse --show-toplevel >/dev/null 2>&1; then
-  ROOT="$(git rev-parse --show-toplevel)"
-else
-  ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-fi
-MODE="${1:-pre_commit}"
+# --- CONFIGURATION ---
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 AGENT_OS="$ROOT/repos/packages/agent-os"
+MODE="pre_commit"
+JSON_REPORT=false
+DEBUG=0
 
-if [[ -z "${ROOT:-}" ]]; then
-  echo "ERROR: failed to resolve repository root" >&2
-  exit 2
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
+
+log()  { [[ "$JSON_REPORT" == "true" ]] || echo -e "${CYAN}[QUALITY]${NC} $1"; }
+ok()   { [[ "$JSON_REPORT" == "true" ]] || echo -e "${GREEN}[OK]${NC}      $1"; }
+warn() { [[ "$JSON_REPORT" == "true" ]] || echo -e "${YELLOW}[WARN]${NC}    $1"; }
+err()  { [[ "$JSON_REPORT" == "true" ]] || echo -e "${RED}[ERROR]${NC}   $1" >&2; }
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --json)    JSON_REPORT=true ;;
+        --debug)   DEBUG=1 ;;
+        --quick)   MODE="local_quick" ;;
+        --profile) shift; MODE="$1" ;;
+        --doctor)  MODE="doctor" ;;
+        *)         MODE="$1" ;;
+    esac
+    shift
+done
+
+if [[ "$MODE" == "pre-commit" ]]; then MODE="pre_commit"; fi
+
+# --- VALIDATION ---
+if [[ ! -d "$ROOT" ]]; then err "Root not found: $ROOT"; exit 2; fi
+if [[ ! -d "$AGENT_OS" ]]; then err "Agent-OS not found: $AGENT_OS"; exit 2; fi
+
+# --- PREFLIGHT ---
+if [[ "${AG_SKIP_PREFLIGHT:-0}" != "1" && "$MODE" != "doctor" ]]; then
+    HEALTH_SCRIPT="$ROOT/scripts/system_health_check.sh"
+    if [[ -x "$HEALTH_SCRIPT" ]]; then
+        if [[ "$JSON_REPORT" == "true" ]]; then
+            "$HEALTH_SCRIPT" --quick --json >/dev/null 2>&1 || { err "Preflight health check failed"; exit 1; }
+        else
+            "$HEALTH_SCRIPT" --quick || { err "Preflight health check failed"; exit 1; }
+        fi
+    fi
 fi
 
-if [[ ! -d "$ROOT" ]]; then
-  echo "ERROR: resolved root does not exist: $ROOT" >&2
-  exit 2
-fi
-
-if [[ ! -d "$AGENT_OS" ]]; then
-  echo "ERROR: agent-os directory not found: $AGENT_OS" >&2
-  exit 2
-fi
-
-if [[ "${AG_SKIP_PREFLIGHT:-0}" != "1" ]]; then
-  if [[ -x "$ROOT/scripts/system_health_check.sh" ]]; then
-    "$ROOT/scripts/system_health_check.sh" --quick
-  elif [[ -f "$ROOT/scripts/system_health_check.sh" ]]; then
-    bash "$ROOT/scripts/system_health_check.sh" --quick
-  else
-    echo "WARN: preflight health check script missing: $ROOT/scripts/system_health_check.sh" >&2
-  fi
-fi
-
-cd "$ROOT"
-
-if [[ "${QUALITY_DEBUG:-0}" == "1" ]]; then
-  echo "[quality] root=$ROOT mode=$MODE" >&2
-fi
-
-if [[ "$MODE" == "--quick" || "$MODE" == "quick" ]]; then
-  MODE="local_quick"
-fi
-
-if [[ "$MODE" == "pre-commit" ]]; then
-  MODE="pre_commit"
-fi
-
+# --- EXECUTION ---
 case "$MODE" in
-  pre_commit|local_quick|ci_required|nightly|all_non_benchmark)
-    ;;
-  *)
-    echo "Unknown reliability profile: $MODE" >&2
-    echo "Allowed: pre-commit, local_quick, ci_required, nightly, all_non_benchmark" >&2
-    exit 2
-    ;;
+    doctor)
+        log "Running Qualitly Doctor (Auto-fix mode)..."
+        # Integration with ruff or other formatters could go here
+        cd "$AGENT_OS"
+        if command -v uv >/dev/null 2>&1; then
+            uv run ruff format . 2>/dev/null || warn "Ruff format failed or not available"
+            uv run ruff check --fix . 2>/dev/null || warn "Ruff fix failed or not available"
+        fi
+        ok "Doctor finished"
+        exit 0
+        ;;
+    pre_commit|local_quick|ci_required|nightly|all_non_benchmark)
+        log "Running quality profile: $MODE"
+        if [[ "$JSON_REPORT" == "true" ]]; then
+            # Execute with JSON capture
+            cd "$AGENT_OS"
+            exec bash -lc "uv run python ../../../scripts/reliability_orchestrator.py run --profile \"$MODE\" --json"
+        else
+            cd "$AGENT_OS"
+            exec bash -lc "uv run python ../../../scripts/reliability_orchestrator.py run --profile \"$MODE\""
+        fi
+        ;;
+    *)
+        err "Unknown reliability profile: $MODE"
+        echo "Allowed: pre-commit, quick, --doctor, ci_required, nightly"
+        exit 2
+        ;;
 esac
-
-exec bash -lc "cd \"$AGENT_OS\" && uv run python ../../../scripts/reliability_orchestrator.py run --profile \"$MODE\""

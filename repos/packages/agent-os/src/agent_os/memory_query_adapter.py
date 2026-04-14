@@ -10,16 +10,12 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-import build_memory_library
-import repo_memory_catalog
+from . import build_memory_library
+from . import repo_memory_catalog
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def utc_now() -> datetime:

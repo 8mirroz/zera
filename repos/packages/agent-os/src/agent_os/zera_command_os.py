@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,18 @@ try:  # pragma: no cover
     import yaml
 except ModuleNotFoundError:  # pragma: no cover
     yaml = None
+
+
+# Lazy-initialized trace emitter
+_emitter: Any = None
+
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter, TraceContext
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 
 _CAPABILITY_RANK = {
@@ -129,88 +142,125 @@ class ZeraCommandOS:
         return _CAPABILITY_RANK.get(str(actual or "none"), 0) >= _CAPABILITY_RANK.get(str(required or "none"), 0)
 
     def resolve_command(self, *, command_id: str | None, objective: str, client_id: str) -> dict[str, Any]:
-        requested = command_id
-        decision_reason = "explicit_command"
-        confidence = 1.0
-        if not command_id:
-            command_id, decision_reason, confidence = self.infer_command(objective)
-        client_row = self._client_row(client_id)
-        resolved_id = str(command_id)
-        command_row = self._command_row(resolved_id)
-        degraded = False
-        degradation_reason: str | None = None
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"resolve_command:{client_id}", tier="C2", component="zera_command_os")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, command_id=command_id, client_id=client_id, objective_length=len(objective))
 
-        supported = client_id in list(command_row.get("allowed_clients", []))
-        required_caps = command_row.get("required_capabilities", {})
-        if supported and isinstance(required_caps, dict):
-            client_caps = client_row.get("capabilities", {})
-            if isinstance(client_caps, dict):
-                for cap_name, required_value in required_caps.items():
-                    actual = client_caps.get(cap_name)
-                    if not self._capability_sufficient(str(actual or "none"), str(required_value or "none")):
-                        supported = False
-                        degradation_reason = f"client capability '{cap_name}' insufficient"
-                        break
-
-        if not supported:
-            fallback = command_row.get("fallback", {})
-            degrade_to = str(fallback.get("degrade_to") or "").strip() if isinstance(fallback, dict) else ""
-            if not degrade_to:
-                raise ValueError(f"{client_id} cannot execute {resolved_id} and no fallback is defined")
-            degraded = True
-            degradation_reason = degradation_reason or str(fallback.get("reason") or "fallback required")
-            resolved_id = degrade_to
+        try:
+            requested = command_id
+            decision_reason = "explicit_command"
+            confidence = 1.0
+            if not command_id:
+                command_id, decision_reason, confidence = self.infer_command(objective)
+            client_row = self._client_row(client_id)
+            resolved_id = str(command_id)
             command_row = self._command_row(resolved_id)
+            degraded = False
+            degradation_reason: str | None = None
 
-        mode_binding = str(command_row.get("mode_binding") or "plan")
-        if mode_binding == "fallback_router":
-            mode_binding = self.mode_router.select_mode(objective, default_mode="plan")
+            supported = client_id in list(command_row.get("allowed_clients", []))
+            required_caps = command_row.get("required_capabilities", {})
+            if supported and isinstance(required_caps, dict):
+                client_caps = client_row.get("capabilities", {})
+                if isinstance(client_caps, dict):
+                    for cap_name, required_value in required_caps.items():
+                        actual = client_caps.get(cap_name)
+                        if not self._capability_sufficient(str(actual or "none"), str(required_value or "none")):
+                            supported = False
+                            degradation_reason = f"client capability '{cap_name}' insufficient"
+                            break
 
-        return {
-            "requested_command_id": requested,
-            "command_id": resolved_id,
-            "client_id": client_id,
-            "supported": not degraded,
-            "degraded": degraded,
-            "degradation_reason": degradation_reason,
-            "decision_reason": decision_reason,
-            "confidence": round(confidence, 3),
-            "mode": mode_binding,
-            "loop": str(command_row.get("loop_binding") or "capability"),
-            "candidate_class": command_row.get("candidate_class"),
-            "workflow_type": command_row.get("workflow_type"),
-            "action_class_expectation": command_row.get("action_class_expectation"),
-            "tool_profile": command_row.get("tool_profile"),
-            "model_transport_tier": command_row.get("model_transport_tier"),
-            "approval_route": command_row.get("approval_route"),
-            "risk_level": command_row.get("risk_level"),
-            "rollback_path": command_row.get("rollback_path"),
-            "telemetry_schema": command_row.get("telemetry_schema", {}),
-            "required_capabilities": required_caps if isinstance(required_caps, dict) else {},
-        }
+            if not supported:
+                fallback = command_row.get("fallback", {})
+                degrade_to = str(fallback.get("degrade_to") or "").strip() if isinstance(fallback, dict) else ""
+                if not degrade_to:
+                    raise ValueError(f"{client_id} cannot execute {resolved_id} and no fallback is defined")
+                degraded = True
+                degradation_reason = degradation_reason or str(fallback.get("reason") or "fallback required")
+                resolved_id = degrade_to
+                command_row = self._command_row(resolved_id)
+
+            mode_binding = str(command_row.get("mode_binding") or "plan")
+            if mode_binding == "fallback_router":
+                mode_binding = self.mode_router.select_mode(objective, default_mode="plan")
+
+            loop_binding = str(command_row.get("loop_binding") or "capability")
+
+            result = {
+                "requested_command_id": requested,
+                "command_id": resolved_id,
+                "client_id": client_id,
+                "supported": not degraded,
+                "degraded": degraded,
+                "degradation_reason": degradation_reason,
+                "decision_reason": decision_reason,
+                "confidence": round(confidence, 3),
+                "mode": mode_binding,
+                "loop": loop_binding,
+                "candidate_class": command_row.get("candidate_class"),
+                "workflow_type": command_row.get("workflow_type"),
+                "action_class_expectation": command_row.get("action_class_expectation"),
+                "tool_profile": command_row.get("tool_profile"),
+                "model_transport_tier": command_row.get("model_transport_tier"),
+                "approval_route": command_row.get("approval_route"),
+                "risk_level": command_row.get("risk_level"),
+                "rollback_path": command_row.get("rollback_path"),
+                "telemetry_schema": command_row.get("telemetry_schema", {}),
+                "required_capabilities": required_caps if isinstance(required_caps, dict) else {},
+            }
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             command_id=resolved_id, client_id=client_id,
+                             mode_binding=mode_binding, loop_binding=loop_binding,
+                             confidence=round(confidence, 3), degraded=degraded)
+            return result
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def render_prompt(self, *, command_id: str | None, objective: str, client_id: str, branch_manifest_path: str | None = None) -> dict[str, Any]:
-        resolved = self.resolve_command(command_id=command_id, objective=objective, client_id=client_id)
-        header = [
-            "[ZERA COMMAND CONTEXT]",
-            f"command_id: {resolved['command_id']}",
-            f"client_id: {client_id}",
-            f"mode: {resolved['mode']}",
-            f"loop: {resolved['loop']}",
-            f"workflow_type: {resolved['workflow_type']}",
-            f"candidate_class: {resolved['candidate_class']}",
-            f"tool_profile: {resolved['tool_profile']}",
-            f"approval_route: {resolved['approval_route']}",
-            f"decision_reason: {resolved['decision_reason']}",
-            f"confidence: {resolved['confidence']}",
-        ]
-        if branch_manifest_path:
-            header.append(f"branch_manifest_path: {branch_manifest_path}")
-        header.extend(["", "[OBJECTIVE]", objective])
-        return {
-            **resolved,
-            "prompt": "\n".join(header).strip() + "\n",
-        }
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"render_prompt:{client_id}", tier="C2", component="zera_command_os")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, command_id=command_id, client_id=client_id, branch_type=branch_manifest_path or "none")
+
+        try:
+            resolved = self.resolve_command(command_id=command_id, objective=objective, client_id=client_id)
+            header = [
+                "[ZERA COMMAND CONTEXT]",
+                f"command_id: {resolved['command_id']}",
+                f"client_id: {client_id}",
+                f"mode: {resolved['mode']}",
+                f"loop: {resolved['loop']}",
+                f"workflow_type: {resolved['workflow_type']}",
+                f"candidate_class: {resolved['candidate_class']}",
+                f"tool_profile: {resolved['tool_profile']}",
+                f"approval_route: {resolved['approval_route']}",
+                f"decision_reason: {resolved['decision_reason']}",
+                f"confidence: {resolved['confidence']}",
+            ]
+            if branch_manifest_path:
+                header.append(f"branch_manifest_path: {branch_manifest_path}")
+            header.extend(["", "[OBJECTIVE]", objective])
+            prompt_text = "\n".join(header).strip() + "\n"
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             command_id=resolved["command_id"], prompt_length=len(prompt_text),
+                             branch_type=branch_manifest_path or "none")
+            return {
+                **resolved,
+                "prompt": prompt_text,
+            }
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def create_branch_manifest(
         self,
@@ -222,35 +272,52 @@ class ZeraCommandOS:
         run_id: str,
         ttl_minutes: int | None = None,
     ) -> dict[str, Any]:
-        branch_types = self.branching_policy.get("branch_types", {})
-        if not isinstance(branch_types, dict) or branch_type not in branch_types:
-            raise ValueError(f"Unknown branch type: {branch_type}")
-        branch_row = branch_types[branch_type]
-        if not isinstance(branch_row, dict):
-            raise ValueError(f"Invalid branch row: {branch_type}")
-        if command_id not in list(branch_row.get("allowed_commands", [])):
-            raise ValueError(f"{branch_type} is not allowed for {command_id}")
-        resolved = self.resolve_command(command_id=command_id, objective=objective, client_id=client_id)
-        defaults = self.branching_policy.get("defaults", {})
-        storage = self.branching_policy.get("storage", {})
-        manifest = {
-            "branch_id": f"{branch_type}-{run_id}",
-            "branch_type": branch_type,
-            "parent_run_id": run_id,
-            "source_command": resolved["command_id"],
-            "origin_prompt": objective,
-            "allowed_tools": [resolved["tool_profile"]],
-            "max_turns": int(branch_row.get("max_turns", 6)),
-            "ttl_minutes": int(ttl_minutes or defaults.get("ttl_minutes", 90)),
-            "merge_policy": str(branch_row.get("merge_policy") or "summary_with_candidate_cards"),
-            "candidate_emission_allowed": bool(branch_row.get("candidate_emission_allowed", True)),
-            "stable_memory_write_allowed": bool(defaults.get("stable_memory_write_allowed", False)),
-            "personality_promotion_allowed": bool(defaults.get("personality_promotion_allowed", False)),
-            "storage_path": str(storage.get("branch_dir") or "${VAULT_PATH}/research/branches"),
-        }
-        if branch_row.get("requires_persona_review"):
-            manifest["requires_persona_review"] = True
-        return manifest
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"branch_manifest:{run_id}", tier="C2", component="zera_command_os")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, branch_id=f"{branch_type}-{run_id}", branch_type=branch_type,
+                           source_command=command_id, client_id=client_id)
+
+        try:
+            branch_types = self.branching_policy.get("branch_types", {})
+            if not isinstance(branch_types, dict) or branch_type not in branch_types:
+                raise ValueError(f"Unknown branch type: {branch_type}")
+            branch_row = branch_types[branch_type]
+            if not isinstance(branch_row, dict):
+                raise ValueError(f"Invalid branch row: {branch_type}")
+            if command_id not in list(branch_row.get("allowed_commands", [])):
+                raise ValueError(f"{branch_type} is not allowed for {command_id}")
+            resolved = self.resolve_command(command_id=command_id, objective=objective, client_id=client_id)
+            defaults = self.branching_policy.get("defaults", {})
+            storage = self.branching_policy.get("storage", {})
+            manifest = {
+                "branch_id": f"{branch_type}-{run_id}",
+                "branch_type": branch_type,
+                "parent_run_id": run_id,
+                "source_command": resolved["command_id"],
+                "origin_prompt": objective,
+                "allowed_tools": [resolved["tool_profile"]],
+                "max_turns": int(branch_row.get("max_turns", 6)),
+                "ttl_minutes": int(ttl_minutes or defaults.get("ttl_minutes", 90)),
+                "merge_policy": str(branch_row.get("merge_policy") or "summary_with_candidate_cards"),
+                "candidate_emission_allowed": bool(branch_row.get("candidate_emission_allowed", True)),
+                "stable_memory_write_allowed": bool(defaults.get("stable_memory_write_allowed", False)),
+                "personality_promotion_allowed": bool(defaults.get("personality_promotion_allowed", False)),
+                "storage_path": str(storage.get("branch_dir") or "${VAULT_PATH}/research/branches"),
+            }
+            if branch_row.get("requires_persona_review"):
+                manifest["requires_persona_review"] = True
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             branch_id=manifest["branch_id"], branch_type=branch_type,
+                             source_command=command_id)
+            return manifest
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def create_source_card(
         self,
@@ -288,30 +355,50 @@ class ZeraCommandOS:
         stable_memory_write_requested: bool = False,
         personality_promotion_requested: bool = False,
     ) -> dict[str, Any]:
-        classification = str(candidate_classification or "").strip().lower()
-        allowed = {"capability", "personality", "mixed", "governance"}
-        if not classification:
-            raise ValueError("candidate classification is required for branch merge")
-        if classification not in allowed:
-            raise ValueError(f"Unsupported candidate classification: {classification}")
-        if stable_memory_write_requested and not manifest.get("stable_memory_write_allowed", False):
-            raise ValueError("stable memory writes are forbidden for this branch merge")
-        if personality_promotion_requested and not manifest.get("personality_promotion_allowed", False):
-            raise ValueError("personality promotion is forbidden for this branch merge")
-        requires_review = classification in {"personality", "mixed", "governance"} or bool(manifest.get("requires_persona_review"))
-        return {
-            "branch_id": manifest.get("branch_id"),
-            "branch_type": manifest.get("branch_type"),
-            "parent_run_id": manifest.get("parent_run_id"),
-            "source_command": manifest.get("source_command"),
-            "candidate_classification": classification,
-            "summary": summary,
-            "decision": "review_required" if requires_review else "eligible_for_eval",
-            "stable_memory_write_requested": stable_memory_write_requested,
-            "personality_promotion_requested": personality_promotion_requested,
-            "requires_review": requires_review,
-            "rollback_path": "discard branch artifacts and revert to pre-merge state",
-        }
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        ctx = TraceContext.root(task_id=f"branch_merge:{manifest.get('branch_id', 'unknown')}",
+                                tier="C2", component="zera_command_os")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, branch_id=manifest.get("branch_id"),
+                           candidate_classification=candidate_classification,
+                           summary_length=len(summary))
+
+        try:
+            classification = str(candidate_classification or "").strip().lower()
+            allowed = {"capability", "personality", "mixed", "governance"}
+            if not classification:
+                raise ValueError("candidate classification is required for branch merge")
+            if classification not in allowed:
+                raise ValueError(f"Unsupported candidate classification: {classification}")
+            if stable_memory_write_requested and not manifest.get("stable_memory_write_allowed", False):
+                raise ValueError("stable memory writes are forbidden for this branch merge")
+            if personality_promotion_requested and not manifest.get("personality_promotion_allowed", False):
+                raise ValueError("personality promotion is forbidden for this branch merge")
+            requires_review = classification in {"personality", "mixed", "governance"} or bool(manifest.get("requires_persona_review"))
+            result = {
+                "branch_id": manifest.get("branch_id"),
+                "branch_type": manifest.get("branch_type"),
+                "parent_run_id": manifest.get("parent_run_id"),
+                "source_command": manifest.get("source_command"),
+                "candidate_classification": classification,
+                "summary": summary,
+                "decision": "review_required" if requires_review else "eligible_for_eval",
+                "stable_memory_write_requested": stable_memory_write_requested,
+                "personality_promotion_requested": personality_promotion_requested,
+                "requires_review": requires_review,
+                "rollback_path": "discard branch artifacts and revert to pre-merge state",
+            }
+
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             branch_id=manifest.get("branch_id"), decision=result["decision"],
+                             candidate_classification=classification)
+            return result
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
 
     def evaluate_governor(
         self,

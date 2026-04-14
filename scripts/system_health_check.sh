@@ -1,30 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# --- CONFIGURATION ---
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 MODE="full"
 JSON=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --quick)
-      MODE="quick"
-      ;;
-    --json)
-      JSON=1
-      ;;
-    *)
-      echo "Unknown option: $1" >&2
-      exit 2
-      ;;
+    --quick) MODE="quick" ;;
+    --json)  JSON=1 ;;
+    *)       echo "Unknown option: $1" >&2; exit 2 ;;
   esac
   shift
 done
 
-if git rev-parse --show-toplevel >/dev/null 2>&1; then
-  ROOT="$(git rev-parse --show-toplevel)"
-else
-  ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-fi
+# Colors
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
+BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
 
 FAILS=()
 WARNS=()
@@ -92,36 +86,47 @@ check_python_runtime() {
     add_fail "notebooklm_config_missing:$cfg"
     return
   fi
-  py_path="$(python3 - "$cfg" <<'PY'
-import json
-import sys
+  
+  py_path=$(python3 -c "
+import json, sys, os
 from pathlib import Path
-cfg=Path(sys.argv[1])
-data=json.loads(cfg.read_text(encoding="utf-8"))
-print(data.get("python_bin",""))
-PY
-)"
+try:
+    data = json.loads(Path(sys.argv[1]).read_text())
+    print(data.get('python_bin',''))
+except: pass
+" "$cfg" 2>/dev/null)
+
   if [[ -z "$py_path" || ! -x "$py_path" ]]; then
     add_fail "python_bin_missing_or_not_executable:$py_path"
     return
   fi
+
   local py_info
-  py_info="$("$py_path" - <<'PY'
-import platform, sys
-print(platform.machine(), sys.version_info.major, sys.version_info.minor)
-PY
-)"
-  local py_arch py_major py_minor
-  py_arch="$(awk '{print $1}' <<<"$py_info")"
-  py_major="$(awk '{print $2}' <<<"$py_info")"
-  py_minor="$(awk '{print $3}' <<<"$py_info")"
-  if [[ "$py_arch" != "arm64" ]]; then
-    add_fail "python_arch_not_arm64:$py_arch:$py_path"
-  elif [[ "$py_major" -lt 3 || ( "$py_major" -eq 3 && "$py_minor" -lt 11 ) ]]; then
-    add_fail "python_version_lt_3_11:${py_major}.${py_minor}:$py_path"
-  else
-    add_check "python_ok:${py_major}.${py_minor}:$py_path"
-  fi
+  py_info=$("$py_path" -c "
+import platform, sys, os
+print(f'{platform.machine()} {sys.version_info.major} {sys.version_info.minor}')
+" 2>/dev/null)
+
+  # Robust parsing with python to avoid awk/tr issues
+  python3 -c "
+import sys
+try:
+    info = sys.argv[1].split()
+    arch, major, minor = info[0], int(info[1]), int(info[2])
+    if arch != 'arm64':
+        print('FAIL:python_arch_not_arm64:' + arch)
+    elif major < 3 or (major == 3 and minor < 11):
+        print(f'FAIL:python_version_lt_3_11:{major}.{minor}')
+    else:
+        print(f'OK:python_ok:{major}.{minor}')
+except:
+    print('FAIL:python_info_parsing_failed')
+" "$py_info" | while read -r line; do
+    case "$line" in
+        OK:*)   add_check "${line#OK:}:$py_path" ;;
+        FAIL:*) add_fail "${line#FAIL:}:$py_path" ;;
+    esac
+  done
 }
 
 check_notebooklm() {
@@ -174,6 +179,21 @@ check_env_consistency() {
   fi
 }
 
+# --- TRAPS ---
+cleanup() { :; }
+trap cleanup EXIT
+trap 'echo -e "\nInterrupted"; exit 130' INT TERM
+
+# --- EXECUTION ---
+if [[ "$JSON" -eq 0 ]]; then
+    echo -e "${CYAN}╔══════════════════════════════════════════════════════════╗${NC}"
+    echo -e "${CYAN}║  ⚕  Antigravity Core System Health Check                  ║${NC}"
+    echo -e "${CYAN}╚══════════════════════════════════════════════════════════╝${NC}"
+    echo -e "${BLUE}[SYSTEM]${NC} Mode: $MODE | Root: $ROOT"
+    echo ""
+fi
+
+# Run checks
 check_repo_root
 check_git_integrity
 check_architecture
@@ -185,67 +205,45 @@ check_env_consistency
 check_notebooklm
 
 if [[ "$JSON" -eq 1 ]]; then
-  if [[ "${#CHECKS[@]}" -gt 0 ]]; then
-    export AG_HEALTH_CHECKS="$(printf '%s\n' "${CHECKS[@]}")"
-  else
-    export AG_HEALTH_CHECKS=""
-  fi
-  if [[ "${#WARNS[@]}" -gt 0 ]]; then
-    export AG_HEALTH_WARNS="$(printf '%s\n' "${WARNS[@]}")"
-  else
-    export AG_HEALTH_WARNS=""
-  fi
-  if [[ "${#FAILS[@]}" -gt 0 ]]; then
-    export AG_HEALTH_FAILS="$(printf '%s\n' "${FAILS[@]}")"
-  else
-    export AG_HEALTH_FAILS=""
-  fi
-  python3 - "$MODE" "$ROOT" <<'PY'
-import json
-import os
-import sys
-
-mode = sys.argv[1]
-root = sys.argv[2]
-checks = [x for x in os.environ.get("AG_HEALTH_CHECKS", "").splitlines() if x]
-warns = [x for x in os.environ.get("AG_HEALTH_WARNS", "").splitlines() if x]
-fails = [x for x in os.environ.get("AG_HEALTH_FAILS", "").splitlines() if x]
-print(
-    json.dumps(
-        {
-            "mode": mode,
-            "root": root,
-            "checks": checks,
-            "warnings": warns,
-            "failures": fails,
-            "status": "fail" if fails else "pass",
-        },
-        ensure_ascii=False,
-    )
-)
+  # Structured JSON output consistent with Hermes dashboard
+  # Export lists for python helper
+  export AG_CHECKS="$(printf '%s\n' "${CHECKS[@]:-}")"
+  export AG_WARNS="$(printf '%s\n' "${WARNS[@]:-}")"
+  export AG_FAILS="$(printf '%s\n' "${FAILS[@]:-}")"
+  export AG_MODE="$MODE"
+  export AG_ROOT="$ROOT"
+  
+  python3 - <<'PY'
+import json, os, sys
+from datetime import datetime
+checks = os.environ.get("AG_CHECKS", "").splitlines()
+warns = os.environ.get("AG_WARNS", "").splitlines()
+fails = os.environ.get("AG_FAILS", "").splitlines()
+print(json.dumps({
+    "service": "antigravity-core",
+    "timestamp": datetime.utcnow().isoformat() + "Z",
+    "status": "healthy" if not fails else "critical",
+    "mode": os.environ.get("AG_MODE", "full"),
+    "repository_root": os.environ.get("AG_ROOT"),
+    "checks": [c for c in checks if c],
+    "warnings": [w for w in warns if w],
+    "failures": [f for f in fails if f]
+}, indent=2))
 PY
-  if [[ "${#FAILS[@]}" -gt 0 ]]; then
-    exit 1
-  fi
+  [[ ${#FAILS[@]} -eq 0 ]] || exit 1
   exit 0
 fi
 
-echo "[health] mode=$MODE root=$ROOT"
-for c in "${CHECKS[@]:-}"; do
-  [[ -n "$c" ]] || continue
-  echo "[OK]   $c"
-done
-for w in "${WARNS[@]:-}"; do
-  [[ -n "$w" ]] || continue
-  echo "[WARN] $w"
-done
-for f in "${FAILS[@]:-}"; do
-  [[ -n "$f" ]] || continue
-  echo "[FAIL] $f"
-done
+# Human readable output
+for c in "${CHECKS[@]}"; do echo -e "${GREEN}[OK]${NC}     $c"; done
+for w in "${WARNS[@]}"; do echo -e "${YELLOW}[WARN]${NC}   $w"; done
+for f in "${FAILS[@]}"; do echo -e "${RED}[FAIL]${NC}   $f"; done
 
-if [[ "${#FAILS[@]}" -gt 0 ]]; then
+echo ""
+if [[ ${#FAILS[@]} -eq 0 ]]; then
+  echo -e "${GREEN}✅ System healthy${NC}"
+  exit 0
+else
+  echo -e "${RED}❌ System issues detected (${#FAILS[@]} failures)${NC}"
   exit 1
 fi
-
-exit 0

@@ -1,11 +1,10 @@
 {
+  "include": ["src/**/*.py", "scripts/**/*.py", "tests/**/*.py"],
   "executionEnvironments": [
     {
-      "root": "scripts",
-      "extraPaths": ["scripts"]
-    },
-    {
-      "root": "src"
+      "root": "src",
+      "extraPaths": ["src"]
     }
-  ]
+  ],
+  "extraPaths": ["src", "scripts"]
 }

@@ -1,0 +1,42 @@
+{
+  "id": "bml-global-execution-playbook-{{slug}}-001",
+  "version": 1,
+  "scope": "global",
+  "project_slug": null,
+  "status": "candidate",
+  "entry_type": "execution_playbook",
+  "title": "Playbook: {{operation_name}}",
+  "summary": "Step-by-step execution guide for {{operation_name}} focusing on {{priority}}.",
+  "problem_class": ["playbook", "{{category}}"],
+  "components": [],
+  "configuration": {
+    "mode": "sequential",
+    "checkpoints": "enabled"
+  },
+  "algorithm": {
+    "inputs": ["requirement_doc"],
+    "steps": [
+      "analysis",
+      "planning",
+      "execution",
+      "verification"
+    ],
+    "fallbacks": ["escalation to parent agent"]
+  },
+  "evidence": {
+    "trace_refs": [],
+    "metrics": {}
+  },
+  "scoring": {
+    "reusability": 0.9,
+    "overall_score": 0.5
+  },
+  "constraints": [],
+  "failure_modes": ["skip checkpoint", "incomplete analysis"],
+  "when_to_use": ["standard operations"],
+  "when_not_to_use": ["emergency overrides"],
+  "tags": ["playbook"],
+  "owner_agent": "memory-harvester",
+  "created_at": "{{now}}",
+  "updated_at": "{{now}}"
+}

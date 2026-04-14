@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Build Memory Entry",
+  "type": "object",
+  "required": [
+    "id",
+    "version",
+    "scope",
+    "status",
+    "entry_type",
+    "title",
+    "summary",
+    "problem_class",
+    "components",
+    "configuration",
+    "algorithm",
+    "evidence",
+    "scoring",
+    "constraints",
+    "failure_modes",
+    "when_to_use",
+    "when_not_to_use",
+    "tags",
+    "owner_agent",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "version": { "type": "integer", "minimum": 1 },
+    "scope": { "enum": ["global", "project"] },
+    "project_slug": { "type": ["string", "null"] },
+    "status": { "enum": ["candidate", "validated", "gold", "deprecated", "archived"] },
+    "entry_type": {
+      "enum": [
+        "build_combination",
+        "settings_stack",
+        "algorithm_pattern",
+        "execution_playbook",
+        "routing_policy",
+        "memory_strategy",
+        "benchmark_winner",
+        "integration_pattern",
+        "recovery_pattern",
+        "cost_optimization_pattern"
+      ]
+    },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "problem_class": { "type": "array", "items": { "type": "string" } },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "role", "version"],
+        "properties": {
+          "name": { "type": "string" },
+          "role": { "type": "string" },
+          "version": { "type": "string" }
+        }
+      }
+    },
+    "configuration": { "type": "object" },
+    "algorithm": {
+      "type": "object",
+      "properties": {
+        "inputs": { "type": "array", "items": { "type": "string" } },
+        "steps": { "type": "array", "items": { "type": "string" } },
+        "fallbacks": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "trace_refs": { "type": "array", "items": { "type": "string" } },
+        "ki_refs": { "type": "array", "items": { "type": "string" } },
+        "benchmark_refs": { "type": "array", "items": { "type": "string" } },
+        "audit_refs": { "type": "array", "items": { "type": "string" } },
+        "metrics": { "type": "object" }
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "properties": {
+        "overall_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "evidence_strength": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reusability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "determinism": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "constraints": { "type": "array", "items": { "type": "string" } },
+    "failure_modes": { "type": "array", "items": { "type": "string" } },
+    "when_to_use": { "type": "array", "items": { "type": "string" } },
+    "when_not_to_use": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "owner_agent": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

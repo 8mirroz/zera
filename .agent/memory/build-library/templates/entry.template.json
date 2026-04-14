@@ -1,0 +1,56 @@
+{
+  "id": "bml-{{scope}}-{{entry_type}}-{{slug}}-001",
+  "version": 1,
+  "scope": "global",
+  "project_slug": null,
+  "status": "candidate",
+  "entry_type": "build_combination",
+  "title": "",
+  "summary": "",
+  "problem_class": [],
+  "use_cases": [],
+  "components": [
+    {
+      "name": "",
+      "role": "",
+      "version": "stable"
+    }
+  ],
+  "configuration": {
+    "runtime": "local",
+    "budget_mode": "free-first",
+    "latency_profile": "balanced",
+    "reliability_profile": "high"
+  },
+  "algorithm": {
+    "inputs": [],
+    "steps": [],
+    "fallbacks": []
+  },
+  "evidence": {
+    "trace_refs": [],
+    "ki_refs": [],
+    "benchmark_refs": [],
+    "audit_refs": [],
+    "metrics": {
+      "success_rate": 0,
+      "first_pass_success": 0
+    }
+  },
+  "scoring": {
+    "confidence": 0,
+    "evidence_strength": 0,
+    "reusability": 0,
+    "determinism": 0,
+    "cost_efficiency": 0,
+    "overall_score": 0
+  },
+  "constraints": [],
+  "failure_modes": [],
+  "when_to_use": [],
+  "when_not_to_use": [],
+  "tags": [],
+  "owner_agent": "memory-harvester",
+  "created_at": "{{now}}",
+  "updated_at": "{{now}}"
+}

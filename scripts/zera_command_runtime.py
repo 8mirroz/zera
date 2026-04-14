@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+# DEPRECATED — Forwarding stub. Canonical implementation: scripts/zera/zera_command_runtime.py
+# This file exists for backward compatibility with existing tooling/cron references.
+# New code should reference the canonical path directly.
+# Date: 2026-04-14
 from __future__ import annotations
 
 import os

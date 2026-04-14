@@ -8,11 +8,7 @@ import re
 import sys
 from pathlib import Path
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-if str(SCRIPT_DIR) not in sys.path:
-    sys.path.insert(0, str(SCRIPT_DIR))
-
-from active_set_lib import parse_active_skills_md
+from .active_set_lib import parse_active_skills_md
 
 INTERNAL_META_SKILLS = {
     "using-superpowers",
@@ -44,7 +40,7 @@ OPTIONAL_EXTERNAL_ROUTING_SKILLS = {
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def list_agent_skills(root: Path) -> set[str]:

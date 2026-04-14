@@ -1,12 +1,25 @@
 from __future__ import annotations
 
 import logging
+import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 from .config_loader import ModularConfigLoader
 
 logger = logging.getLogger(__name__)
+
+
+# Lazy-initialized trace emitter
+_emitter: Any = None
+
+
+def _get_emitter() -> Any:
+    global _emitter
+    if _emitter is None:
+        from .trace_context import TraceSink, StructuredTraceEmitter
+        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+    return _emitter
 
 class PlatformController:
     """Executable logic for Platform Mode Switching and Autonomy Control.
@@ -82,30 +95,51 @@ class PlatformController:
         return False
 
     def resolve_mode(self, context: Dict[str, Any]) -> str:
-        """Determines the active platform mode based on rules and context.
-        
-        Context should include:
-        - intent_class (e.g., 'codegen', 'analysis')
-        - complexity (e.g., 'C1', 'C3')
-        - task_tags
-        - user_mentions_direct_mode
-        """
-        logic = self._rules.get("arbitration_logic", {})
-        overrides = logic.get("mode_selection_overrides", [])
-        
-        # 1. Check User Preference (highest priority in rules)
-        user_pref = context.get("user_mentions_direct_mode")
-        if user_pref and user_pref in ["consumer", "pro"]:
-            return user_pref
+        emitter = _get_emitter()
+        from .trace_context import TraceContext
+        task_id = f"resolve_mode:{context.get('intent_class', 'unknown')}"
+        ctx = TraceContext.root(task_id=task_id, tier="C2", component="platform_controller")
+        t0 = time.perf_counter()
+        emitter.task_start(ctx, intent_class=context.get("intent_class"),
+                           complexity=context.get("complexity"),
+                           task_tags=context.get("task_tags", []))
 
-        # 2. Check Overrides
-        for rule in overrides:
-            if self._evaluate_condition(rule.get("if", ""), context):
-                action = rule.get("action", "")
-                if action.startswith("force_mode:"):
-                    return action.split(":")[1].strip()
-                if action == "apply_user_preference":
-                    if user_pref: return user_pref
+        try:
+            logic = self._rules.get("arbitration_logic", {})
+            overrides = logic.get("mode_selection_overrides", [])
 
-        # 3. Default to fallback
-        return self._rules.get("fallback_logic", {}).get("default_mode", "hybrid")
+            # 1. Check User Preference (highest priority in rules)
+            user_pref = context.get("user_mentions_direct_mode")
+            if user_pref and user_pref in ["consumer", "pro"]:
+                duration_ms = (time.perf_counter() - t0) * 1000
+                emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                                 resolved_mode=user_pref, decision_reason="user_preference")
+                return user_pref
+
+            # 2. Check Overrides
+            for rule in overrides:
+                if self._evaluate_condition(rule.get("if", ""), context):
+                    action = rule.get("action", "")
+                    if action.startswith("force_mode:"):
+                        mode = action.split(":")[1].strip()
+                        duration_ms = (time.perf_counter() - t0) * 1000
+                        emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                                         resolved_mode=mode, decision_reason="override")
+                        return mode
+                    if action == "apply_user_preference":
+                        if user_pref:
+                            duration_ms = (time.perf_counter() - t0) * 1000
+                            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                                             resolved_mode=user_pref, decision_reason="user_preference_via_override")
+                            return user_pref
+
+            # 3. Default to fallback
+            default_mode = self._rules.get("fallback_logic", {}).get("default_mode", "hybrid")
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_end(ctx, duration_ms=duration_ms, status="completed",
+                             resolved_mode=default_mode, decision_reason="default_fallback")
+            return default_mode
+        except Exception as exc:
+            duration_ms = (time.perf_counter() - t0) * 1000
+            emitter.task_error(ctx, error_type=type(exc).__name__, error_message=str(exc))
+            raise
