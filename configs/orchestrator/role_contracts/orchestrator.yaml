@@ -1,0 +1,106 @@
+role: "orchestrator"
+version: "1.0.0"
+status: "active"
+system_role: "global_control_plane"
+
+complexity_scope: ["C1", "C2", "C3", "C4", "C5"]
+model_alias: "$AGENT_MODEL_ORCHESTRATOR"
+fallback_model: "$AGENT_MODEL_FALLBACK_1"
+runtime_hint: "agent_os_python"
+
+responsibilities:
+  - "Task intake normalization and classification"
+  - "Complexity scoring and tier routing"
+  - "Workflow selection and execution planning"
+  - "Subagent dispatch and swarm coordination"
+  - "Handoff contract enforcement"
+  - "Escalation initiation to council when needed"
+  - "Global execution trace continuity"
+
+interfaces:
+  inputs:
+    - "normalized_task"
+    - "task_context"
+    - "user_constraints"
+    - "workspace_state"
+  outputs:
+    - "execution_plan"
+    - "selected_role"
+    - "routing_decision"
+    - "handoff_package"
+    - "escalation_packet"
+
+dependencies:
+  - "configs/orchestrator/router.yaml"
+  - "configs/orchestrator/models.yaml"
+  - "configs/orchestrator/role_contracts/"
+  - "repos/packages/agent-os/src/agent_os/model_router.py"
+  - "repos/packages/agent-os/src/agent_os/contracts.py"
+
+forbidden_from:
+  - "Direct file modifications without explicit routed ownership"
+  - "Bypassing quality gates"
+  - "Returning final technical implementation without specialist handoff when required"
+  - "Ignoring unresolved ambiguity in C3+ tasks"
+
+handoff_triggers:
+  - condition: "Task complexity in ['C1','C2'] and work is procedural"
+    target: "routine_worker"
+  - condition: "Implementation or code modification required"
+    target: "engineer"
+  - condition: "System design or tradeoff decision required"
+    target: "architect"
+  - condition: "UX, visual system, interaction design, or presentation quality required"
+    target: "design_lead"
+  - condition: "Validation, audit, critique, or acceptance required"
+    target: "reviewer"
+  - condition: "Conflict across roles, high uncertainty, or strategic deadlock"
+    target: "council"
+
+escalation_path: "council"
+
+constraints:
+  token_budget: 50000
+  max_tool_calls: 50
+  max_files_modified: 0
+  requires_trace: true
+  requires_handoff_packet: true
+  requires_decision_log: true
+
+quality_gates:
+  - "Task correctly classified"
+  - "Appropriate workflow selected"
+  - "Role selection justified"
+  - "Model alias resolves correctly"
+  - "Fallback chain available"
+  - "Handoff includes sufficient context"
+  - "Escalation is traceable"
+
+metrics:
+  - "classification_accuracy"
+  - "routing_precision"
+  - "handoff_success_rate"
+  - "escalation_appropriateness"
+  - "token_efficiency"
+
+memory_policy:
+  short_term:
+    write:
+      - "task classification"
+      - "routing rationale"
+      - "execution plan"
+  long_term:
+    write:
+      - "validated workflow pattern"
+      - "effective role-routing precedent"
+  semantic:
+    index:
+      - "task archetype"
+      - "routing outcome"
+      - "failure pattern"
+
+fail_safe:
+  on_contract_missing: "block_execution"
+  on_model_alias_unresolved: "fallback_then_escalate"
+  on_invalid_handoff_target: "escalate_to_council"
+  on_trace_failure: "warn_and_restrict_execution"

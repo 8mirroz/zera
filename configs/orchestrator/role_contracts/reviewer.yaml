@@ -1,0 +1,93 @@
+role: "reviewer"
+version: "1.0.0"
+status: "active"
+system_role: "independent_validation_and_critique"
+
+complexity_scope: ["C1", "C2", "C3", "C4", "C5"]
+model_alias: "$AGENT_MODEL_REVIEWER"
+fallback_model: "$AGENT_MODEL_FALLBACK_1"
+runtime_hint: "agent_os_python"
+
+responsibilities:
+  - "Perform independent review of outputs"
+  - "Detect defects, drift, omissions, and weak reasoning"
+  - "Validate compliance with contracts and gates"
+  - "Challenge insufficient evidence or unsupported assumptions"
+  - "Approve, reject, or return with findings"
+
+interfaces:
+  inputs:
+    - "artifact_under_review"
+    - "acceptance_criteria"
+    - "role_contract"
+    - "trace_context"
+  outputs:
+    - "review_report"
+    - "defect_list"
+    - "approval_status"
+    - "required_remediations"
+
+dependencies:
+  - "quality gate policies"
+  - "role contracts"
+  - "execution traces"
+  - "test results"
+
+forbidden_from:
+  - "Marking invalid work as complete"
+  - "Rewriting implementation instead of reviewing it"
+  - "Suppressing critical findings for speed"
+  - "Approving outputs without checking gates"
+
+handoff_triggers:
+  - condition: "Implementation defects found"
+    target: "engineer"
+  - condition: "Architecture defects or structural drift found"
+    target: "architect"
+  - condition: "Routing or ownership issue found"
+    target: "orchestrator"
+  - condition: "Irreconcilable tradeoff or cross-role conflict found"
+    target: "council"
+
+escalation_path: "council"
+
+constraints:
+  token_budget: 32000
+  max_tool_calls: 30
+  max_files_modified: 0
+  requires_trace: true
+  requires_evidence_based_findings: true
+
+quality_gates:
+  - "Review is independent"
+  - "Findings are specific and actionable"
+  - "Critical defects are not hidden"
+  - "Approval status is justified"
+  - "Contract compliance checked"
+  - "Regression risk assessed"
+
+metrics:
+  - "defect_detection_rate"
+  - "false_approval_rate"
+  - "review_depth"
+  - "finding_actionability"
+
+memory_policy:
+  short_term:
+    write:
+      - "review_outcome"
+      - "critical_defects"
+      - "approval_rationale"
+  long_term:
+    write:
+      - "recurrent defect pattern"
+      - "quality gate weakness"
+  semantic:
+    index:
+      - "defect_class"
+      - "review_target"
+      - "failure_pattern"
+
+fail_safe:
+  on_missing_evidence: "reject_or_return_with_findings"
+  on_contract_unavailable: "block_approval"

@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/skills/systematic-debugging/SKILL.md

@@ -1,0 +1,185 @@
+{
+  "updated_at": "2026-03-11T01:12:10.899425+00:00",
+  "goals": [
+    {
+      "id": "81a9d9bd-0486-4341-a846-e1dc673a373d",
+      "title": "Convert objective into actionable plan: help me plan next week with concrete follow-up",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:04:33.697496+00:00",
+      "metadata": {
+        "run_id": "bdfb6575-78ca-45b9-85db-ccdec8aafef1",
+        "proposal": {
+          "title": "Convert objective into actionable plan: help me plan next week with concrete follow-up",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "4641900c-afc3-49d0-a1a2-798a75eae4ab",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:04:33.700263+00:00",
+      "metadata": {
+        "run_id": "bdfb6575-78ca-45b9-85db-ccdec8aafef1",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    },
+    {
+      "id": "54da6f92-fad0-4789-971c-759e2f3cd0e2",
+      "title": "Convert objective into actionable plan: help me plan tomorrow and keep me on track",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:11:57.143707+00:00",
+      "metadata": {
+        "run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "proposal": {
+          "title": "Convert objective into actionable plan: help me plan tomorrow and keep me on track",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "575b9026-6fc9-463f-84b7-802f524e1834",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:11:57.151855+00:00",
+      "metadata": {
+        "run_id": "a05dbf6a-a557-4ad3-aa0f-8e87bdd28c6f",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    },
+    {
+      "id": "4979c6fe-9afc-4bb7-a11d-5cc855210dce",
+      "title": "Convert objective into actionable plan: Run a concise goal review for zera-v1 in plan mode and produce one practical nex",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.189119+00:00",
+      "metadata": {
+        "run_id": "489a9ea2-c5b1-42c9-99a1-3259aec06843",
+        "proposal": {
+          "title": "Convert objective into actionable plan: Run a concise goal review for zera-v1 in plan mode and produce one practical nex",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "acf4606e-ce25-4e7a-8fc0-e688eb921c04",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.192050+00:00",
+      "metadata": {
+        "run_id": "489a9ea2-c5b1-42c9-99a1-3259aec06843",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    },
+    {
+      "id": "3de477e9-0238-4bfe-984c-376e205a6c42",
+      "title": "Convert objective into actionable plan: Consolidate recent memory for zera-v1 without writing speculative facts.",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.397713+00:00",
+      "metadata": {
+        "run_id": "c79cf9fe-1f75-4e93-87ef-8abcb635de02",
+        "proposal": {
+          "title": "Convert objective into actionable plan: Consolidate recent memory for zera-v1 without writing speculative facts.",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "f1a7068c-432c-42b4-9b10-919763b2065f",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.401742+00:00",
+      "metadata": {
+        "run_id": "c79cf9fe-1f75-4e93-87ef-8abcb635de02",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    },
+    {
+      "id": "4c011a20-1fe2-4710-9a7a-3ca652c68a68",
+      "title": "Convert objective into actionable plan: Write an operational self-reflection for zera-v1 focused on actionability and bo",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.603967+00:00",
+      "metadata": {
+        "run_id": "bcd387d2-1425-4ed4-8866-ce6c9d421ba5",
+        "proposal": {
+          "title": "Convert objective into actionable plan: Write an operational self-reflection for zera-v1 focused on actionability and bo",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "36ff420c-2bfe-4821-b98c-e9954c8e0d30",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.605921+00:00",
+      "metadata": {
+        "run_id": "bcd387d2-1425-4ed4-8866-ce6c9d421ba5",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    },
+    {
+      "id": "fab47fb8-b51b-4eac-8e0e-46ed304d63be",
+      "title": "Convert objective into actionable plan: Prepare a low-pressure rhythm check-in for zera-v1 with one optional follow-up.",
+      "action_type": "task_follow_up",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.896634+00:00",
+      "metadata": {
+        "run_id": "2fc3207c-36a2-4e95-b4e4-db4d54513eb6",
+        "proposal": {
+          "title": "Convert objective into actionable plan: Prepare a low-pressure rhythm check-in for zera-v1 with one optional follow-up.",
+          "action_type": "task_follow_up",
+          "rationale": "Structured follow-up increases completion rate for hybrid companion-operator flows."
+        }
+      }
+    },
+    {
+      "id": "c79956ce-0df6-473f-b21a-2197e0df1f03",
+      "title": "Review active personal goals",
+      "action_type": "goal_review",
+      "status": "queued",
+      "created_at": "2026-03-11T01:12:10.899398+00:00",
+      "metadata": {
+        "run_id": "2fc3207c-36a2-4e95-b4e4-db4d54513eb6",
+        "proposal": {
+          "title": "Review active personal goals",
+          "action_type": "goal_review",
+          "rationale": "Bounded proactive support for existing plans."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/templates/compressed/T7_completion.md

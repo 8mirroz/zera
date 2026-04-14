@@ -1,16 +1,38 @@
 {
   "insights": [
     {
-      "timestamp": "2026-04-14T06:13:45.650335+00:00",
+      "timestamp": "2026-04-11T19:07:58.091414+00:00",
       "cycle_number": 2,
       "loop_algorithm": "rsi",
       "candidate_class": "research_target",
       "score": 0.499,
       "status": "approved",
-      "reward": 0.6495,
+      "reward": 0.7495,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-11T19:10:28.407569+00:00",
+      "cycle_number": 3,
+      "loop_algorithm": "darwin-goedel",
+      "candidate_class": "research_target",
+      "score": 0.529,
+      "status": "approved",
+      "reward": 0.7645,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-11T19:15:24.434923+00:00",
+      "cycle_number": 4,
+      "loop_algorithm": "pantheon",
+      "candidate_class": "research_target",
+      "score": 0.529,
+      "status": "approved",
+      "reward": 0.7645,
       "next_focus": "workflow_optimization",
       "risk_hint": "stable"
     }
   ],
-  "updated_at": "2026-04-14T06:13:45.650345+00:00"
+  "updated_at": "2026-04-11T19:15:24.434928+00:00"
 }

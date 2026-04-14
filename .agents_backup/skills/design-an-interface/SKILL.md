@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/skills/design-an-interface/SKILL.md

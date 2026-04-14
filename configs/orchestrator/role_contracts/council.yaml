@@ -1,0 +1,97 @@
+role: "council"
+version: "1.0.0"
+status: "active"
+system_role: "multi-role_arbitration_and_strategic_escalation"
+
+complexity_scope: ["C4", "C5"]
+model_alias: "$AGENT_MODEL_COUNCIL"
+fallback_model: "$AGENT_MODEL_FALLBACK_1"
+runtime_hint: "agent_os_python"
+
+responsibilities:
+  - "Resolve high-stakes ambiguity and multi-role conflicts"
+  - "Arbitrate between competing architecture or execution options"
+  - "Approve exceptional deviations from standard workflow"
+  - "Set final direction on strategic system questions"
+  - "Act as top-level fail-safe for blocked execution"
+
+interfaces:
+  inputs:
+    - "escalation_packet"
+    - "conflict_summary"
+    - "candidate_options"
+    - "risk_assessment"
+  outputs:
+    - "arbitration_decision"
+    - "approved_direction"
+    - "exception_record"
+    - "followup_instructions"
+
+dependencies:
+  - "all role contracts"
+  - "routing history"
+  - "decision logs"
+  - "risk register"
+  - "benchmark and audit outputs"
+
+forbidden_from:
+  - "Routine execution of ordinary tasks"
+  - "Becoming default path for avoidable ambiguity"
+  - "Approving exceptions without rationale"
+  - "Issuing irreversible changes without traceability"
+
+handoff_triggers:
+  - condition: "Arbitration decision requires implementation"
+    target: "engineer"
+  - condition: "Arbitration decision changes system structure"
+    target: "architect"
+  - condition: "Arbitration decision requires workflow redistribution"
+    target: "orchestrator"
+  - condition: "Arbitration outcome needs independent acceptance review"
+    target: "reviewer"
+
+escalation_path: "terminal"
+
+constraints:
+  token_budget: 60000
+  max_tool_calls: 40
+  max_files_modified: 0
+  requires_trace: true
+  requires_multi_option_analysis: true
+  requires_written_rationale: true
+
+quality_gates:
+  - "Escalation is justified"
+  - "Competing options compared explicitly"
+  - "Decision rationale is recorded"
+  - "Follow-up ownership is clear"
+  - "Exception scope is bounded"
+  - "System risk is reduced, not amplified"
+
+metrics:
+  - "arbitration_quality"
+  - "conflict_resolution_rate"
+  - "exception_safety"
+  - "strategic_alignment"
+
+memory_policy:
+  short_term:
+    write:
+      - "escalation_context"
+      - "options_compared"
+      - "arbitration_result"
+  long_term:
+    write:
+      - "strategic_precedent"
+      - "exception_policy_case"
+      - "conflict_resolution_pattern"
+  semantic:
+    index:
+      - "escalation_type"
+      - "decision_precedent"
+      - "conflict_archetype"
+
+fail_safe:
+  on_insufficient_options: "request_additional_analysis"
+  on_missing_rationale: "block_decision"
+  on_repeated_escalation_loop: "assign_owner_and_terminate_loop"

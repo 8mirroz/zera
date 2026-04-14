@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -129,9 +130,54 @@ class UnifiedRouter(ModelRouter):
 
     Reads from configs/orchestrator/router.yaml (sole source of truth).
     Provides simplified escalation and task mapping.
+    Includes role contract enforcement via RoleContractLoader.
     """
 
     _V4_COMPLEXITIES = {"C1", "C2", "C3", "C4", "C5"}
+
+    # Role contract loader (lazy-initialized)
+    _role_loader = None
+
+    def _get_role_loader(self):
+        """Lazy initialization of role contract loader."""
+        if self._role_loader is None and self.repo_root:
+            from .role_contract_loader import RoleContractLoader
+            contracts_dir = self.repo_root / "configs/orchestrator/role_contracts"
+            models_path = self.repo_root / "configs/orchestrator/models.yaml"
+            loader = RoleContractLoader(contracts_dir, models_path)
+            loader.load_all()
+            type(self)._role_loader = loader
+        return self._role_loader
+
+    @staticmethod
+    def _resolve_role_for_complexity(complexity: str, loader) -> str | None:
+        """Determine primary role for a given complexity tier.
+
+        Priority order based on tier:
+        - C1: routine_worker
+        - C2: engineer (if implementation) or routine_worker (if procedural)
+        - C3: engineer
+        - C4: architect
+        - C5: council
+        """
+        if loader is None:
+            return None
+
+        role_priority = {
+            "C1": ["routine_worker", "orchestrator"],
+            "C2": ["engineer", "routine_worker", "design_lead"],
+            "C3": ["engineer", "architect"],
+            "C4": ["architect", "engineer"],
+            "C5": ["council", "architect"],
+        }
+
+        candidates = role_priority.get(complexity, ["orchestrator"])
+        for role_name in candidates:
+            contract = loader.contracts.get(role_name)
+            if contract and complexity in contract.get("complexity_scope", []):
+                return role_name
+
+        return None
 
     @staticmethod
     def _read_yaml_mapping(path: Path) -> dict[str, Any]:
@@ -409,6 +455,28 @@ class UnifiedRouter(ModelRouter):
             "orchestrator_model": tier_row.get("orchestrator_model"),
         }
 
+        # --- Resolve role contract metadata ---
+        role_loader = self._get_role_loader()
+        active_role = self._resolve_role_for_complexity(complexity, role_loader)
+        role_contract = None
+        role_constraints = {}
+        role_quality_gates = []
+        role_handoff_policy = []
+        role_forbidden_actions = []
+
+        if role_loader and active_role:
+            raw_contract = role_loader.contracts.get(active_role)
+            if raw_contract:
+                # Strip internal metadata keys for serialization
+                role_contract = {
+                    k: v for k, v in raw_contract.items()
+                    if not k.startswith("_")
+                }
+                role_constraints = raw_contract.get("constraints", {})
+                role_quality_gates = raw_contract.get("quality_gates", [])
+                role_handoff_policy = raw_contract.get("handoff_triggers", [])
+                role_forbidden_actions = raw_contract.get("forbidden_from", [])
+
         # --- trace: model selection + route decision end ---
         elapsed_ms = (time.perf_counter() - t_start) * 1000
         _get_emitter().task_end(
@@ -420,6 +488,7 @@ class UnifiedRouter(ModelRouter):
             reason=route_reason,
             fallback_chain=fallback_chain,
             orchestration_path=orchestration_path,
+            active_role=active_role,
         )
         # --- end trace ---
 
@@ -436,6 +505,12 @@ class UnifiedRouter(ModelRouter):
             "routing_source": "v4",
             "orchestration_path": orchestration_path,
             "max_tools": max_tools,
+            "active_role": active_role,
+            "role_contract": role_contract,
+            "role_constraints": role_constraints,
+            "role_quality_gates": role_quality_gates,
+            "role_handoff_policy": role_handoff_policy,
+            "role_forbidden_actions": role_forbidden_actions,
             "telemetry": {
                 "router_mode": str(providers_json.get("router_mode_default") or "hybrid"),
                 "fallback_depth": 0,
@@ -455,6 +530,7 @@ class UnifiedRouter(ModelRouter):
                 "v4_role_models": role_models_payload,
                 "transport_preference": transport_preference,
                 "execution_channel": str(context.get("execution_channel") or "") or None,
+                "active_role": active_role,
             },
             "escalation": {
                 "escalated_tier": complexity,

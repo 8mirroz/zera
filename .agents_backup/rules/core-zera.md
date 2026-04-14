@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/rules/core-zera.md

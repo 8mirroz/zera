@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/templates/compressed/T4_thinking_req.md

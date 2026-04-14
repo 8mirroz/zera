@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/skills/telegram-miniapp/SKILL.md

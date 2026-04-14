@@ -1,0 +1,1 @@
+/Users/user/zera/.agents/templates/compressed/T2_constraint_spec.md

@@ -1,9 +1,252 @@
 {
-  "generated_at": "2026-04-14T06:01:29.313804+00:00",
+  "generated_at": "2026-03-11T02:15:34.858486+00:00",
   "repos_count": 14,
   "records": [
     {
-      "repo_id": "repo::pkg::agent-os",
+      "repo_id": "repo::skills::antigravity-skills",
+      "domain": "skills",
+      "domain_code": "sk",
+      "slug": "antigravity-skills",
+      "display_name": "antigravity-skills",
+      "path": "repos/skills/antigravity-skills",
+      "stable_key": "repo_catalog:repo:skills:antigravity-skills",
+      "aliases": {
+        "path_alias": "r/sk/antigravity-skills",
+        "compact_alias": "sk:ask",
+        "initials_alias": "sk:as",
+        "all": [
+          "r/sk/antigravity-skills",
+          "sk:ask",
+          "sk:as",
+          "sk:antski",
+          "sk-antigravity-skills"
+        ]
+      },
+      "signals": {
+        "has_git": true,
+        "has_readme": true,
+        "has_scripts": true,
+        "has_skills": true,
+        "has_assets": false,
+        "has_src": false,
+        "tech_markers": [
+          "package.json"
+        ],
+        "top_file_count": 11,
+        "top_dir_count": 6
+      },
+      "scores": {
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ],
+      "updated_at": "2026-03-11T02:15:34.854287+00:00"
+    },
+    {
+      "repo_id": "repo::skills::huggingface-skills",
+      "domain": "skills",
+      "domain_code": "sk",
+      "slug": "huggingface-skills",
+      "display_name": "huggingface-skills",
+      "path": "repos/skills/huggingface-skills",
+      "stable_key": "repo_catalog:repo:skills:huggingface-skills",
+      "aliases": {
+        "path_alias": "r/sk/huggingface-skills",
+        "compact_alias": "sk:hsk",
+        "initials_alias": "sk:hs",
+        "all": [
+          "r/sk/huggingface-skills",
+          "sk:hsk",
+          "sk:hs",
+          "sk:hugski",
+          "sk-huggingface-skills"
+        ]
+      },
+      "signals": {
+        "has_git": true,
+        "has_readme": true,
+        "has_scripts": true,
+        "has_skills": true,
+        "has_assets": true,
+        "has_src": false,
+        "tech_markers": [],
+        "top_file_count": 5,
+        "top_dir_count": 10
+      },
+      "scores": {
+        "speed_free_score": 75,
+        "navigation_priority": 65,
+        "reuse_priority": 80
+      },
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ],
+      "updated_at": "2026-03-11T02:15:34.856884+00:00"
+    },
+    {
+      "repo_id": "repo::skills::antigravity-awesome-skills",
+      "domain": "skills",
+      "domain_code": "sk",
+      "slug": "antigravity-awesome-skills",
+      "display_name": "antigravity-awesome-skills",
+      "path": "repos/skills/antigravity-awesome-skills",
+      "stable_key": "repo_catalog:repo:skills:antigravity-awesome-skills",
+      "aliases": {
+        "path_alias": "r/sk/antigravity-awesome-skills",
+        "compact_alias": "sk:aas",
+        "initials_alias": "sk:aas",
+        "all": [
+          "r/sk/antigravity-awesome-skills",
+          "sk:aas",
+          "sk:antaweski",
+          "sk-antigravity-awesom"
+        ]
+      },
+      "signals": {
+        "has_git": true,
+        "has_readme": true,
+        "has_scripts": true,
+        "has_skills": true,
+        "has_assets": true,
+        "has_src": false,
+        "tech_markers": [
+          "package.json"
+        ],
+        "top_file_count": 11,
+        "top_dir_count": 9
+      },
+      "scores": {
+        "speed_free_score": 75,
+        "navigation_priority": 55,
+        "reuse_priority": 80
+      },
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "sk",
+        "skills"
+      ],
+      "updated_at": "2026-03-11T02:15:34.851369+00:00"
+    },
+    {
+      "repo_id": "repo::workflows::antigravity-workflow-system",
+      "domain": "workflows",
+      "domain_code": "wf",
+      "slug": "antigravity-workflow-system",
+      "display_name": "Antigravity-Workflow-System",
+      "path": "repos/workflows/Antigravity-Workflow-System",
+      "stable_key": "repo_catalog:repo:workflows:antigravity-workflow-system",
+      "aliases": {
+        "path_alias": "r/wf/antigravity-workflow-system",
+        "compact_alias": "wf:aws",
+        "initials_alias": "wf:aws",
+        "all": [
+          "r/wf/antigravity-workflow-system",
+          "wf:aws",
+          "wf:antworsys",
+          "wf-antigravity-workfl"
+        ]
+      },
+      "signals": {
+        "has_git": true,
+        "has_readme": true,
+        "has_scripts": false,
+        "has_skills": false,
+        "has_assets": true,
+        "has_src": false,
+        "tech_markers": [],
+        "top_file_count": 4,
+        "top_dir_count": 3
+      },
+      "scores": {
+        "speed_free_score": 65,
+        "navigation_priority": 65,
+        "reuse_priority": 55
+      },
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "repo-catalog",
+        "wf",
+        "workflows"
+      ],
+      "updated_at": "2026-03-11T02:15:34.858173+00:00"
+    },
+    {
+      "repo_id": "repo::mcp::servers",
+      "domain": "mcp",
+      "domain_code": "mcp",
+      "slug": "servers",
+      "display_name": "servers",
+      "path": "repos/mcp/servers",
+      "stable_key": "repo_catalog:repo:mcp:servers",
+      "aliases": {
+        "path_alias": "r/mcp/servers",
+        "compact_alias": "mcp:srv",
+        "initials_alias": "mcp:s",
+        "all": [
+          "r/mcp/servers",
+          "mcp:srv",
+          "mcp:s",
+          "mcp:ser",
+          "mcp-servers"
+        ]
+      },
+      "signals": {
+        "has_git": true,
+        "has_readme": true,
+        "has_scripts": true,
+        "has_skills": false,
+        "has_assets": false,
+        "has_src": true,
+        "tech_markers": [
+          "package.json",
+          "tsconfig.json"
+        ],
+        "top_file_count": 12,
+        "top_dir_count": 5
+      },
+      "scores": {
+        "speed_free_score": 60,
+        "navigation_priority": 60,
+        "reuse_priority": 75
+      },
+      "tags": [
+        "fast-free-priority",
+        "git",
+        "likely-oss",
+        "mcp",
+        "package.json",
+        "repo-catalog",
+        "scripts",
+        "src",
+        "tsconfig.json"
+      ],
+      "updated_at": "2026-03-11T02:15:34.840647+00:00"
+    },
+    {
+      "repo_id": "repo::packages::agent-os",
       "domain": "packages",
       "domain_code": "pkg",
       "slug": "agent-os",
@@ -29,25 +272,19 @@
         "has_skills": false,
         "has_assets": false,
         "has_src": true,
-        "has_tests": true,
         "tech_markers": [
           "pyproject.toml",
           "requirements.txt"
         ],
-        "tech_stack": [
-          "python"
-        ],
-        "top_file_count": 12,
-        "top_dir_count": 10,
-        "complexity_tier": "C3"
+        "top_file_count": 9,
+        "top_dir_count": 7
       },
       "scores": {
-        "speed_free_score": 70,
+        "speed_free_score": 55,
         "navigation_priority": 65,
-        "reuse_priority": 85
+        "reuse_priority": 75
       },
       "tags": [
-        "fast-free-priority",
         "packages",
         "pkg",
         "pyproject.toml",
@@ -56,13 +293,10 @@
         "scripts",
         "src"
       ],
-      "tech_stack": [
-        "python"
-      ],
-      "updated_at": "2026-04-14T06:01:29.284812+00:00"
+      "updated_at": "2026-03-11T02:15:34.842430+00:00"
     },
     {
-      "repo_id": "repo::pkg::design-system",
+      "repo_id": "repo::packages::design-system",
       "domain": "packages",
       "domain_code": "pkg",
       "slug": "design-system",
@@ -88,24 +322,18 @@
         "has_skills": false,
         "has_assets": false,
         "has_src": true,
-        "has_tests": true,
         "tech_markers": [
           "pyproject.toml"
         ],
-        "tech_stack": [
-          "python"
-        ],
-        "top_file_count": 5,
-        "top_dir_count": 10,
-        "complexity_tier": "C2"
+        "top_file_count": 4,
+        "top_dir_count": 10
       },
       "scores": {
-        "speed_free_score": 70,
+        "speed_free_score": 55,
         "navigation_priority": 65,
-        "reuse_priority": 85
+        "reuse_priority": 75
       },
       "tags": [
-        "fast-free-priority",
         "packages",
         "pkg",
         "pyproject.toml",
@@ -113,206 +341,10 @@
         "scripts",
         "src"
       ],
-      "tech_stack": [
-        "python"
-      ],
-      "updated_at": "2026-04-14T06:01:29.285092+00:00"
+      "updated_at": "2026-03-11T02:15:34.843716+00:00"
     },
     {
-      "repo_id": "repo::pkg::telegram-runtime-ops",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-runtime-ops",
-      "display_name": "telegram-runtime-ops",
-      "path": "repos/packages/telegram-runtime-ops",
-      "stable_key": "repo_catalog:repo:packages:telegram-runtime-ops",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-runtime-ops",
-        "compact_alias": "pkg:tro",
-        "initials_alias": "pkg:tro",
-        "all": [
-          "r/pkg/telegram-runtime-ops",
-          "pkg:tro",
-          "pkg:telrunops",
-          "pkg-telegram-runtime-o"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": true,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [],
-        "tech_stack": [],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 70,
-        "navigation_priority": 75,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "fast-free-priority",
-        "packages",
-        "pkg",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [],
-      "updated_at": "2026-04-14T06:01:29.287552+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::telegram-observability",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-observability",
-      "display_name": "telegram-observability",
-      "path": "repos/packages/telegram-observability",
-      "stable_key": "repo_catalog:repo:packages:telegram-observability",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-observability",
-        "compact_alias": "pkg:tob",
-        "initials_alias": "pkg:to",
-        "all": [
-          "r/pkg/telegram-observability",
-          "pkg:tob",
-          "pkg:to",
-          "pkg:telobs",
-          "pkg-telegram-observabi"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": true,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [],
-        "tech_stack": [],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 70,
-        "navigation_priority": 65,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "fast-free-priority",
-        "packages",
-        "pkg",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [],
-      "updated_at": "2026-04-14T06:01:29.286886+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::telegram-payment-ledger",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-payment-ledger",
-      "display_name": "telegram-payment-ledger",
-      "path": "repos/packages/telegram-payment-ledger",
-      "stable_key": "repo_catalog:repo:packages:telegram-payment-ledger",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-payment-ledger",
-        "compact_alias": "pkg:tpl",
-        "initials_alias": "pkg:tpl",
-        "all": [
-          "r/pkg/telegram-payment-ledger",
-          "pkg:tpl",
-          "pkg:telpayled",
-          "pkg-telegram-payment-l"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": true,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [],
-        "tech_stack": [],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 70,
-        "navigation_priority": 65,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "fast-free-priority",
-        "packages",
-        "pkg",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [],
-      "updated_at": "2026-04-14T06:01:29.287099+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::telegram-provider-mocks",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-provider-mocks",
-      "display_name": "telegram-provider-mocks",
-      "path": "repos/packages/telegram-provider-mocks",
-      "stable_key": "repo_catalog:repo:packages:telegram-provider-mocks",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-provider-mocks",
-        "compact_alias": "pkg:tpm",
-        "initials_alias": "pkg:tpm",
-        "all": [
-          "r/pkg/telegram-provider-mocks",
-          "pkg:tpm",
-          "pkg:telpromoc",
-          "pkg-telegram-provider"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": true,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [],
-        "tech_stack": [],
-        "top_file_count": 1,
-        "top_dir_count": 3,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 70,
-        "navigation_priority": 65,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "fast-free-priority",
-        "packages",
-        "pkg",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [],
-      "updated_at": "2026-04-14T06:01:29.287407+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::mcp-profile-manager",
+      "repo_id": "repo::packages::mcp-profile-manager",
       "domain": "packages",
       "domain_code": "pkg",
       "slug": "mcp-profile-manager",
@@ -337,26 +369,19 @@
         "has_skills": false,
         "has_assets": false,
         "has_src": true,
-        "has_tests": false,
         "tech_markers": [
           "package.json",
           "tsconfig.json"
         ],
-        "tech_stack": [
-          "javascript",
-          "typescript"
-        ],
-        "top_file_count": 4,
-        "top_dir_count": 1,
-        "complexity_tier": "C1"
+        "top_file_count": 3,
+        "top_dir_count": 1
       },
       "scores": {
-        "speed_free_score": 60,
+        "speed_free_score": 55,
         "navigation_priority": 75,
         "reuse_priority": 65
       },
       "tags": [
-        "fast-free-priority",
         "package.json",
         "packages",
         "pkg",
@@ -364,30 +389,25 @@
         "src",
         "tsconfig.json"
       ],
-      "tech_stack": [
-        "javascript",
-        "typescript"
-      ],
-      "updated_at": "2026-04-14T06:01:29.285253+00:00"
+      "updated_at": "2026-03-11T02:15:34.847137+00:00"
     },
     {
-      "repo_id": "repo::pkg::telegram-contracts",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-contracts",
-      "display_name": "telegram-contracts",
-      "path": "repos/packages/telegram-contracts",
-      "stable_key": "repo_catalog:repo:packages:telegram-contracts",
+      "repo_id": "repo::mcp::awesome-mcp-servers",
+      "domain": "mcp",
+      "domain_code": "mcp",
+      "slug": "awesome-mcp-servers",
+      "display_name": "awesome-mcp-servers",
+      "path": "repos/mcp/awesome-mcp-servers",
+      "stable_key": "repo_catalog:repo:mcp:awesome-mcp-servers",
       "aliases": {
-        "path_alias": "r/pkg/telegram-contracts",
-        "compact_alias": "pkg:tcn",
-        "initials_alias": "pkg:tc",
+        "path_alias": "r/mcp/awesome-mcp-servers",
+        "compact_alias": "mcp:ams",
+        "initials_alias": "mcp:ams",
         "all": [
-          "r/pkg/telegram-contracts",
-          "pkg:tcn",
-          "pkg:tc",
-          "pkg:telcon",
-          "pkg-telegram-contracts"
+          "r/mcp/awesome-mcp-servers",
+          "mcp:ams",
+          "mcp:awemcpser",
+          "mcp-awesome-mcp-server"
         ]
       },
       "signals": {
@@ -395,251 +415,25 @@
         "has_readme": true,
         "has_scripts": false,
         "has_skills": false,
-        "has_assets": false,
+        "has_assets": true,
         "has_src": false,
-        "has_tests": false,
         "tech_markers": [],
-        "tech_stack": [],
-        "top_file_count": 1,
-        "top_dir_count": 1,
-        "complexity_tier": "C1"
+        "top_file_count": 3,
+        "top_dir_count": 2
       },
       "scores": {
-        "speed_free_score": 60,
+        "speed_free_score": 50,
         "navigation_priority": 75,
         "reuse_priority": 55
       },
       "tags": [
-        "fast-free-priority",
-        "packages",
-        "pkg",
+        "mcp",
         "repo-catalog"
       ],
-      "tech_stack": [],
-      "updated_at": "2026-04-14T06:01:29.286129+00:00"
+      "updated_at": "2026-03-11T02:15:34.838863+00:00"
     },
     {
-      "repo_id": "repo::pkg::telegram-bot-core-py",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-bot-core-py",
-      "display_name": "telegram-bot-core-py",
-      "path": "repos/packages/telegram-bot-core-py",
-      "stable_key": "repo_catalog:repo:packages:telegram-bot-core-py",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-bot-core-py",
-        "compact_alias": "pkg:tbcp",
-        "initials_alias": "pkg:tbcp",
-        "all": [
-          "r/pkg/telegram-bot-core-py",
-          "pkg:tbcp",
-          "pkg:telbotcor",
-          "pkg-telegram-bot-core"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": false,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [
-          "pyproject.toml"
-        ],
-        "tech_stack": [
-          "python"
-        ],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 55,
-        "navigation_priority": 65,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "packages",
-        "pkg",
-        "pyproject.toml",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [
-        "python"
-      ],
-      "updated_at": "2026-04-14T06:01:29.285672+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::telegram-miniapp-core-ts",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-miniapp-core-ts",
-      "display_name": "telegram-miniapp-core-ts",
-      "path": "repos/packages/telegram-miniapp-core-ts",
-      "stable_key": "repo_catalog:repo:packages:telegram-miniapp-core-ts",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-miniapp-core-ts",
-        "compact_alias": "pkg:tmct",
-        "initials_alias": "pkg:tmct",
-        "all": [
-          "r/pkg/telegram-miniapp-core-ts",
-          "pkg:tmct",
-          "pkg:telmincor",
-          "pkg-telegram-miniapp-c"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": false,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [
-          "package.json"
-        ],
-        "tech_stack": [
-          "javascript"
-        ],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 55,
-        "navigation_priority": 55,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "package.json",
-        "packages",
-        "pkg",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [
-        "javascript"
-      ],
-      "updated_at": "2026-04-14T06:01:29.286351+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::telegram-payments-core",
-      "domain": "packages",
-      "domain_code": "pkg",
-      "slug": "telegram-payments-core",
-      "display_name": "telegram-payments-core",
-      "path": "repos/packages/telegram-payments-core",
-      "stable_key": "repo_catalog:repo:packages:telegram-payments-core",
-      "aliases": {
-        "path_alias": "r/pkg/telegram-payments-core",
-        "compact_alias": "pkg:tpc",
-        "initials_alias": "pkg:tpc",
-        "all": [
-          "r/pkg/telegram-payments-core",
-          "pkg:tpc",
-          "pkg:telpaycor",
-          "pkg-telegram-payments"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": false,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": true,
-        "tech_markers": [
-          "pyproject.toml"
-        ],
-        "tech_stack": [
-          "python"
-        ],
-        "top_file_count": 1,
-        "top_dir_count": 2,
-        "complexity_tier": "C1"
-      },
-      "scores": {
-        "speed_free_score": 55,
-        "navigation_priority": 55,
-        "reuse_priority": 75
-      },
-      "tags": [
-        "packages",
-        "pkg",
-        "pyproject.toml",
-        "repo-catalog",
-        "src"
-      ],
-      "tech_stack": [
-        "python"
-      ],
-      "updated_at": "2026-04-14T06:01:29.287254+00:00"
-    },
-    {
-      "repo_id": "repo::mcp::lightrag",
-      "domain": "mcp",
-      "domain_code": "mcp",
-      "slug": "lightrag",
-      "display_name": "lightrag",
-      "path": "repos/mcp/lightrag",
-      "stable_key": "repo_catalog:repo:mcp:lightrag",
-      "aliases": {
-        "path_alias": "r/mcp/lightrag",
-        "compact_alias": "mcp:lgh",
-        "initials_alias": "mcp:l",
-        "all": [
-          "r/mcp/lightrag",
-          "mcp:lgh",
-          "mcp:l",
-          "mcp:lig",
-          "mcp-lightrag"
-        ]
-      },
-      "signals": {
-        "has_git": false,
-        "has_readme": true,
-        "has_scripts": false,
-        "has_skills": false,
-        "has_assets": false,
-        "has_src": true,
-        "has_tests": false,
-        "tech_markers": [
-          "package.json",
-          "tsconfig.json"
-        ],
-        "tech_stack": [
-          "javascript",
-          "typescript"
-        ],
-        "top_file_count": 7,
-        "top_dir_count": 3,
-        "complexity_tier": "C2"
-      },
-      "scores": {
-        "speed_free_score": 55,
-        "navigation_priority": 70,
-        "reuse_priority": 65
-      },
-      "tags": [
-        "mcp",
-        "package.json",
-        "repo-catalog",
-        "src",
-        "tsconfig.json"
-      ],
-      "tech_stack": [
-        "javascript",
-        "typescript"
-      ],
-      "updated_at": "2026-04-14T06:01:29.284424+00:00"
-    },
-    {
-      "repo_id": "repo::pkg::mcp-context",
+      "repo_id": "repo::packages::mcp-context",
       "domain": "packages",
       "domain_code": "pkg",
       "slug": "mcp-context",
@@ -665,18 +459,12 @@
         "has_skills": false,
         "has_assets": false,
         "has_src": true,
-        "has_tests": false,
         "tech_markers": [
           "package.json",
           "tsconfig.json"
         ],
-        "tech_stack": [
-          "javascript",
-          "typescript"
-        ],
         "top_file_count": 3,
-        "top_dir_count": 3,
-        "complexity_tier": "C2"
+        "top_dir_count": 3
       },
       "scores": {
         "speed_free_score": 45,
@@ -691,65 +479,176 @@
         "src",
         "tsconfig.json"
       ],
-      "tech_stack": [
-        "javascript",
-        "typescript"
-      ],
-      "updated_at": "2026-04-14T06:01:29.285504+00:00"
+      "updated_at": "2026-03-11T02:15:34.848841+00:00"
     },
     {
-      "repo_id": "repo::app::zera-telegram",
-      "domain": "apps",
-      "domain_code": "app",
-      "slug": "zera-telegram",
-      "display_name": "zera-telegram",
-      "path": "repos/apps/zera-telegram",
-      "stable_key": "repo_catalog:repo:apps:zera-telegram",
+      "repo_id": "repo::gsap-public::esm",
+      "domain": "gsap-public",
+      "domain_code": "gsa",
+      "slug": "esm",
+      "display_name": "esm",
+      "path": "repos/gsap-public/esm",
+      "stable_key": "repo_catalog:repo:gsap-public:esm",
       "aliases": {
-        "path_alias": "r/app/zera-telegram",
-        "compact_alias": "app:ztl",
-        "initials_alias": "app:zt",
+        "path_alias": "r/gsa/esm",
+        "compact_alias": "gsa:esm",
+        "initials_alias": "gsa:e",
         "all": [
-          "r/app/zera-telegram",
-          "app:ztl",
-          "app:zt",
-          "app:zertel",
-          "app-zera-telegram"
+          "r/gsa/esm",
+          "gsa:esm",
+          "gsa:e",
+          "gsa-esm"
         ]
       },
       "signals": {
         "has_git": false,
-        "has_readme": true,
+        "has_readme": false,
         "has_scripts": false,
         "has_skills": false,
         "has_assets": false,
         "has_src": false,
-        "has_tests": false,
-        "tech_markers": [
-          "requirements.txt"
-        ],
-        "tech_stack": [
-          "python"
-        ],
-        "top_file_count": 4,
-        "top_dir_count": 2,
-        "complexity_tier": "C2"
+        "tech_markers": [],
+        "top_file_count": 29,
+        "top_dir_count": 1
       },
       "scores": {
-        "speed_free_score": 25,
-        "navigation_priority": 75,
+        "speed_free_score": 0,
+        "navigation_priority": 50,
         "reuse_priority": 30
       },
       "tags": [
-        "app",
-        "apps",
-        "repo-catalog",
-        "requirements.txt"
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
       ],
-      "tech_stack": [
-        "python"
+      "updated_at": "2026-03-11T02:15:34.824739+00:00"
+    },
+    {
+      "repo_id": "repo::gsap-public::minified",
+      "domain": "gsap-public",
+      "domain_code": "gsa",
+      "slug": "minified",
+      "display_name": "minified",
+      "path": "repos/gsap-public/minified",
+      "stable_key": "repo_catalog:repo:gsap-public:minified",
+      "aliases": {
+        "path_alias": "r/gsa/minified",
+        "compact_alias": "gsa:mnf",
+        "initials_alias": "gsa:m",
+        "all": [
+          "r/gsa/minified",
+          "gsa:mnf",
+          "gsa:m",
+          "gsa:min",
+          "gsa-minified"
+        ]
+      },
+      "signals": {
+        "has_git": false,
+        "has_readme": false,
+        "has_scripts": false,
+        "has_skills": false,
+        "has_assets": false,
+        "has_src": false,
+        "tech_markers": [],
+        "top_file_count": 51,
+        "top_dir_count": 0
+      },
+      "scores": {
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
       ],
-      "updated_at": "2026-04-14T06:01:29.283996+00:00"
+      "updated_at": "2026-03-11T02:15:34.830071+00:00"
+    },
+    {
+      "repo_id": "repo::gsap-public::src",
+      "domain": "gsap-public",
+      "domain_code": "gsa",
+      "slug": "src",
+      "display_name": "src",
+      "path": "repos/gsap-public/src",
+      "stable_key": "repo_catalog:repo:gsap-public:src",
+      "aliases": {
+        "path_alias": "r/gsa/src",
+        "compact_alias": "gsa:src",
+        "initials_alias": "gsa:s",
+        "all": [
+          "r/gsa/src",
+          "gsa:src",
+          "gsa:s",
+          "gsa-src"
+        ]
+      },
+      "signals": {
+        "has_git": false,
+        "has_readme": false,
+        "has_scripts": false,
+        "has_skills": false,
+        "has_assets": false,
+        "has_src": false,
+        "tech_markers": [],
+        "top_file_count": 30,
+        "top_dir_count": 1
+      },
+      "scores": {
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ],
+      "updated_at": "2026-03-11T02:15:34.834074+00:00"
+    },
+    {
+      "repo_id": "repo::gsap-public::umd",
+      "domain": "gsap-public",
+      "domain_code": "gsa",
+      "slug": "umd",
+      "display_name": "umd",
+      "path": "repos/gsap-public/umd",
+      "stable_key": "repo_catalog:repo:gsap-public:umd",
+      "aliases": {
+        "path_alias": "r/gsa/umd",
+        "compact_alias": "gsa:umd",
+        "initials_alias": "gsa:u",
+        "all": [
+          "r/gsa/umd",
+          "gsa:umd",
+          "gsa:u",
+          "gsa-umd"
+        ]
+      },
+      "signals": {
+        "has_git": false,
+        "has_readme": false,
+        "has_scripts": false,
+        "has_skills": false,
+        "has_assets": false,
+        "has_src": false,
+        "tech_markers": [],
+        "top_file_count": 27,
+        "top_dir_count": 0
+      },
+      "scores": {
+        "speed_free_score": 0,
+        "navigation_priority": 50,
+        "reuse_priority": 30
+      },
+      "tags": [
+        "gsa",
+        "gsap-public",
+        "repo-catalog"
+      ],
+      "updated_at": "2026-03-11T02:15:34.837727+00:00"
     }
   ]
 }
