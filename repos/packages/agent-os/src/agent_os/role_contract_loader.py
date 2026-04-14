@@ -159,7 +159,12 @@ class AliasResolver:
         return resolved
 
     def resolve(self, alias: str) -> Optional[str]:
-        """Resolve a single alias. Returns raw value if not an alias."""
+        """Resolve a single alias. Returns raw value if not an alias.
+
+        Supports:
+        - $ALIAS references → resolved against models.yaml
+        - omniroute://combo/name → resolved via OmniRoute combo config
+        """
         if not alias:
             return None
 
@@ -167,9 +172,37 @@ class AliasResolver:
         if not raw.startswith("$"):
             return raw
 
+        # Handle omniroute:// URI references
+        if raw.startswith("$MODEL_OMNIRROUTE_"):
+            key = raw[1:]
+            aliases = self.load()
+            value = aliases.get(key)
+            if value and value.startswith("omniroute://"):
+                # Return the combo URI as-is — runtime will handle OmniRoute routing
+                return value
+            # Fallback: if omniroute alias not set, resolve underlying model
+            if value:
+                return self._resolve_chain(value)
+            return raw
+
         key = raw[1:] if raw.startswith("$") else raw
+        return self._resolve_chain(key)
+
+    def _resolve_chain(self, key: str) -> Optional[str]:
+        """Resolve an alias, following $REFERENCES up to 5 levels deep."""
         aliases = self.load()
-        return aliases.get(key)
+        value = aliases.get(key)
+        if not value:
+            return key  # Return as-is if not found
+
+        for _ in range(5):
+            if isinstance(value, str) and value.startswith("$"):
+                next_key = value[1:]
+                value = aliases.get(next_key, value)
+            else:
+                break
+
+        return value
 
 
 # ---------------------------------------------------------------------------

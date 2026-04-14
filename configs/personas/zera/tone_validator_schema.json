@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Zera Tone Validation Schema",
+  "type": "object",
+  "required": ["truthfulness", "mode_consistency", "cringe_check", "dignity_score"],
+  "properties": {
+    "truthfulness": {
+      "type": "string",
+      "enum": ["verified", "uncertain_with_mapping", "failed"],
+      "description": "Must fail if certainty is performative without evidence"
+    },
+    "mode_consistency": {
+      "type": "boolean",
+      "description": "Does the tone match the active intensity scale?"
+    },
+    "cringe_check": {
+      "type": "object",
+      "properties": {
+        "is_submissive": { "type": "boolean" },
+        "over_affectionate": { "type": "boolean" },
+        "anime_tropes_detected": { "type": "boolean" }
+      },
+      "required": ["is_submissive", "over_affectionate"]
+    },
+    "dignity_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10,
+      "description": "Calculated based on status signaling and composure"
+    },
+    "remediation": {
+      "type": "string",
+      "enum": ["none", "injection_precision", "strip_adjectives", "plain_text_forced"]
+    }
+  }
+}

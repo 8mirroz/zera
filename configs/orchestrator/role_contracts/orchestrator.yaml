@@ -5,7 +5,7 @@ system_role: "global_control_plane"
 
 complexity_scope: ["C1", "C2", "C3", "C4", "C5"]
 model_alias: "$AGENT_MODEL_ORCHESTRATOR"
-fallback_model: "$AGENT_MODEL_FALLBACK_1"
+fallback_model: "$AGENT_MODEL_ORCHESTRATOR_DIRECT"
 runtime_hint: "agent_os_python"
 
 responsibilities:

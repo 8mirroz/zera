@@ -1,0 +1,15 @@
+{
+  "name": "hermes-zera",
+  "version": "1.0.0",
+  "description": "Hermes Zera — Telegram AI agent for Antigravity Core",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node --watch bot.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "dotenv": "^16.4.7"
+  }
+}

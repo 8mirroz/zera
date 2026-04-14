@@ -1,0 +1,379 @@
+# Tool Permissions Registry
+# Version: 1.0
+# Explicit permissions per role with approval requirements
+
+version: "1.0"
+
+tool_registry:
+
+  # =============================================================================
+  # Read-Only Tools (Safe, Always Allowed)
+  # =============================================================================
+  retrieval:
+    category: read_only
+    risk_level: 0
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - architect
+      - design_lead
+      - council
+      - routine_worker
+    description: "Memory retrieval, file reading, search"
+
+  observe:
+    category: read_only
+    risk_level: 1
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - architect
+      - design_lead
+      - council
+      - routine_worker
+    description: "Classification, observation, analysis"
+
+  note_reading:
+    category: read_only
+    risk_level: 1
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - architect
+      - design_lead
+      - council
+    description: "Reading notes from vault/memory"
+
+  # =============================================================================
+  # Internal Write Tools (Low Risk, No External Effect)
+  # =============================================================================
+  memory_consolidation:
+    category: internal_write
+    risk_level: 2
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - architect
+      - routine_worker
+    description: "Memory consolidation, deduplication"
+    max_frequency_per_hour: 10
+
+  note_writing:
+    category: internal_write
+    risk_level: 2
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - architect
+      - design_lead
+    description: "Writing notes to vault, memory updates"
+    max_frequency_per_hour: 20
+
+  summarization:
+    category: internal_write
+    risk_level: 1
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - routine_worker
+    description: "Content summarization, extraction"
+
+  planning:
+    category: internal_write
+    risk_level: 2
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - architect
+      - design_lead
+    description: "Plan generation, task decomposition"
+
+  tagging:
+    category: internal_write
+    risk_level: 1
+    approval_required: false
+    roles:
+      - orchestrator
+      - engineer
+      - reviewer
+      - routine_worker
+    description: "Adding tags, categorization"
+
+  # =============================================================================
+  # Branch/Repository Tools (Medium Risk)
+  # =============================================================================
+  branch_creation:
+    category: repository
+    risk_level: 3
+    approval_required: false
+    roles:
+      - engineer
+      - orchestrator
+    description: "Creating git branches"
+    max_daily: 20
+    naming_pattern_required: true
+
+  branch_deletion:
+    category: repository
+    risk_level: 4
+    approval_required: true
+    roles:
+      - engineer
+    description: "Deleting git branches"
+    require_force_flag: true
+    require_confirmation: true
+
+  file_edit:
+    category: repository
+    risk_level: 3
+    approval_required: false
+    roles:
+      - engineer
+      - orchestrator
+    description: "Editing files in allowed directories"
+    allowed_directories:
+      - repos/
+      - configs/
+      - scripts/
+      - .agent/
+    forbidden_directories:
+      - ".env"
+      - "**/*.env"
+      - "credentials/"
+      - "secrets/"
+
+  file_create:
+    category: repository
+    risk_level: 3
+    approval_required: false
+    roles:
+      - engineer
+      - orchestrator
+    description: "Creating new files"
+    allowed_directories:
+      - repos/
+      - configs/
+      - scripts/
+      - .agent/
+      - docs/
+
+  file_delete:
+    category: repository
+    risk_level: 4
+    approval_required: true
+    roles:
+      - engineer
+    description: "Deleting files"
+    require_confirmation: true
+    forbid_patterns:
+      - "**/*.log"
+      - "**/node_modules/**"
+      - "**/.git/**"
+
+  # =============================================================================
+  # Execution Tools (Medium Risk)
+  # =============================================================================
+  command_execution:
+    category: execution
+    risk_level: 3
+    approval_required: false
+    roles:
+      - engineer
+      - orchestrator
+    description: "Running shell commands"
+    allowed_commands:
+      - git status
+      - git diff
+      - git log
+      - npm install
+      - npm run
+      - python3
+      - pip install
+      - cargo
+    forbidden_commands:
+      - rm -rf /
+      - dd
+      - mkfs
+      - :(){ :|:& };:
+      - curl | sh
+      - wget | sh
+
+  test_execution:
+    category: execution
+    risk_level: 2
+    approval_required: false
+    roles:
+      - engineer
+    description: "Running tests"
+    allowed_frameworks:
+      - pytest
+      - vitest
+      - jest
+      - unittest
+
+  build_execution:
+    category: execution
+    risk_level: 3
+    approval_required: false
+    roles:
+      - engineer
+    description: "Running build commands"
+    timeout_seconds: 300
+
+  # =============================================================================
+  # Browser/Desktop Tools (High Risk - Gated)
+  # =============================================================================
+  browser_observation:
+    category: browser
+    risk_level: 4
+    approval_required: true
+    roles:
+      - engineer
+      - reviewer
+    description: "Browser observation, DOM inspection"
+    sandbox_only: true
+    allowed_domains: []
+
+  browser_action:
+    category: browser
+    risk_level: 5
+    approval_required: true
+    roles:
+      - engineer
+    description: "Browser actions, clicks, forms"
+    sandbox_only: true
+    max_actions_per_session: 50
+
+  # =============================================================================
+  # External/Gated Tools (High Risk)
+  # =============================================================================
+  external_api_call:
+    category: external
+    risk_level: 5
+    approval_required: true
+    roles:
+      - engineer
+    description: "External API calls"
+    sandbox_only: true
+    allowed_endpoints: []
+
+  web_publish:
+    category: external
+    risk_level: 5
+    approval_required: true
+    roles: []
+    description: "Publishing to web"
+
+  outbound_message:
+    category: external
+    risk_level: 5
+    approval_required: true
+    roles: []
+    description: "Sending messages externally"
+    never_allow_autonomous: true
+
+  credential_access:
+    category: sensitive
+    risk_level: 5
+    approval_required: true
+    roles: []
+    description: "Accessing credentials/secrets"
+    never_allow_autonomous: true
+    audit_required: true
+
+  # =============================================================================
+  # CRM/External Systems (Medium-High Risk)
+  # =============================================================================
+  crm_read:
+    category: external_systems
+    risk_level: 3
+    approval_required: false
+    roles:
+      - orchestrator
+      - routine_worker
+    description: "Reading CRM data"
+
+  crm_write_non_sensitive:
+    category: external_systems
+    risk_level: 3
+    approval_required: false
+    roles:
+      - orchestrator
+    description: "Writing non-sensitive CRM data"
+
+  crm_write_sensitive:
+    category: external_systems
+    risk_level: 5
+    approval_required: true
+    roles:
+      - orchestrator
+    description: "Writing sensitive CRM data"
+
+  # =============================================================================
+  # Never Autonomous (System Level)
+  # =============================================================================
+  system_change:
+    category: system
+    risk_level: 5
+    approval_required: true
+    roles: []
+    description: "System-level changes"
+    never_allow_autonomous: true
+
+  financial_transaction:
+    category: sensitive
+    risk_level: 5
+    approval_required: true
+    roles: []
+    description: "Financial transactions"
+    never_allow_autonomous: true
+
+  destructive_change:
+    category: system
+    risk_level: 5
+    approval_required: true
+    roles:
+      - engineer
+    description: "Destructive changes"
+    never_allow_autonomous: true
+    audit_required: true
+
+# =============================================================================
+# Global Tool Policies
+# =============================================================================
+
+global_policies:
+  rate_limits:
+    enabled: true
+    max_tools_per_task: 50
+    max_concurrent_tools: 5
+
+  audit_logging:
+    enabled: true
+    log_all: true
+    log_approval_requests: true
+    log_denials: true
+    log_failures: true
+
+  emergency_stop:
+    enabled: true
+    max_consecutive_failures: 3
+    auto_stop_on_critical_failure: true
+
+  tool_chaining:
+    max_chain_length: 10
+    require_approval_on_chain: true
+    approval_threshold: 5

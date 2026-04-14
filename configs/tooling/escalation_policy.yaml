@@ -1,0 +1,182 @@
+# Escalation Policy
+# Version: 1.0
+# Defines when and how to escalate to higher authority
+
+version: "1.0"
+
+escalation_triggers:
+
+  confidence_triggers:
+    below_tier_minimum:
+      description: "Task confidence below tier minimum"
+      action: "escalate_to_role"
+      target: "planner"
+      require_replan: true
+
+    significant_drop:
+      description: "Confidence dropped >0.3 in single run"
+      action: "reassess_task"
+      require_new_plan: true
+
+    repeated_low_confidence:
+      count: 3
+      description: "3+ consecutive low confidence tasks"
+      action: "escalate_to_orchestrator"
+      require_review: true
+
+  risk_triggers:
+    high_risk_above_threshold:
+      risk_score_min: 8
+      action: "require_approval"
+      approval_from: "human"
+
+    critical_risk:
+      risk_score_min: 12
+      action: "halt_and_escalate"
+      target: "architect"
+      require_council: false
+
+  budget_triggers:
+    soft_limit_exceeded:
+      action: "notify_operator"
+      allow_continue: true
+
+    hard_limit_exceeded:
+      action: "halt_execution"
+      require_approval: true
+      allow_resume: false
+
+    budget_depleted_with_pending_tasks:
+      action: "escalate_to_orchestrator"
+      require_reprioritization: true
+
+  failure_triggers:
+    repeated_failure:
+      count: 2
+      action: "escalate_to_reviewer"
+      require_analysis: true
+
+    same_failure_three_times:
+      action: "escalate_to_architect"
+      require_root_cause_analysis: true
+
+    critical_test_failure:
+      action: "halt_and_escalate"
+      target: "engineer"
+      allow_continue: false
+
+  complexity_triggers:
+    task_expansion:
+      description: "Task scope expanded beyond original"
+      action: "return_to_orchestrator"
+      require_replan: true
+
+    architecture_decision_needed:
+      action: "escalate_to_architect"
+      require_design_approval: true
+
+    design_implications:
+      action: "escalate_to_design_lead"
+      require_design_review: true
+
+  approval_triggers:
+    approval_denied:
+      action: "log_and_propose_alternative"
+      max_retry_same_approval: 2
+
+    approval_timeout:
+      timeout_minutes: 30
+      action: "escalate_to_orchestrator"
+      allow_fallback: true
+
+escalation_levels:
+
+  level_0_self_recovery:
+    description: "Agent attempts self-recovery"
+    allowed_attempts: 2
+    require_different_strategy: true
+
+  level_1_role_escalation:
+    description: "Escalate within same tier"
+    targets:
+      - planner -> critic
+      - engineer -> reviewer
+      - reviewer -> architect
+
+  level_2_orchestrator_escalation:
+    description: "Escalate to orchestrator"
+    require: "task_reclassification"
+    possible_actions:
+      - reprioritize
+      - reallocate
+      - split_task
+
+  level_3_architect_escalation:
+    description: "Escalate to architect for design decisions"
+    require: "design_review_needed"
+    possible_actions:
+      - design_approval
+      - design_change
+      - architecture_decision
+
+  level_4_council_escalation:
+    description: "Escalate to council for critical decisions"
+    require: "high_stakes_or_security"
+    possible_actions:
+      - strategic_decision
+      - risk_acceptance
+      - full_audit
+
+  level_5_human_escalation:
+    description: "Escalate to human operator"
+    require: "cannot_autonomously_resolve"
+    possible_actions:
+      - approval_request
+      - decision_request
+      - intervention_request
+
+handoff_contracts:
+  required_fields:
+    - task_id
+    - current_status
+    - reason_for_handoff
+    - confidence_at_handoff
+    - risk_at_handoff
+    - attempt_count
+    - attempted_strategies
+
+  optional_fields:
+    - memory_context
+    - partial_output
+    - recommendations
+
+escalation_prevention:
+  pre_escalation_checks:
+    - retry_with_different_strategy
+    - check_budget_availability
+    - verify_memory_retrieval
+    - validate_evidence
+
+escalation_avoidance:
+    enabled: true
+    strategies:
+      - lower_risk_strategy
+      - split_task_strategy
+      - defer_non_critical_strategy
+
+monitoring:
+  log_all_escalations: true
+  track_escalation_reasons: true
+  measure_escalation_rate: true
+  alert_on_high_escalation_rate: true
+  escalation_rate_threshold: 0.15
+
+recovery:
+  on_escalation_success:
+    - update_confidence
+    - log_recovery_pattern
+
+  on_escalation_denied:
+    - propose_safe_alternative
+    - log_denial_reason
+    - attempt_lower_risk_path

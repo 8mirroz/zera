@@ -1,36 +1,69 @@
-# Model Registry — Antigravity Core
-# Version: 4.2
+# Model Registry — Antigrivity Core v4.2
+# Version: 4.3 — OmniRoute Integration Edition
 # Source of truth for all model aliases.
 # All role_contracts and routing configs MUST reference aliases defined here.
 # Never hardcode model strings outside this file.
+#
+# Primary provider: OmniRoute Gateway (http://localhost:20128/v1)
+# OmniRoute combos defined in: configs/orchestrator/omniroute_combos.yaml
+# Fallback: Direct API / OpenRouter when OmniRoute unavailable
+#
 # Hermes profile defaults: synced with ~/.hermes/profiles/*/config.yaml
 
-version: "4.2"
+version: "4.3"
+
+# ============================================================================
+# OMNIRROUTE GATEWAY CONFIGURATION
+# ============================================================================
+omniroute:
+  enabled: true
+  base_url: "http://localhost:20128/v1"
+  timeout_seconds: 60
+  fallback_on_unavailable: true  # Fall back to direct API if OmniRoute down
+  combo_config: "configs/orchestrator/omniroute_combos.yaml"
 
 models:
   # ==========================================
-  # TIERED MODEL SYSTEM (Agent OS v4.2)
+  # TIERED MODEL SYSTEM (Agent OS v4.3)
+  # Models now route through OmniRoute combos.
+  # Aliases reference combo names from omniroute_combos.yaml.
   # ==========================================
 
+  # === OMNIRROUTE COMBO ALIASES ===
+  # Each combo is a fallback chain managed by OmniRoute.
+  # The alias resolves to the first available model in the chain.
+  MODEL_OMNIRROUTE_ORCHESTRATOR: "omniroute://combo/orchestrator"
+  MODEL_OMNIRROUTE_ROUTINE: "omniroute://combo/routine_worker"
+  MODEL_OMNIRROUTE_ENGINEER: "omniroute://combo/engineer"
+  MODEL_OMNIRROUTE_DESIGN: "omniroute://combo/design_lead"
+  MODEL_OMNIRROUTE_REVIEWER: "omniroute://combo/reviewer"
+  MODEL_OMNIRROUTE_ARCHITECT: "omniroute://combo/architect"
+  MODEL_OMNIRROUTE_COUNCIL: "omniroute://combo/council"
+
   # === ARCHITECT (Complex Reasoning / C4-C5) ===
-  MODEL_ARCHITECT_PRIMARY: "deepseek/deepseek-r1:free"
+  MODEL_ARCHITECT_PRIMARY: "deepseek/deepseek-r1-0528:free"
   MODEL_ARCHITECT_STABILITY: "anthropic/claude-3.5-opus"
   MODEL_ARCHITECT_POWER: "openai/gpt-4o"
 
   # === ENGINEER (Coding / C2-C3) ===
-  MODEL_ENGINEER_PRIMARY: "deepseek/deepseek-v3:free"
+  MODEL_ENGINEER_PRIMARY: "qwen/qwen3-coder"
   MODEL_ENGINEER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
   MODEL_ENGINEER_POWER: "openrouter/qwen/qwen2.5-coder-72b-instruct"
 
   # === REVIEWER (Security / Quality Audit) ===
-  MODEL_REVIEWER_PRIMARY: "mistralai/mistral-small-24b-instruct-2501"
+  MODEL_REVIEWER_PRIMARY: "qwen/qwen-2.5-72b-instruct"
   MODEL_REVIEWER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
   MODEL_REVIEWER_POWER: "openrouter/qwen/qwen2.5-coder-32b-instruct"
 
   # === ROUTINE/FAST (Trivial / UI / C1) ===
-  MODEL_FAST_PRIMARY: "google/gemini-2.0-flash-001"
+  MODEL_FAST_PRIMARY: "qwen/qwen3.6-plus"
   MODEL_FAST_STABILITY: "$MODEL_ENGINEER_PRIMARY"
   MODEL_FAST_POWER: "openrouter/qwen/qwen2.5-72b-instruct"
+
+  # === DESIGN (UX / Visual / Creative) ===
+  MODEL_DESIGN_PRIMARY: "google/gemma-3-27b-it"
+  MODEL_DESIGN_STABILITY: "$MODEL_FAST_PRIMARY"
+  MODEL_DESIGN_POWER: "openrouter/qwen/qwen3.5-plus-02-15"
 
   # === LOCAL MODELS (Ollama / Mac mini M1) ===
   MODEL_LOCAL_CODING: "ollama/qwen2.5-coder:7b"
@@ -60,21 +93,27 @@ models:
   # MODEL_HERMES_PREMIUM: "qwen/qwen3-235b-a22b"
 
   # ==========================================
-  # LEGACY ALIASES (Compatibility Layer)
-  # Used by role contracts and older workflows.
-  # Do not remove without updating all consumers.
+  # ROLE CONTRACT ALIASES (v4.3)
+  # Maps roles to OmniRoute combos with direct fallbacks.
   # ==========================================
 
-  # === ROLE CONTRACT ALIASES (v4.2) ===
-  # Canonical aliases for role contract system.
-  # Each role maps to a specific model tier.
-  AGENT_MODEL_ORCHESTRATOR: "$MODEL_ENGINEER_PRIMARY"
-  AGENT_MODEL_ROUTINE: "$MODEL_FAST_PRIMARY"
-  AGENT_MODEL_ENGINEER: "$MODEL_ENGINEER_PRIMARY"
-  AGENT_MODEL_DESIGN: "$MODEL_FAST_PRIMARY"
-  AGENT_MODEL_REVIEWER: "$MODEL_REVIEWER_PRIMARY"
-  AGENT_MODEL_ARCHITECT: "$MODEL_ARCHITECT_PRIMARY"
-  AGENT_MODEL_COUNCIL: "$MODEL_ARCHITECT_PRIMARY"
+  # === OMNIRROUTE COMBO ALIASES (Primary) ===
+  AGENT_MODEL_ORCHESTRATOR: "$MODEL_OMNIRROUTE_ORCHESTRATOR"
+  AGENT_MODEL_ROUTINE: "$MODEL_OMNIRROUTE_ROUTINE"
+  AGENT_MODEL_ENGINEER: "$MODEL_OMNIRROUTE_ENGINEER"
+  AGENT_MODEL_DESIGN: "$MODEL_OMNIRROUTE_DESIGN"
+  AGENT_MODEL_REVIEWER: "$MODEL_OMNIRROUTE_REVIEWER"
+  AGENT_MODEL_ARCHITECT: "$MODEL_OMNIRROUTE_ARCHITECT"
+  AGENT_MODEL_COUNCIL: "$MODEL_OMNIRROUTE_COUNCIL"
+
+  # === DIRECT FALLBACK ALIASES (when OmniRoute unavailable) ===
+  AGENT_MODEL_ORCHESTRATOR_DIRECT: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_ROUTINE_DIRECT: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_ENGINEER_DIRECT: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_DESIGN_DIRECT: "$MODEL_DESIGN_PRIMARY"
+  AGENT_MODEL_REVIEWER_DIRECT: "$MODEL_REVIEWER_PRIMARY"
+  AGENT_MODEL_ARCHITECT_DIRECT: "$MODEL_ARCHITECT_PRIMARY"
+  AGENT_MODEL_COUNCIL_DIRECT: "$MODEL_ARCHITECT_POWER"
 
   # === LEGACY / BACKWARD COMPATIBILITY ===
   AGENT_MODEL_BUILDER_A: "$MODEL_ENGINEER_PRIMARY"

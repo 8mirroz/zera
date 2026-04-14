@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  hermes-zera:
+    build: .
+    container_name: hermes-zera
+    env_file: .env
+    volumes:
+      - ./SOUL.md:/app/SOUL.md:ro
+    restart: unless-stopped

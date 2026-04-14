@@ -248,10 +248,12 @@ class TestModelAliasResolution(unittest.TestCase):
                     resolved,
                     f"Role '{role_name}' model_alias '{alias}' could not be resolved"
                 )
-                self.assertNotEqual(
-                    resolved, alias,
-                    f"Role '{role_name}' model_alias '{alias}' did not resolve to a model string"
-                )
+                # omniroute:// URIs are valid resolved values (combo references)
+                if not (resolved and resolved.startswith("omniroute://")):
+                    self.assertNotEqual(
+                        resolved, alias,
+                        f"Role '{role_name}' model_alias '{alias}' did not resolve to a model string"
+                    )
 
     def test_fallback_model_resolves(self):
         for role_name, contract in self.contracts.items():
@@ -273,9 +275,10 @@ class TestModelAliasResolution(unittest.TestCase):
                 alias = contract.get("model_alias", "")
                 resolved = self._resolve_alias(alias)
                 self.assertIsInstance(resolved, str)
-                self.assertIn(
-                    "/", resolved,
-                    f"Role '{role_name}' resolved model '{resolved}' doesn't look like a valid model ID"
+                # Either a valid model ID or an omniroute combo URI
+                self.assertTrue(
+                    "/" in resolved or resolved.startswith("omniroute://"),
+                    f"Role '{role_name}' resolved model '{resolved}' doesn't look like a valid model ID or combo URI"
                 )
 
 

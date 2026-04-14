@@ -1,0 +1,201 @@
+# Replay Registry — Critical Action Audit System
+# Version: 1.0
+# Stores and manages action replays for audit and rollback
+
+version: "1.0"
+
+replay_storage:
+  base_path: ".agent/replays/"
+  format: "jsonl"
+  compression: "gzip"
+  retention_days: 90
+
+  paths:
+    critical_actions: ".agent/replays/critical/"
+    desktop_sessions: ".agent/replays/desktop/"
+    rollback_snapshots: ".agent/replays/snapshots/"
+
+action_logging:
+  enabled: true
+  log_level: "detailed"
+
+  capture:
+    - timestamp
+    - action_id
+    - parent_task_id
+    - agent_role
+    - action_type
+    - tool_used
+    - input_parameters
+    - output_result
+    - confidence_score
+    - risk_score
+    - approval_status
+    - execution_duration_ms
+    - error_message
+    - rollback_available
+
+  sensitive_fields_to_redact:
+    - credential
+    - password
+    - token
+    - api_key
+    - secret
+    - personal_data
+
+replay_categories:
+
+  critical_execution:
+    trigger_on_risk_score: 5
+    trigger_on_approval: true
+    trigger_on_roles:
+      - architect
+      - council
+    capture_screenshots: true
+    max_replay_size_mb: 100
+
+  browser_actions:
+    trigger_on_type: "browser_action"
+    capture_screenshots: true
+    capture_dom_snapshot: true
+    max_screenshots: 20
+    capture_network_log: true
+
+  file_modifications:
+    trigger_on_types:
+      - file_edit
+      - file_create
+      - file_delete
+    capture_before: true
+    capture_after: true
+    capture_diff: true
+    git_integration: true
+
+  terminal_commands:
+    trigger_on_type: "command_execution"
+    capture_output: true
+    capture_environment: true
+    max_output_length: 50000
+    capture_timing: true
+
+  api_calls:
+    trigger_on_type: "external_api_call"
+    capture_request: true
+    capture_response: true
+    redact_auth_headers: true
+    capture_timing: true
+
+snapshot_system:
+  enabled: true
+  trigger_before_actions:
+    - file_delete
+    - destructive_change
+    - system_change
+    - credential_access
+
+  snapshot_types:
+    filesystem:
+      method: "git_snapshot"
+      paths:
+        - "${REPO_ROOT}/repos"
+        - "${REPO_ROOT}/configs"
+      exclude:
+        - "**/node_modules/**"
+        - "**/.git/**"
+        - "**/dist/**"
+
+    environment:
+      method: "env_snapshot"
+      capture_vars:
+        - PATH
+        - NODE_ENV
+        - PYTHON_PATH
+
+    database:
+      method: "none"
+      description: "Future: database state snapshots"
+
+rollback:
+  enabled: true
+  supported_strategies:
+    - name: "git_restore"
+      applies_to:
+        - file_edit
+        - file_create
+      requires_approval: false
+
+    - name: "branch_revert"
+      applies_to:
+        - branch_creation
+      requires_approval: true
+
+    - name: "shell_log_replay"
+      applies_to:
+        - terminal_command
+      requires_approval: false
+
+    - name: "session_replay"
+      applies_to:
+        - browser_action
+      requires_approval: false
+
+  approval_required_for:
+    - destructive_rollback
+    - cross_file_rollback
+    - multi_step_rollback
+
+replay_access:
+  allowed_viewers:
+    - reviewer
+    - architect
+    - council
+    - orchestrator
+
+  access_levels:
+    full:
+      - view_all
+      - download
+      - export
+
+    limited:
+      - view_own_actions
+      - view_approved_actions
+
+    audit_only:
+      - view_summary
+      - view_metrics
+
+audit_queries:
+  enabled: true
+  supported_queries:
+    - "actions_by_role"
+    - "actions_by_risk_score"
+    - "actions_by_time_range"
+    - "failed_actions"
+    - "approval_denials"
+    - "rollback_executed"
+
+  export_formats:
+    - json
+    - csv
+    - markdown
+
+analytics:
+  enabled: true
+  metrics:
+    - total_replays
+    - replay_size_mb
+    - average_replay_duration_ms
+    - rollback_executed_count
+    - rollback_success_rate
+
+  alerts:
+    on_replay_size_exceed_gb: 1
+    on_rollback_failure: true
+    on_replay_corruption: true
+
+compliance:
+  pii_handling: "redact"
+  retention_policy: "90_days"
+  encryption_at_rest: false
+  access_audit: true

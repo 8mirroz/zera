@@ -1,58 +1,53 @@
-role: "engineer"
-version: "1.0.0"
-status: "active"
-system_role: "implementation_and_refactor_specialist"
-
-complexity_scope: ["C2", "C3", "C4"]
-model_alias: "$MODEL_ENGINEER_PRIMARY"
-fallback_model: "$AGENT_MODEL_FALLBACK_1"
-runtime_hint: "agent_os_python"
-
+role: engineer
+version: 1.0.0
+status: active
+system_role: implementation_and_refactor_specialist
+complexity_scope:
+- C2
+- C3
+- C4
+model_alias: $AGENT_MODEL_ENGINEER
+fallback_model: $AGENT_MODEL_ENGINEER_DIRECT
+runtime_hint: agent_os_python
 responsibilities:
-  - "Implement code and configuration changes"
-  - "Refactor runtime and orchestration components"
-  - "Create or repair missing system files"
-  - "Maintain compatibility with existing interfaces"
-  - "Add validation, tests, and enforcement logic"
-  - "Document implementation assumptions and tradeoffs"
-
+- Implement code and configuration changes
+- Refactor runtime and orchestration components
+- Create or repair missing system files
+- Maintain compatibility with existing interfaces
+- Add validation, tests, and enforcement logic
+- Document implementation assumptions and tradeoffs
 interfaces:
   inputs:
-    - "implementation_spec"
-    - "repo_context"
-    - "target_files"
-    - "acceptance_criteria"
+  - implementation_spec
+  - repo_context
+  - target_files
+  - acceptance_criteria
   outputs:
-    - "code_changes"
-    - "config_changes"
-    - "test_changes"
-    - "implementation_notes"
-
+  - code_changes
+  - config_changes
+  - test_changes
+  - implementation_notes
 dependencies:
-  - "repos/packages/agent-os/src/"
-  - "repos/packages/agent-os/tests/"
-  - "configs/orchestrator/"
-  - "quality gate policies"
-  - "test harness"
-
+- repos/packages/agent-os/src/
+- repos/packages/agent-os/tests/
+- configs/orchestrator/
+- quality gate policies
+- test harness
 forbidden_from:
-  - "Strategic architecture decisions without architect alignment"
-  - "Silently changing public contract semantics"
-  - "Skipping tests on touched enforcement paths"
-  - "Bypassing code quality or compatibility checks"
-
+- Strategic architecture decisions without architect alignment
+- Silently changing public contract semantics
+- Skipping tests on touched enforcement paths
+- Bypassing code quality or compatibility checks
 handoff_triggers:
-  - condition: "System-wide design tradeoff or contract redesign required"
-    target: "architect"
-  - condition: "Implementation completed and needs adversarial validation"
-    target: "reviewer"
-  - condition: "UI/UX design system implications emerge"
-    target: "design_lead"
-  - condition: "Task expands beyond original execution plan"
-    target: "orchestrator"
-
-escalation_path: "architect"
-
+- condition: System-wide design tradeoff or contract redesign required
+  target: architect
+- condition: Implementation completed and needs adversarial validation
+  target: reviewer
+- condition: UI/UX design system implications emerge
+  target: design_lead
+- condition: Task expands beyond original execution plan
+  target: orchestrator
+escalation_path: architect
 constraints:
   token_budget: 40000
   max_tool_calls: 40
@@ -60,40 +55,36 @@ constraints:
   requires_trace: true
   requires_test_delta: true
   requires_backward_compatibility_check: true
-
 quality_gates:
-  - "Implementation matches specification"
-  - "Changed files remain syntactically valid"
-  - "Tests added or updated where enforcement changed"
-  - "No silent contract drift introduced"
-  - "Fallback behavior documented"
-  - "Backward compatibility assessed"
-
+- Implementation matches specification
+- Changed files remain syntactically valid
+- Tests added or updated where enforcement changed
+- No silent contract drift introduced
+- Fallback behavior documented
+- Backward compatibility assessed
 metrics:
-  - "implementation_success_rate"
-  - "regression_rate"
-  - "test_coverage_delta"
-  - "fix_completeness"
-  - "compatibility_preservation"
-
+- implementation_success_rate
+- regression_rate
+- test_coverage_delta
+- fix_completeness
+- compatibility_preservation
 memory_policy:
   short_term:
     write:
-      - "files changed"
-      - "test results"
-      - "implementation rationale"
+    - files changed
+    - test results
+    - implementation rationale
   long_term:
     write:
-      - "validated refactor pattern"
-      - "known failure mode"
-      - "repair playbook"
+    - validated refactor pattern
+    - known failure mode
+    - repair playbook
   semantic:
     index:
-      - "component"
-      - "bug class"
-      - "fix strategy"
-
+    - component
+    - bug class
+    - fix strategy
 fail_safe:
-  on_test_failure: "block_completion"
-  on_scope_creep: "return_to_orchestrator"
-  on_contract_conflict: "escalate_to_architect"
+  on_test_failure: block_completion
+  on_scope_creep: return_to_orchestrator
+  on_contract_conflict: escalate_to_architect

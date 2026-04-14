@@ -1,0 +1,166 @@
+# Confidence Thresholds — Autonomy Execution Limits
+# Version: 1.0
+# Controls autonomous execution based on confidence scoring
+
+version: "1.0"
+
+confidence_levels:
+  level_1:
+    score_min: 0.0
+    score_max: 0.4
+    autonomy_allowed: false
+    action_class: observe
+    description: "Very low confidence — only observation allowed"
+    escalate_to: "human_review"
+
+  level_2:
+    score_min: 0.4
+    score_max: 0.6
+    autonomy_allowed: false
+    action_class: propose
+    description: "Low confidence — only propose, require approval"
+    escalate_to: "planner_review"
+
+  level_3:
+    score_min: 0.6
+    score_max: 0.75
+    autonomy_allowed: true
+    action_class: execute_low_risk
+    description: "Medium-low confidence — limited execution"
+    max_risk_score: 3
+    require_approval: false
+
+  level_4:
+    score_min: 0.75
+    score_max: 0.85
+    autonomy_allowed: true
+    action_class: execute_low_risk
+    description: "Medium confidence — normal execution"
+    max_risk_score: 4
+    require_approval: false
+
+  level_5:
+    score_min: 0.85
+    score_max: 0.95
+    autonomy_allowed: true
+    action_class: allowed_under_budget
+    description: "High confidence — full autonomous execution"
+    max_risk_score: 6
+    require_approval: false
+
+  level_6:
+    score_min: 0.95
+    score_max: 1.0
+    autonomy_allowed: true
+    action_class: allowed_under_budget
+    description: "Very high confidence — trusted execution"
+    max_risk_score: 7
+    require_approval: false
+    enable_ralph_boost: true
+
+confidence_factors:
+  evidence_quality:
+    weight: 0.25
+    scoring:
+      multiple_verified_sources: 1.0
+      single_verified_source: 0.7
+      inferred_weak_evidence: 0.4
+      no_evidence: 0.1
+
+  source_reliability:
+    weight: 0.20
+    scoring:
+      official_documentation: 1.0
+      verified_user_input: 0.9
+      recent_research: 0.8
+      stale_data: 0.5
+      uncertain: 0.3
+
+  historical_success:
+    weight: 0.20
+    scoring:
+      perfect_track: 1.0
+      high_success_rate: 0.85
+      moderate_success: 0.6
+      low_success: 0.35
+      no_history: 0.5
+
+  model_capability_match:
+    weight: 0.15
+    scoring:
+      optimal_model: 1.0
+      adequate_model: 0.8
+      suboptimal_model: 0.5
+      weak_model: 0.3
+
+  risk_assessment:
+    weight: 0.20
+    scoring:
+      fully_reversible: 1.0
+      partially_reversible: 0.7
+      difficult_to_reverse: 0.4
+      irreversible: 0.1
+
+degradation_rules:
+  on_retry:
+    enabled: true
+    confidence_penalty_per_failure: 0.15
+    min_confidence_floor: 0.3
+    max_retries_before_escalation: 2
+
+  on_time_pressure:
+    enabled: true
+    time_budget_exceeded_penalty: 0.1
+    require_approval_after_penalty: true
+
+  on_context_growth:
+    enabled: true
+    token_limit_warning_penalty: 0.08
+    trigger_at_percent: 80
+
+confidence_calibration:
+  enabled: true
+  track_predictions: true
+  calibration_check_interval: 50
+  recalibrate_on_drift_threshold: 0.15
+  human_feedback_incorporation: true
+
+measurement:
+  log_confidence_scores: true
+  log_factors: true
+  store_prediction_outcome_pairs: true
+  calculate_calibration_error: true
+
+tiered_thresholds:
+  C1_trivial:
+    min_confidence: 0.5
+    max_confidence_for_auto: 0.85
+    approval_above: 0.85
+
+  C2_simple:
+    min_confidence: 0.6
+    max_confidence_for_auto: 0.9
+    approval_above: 0.9
+
+  C3_medium:
+    min_confidence: 0.7
+    max_confidence_for_auto: 0.92
+    approval_above: 0.92
+
+  C4_complex:
+    min_confidence: 0.75
+    max_confidence_for_auto: 0.95
+    approval_above: 0.85
+
+  C5_critical:
+    min_confidence: 0.85
+    max_confidence_for_auto: 0.98
+    approval_above: 0.8
+    always_require_council: true
+
+escalation_triggers:
+  confidence_below_tier_min: true
+  confidence_drop_more_than_0.3_in_single_run: true
+  repeated_low_confidence_tasks: 3
+  high_risk_action_with_confidence_below_0.85: true
+  budget_depleted_with_low_confidence_tasks_remaining: true

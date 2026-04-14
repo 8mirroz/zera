@@ -1,0 +1,203 @@
+# OmniRoute Combos — Version-Controlled Configuration
+# Version: 4.3 — Live Model Sync
+# Generated: 2026-04-14
+# Source of truth for role→model fallback chains.
+# Sync to OmniRoute via: python3 scripts/omniroute/sync_combos.py
+# OmniRoute API: http://localhost:20128/v1
+#
+# Models verified against live OmniRoute instance (187 models available).
+
+# Global settings
+omniroute:
+  base_url: "http://localhost:20128/v1"
+  api_key: "${OMNIRROUTE_API_KEY:-}"  # Optional — set if OmniRoute has auth
+  sync_strategy: "upsert"  # upsert | replace | dry-run
+
+# Default routing settings
+defaults:
+  strategy: "priority"  # Strict sequential fallback
+  timeout_seconds: 60
+  max_retries: 3
+  circuit_breaker_threshold: 5  # failures before marking model unhealthy
+
+# ============================================================================
+# Role-Specific Combos
+# Each combo maps to a role contract in configs/orchestrator/role_contracts/
+# Models verified against live OmniRoute instance.
+# ============================================================================
+
+combos:
+
+  # --- Orchestrator (C1-C5) ---
+  # Needs: task classification, routing decisions, coordination
+  # Best: balanced general reasoning, good instruction following
+  orchestrator:
+    role: "orchestrator"
+    description: "Task classification and swarm coordination"
+    strategy: "priority"
+    models:
+      - model: "kc/deepseek/deepseek-v3.2"
+        reason: "DeepSeek V3.2 — strong general reasoning, good at task classification"
+      - model: "kc/qwen/qwen3-coder"
+        reason: "Qwen3 Coder — strong structured reasoning for routing decisions"
+      - model: "kc/meta-llama/llama-3.3-70b-instruct"
+        reason: "Llama 70B — capable general model for coordination"
+      - model: "antigravity/claude-sonnet-4-6"
+        reason: "Claude Sonnet — fast, reliable for coordination tasks"
+
+  # --- Routine Worker (C1-C2) ---
+  # Needs: fast, cheap, deterministic execution
+  # Priority: speed + cost efficiency
+  routine_worker:
+    role: "routine_worker"
+    description: "Low-complexity deterministic execution"
+    strategy: "priority"
+    models:
+      - model: "kc/google/gemini-2.0-flash"
+        reason: "Gemini Flash — fastest model, ideal for trivial tasks"
+      - model: "kc/openai/gpt-4o-mini"
+        reason: "GPT-4o-mini — fast, cheap, reliable for simple tasks"
+      - model: "kc/mistralai/mistral-small-24b-instruct-2501"
+        reason: "Mistral Small 24B — lightweight but capable"
+      - model: "kc/arcee-ai/trinity-large-preview:free"
+        reason: "Free tier, zero cost"
+      - model: "kc/stepfun/step-3.5-flash:free"
+        reason: "Free flash model, always available"
+
+  # --- Engineer (C2-C4) ---
+  # Needs: code generation, refactoring, implementation
+  # Priority: coding quality, context window, test awareness
+  engineer:
+    role: "engineer"
+    description: "Code implementation and refactoring"
+    strategy: "priority"
+    models:
+      - model: "qw/qwen3-coder-plus"
+        reason: "Qwen3 Coder Plus — specialized coding model, best generation quality"
+      - model: "qw/qwen3-coder-flash"
+        reason: "Qwen3 Coder Flash — fast coding for simple implementations"
+      - model: "cx/gpt-5.4"
+        reason: "GPT-5.4 Codex — premium coding capability via subscription"
+      - model: "cx/gpt-5.3-codex-high"
+        reason: "GPT-5.3 Codex High — strong reasoning for complex implementations"
+      - model: "kc/deepseek/deepseek-chat-v3.1"
+        reason: "DeepSeek V3.1 — strong coding + reasoning, free tier"
+
+  # --- Design Lead (C2-C4) ---
+  # Needs: visual judgment, design system knowledge, UX reasoning
+  # Priority: large context, visual understanding, aesthetic coherence
+  design_lead:
+    role: "design_lead"
+    description: "UX and visual governance"
+    strategy: "priority"
+    models:
+      - model: "antigravity/gemini-3.1-pro-high"
+        reason: "Gemini 3.1 Pro High — best multimodal capability for design"
+      - model: "antigravity/gemini-3.1-pro-low"
+        reason: "Gemini 3.1 Pro Low — same model, cost-optimized"
+      - model: "gemini-cli/gemini-3.1-pro-preview"
+        reason: "Gemini CLI Pro — strong visual/multimodal reasoning"
+      - model: "kc/meta-llama/llama-4-scout"
+        reason: "Llama 4 Scout — good creative reasoning for design tasks"
+      - model: "antigravity/gemini-3-flash"
+        reason: "Gemini 3 Flash — fast design iterations"
+
+  # --- Reviewer (C1-C5) ---
+  # Needs: defect detection, contract compliance, adversarial thinking
+  # Priority: thoroughness, large context, code analysis
+  reviewer:
+    role: "reviewer"
+    description: "Independent validation and critique"
+    strategy: "priority"
+    models:
+      - model: "antigravity/claude-opus-4-6-thinking"
+        reason: "Claude Opus Thinking — best at adversarial review and edge cases"
+      - model: "gh/claude-opus-4.6"
+        reason: "Claude Opus via GitHub — premium review capability"
+      - model: "kc/qwen/qwq-32b"
+        reason: "QwQ 32B — strong reasoning at finding defects"
+      - model: "cl/anthropic/claude-opus-4-20250514"
+        reason: "Claude Opus direct — thorough analysis for C4-C5 reviews"
+      - model: "kc/mistralai/mistral-small-24b-instruct-2501"
+        reason: "Mistral Small — fast review for C1-C2 tasks"
+
+  # --- Architect (C3-C5) ---
+  # Needs: deep reasoning, system design, tradeoff analysis
+  # Priority: reasoning depth, architectural pattern recognition
+  architect:
+    role: "architect"
+    description: "System design and governance authority"
+    strategy: "priority"
+    models:
+      - model: "antigravity/claude-opus-4-6-thinking"
+        reason: "Claude Opus Thinking — best reasoning for architecture decisions"
+      - model: "cl/anthropic/claude-opus-4-20250514"
+        reason: "Claude Opus direct — strong system design capability"
+      - model: "cl/google/gemini-2.5-pro"
+        reason: "Gemini 2.5 Pro — excellent at tradeoff analysis"
+      - model: "cl/openai/o3"
+        reason: "O3 — strong reasoning for complex architectural decisions"
+      - model: "kc/qwen/qwen3-235b-a22b-thinking-2507"
+        reason: "Qwen3 235B Thinking — large model for deep reasoning"
+
+  # --- Council (C4-C5) ---
+  # Needs: highest judgment, multi-option analysis, strategic thinking
+  # Priority: maximum reasoning capability, reliability
+  council:
+    role: "council"
+    description: "Multi-role arbitration and strategic escalation"
+    strategy: "priority"
+    models:
+      - model: "antigravity/claude-opus-4-6-thinking"
+        reason: "Claude Opus Thinking — top tier for strategic judgment"
+      - model: "gh/claude-opus-4.6"
+        reason: "Claude Opus via GitHub — premium reasoning for arbitration"
+      - model: "cl/google/gemini-2.5-pro"
+        reason: "Gemini 2.5 Pro — excellent multi-option analysis"
+      - model: "cl/openai/o3"
+        reason: "O3 — strong reasoning for final arbitration"
+      - model: "kc/qwen/qwen3-235b-a22b-thinking-2507"
+        reason: "Qwen3 235B Thinking — free reasoning fallback"
+
+# ============================================================================
+# Shared Utility Combos (used by system, not roles)
+# ============================================================================
+
+utility_combos:
+
+  # Quick tasks — low latency, cheap
+  quick_task:
+    description: "Fast responses for trivial queries"
+    strategy: "priority"
+    models:
+      - model: "kc/google/gemini-2.0-flash"
+      - model: "kc/openai/gpt-4o-mini"
+      - model: "kc/mistralai/mistral-7b-instruct"
+
+  # Heavy analysis — maximum reasoning
+  heavy_analysis:
+    description: "Complex analytical tasks requiring deep reasoning"
+    strategy: "priority"
+    models:
+      - model: "antigravity/claude-opus-4-6-thinking"
+      - model: "cl/anthropic/claude-opus-4-20250514"
+      - model: "cl/openai/o3"
+
+  # Embedding generation
+  embedding:
+    description: "Vector embedding generation for memory/retrieval"
+    strategy: "priority"
+    models:
+      - model: "github/text-embedding-3-large"
+      - model: "github/text-embedding-3-small"
+      - model: "openrouter/openai/text-embedding-3-large"
+
+  # Image generation
+  image_gen:
+    description: "Image generation for design and prototyping"
+    strategy: "priority"
+    models:
+      - model: "openrouter/openai/gpt-image-1"
+      - model: "openrouter/openai/dall-e-3"
+      - model: "openrouter/black-forest-labs/FLUX.1-schnell"
+      - model: "openrouter/google/imagen-3.0-generate-002"

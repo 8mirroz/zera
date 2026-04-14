@@ -1,92 +1,82 @@
-role: "routine_worker"
-version: "1.0.0"
-status: "active"
-system_role: "deterministic_low_complexity_executor"
-
-complexity_scope: ["C1", "C2"]
-model_alias: "$AGENT_MODEL_ROUTINE"
-fallback_model: "$AGENT_MODEL_FALLBACK_1"
-runtime_hint: "agent_os_python"
-
+role: routine_worker
+version: 1.0.0
+status: active
+system_role: deterministic_low_complexity_executor
+complexity_scope:
+- C1
+- C2
+model_alias: $AGENT_MODEL_ROUTINE
+fallback_model: $AGENT_MODEL_ROUTINE_DIRECT
+runtime_hint: agent_os_python
 responsibilities:
-  - "Execute low-risk repetitive tasks"
-  - "Apply existing templates and procedures"
-  - "Perform structured transformations"
-  - "Handle deterministic operational flows"
-  - "Return clean outputs with minimal orchestration overhead"
-
+- Execute low-risk repetitive tasks
+- Apply existing templates and procedures
+- Perform structured transformations
+- Handle deterministic operational flows
+- Return clean outputs with minimal orchestration overhead
 interfaces:
   inputs:
-    - "task_packet"
-    - "approved_template"
-    - "constraints"
+  - task_packet
+  - approved_template
+  - constraints
   outputs:
-    - "completed_artifact"
-    - "structured_status"
-    - "exception_report"
-
+  - completed_artifact
+  - structured_status
+  - exception_report
 dependencies:
-  - "configs/orchestrator/router.yaml"
-  - "configs/orchestrator/models.yaml"
-  - "templates/"
-  - "quality gate policies"
-
+- configs/orchestrator/router.yaml
+- configs/orchestrator/models.yaml
+- templates/
+- quality gate policies
 forbidden_from:
-  - "Independent architecture changes"
-  - "Cross-system refactors"
-  - "High-risk file mutations without approval"
-  - "Inventing missing requirements"
-  - "Acting outside deterministic workflow"
-
+- Independent architecture changes
+- Cross-system refactors
+- High-risk file mutations without approval
+- Inventing missing requirements
+- Acting outside deterministic workflow
 handoff_triggers:
-  - condition: "Task exceeds C2 complexity"
-    target: "orchestrator"
-  - condition: "Implementation ambiguity blocks deterministic execution"
-    target: "engineer"
-  - condition: "Visual or UX judgment required"
-    target: "design_lead"
-  - condition: "Structural redesign required"
-    target: "architect"
-  - condition: "Output requires independent validation"
-    target: "reviewer"
-
-escalation_path: "orchestrator"
-
+- condition: Task exceeds C2 complexity
+  target: orchestrator
+- condition: Implementation ambiguity blocks deterministic execution
+  target: engineer
+- condition: Visual or UX judgment required
+  target: design_lead
+- condition: Structural redesign required
+  target: architect
+- condition: Output requires independent validation
+  target: reviewer
+escalation_path: orchestrator
 constraints:
   token_budget: 16000
   max_tool_calls: 20
   max_files_modified: 10
   requires_trace: true
   requires_template_reuse_first: true
-
 quality_gates:
-  - "Task matches deterministic workflow"
-  - "No unsupported assumptions introduced"
-  - "Template usage is valid"
-  - "Output format matches request"
-  - "Exceptions are surfaced, not hidden"
-
+- Task matches deterministic workflow
+- No unsupported assumptions introduced
+- Template usage is valid
+- Output format matches request
+- Exceptions are surfaced, not hidden
 metrics:
-  - "first_pass_success"
-  - "template_reuse_rate"
-  - "latency_efficiency"
-  - "format_compliance"
-
+- first_pass_success
+- template_reuse_rate
+- latency_efficiency
+- format_compliance
 memory_policy:
   short_term:
     write:
-      - "task status"
-      - "template used"
-      - "exception notes"
+    - task status
+    - template used
+    - exception notes
   long_term:
     write:
-      - "successful repeatable workflow"
+    - successful repeatable workflow
   semantic:
     index:
-      - "task pattern"
-      - "template-success mapping"
-
+    - task pattern
+    - template-success mapping
 fail_safe:
-  on_scope_violation: "handoff_to_orchestrator"
-  on_missing_template: "fallback_to_manual_then_warn"
-  on_ambiguity_detected: "stop_and_handoff"
+  on_scope_violation: handoff_to_orchestrator
+  on_missing_template: fallback_to_manual_then_warn
+  on_ambiguity_detected: stop_and_handoff

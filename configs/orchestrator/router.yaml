@@ -71,6 +71,25 @@ routing:
     scoring_threshold: 0.85
     max_iterations_cap: 7
 
+    # Verification layer - explicit pass/fail gates
+    verification:
+      enabled: true
+      verify_each_iteration: true
+      pass_threshold: 0.85
+      fail_on_verification_failure: true
+      verification_types:
+        - code_syntax
+        - test_pass
+        - no_regression
+        - backward_compatibility
+
+    # Confidence degradation on retry
+    confidence:
+      degradation_enabled: true
+      penalty_per_retry: 0.15
+      min_floor: 0.3
+      escalate_on_degradation: true
+
   handoff_safeguards:
     max_chain_depth: 2
     forbid_cycles: true

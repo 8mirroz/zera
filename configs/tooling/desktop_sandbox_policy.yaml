@@ -1,0 +1,233 @@
+# Desktop Sandbox Policy
+# Version: 1.0
+# Controls desktop automation execution in sandboxed mode
+
+version: "1.0"
+
+sandbox_mode:
+  enabled: true
+  isolation_level: "containerized"
+  description: "Desktop automation runs in isolated container with limited capabilities"
+
+execution_limits:
+  max_sessions_per_day: 50
+  max_actions_per_session: 100
+  session_timeout_minutes: 15
+  idle_timeout_minutes: 5
+  max_concurrent_sessions: 2
+
+application_whitelist:
+  enabled: true
+  mode: "allowlist"  # allowlist | blocklist
+
+  # Allowed applications for automation
+  allowed_apps:
+    - name: "vscode"
+      description: "Visual Studio Code"
+      allowed_actions:
+        - file_read
+        - file_write
+        - terminal_execute
+        - search
+      max_daily_actions: 500
+
+    - name: "terminal"
+      description: "Terminal emulator"
+      allowed_actions:
+        - command_execute
+      allowed_commands:
+        - git
+        - npm
+        - pip
+        - python3
+        - cargo
+        - make
+        - docker
+      forbidden_commands:
+        - rm -rf /
+        - dd if=
+        - mkfs
+        - :(){ :|:& };:
+        - curl | sh
+        - wget | sh
+
+    - name: "browser"
+      description: "Web browser"
+      allowed_actions:
+        - navigate
+        - read_dom
+        - fill_form
+        - click
+      allowed_domains:
+        - "*.github.com"
+        - "*.gitlab.com"
+        - "localhost"
+        - "*.vercel.app"
+        - "*.netlify.app"
+      forbidden_domains:
+        - "*.bank.com"
+        - "*.paypal.com"
+        - "*.amazon.com/pay"
+        - "*/login*"
+
+    - name: "file_explorer"
+      description: "File system navigation"
+      allowed_actions:
+        - list
+        - read
+        - create
+        - move
+      allowed_paths:
+        - "${REPO_ROOT}"
+        - "${WORKSPACE}"
+      forbidden_paths:
+        - "${HOME}/.ssh"
+        - "${HOME}/.aws"
+        - "**/credentials/**"
+        - "**/secrets/**"
+        - "**/.env"
+
+    - name: "ide"
+      description: "Generic IDE operations"
+      allowed_actions:
+        - open_file
+        - save_file
+        - search_code
+        - refactor
+
+high_risk_controls:
+  shell_execution:
+    max_duration_seconds: 30
+    require_approval: false
+    allowed_in_sandbox: true
+
+  file_deletion:
+    max_files: 5
+    require_approval: true
+    allowed_in_sandbox: false
+
+  network_access:
+    require_approval: false
+    allowed_endpoints:
+      - "api.github.com"
+      - "api.openai.com"
+      - "localhost"
+    blocked_endpoints:
+      - "*.bank.*"
+      - "*.gov.*"
+
+  credential_access:
+    require_approval: true
+    allowed_in_sandbox: false
+
+  system_commands:
+    require_approval: true
+    allowed_in_sandbox: false
+
+replay_and_rollback:
+  enabled: true
+  storage_path: ".agent/desktop_replays/"
+
+  record_actions: true
+  record_screenshots: true
+  screenshot_interval_seconds: 5
+  max_screenshots_per_session: 100
+
+  replay_enabled: true
+  allow_manual_replay: true
+
+  rollback_enabled: true
+  rollback_levels:
+    - action_level: "file_edit"
+      strategy: "git_restore"
+    - action_level: "terminal_command"
+      strategy: "log_and_notify"
+    - action_level: "browser_action"
+      strategy: "session_replay"
+
+monitoring:
+  enabled: true
+  log_all_actions: true
+  log_to_file: true
+  log_path: ".agent/desktop_logs/"
+
+  metrics:
+    - action_count
+    - session_duration
+    - failed_actions
+    - approval_requests
+    - escalation_count
+
+  alerts:
+    on_high_risk_action: true
+    on_approval_denial: true
+    on_session_timeout: true
+    on_rate_limit_exceeded: true
+
+safety_guards:
+  emergency_stop_commands:
+    - "CTRL+C"
+    - "ESC"
+    - "SIGINT"
+
+  max_retry_same_action: 2
+  require_confirmation_for:
+    - file_delete
+    - credential_access
+    - external_network_call
+    - system_change
+
+  allowed_file_extensions:
+    safe:
+      - ".txt"
+      - ".md"
+      - ".json"
+      - ".yaml"
+      - ".yml"
+      - ".py"
+      - ".js"
+      - ".ts"
+      - ".jsx"
+      - ".tsx"
+      - ".html"
+      - ".css"
+      - ".sh"
+      - ".log"
+    requires_approval:
+      - ".exe"
+      - ".sh"
+      - ".bat"
+      - ".ps1"
+
+approval_requirements:
+  always_require_for:
+    - credential_access
+    - financial_transaction
+    - system_configuration_change
+    - external_api_with_auth
+
+  require_if_above_threshold:
+    - risk_score: 5
+      action: "file_delete"
+    - risk_score: 4
+      action: "terminal_command"
+    - risk_score: 4
+      action: "browser_action"
+
+sandbox_exit_conditions:
+  graceful:
+    - task_completed
+    - session_timeout
+    - user_request
+
+  forced:
+    - critical_failure
+    - approval_denied
+    - safety_guard_triggered
+    - resource_limit_exceeded
+
+  post_exit:
+    - save_replay_log
+    - cleanup_temp_files
+    - log_session_summary
+    - archive_screenshots

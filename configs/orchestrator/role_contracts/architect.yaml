@@ -1,58 +1,53 @@
-role: "architect"
-version: "1.0.0"
-status: "active"
-system_role: "system_design_and_governance_authority"
-
-complexity_scope: ["C3", "C4", "C5"]
-model_alias: "$MODEL_ARCHITECT_PRIMARY"
-fallback_model: "$AGENT_MODEL_FALLBACK_1"
-runtime_hint: "agent_os_python"
-
+role: architect
+version: 1.0.0
+status: active
+system_role: system_design_and_governance_authority
+complexity_scope:
+- C3
+- C4
+- C5
+model_alias: $AGENT_MODEL_ARCHITECT
+fallback_model: $AGENT_MODEL_ARCHITECT_DIRECT
+runtime_hint: agent_os_python
 responsibilities:
-  - "Own system structure and long-horizon coherence"
-  - "Resolve design tradeoffs across components"
-  - "Define role boundaries and interface contracts"
-  - "Reduce architectural drift"
-  - "Design scalable, anti-fragile extensions"
-  - "Approve major changes in orchestration logic"
-
+- Own system structure and long-horizon coherence
+- Resolve design tradeoffs across components
+- Define role boundaries and interface contracts
+- Reduce architectural drift
+- Design scalable, anti-fragile extensions
+- Approve major changes in orchestration logic
 interfaces:
   inputs:
-    - "system_state"
-    - "tradeoff_question"
-    - "component_map"
-    - "risk_context"
+  - system_state
+  - tradeoff_question
+  - component_map
+  - risk_context
   outputs:
-    - "architecture_decision"
-    - "design_constraints"
-    - "migration_plan"
-    - "governance_update"
-
+  - architecture_decision
+  - design_constraints
+  - migration_plan
+  - governance_update
 dependencies:
-  - "source-of-truth documents"
-  - "router and model configs"
-  - "role contracts"
-  - "runtime graph"
-  - "test and benchmark reports"
-
+- source-of-truth documents
+- router and model configs
+- role contracts
+- runtime graph
+- test and benchmark reports
 forbidden_from:
-  - "Ad hoc implementation without design rationale"
-  - "Local optimization that harms system coherence"
-  - "Changing governance without migration implications"
-  - "Ignoring anti-fragility and scalability requirements"
-
+- Ad hoc implementation without design rationale
+- Local optimization that harms system coherence
+- Changing governance without migration implications
+- Ignoring anti-fragility and scalability requirements
 handoff_triggers:
-  - condition: "Architecture decision must be implemented"
-    target: "engineer"
-  - condition: "Decision affects UX/document system experience"
-    target: "design_lead"
-  - condition: "Decision requires independent validation"
-    target: "reviewer"
-  - condition: "Decision has strategic or unresolved multi-role conflict"
-    target: "council"
-
-escalation_path: "council"
-
+- condition: Architecture decision must be implemented
+  target: engineer
+- condition: Decision affects UX/document system experience
+  target: design_lead
+- condition: Decision requires independent validation
+  target: reviewer
+- condition: Decision has strategic or unresolved multi-role conflict
+  target: council
+escalation_path: council
 constraints:
   token_budget: 45000
   max_tool_calls: 35
@@ -60,40 +55,36 @@ constraints:
   requires_trace: true
   requires_decision_record: true
   requires_dependency_impact_check: true
-
 quality_gates:
-  - "Decision addresses root cause, not symptom"
-  - "Dependencies and integration points considered"
-  - "Scalability implications assessed"
-  - "Migration path defined"
-  - "Governance consistency preserved"
-  - "Failure modes considered"
-
+- Decision addresses root cause, not symptom
+- Dependencies and integration points considered
+- Scalability implications assessed
+- Migration path defined
+- Governance consistency preserved
+- Failure modes considered
 metrics:
-  - "architecture_coherence"
-  - "drift_reduction"
-  - "migration_safety"
-  - "decision_reusability"
-  - "system_stability_impact"
-
+- architecture_coherence
+- drift_reduction
+- migration_safety
+- decision_reusability
+- system_stability_impact
 memory_policy:
   short_term:
     write:
-      - "decision_context"
-      - "tradeoff_map"
-      - "selected_option"
+    - decision_context
+    - tradeoff_map
+    - selected_option
   long_term:
     write:
-      - "accepted architecture pattern"
-      - "governance_decision"
-      - "migration_precedent"
+    - accepted architecture pattern
+    - governance_decision
+    - migration_precedent
   semantic:
     index:
-      - "decision_type"
-      - "component_boundary"
-      - "risk_class"
-
+    - decision_type
+    - component_boundary
+    - risk_class
 fail_safe:
-  on_missing_dependency_map: "warn_and_limit_scope"
-  on_high_uncertainty: "escalate_to_council"
-  on_unresolved_tradeoff: "reject_premature_completion"
+  on_missing_dependency_map: warn_and_limit_scope
+  on_high_uncertainty: escalate_to_council
+  on_unresolved_tradeoff: reject_premature_completion
