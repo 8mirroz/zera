@@ -1,0 +1,39 @@
+# Prompt Library Registry
+
+version: "1.0"
+last_updated: "2026-04-14"
+
+prompts:
+  - id: system.architect.v1
+    name: "Architect System Prompt"
+    path: "system/architect.yaml"
+    role: "architect"
+    tier: "C3-C5"
+    description: "Комплексный промт для проектирования высокоуровневой архитектуры и управления техдолгом."
+    model_hint: "$MODEL_ARCHITECT_PRIMARY"
+
+  - id: system.engineer.v1
+    name: "Engineer System Prompt"
+    path: "system/engineer.yaml"
+    role: "engineer"
+    tier: "C2-C3"
+    description: "Промт для реализации атомарных задач и написания чистого кода."
+    model_hint: "$MODEL_ENGINEER_PRIMARY"
+
+  - id: tasks.research.v1
+    name: "Deep Research Prompt"
+    path: "tasks/research.yaml"
+    task_type: "research"
+    description: "Промт для многоэтапного исследования с синтезом из нескольких источников."
+
+  - id: tasks.audit.v1
+    name: "Architecture Audit Prompt"
+    path: "tasks/audit.yaml"
+    task_type: "audit"
+    description: "Промт для выявления архитектурного дрифта и несоответствий стандартам."
+
+  - id: templates.xml_output.v1
+    name: "XML Wrapper Template"
+    path: "templates/xml_output.yaml"
+    type: "format"
+    description: "Шаблон для детерминированного вывода сабагентов в XML-тегах."

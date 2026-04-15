@@ -81,3 +81,20 @@ memory_policy:
 fail_safe:
   on_missing_brand_context: continue_with_system_defaults_and_warn
   on_design_implementation_gap: handoff_to_engineer
+
+# ============================================================================
+# EXECUTION TRUTH CONTRACT — Injected from _execution_constraints.yaml
+# Enforced by: agent_os.execution_guards.ExecutionGuards
+# Source: configs/rules/EXECUTION_TRUTH_CONTRACT.md
+# ============================================================================
+execution_truth:
+  evidence_required: true
+  grounding_required: true
+  auto_continue_safe: true
+  stall_timeout_seconds: 20
+  completion_artifacts_required: true
+  forbidden_patterns:
+    - "created without evidence"
+    - "done without artifact list"
+    - "checking without findings"
+    - "continuing without state"

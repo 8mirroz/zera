@@ -28,6 +28,7 @@ from uuid import uuid4
 class TraceContext:
     """Thread-safe trace context for a task execution tree."""
 
+    run_id: str                  # Stable correlation ID (session/process run)
     trace_id: str                # Root correlation ID (shared across parent -> child)
     span_id: str                 # Unique span ID for this execution
     parent_span_id: str | None   # Parent's span_id (None for root)
@@ -38,10 +39,12 @@ class TraceContext:
     started_at: str              # ISO-8601 timestamp
 
     @classmethod
-    def root(cls, task_id: str, tier: str, component: str) -> TraceContext:
+    def root(cls, task_id: str, tier: str, component: str, run_id: str | None = None) -> TraceContext:
         """Create a root trace context (no parent)."""
+        tid = f"trace-{uuid4().hex[:16]}"
         return cls(
-            trace_id=f"trace-{uuid4().hex[:16]}",
+            run_id=run_id or tid,
+            trace_id=tid,
             span_id=f"span-{uuid4().hex[:12]}",
             parent_span_id=None,
             task_id=task_id,
@@ -52,8 +55,9 @@ class TraceContext:
         )
 
     def child(self, task_id: str, tier: str, component: str) -> TraceContext:
-        """Create a child context inheriting trace_id and incrementing depth."""
+        """Create a child context inheriting run_id, trace_id and incrementing depth."""
         return TraceContext(
+            run_id=self.run_id,
             trace_id=self.trace_id,
             span_id=f"span-{uuid4().hex[:12]}",
             parent_span_id=self.span_id,
@@ -141,8 +145,8 @@ class TraceSink:
 
     def query_by_trace_id(self, trace_id: str, limit: int = 1000) -> list[dict[str, Any]]:
         """Search all trace files for events matching *trace_id* (correlation)."""
-        return self._query_all(lambda ev: ev.get("data", {}).get("trace_id") == trace_id
-                               or ev.get("trace_id") == trace_id,
+        return self._query_all(lambda ev: ev.get("trace_id") == trace_id
+                               or ev.get("data", {}).get("trace_id") == trace_id,
                                limit)
 
     def get_current_file(self) -> Path:
@@ -176,39 +180,35 @@ class TraceSink:
         return self.trace_dir / f"agent_traces_{self._current_date}.jsonl"
 
     def _query_all(self, predicate: Any, limit: int) -> list[dict[str, Any]]:
-        """Scan JSONL files in trace_dir, return matching events sorted by ts."""
+        """Scan JSONL files in trace_dir, return matching events sorted by ts.
+        Uses incremental reading with line-buffering to avoid OOM for large traces.
+        """
         results: list[dict[str, Any]] = []
-        # If fixed filename, only scan that file
+        files = []
         if self._fixed_filename is not None:
-            target = self.trace_dir / self._fixed_filename
-            if target.exists():
-                for line in target.read_text(encoding="utf-8").splitlines():
-                    if not line.strip():
-                        continue
-                    try:
-                        ev = json.loads(line)
-                    except json.JSONDecodeError:
-                        continue
-                    if predicate(ev):
-                        results.append(ev)
-                        if len(results) >= limit:
-                            break
-            return results
-        # Otherwise scan all agent_traces_*.jsonl files
-        files = sorted(self.trace_dir.glob("agent_traces_*.jsonl"))
+            files = [self.trace_dir / self._fixed_filename]
+        else:
+            files = sorted(self.trace_dir.glob("agent_traces_*.jsonl"))
+
         for fp in files:
-            try:
-                for line in fp.read_text(encoding="utf-8").splitlines():
-                    if not line.strip():
-                        continue
-                    ev = json.loads(line)
-                    if predicate(ev):
-                        results.append(ev)
-                        if len(results) >= limit:
-                            return results
-            except (OSError, json.JSONDecodeError):
+            if not fp.exists():
                 continue
-        # Sort chronologically by ts field
+            try:
+                with fp.open("r", encoding="utf-8", errors="replace") as f:
+                    for line in f:
+                        if not line.strip():
+                            continue
+                        try:
+                            ev = json.loads(line)
+                        except json.JSONDecodeError:
+                            continue
+                        if predicate(ev):
+                            results.append(ev)
+                            if len(results) >= limit:
+                                return results
+            except OSError:
+                continue
+
         results.sort(key=lambda ev: ev.get("ts", ""))
         return results
 
@@ -405,31 +405,40 @@ class StructuredTraceEmitter:
         level: str,
         data: dict[str, Any],
     ) -> None:
-        """Build a v2.1-compliant envelope and write to sink."""
+        """Build a v2.1-compliant envelope and write to sink.
+        Implements Compaction Mode to reduce metadata noise in long sessions.
+        """
         t0 = time.perf_counter()
 
-        # Extract key fields to envelope level for easier querying
-        # Use .get() to keep them in data dict as well for backward compatibility
-        run_id = data.get("run_id")
-        status = data.get("status")
-        duration_ms = data.get("duration_ms")
-
+        # Compaction Logic: If nesting is too deep, prune redundant context fields from envelope
+        use_compaction = ctx.level > 5
+        
         envelope: dict[str, Any] = {
             "ts": _utc_now_iso(),
+            "run_id": ctx.run_id,
             "trace_id": ctx.trace_id,
             "span_id": ctx.span_id,
-            "parent_span_id": ctx.parent_span_id,
-            "task_id": ctx.task_id,
-            "tier": ctx.tier,
-            "component": ctx.component,
-            "level": level,
             "event_type": event_type,
+            "level": level,
             "data": data,
         }
 
-        # Add extracted fields to envelope level if present
-        if run_id is not None:
-            envelope["run_id"] = run_id
+        if not use_compaction:
+            # Full metadata for shallow spans
+            envelope.update({
+                "parent_span_id": ctx.parent_span_id,
+                "task_id": ctx.task_id,
+                "tier": ctx.tier,
+                "component": ctx.component,
+            })
+        else:
+            # Compact mode: only include bare essentials
+            envelope["_compact"] = True
+
+        # Extract priority fields to envelope level if present in data
+        status = data.get("status")
+        duration_ms = data.get("duration_ms")
+
         if status is not None:
             envelope["status"] = status
         if duration_ms is not None:

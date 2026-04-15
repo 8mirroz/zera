@@ -20,7 +20,8 @@ set -euo pipefail
   done
 ) & disown
 
-ROOT="${ZERA_REPO_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}"
+ROOT="${ZERA_REPO_ROOT:-$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null || echo "${BASH_SOURCE[0]}")")" && if [[ $(basename "$(pwd)") == "zera" ]]; then cd ../..; else cd ..; fi && pwd)}"
+
 AGENT_OS="$ROOT/repos/packages/agent-os"
 
 if [[ "${AG_SKIP_PREFLIGHT:-0}" != "1" ]]; then

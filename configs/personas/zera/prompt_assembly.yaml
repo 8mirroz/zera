@@ -5,6 +5,7 @@ assembly_order:
   - "safety.md"
   - "relationship_boundaries.md"
   - "tone.md"
+  - "execution_contract.md"  # Execution truth contract — enforced at runtime
 mode_injection:
   enabled: true
   source_file: "modes.yaml"
@@ -18,3 +19,4 @@ runtime_overrides:
     - "constitution"
     - "safety"
     - "relationship_boundaries"
+    - "execution_contract"  # Never override execution contract

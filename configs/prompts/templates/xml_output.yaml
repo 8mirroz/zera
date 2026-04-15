@@ -1,0 +1,30 @@
+id: templates.xml_output.v1
+name: XML Wrapper Template
+version: 1.0
+type: format
+content: |
+  # 📦 XML Wrapper Template (v1.0)
+  
+  Используйте эту структуру для детерминированного вывода результатов в сложных многошаговых задачах.
+  
+  ```xml
+  <analysis>
+    <!-- Глубокий анализ вводных данных и ограничений -->
+  </analysis>
+  
+  <thought>
+    <!-- Пошаговое рассуждение и выбор стратегии -->
+  </thought>
+  
+  <execution_log>
+    <!-- Список выполненных действий и промежуточные результаты -->
+  </execution_log>
+  
+  <output>
+    <!-- Финальный результат задачи -->
+  </output>
+  
+  <verification>
+    <!-- Доказательства корректности (тесты, скриншоты, хеши) -->
+  </verification>
+  ```

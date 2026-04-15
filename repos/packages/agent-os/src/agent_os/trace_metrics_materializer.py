@@ -16,7 +16,7 @@ FAIL_STATUSES = {"error", "fail", "failure"}
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def utc_now_iso() -> str:
@@ -167,7 +167,7 @@ def _normalize_trace_rows(trace_file: Path, *, allow_legacy: bool) -> tuple[list
             events.extend(_legacy_to_v2_events(row))
             continue
 
-        if "event_type" in row and "run_id" in row:
+        if "event_type" in row:
             stats["v2_rows"] += 1
             ev = dict(row)
             if not isinstance(ev.get("data"), dict):

@@ -60,6 +60,7 @@ class AgentInput:
     objective: str
     plan_steps: list[str]
     route_decision: dict[str, Any]
+    swarm_mode: bool = False
 
 
 @dataclass

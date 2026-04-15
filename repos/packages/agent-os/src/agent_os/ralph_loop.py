@@ -71,30 +71,36 @@ class RalphLoopConfig:
 @dataclass
 class RalphLoopState:
     """Runtime state for Ralph Loop engine."""
-    
+
     iteration: int = 0
     """Current iteration number (1-based)."""
-    
+
     candidates: list[dict[str, Any]] = field(default_factory=list)
     """List of candidate solutions with metadata."""
-    
+
     scores: list[float] = field(default_factory=list)
     """List of weighted total scores."""
-    
+
     best_index: int = -1
     """Index of best candidate (by weighted_total score)."""
-    
+
     best_score: float = 0.0
     """Best score seen so far."""
-    
+
     prev_best_score: float = 0.0
     """Best score from previous iteration (for plateau detection)."""
-    
+
     stopped: bool = False
     """Whether stop condition has been triggered."""
-    
+
     stop_reason: str | None = None
     """Reason for stopping (if stopped)."""
+
+    improvement_streak: int = 0
+    """Number of consecutive iterations with improvement."""
+
+    last_improvement_delta: float = 0.0
+    """Delta of the last score improvement."""
 
 
 @dataclass
@@ -238,17 +244,20 @@ class RalphLoopEngine:
         
         self.state.iteration += 1
         iteration = self.state.iteration
-        
+
         # Compute score if not provided
         if weighted_total is None:
             if metrics is None:
                 metrics = {}
             weighted_total = _compute_weighted_score(metrics, self.config.score_weights)
+
+        # Track improvement BEFORE updating best_score
+        is_new_best = self.state.best_index == -1 or weighted_total > self.state.best_score
         
-        # Update state
+        # Update state - save previous best BEFORE updating
         self.state.prev_best_score = self.state.best_score
         self.state.scores.append(weighted_total)
-        
+
         candidate_record = {
             "iteration": iteration,
             "candidate": candidate,
@@ -256,11 +265,17 @@ class RalphLoopEngine:
             "weighted_total": weighted_total,
         }
         self.state.candidates.append(candidate_record)
-        
-        # Update best - first candidate is always best initially, then compare
-        if self.state.best_index == -1 or weighted_total > self.state.best_score:
+
+        # Update best and track improvement streak
+        if is_new_best:
             self.state.best_score = weighted_total
             self.state.best_index = len(self.state.candidates) - 1
+            self.state.improvement_streak += 1
+            self.state.last_improvement_delta = weighted_total - self.state.prev_best_score if self.state.prev_best_score > 0 else weighted_total
+        else:
+            # No improvement - reset streak
+            self.state.improvement_streak = 0
+            self.state.last_improvement_delta = 0.0
         
         # Generate events
         events: list[RalphEvent] = []
@@ -339,13 +354,25 @@ class RalphLoopEngine:
         # Threshold stop — only check after min_iterations
         if self.state.best_score >= self.config.min_acceptable_score:
             return True, "threshold_met"
-        
+
         # Plateau detection — only check after min_iterations
-        # Plateau means: improvement is below delta (not necessarily negative)
-        delta = self.state.best_score - self.state.prev_best_score
-        if delta < self.config.min_score_delta:
+        # True plateau means: NO improvement (delta ~0) OR negative improvement
+        # We should NOT stop if there's consistent improvement, even if small.
+        # Use improvement_streak: if we've improved in last N iterations, it's not plateau.
+        delta = self.state.last_improvement_delta
+        
+        # Plateau only if:
+        # 1. No improvement this iteration (delta == 0), OR
+        # 2. Improvement is below min_score_delta AND we have no streak
+        if delta <= 0:
             return True, "plateau_detected"
         
+        # If there's consistent small improvement, continue
+        # (delta < min_score_delta but streak > 0 means gradual progress)
+        if delta < self.config.min_score_delta and self.state.improvement_streak < 2:
+            # Give it more iterations if we just started improving
+            return False, None
+
         return False, None
     
     def should_stop(self) -> bool:

@@ -41,12 +41,12 @@ models:
   MODEL_OMNIRROUTE_COUNCIL: "omniroute://combo/council"
 
   # === ARCHITECT (Complex Reasoning / C4-C5) ===
-  MODEL_ARCHITECT_PRIMARY: "deepseek/deepseek-r1-0528:free"
+  MODEL_ARCHITECT_PRIMARY: "ollama/deepseek-r1:7b"
   MODEL_ARCHITECT_STABILITY: "anthropic/claude-3.5-opus"
   MODEL_ARCHITECT_POWER: "openai/gpt-4o"
 
   # === ENGINEER (Coding / C2-C3) ===
-  MODEL_ENGINEER_PRIMARY: "qwen/qwen3-coder"
+  MODEL_ENGINEER_PRIMARY: "ollama/qwen2.5-coder:7b"
   MODEL_ENGINEER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
   MODEL_ENGINEER_POWER: "openrouter/qwen/qwen2.5-coder-72b-instruct"
 
@@ -56,7 +56,7 @@ models:
   MODEL_REVIEWER_POWER: "openrouter/qwen/qwen2.5-coder-32b-instruct"
 
   # === ROUTINE/FAST (Trivial / UI / C1) ===
-  MODEL_FAST_PRIMARY: "qwen/qwen3.6-plus"
+  MODEL_FAST_PRIMARY: "ollama/qwen3.5:4b-q4_K_M"
   MODEL_FAST_STABILITY: "$MODEL_ENGINEER_PRIMARY"
   MODEL_FAST_POWER: "openrouter/qwen/qwen2.5-72b-instruct"
 
@@ -85,7 +85,7 @@ models:
   # === HERMES RUNTIME DEFAULTS ===
   # Free strong models for Hermes agent profile (zera)
   # Synced with ${HOME}/.hermes/profiles/*/config.yaml model.default
-  MODEL_HERMES_DEFAULT: "openrouter/qwen/qwen3.6-plus-preview:free"
+  MODEL_HERMES_DEFAULT: "ollama/qwen3.5:9b-q4_K_M"
   MODEL_HERMES_FALLBACK_1: "openrouter/qwen/qwen3.6-plus:free"
   MODEL_HERMES_FALLBACK_2: "openrouter/google/gemma-3-27b-it:free"
   MODEL_HERMES_COMPRESSION: "openrouter/qwen/qwen3.6-plus-preview:free"

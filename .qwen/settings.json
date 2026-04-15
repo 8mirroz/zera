@@ -54,7 +54,12 @@
       "Bash([\"8223961194\"]})",
       "Bash(head *)",
       "Bash(src *)",
-      "Bash(load_hermes_dotenv)"
+      "Bash(load_hermes_dotenv)",
+      "Bash(uv *)",
+      "Bash(chmod *)",
+      "Bash(memory_pressure)",
+      "Bash(ollama *)",
+      "WebSearch"
     ]
   },
   "$version": 3

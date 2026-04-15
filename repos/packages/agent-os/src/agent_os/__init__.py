@@ -49,6 +49,27 @@ from .ralph_loop_verification import (
 )
 from .ralph_loop import RalphLoopConfig, RalphLoopDecision, RalphEvent
 
+# Execution Guards — pre/post-flight validation, stall detection, heartbeat
+from .execution_guards import (
+    ExecutionGuards,
+    HeartbeatMonitor,
+    PreflightValidator,
+    PostflightGroundingChecker,
+    StallDetector,
+    HeartbeatEmitter,
+    ViolationTracker,
+    ArtifactSummaryValidator,
+    ProgressSignal,
+    ViolationLevel,
+    ViolationType,
+    StallCause,
+    Violation,
+    ValidationResult,
+    GroundingResult,
+    StallEvent,
+    HeartbeatPayload,
+)
+
 __all__ = [
     "AgentRuntime",
     "CodeEditor",
@@ -104,4 +125,22 @@ __all__ = [
     "RalphLoopConfig",
     "RalphLoopDecision",
     "RalphEvent",
+    # Execution Guards
+    "ExecutionGuards",
+    "HeartbeatMonitor",
+    "PreflightValidator",
+    "PostflightGroundingChecker",
+    "StallDetector",
+    "HeartbeatEmitter",
+    "ViolationTracker",
+    "ArtifactSummaryValidator",
+    "ProgressSignal",
+    "ViolationLevel",
+    "ViolationType",
+    "StallCause",
+    "Violation",
+    "ValidationResult",
+    "GroundingResult",
+    "StallEvent",
+    "HeartbeatPayload",
 ]

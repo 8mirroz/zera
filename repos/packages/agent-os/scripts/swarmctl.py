@@ -520,7 +520,9 @@ def _doctor_remediation_hints(failures: list[str], warnings: list[str]) -> list[
     if "Qwen CLI not found in PATH" in combined:
         hints.append("Install/repair Qwen CLI: `npm i -g @qwen-code/qwen-code@latest` and ensure `qwen` is available in PATH.")
     if "uv not found in PATH" in combined:
-        hints.append("Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh` or `brew install uv`.")
+        hints.append("Install uv: `curl -LsSf https://astral.sh/uv/install.sh | sh` or `brew install uv` (optional but recommended).")
+    if "npm not found in PATH" in combined:
+        hints.append("Install Node.js/npm or ensure NVM is sourced in your shell.")
     if "Wiki-core qmd unavailable" in combined:
         hints.append("Install qmd or configure `configs/tooling/wiki_core.yaml` to use an available qmd command; until then wiki-core will use TF-IDF fallback.")
     if "Wiki-core doctor failed" in combined or "Wiki-core missing required paths" in combined:
@@ -1037,13 +1039,32 @@ def cmd_doctor(_: argparse.Namespace) -> int:
     if not _env_var_present(repo_root, "OPENROUTER_API_KEY"):
         warnings.append("Missing env var: OPENROUTER_API_KEY")
     if shutil.which("uv") is None:
-        failures.append("uv not found in PATH (required for high-speed package management)")
-    if shutil.which("qwen") is None:
+        warnings.append("uv not found in PATH (recommended for high-speed package management)")
+    
+    npm_path = shutil.which("npm")
+    if npm_path is None:
+        # Try to find npm in NVM paths
+        nvm_bin = Path.home() / ".nvm/versions/node"
+        if nvm_bin.exists():
+            candidates = sorted(nvm_bin.glob("v*/bin/npm"), reverse=True)
+            if candidates:
+                npm_path = str(candidates[0])
+    
+    if npm_path is None:
+        warnings.append("npm not found in PATH or NVM (required for many MCP servers)")
+    
+    qwen_path = shutil.which("qwen")
+    if qwen_path is None and npm_path:
+        qwen_candidate = Path(npm_path).parent / "qwen"
+        if qwen_candidate.exists():
+            qwen_path = str(qwen_candidate)
+
+    if qwen_path is None:
         warnings.append("Qwen CLI not found in PATH (cli_qwen channel will auto-fallback to api_router)")
     else:
         try:
             auth = subprocess.run(
-                ["qwen", "auth", "status"],
+                [qwen_path, "auth", "status"],
                 capture_output=True,
                 text=True,
                 check=False,

@@ -80,3 +80,20 @@ fail_safe:
   on_scope_violation: handoff_to_orchestrator
   on_missing_template: fallback_to_manual_then_warn
   on_ambiguity_detected: stop_and_handoff
+
+# ============================================================================
+# EXECUTION TRUTH CONTRACT — Injected from _execution_constraints.yaml
+# Enforced by: agent_os.execution_guards.ExecutionGuards
+# Source: configs/rules/EXECUTION_TRUTH_CONTRACT.md
+# ============================================================================
+execution_truth:
+  evidence_required: true
+  grounding_required: true
+  auto_continue_safe: true
+  stall_timeout_seconds: 20
+  completion_artifacts_required: true
+  forbidden_patterns:
+    - "created without evidence"
+    - "done without artifact list"
+    - "checking without findings"
+    - "continuing without state"

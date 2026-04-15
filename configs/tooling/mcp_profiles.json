@@ -5,39 +5,40 @@
     "${HOME}/antigravity-core",
     "${HOME}/projects",
     "${HOME}/lab",
-    "${VAULT_PATH}"
+    "/Users/user/zera/vault"
   ],
   "obsidian_servers": {
     "obsidian-disk": {
       "description": "Disk-based vault access (no Obsidian required, headless-safe)",
-      "command": "npx",
+      "command": "/bin/zsh",
       "args": [
-        "-y",
-        "mcp-obsidian"
+        "-c",
+        "source ~/.nvm/nvm.sh && npx -y mcp-obsidian"
       ],
       "env": {
-        "VAULT_PATH": "${VAULT_PATH}"
+        "VAULT_PATH": "/Users/user/zera/vault"
       }
     },
     "obsidian-semantic": {
       "description": "Semantic search via Smart Connections embeddings (read-only)",
-      "command": "node",
+      "command": "/bin/zsh",
       "args": [
-        "${SMART_CONNECTIONS_MCP_PATH}/dist/index.js"
+        "-c",
+        "source ~/.nvm/nvm.sh && node ${SMART_CONNECTIONS_MCP_PATH}/dist/index.js"
       ],
       "env": {
-        "VAULT_PATH": "${VAULT_PATH}"
+        "VAULT_PATH": "/Users/user/zera/vault"
       }
     },
     "obsidian-memory": {
       "description": "Agent memory write-back as Markdown with wikilinks",
-      "command": "npx",
+      "command": "/bin/zsh",
       "args": [
-        "-y",
-        "obsidian-memory-mcp"
+        "-c",
+        "source ~/.nvm/nvm.sh && npx -y obsidian-memory-mcp"
       ],
       "env": {
-        "VAULT_PATH": "${VAULT_PATH}",
+        "VAULT_PATH": "/Users/user/zera/vault",
         "MEMORY_DIR": "memory"
       }
     }
@@ -56,28 +57,27 @@
   },
   "servers": {
     "browser": {
-      "command": "npx",
+      "command": "/bin/zsh",
       "args": [
-        "-y",
-        "@agent-infra/mcp-server-browser"
+        "-c",
+        "source ~/.nvm/nvm.sh && npx -y @agent-infra/mcp-server-browser"
       ]
     },
     "google-llm": {
-      "command": "npx",
+      "command": "/bin/zsh",
       "args": [
-        "-y",
-        "@agent-infra/mcp-server-google-llm"
+        "-c",
+        "source ~/.nvm/nvm.sh && npx -y @agent-infra/mcp-server-google-llm"
       ],
       "env": {
         "MODEL": "gemini-1.5-pro"
       }
     },
     "exa": {
-      "command": "npx",
+      "command": "/bin/zsh",
       "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}"
+        "-c",
+        "source ~/.nvm/nvm.sh && npx -y mcp-remote https://mcp.exa.ai/mcp?exaApiKey=${EXA_API_KEY}"
       ]
     }
   },

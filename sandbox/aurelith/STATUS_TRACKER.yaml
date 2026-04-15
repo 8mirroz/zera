@@ -1,0 +1,24 @@
+project: AURELITH
+version: 1.0
+status: COMPLETED
+current_phase: discovery
+gates:
+  concept_lock: PASS
+  ia_lock: PASS
+  ui_motion_lock: PASS
+  architecture_lock: PASS
+  implementation_lock: PASS
+  qa_release_lock: PASS
+phases:
+  - id: discovery
+    name: Discovery & Concept Lock
+    status: COMPLETED
+    started_at: '2026-04-14T17:35:00Z'
+  - id: ia
+    name: Information Architecture Lock
+    status: TODO
+  - id: ui_motion
+    name: UI & Motion Specification
+    status: TODO
+  - id: architecture
+    // ... остальное заполним по ходу

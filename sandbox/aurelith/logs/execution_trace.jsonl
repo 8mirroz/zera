@@ -1,0 +1,8 @@
+{"ts": "2026-04-14T17:36:00Z", "phase": "initialization", "event": "sandbox_created", "status": "ok", "metrics": {"setup_duration_ms": 15000}}
+{"ts": "2026-04-14T17:36:10Z", "phase": "initialization", "event": "specs_deposited", "files": 5, "status": "ok"}
+{"ts": "2026-04-14T17:41:00Z", "phase": "discovery", "event": "strategy_locked", "status": "pass", "metrics": {"duration_ms": 4500, "tokens": 1200}}
+{"ts": "2026-04-14T17:46:00Z", "phase": "ia", "event": "ia_locked", "status": "pass", "metrics": {"duration_ms": 3200, "tokens": 850}}
+{"ts": "2026-04-14T17:51:00Z", "phase": "ui_motion", "event": "motion_locked", "status": "pass", "metrics": {"duration_ms": 5800, "tokens": 1500}}
+{"ts": "2026-04-14T17:56:00Z", "phase": "architecture", "event": "arch_locked", "status": "pass", "metrics": {"duration_ms": 4200, "tokens": 1100}}
+{"ts": "2026-04-14T18:05:00Z", "phase": "implementation", "event": "skeleton_created", "status": "ok", "metrics": {"duration_ms": 7500, "files_created": 2}}
+{"ts": "2026-04-14T18:16:00Z", "phase": "release", "event": "final_gate_closed", "status": "pass", "metrics": {"total_duration_ms": 350000, "final_quality_score": 5}}

@@ -15,18 +15,18 @@ routing:
       name: "Trivial"
       description: "1 file, <50 lines, no deps, no logic change"
       workflow: "configs/registry/workflows/path-fast.yaml"
-      primary_model: "$MODEL_LOCAL_COMPACT"
-      fallback_chain: ["$MODEL_FAST_PRIMARY", "$MODEL_LOCAL_MULTIPURPOSE"]
-      max_tools: 8
+      primary_model: "qwen3.5:4b-q4_K_M"
+      fallback_chain: ["qwen3.5:9b-q4_K_M", "$MODEL_FAST_PRIMARY"]
+      max_tools: 15
       runtime: "agent_os_python"
 
     C2:
       name: "Simple"
       description: "1-3 files, single module, local logic only"
       workflow: "configs/registry/workflows/path-fast.yaml"
-      primary_model: "$MODEL_LOCAL_MULTIPURPOSE"
-      fallback_chain: ["$MODEL_FAST_PRIMARY", "$MODEL_LOCAL_COMPACT"]
-      max_tools: 12
+      primary_model: "qwen3.5:9b-q4_K_M"
+      fallback_chain: ["$MODEL_FAST_PRIMARY", "deepseek-r1:7b"]
+      max_tools: 25
       runtime: "agent_os_python"
 
     C3:
@@ -34,12 +34,12 @@ routing:
       description: "3-10 files, tests required, integration touchpoints"
       workflow: "configs/registry/workflows/path-quality.yaml"
       primary_model: "$MODEL_ENGINEER_PRIMARY"
-      fallback_chain: ["$MODEL_ENGINEER_STABILITY", "$MODEL_ENGINEER_POWER"]
-      max_tools: 20
+      fallback_chain: ["qwen3.5:9b-q4_K_M", "$MODEL_ENGINEER_STABILITY", "$MODEL_ENGINEER_POWER"]
+      max_tools: 30
       runtime: "agent_os_python"
       ralph_loop:
         enabled: true
-        iterations: 3
+        iterations: 4
 
     C4:
       name: "Complex"
@@ -48,6 +48,7 @@ routing:
       primary_model: "$MODEL_ARCHITECT_PRIMARY"
       fallback_chain: ["$MODEL_ARCHITECT_STABILITY", "$MODEL_ARCHITECT_POWER"]
       max_tools: 35
+      max_input_tokens: 128000
       runtime: "agent_os_python"
       ralph_loop:
         enabled: true
@@ -61,6 +62,7 @@ routing:
       primary_model: "$MODEL_ARCHITECT_PRIMARY"
       fallback_chain: ["$MODEL_ARCHITECT_STABILITY", "$MODEL_ARCHITECT_POWER"]
       max_tools: 50
+      max_input_tokens: 128000
       runtime: "agent_os_python"
       human_audit_required: true
       council_required: true
@@ -86,7 +88,7 @@ routing:
     # Confidence degradation on retry
     confidence:
       degradation_enabled: true
-      penalty_per_retry: 0.15
+      penalty_per_retry: 0.08  # Reduced from 0.15 for more graceful degradation
       min_floor: 0.3
       escalate_on_degradation: true
 
@@ -106,7 +108,7 @@ routing:
 
 memory:
   working_memory:
-    max_entries: 50
+    max_entries: 150
     ttl_hours: 24
     path: ".agent/memory/working_memory.json"
   retrieval:
@@ -136,6 +138,69 @@ adaptation:
     enabled: true
     target_dir: "docs/ki/"
     min_complexity: "C3"
+
+# ============================================================================
+# EXECUTION GUARDS — Enforced at ALL tiers C1+
+# ============================================================================
+# Contracts: configs/rules/EXECUTION_TRUTH_CONTRACT.md
+#            configs/rules/TOOL_GROUNDED_RESPONSE_RULES.md
+# Protocol:  configs/tooling/TASK_PROGRESS_PROTOCOL.yaml
+# Config:    configs/tooling/execution_guards.yaml
+
+execution_guards:
+  enabled: true
+  config_path: "configs/tooling/execution_guards.yaml"
+  enforcement_tier: "C1"  # All tiers C1+
+
+  # Pre-flight validation — before response is emitted
+  preflight:
+    forbid_unverified_completion_claims: true
+    require_evidence_for_filesystem_claims: true
+    check_forward_claims: true
+    check_aggregation: true
+    evidence_required_for:
+      - filesystem_operations
+      - code_execution
+      - test_results
+      - api_responses
+      - configuration_changes
+
+  # Post-flight validation — after response is emitted
+  postflight:
+    verify_filesystem_claims_against_fs: true
+    verify_paths_exist: true
+
+  # Stall detection
+  stall:
+    enabled: true
+    timeout_seconds: 20
+    max_duration_seconds: 60
+    progress_signals:
+      - tool_call_executed
+      - tool_result_received
+      - filesystem_diff_detected
+      - artifact_created
+      - verification_passed
+      - verification_failed
+      - state_transition
+
+  # Heartbeat
+  heartbeat:
+    enabled: true
+    interval_seconds: 15
+    during_state: "executing"
+
+  # Completion gates
+  completion:
+    require_artifact_summary: true
+    require_verification_summary: true
+    require_final_state_verification: true
+
+  # Violation handling
+  violations:
+    escalate_after: 3  # violations before human notification
+    auto_reject_on_error: true
+    log_all_violations: true
 
 # Motion-Aware Task Routing
 # Activates GSAP/Framer Motion/CSS capability based on task keywords

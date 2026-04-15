@@ -244,6 +244,20 @@ No MCP tool → search fallback (search_web)
 
 ---
 
+## 🎭 Prompt Selection Protocol — Dynamic Context Engineering
+
+The system utilizes a centralized library of "Ultra-Prompts" to ensure deterministic and premium agent behavior.
+
+**Mandatory Procedure:**
+1. **Search First**: Before generating a system prompt or task instructions for a sub-agent, check [configs/prompts/manifest.yaml](file:///Users/user/zera/configs/prompts/manifest.yaml).
+2. **Select by Metadata**: Match the `task_type`, `role`, or `tier` to the registry entries.
+3. **Adapt & Inject**: Use the selected prompt as a base. Inject current goal, file list, and constraints using standard interpolation (e.g., `{{context}}`).
+4. **Registry Path**: [configs/prompts/](file:///Users/user/zera/configs/prompts/)
+
+**Rule:** Using ad-hoc, basic prompts for complex tasks (C3+) when a library equivalent exists is a protocol violation.
+
+---
+
 ## 🏛️ Architecture Quick Reference
 
 ### Task Routing System

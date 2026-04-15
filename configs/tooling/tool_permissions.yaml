@@ -149,6 +149,7 @@ tool_registry:
       - configs/
       - scripts/
       - .agent/
+      - /Users/user/projects/ZeraWork/
     forbidden_directories:
       - ".env"
       - "**/*.env"
@@ -169,6 +170,7 @@ tool_registry:
       - scripts/
       - .agent/
       - docs/
+      - /Users/user/projects/ZeraWork/
 
   file_delete:
     category: repository

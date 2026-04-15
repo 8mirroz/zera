@@ -1,0 +1,62 @@
+# Execution Truth Constraints — Shared by All Roles
+# This file is injected into ALL role contracts at runtime.
+# DO NOT modify per-role — this is a global execution contract.
+
+execution_constraints:
+  # Enforced by: configs/rules/EXECUTION_TRUTH_CONTRACT.md
+  # Validated by: agent_os.execution_guards.ExecutionGuards
+
+  evidence_contract:
+    description: "No claim without evidence"
+    rules:
+      - "Never claim file/directory creation without tool result"
+      - "Never claim 'done' without artifact list"
+      - "Never claim 'checking' without returning findings"
+      - "Never claim 'continuing' without step/state evidence"
+    violation_action: "response_rejected"
+  
+  grounding_contract:
+    description: "All claims must be grounded in observed results"
+    rules:
+      - "Every filesystem claim must be verified against actual filesystem"
+      - "Every code claim must include verified output"
+      - "No forward claims (claiming results from future steps)"
+      - "No aggregation without specific count"
+    violation_action: "warning_logged"
+
+  response_format:
+    required_sections:
+      - "task: objective and progress"
+      - "executed: action, tool, result"
+      - "verified: check, evidence, status"
+      - "artifacts: created/modified/failed"
+      - "next: next step or blocked reason"
+  
+  auto_continue:
+    enabled: true
+    safe_operations:
+      - filesystem_read
+      - filesystem_write
+      - code_generation
+      - config_write
+      - documentation
+      - test_execution
+    requires_pause_for:
+      - destructive_delete
+      - production_write
+      - security_change
+      - external_api_write
+      - payment_operation
+      - data_deletion
+
+  stall_prevention:
+    timeout_seconds: 20
+    on_stall:
+      - "State what you're waiting for"
+      - "State the blocking condition"
+      - "Provide current known state"
+
+  completion_requirements:
+    - "Artifact summary with created/modified/failed lists"
+    - "Verification summary with pass/fail count"
+    - "No unverified completion claims"

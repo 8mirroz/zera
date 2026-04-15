@@ -1,6 +1,6 @@
 {
   "version": "agent-os-v2",
-  "generated_at": "2026-04-10T16:20:21.646942+00:00",
+  "generated_at": "2026-04-14T18:49:52.963012+00:00",
   "active_skills_md": "configs/skills/ACTIVE_SKILLS.md",
   "skills": [
     {
@@ -91,7 +91,7 @@
       "name": "subagent-driven-development",
       "source": "configs/skills/superpowers/subagent-driven-development",
       "dest": ".agent/skills/subagent-driven-development",
-      "sha256_tree": "19ff0fc4e8f574e2887c624f56462d5ecb9e617d40a2743fe166bce82e9a6e6d"
+      "sha256_tree": "b8d33a55f2c4d917db1e49c0f0a1f540fc820c2a4a055e8f14f8b06ea82a5648"
     },
     {
       "name": "requesting-code-review",

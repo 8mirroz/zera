@@ -33,6 +33,13 @@ _C5_KEYWORDS = [
     "council", "совет", "аудит безопасности",
 ]
 
+_C2_KEYWORDS = [
+    "напиши", "write", "создай", "create", "сделай", "make",
+    "function", "функци", "class", "класс", "модул",
+    "скрипт", "script", "утилита", "utility",
+    "implement", "реализ", "код", "code",
+]
+
 _C3_KEYWORDS = [
     "тест", "test", "integration", "модуль", "module",
     "feature", "функцион", "functional", "end-to-end",
@@ -64,6 +71,7 @@ def classify(text: str) -> ClassificationResult:
     c5_hits = sum(1 for kw in _C5_KEYWORDS if kw in lower)
     c4_hits = sum(1 for kw in _C4_KEYWORDS if kw in lower)
     c3_hits = sum(1 for kw in _C3_KEYWORDS if kw in lower)
+    c2_hits = sum(1 for kw in _C2_KEYWORDS if kw in lower)
 
     # Rule-based classification
     if c5_hits >= 1:
@@ -88,6 +96,14 @@ def classify(text: str) -> ClassificationResult:
             tier="C3",
             confidence=confidence,
             reasoning=f"Integration/module keywords ({c3_hits}), medium complexity"
+        )
+
+    if c2_hits >= 1 or (tokens > 10 and text_len >= 50):
+        confidence = min(0.5 + c2_hits * 0.1, 0.8)
+        return ClassificationResult(
+            tier="C2",
+            confidence=confidence,
+            reasoning=f"Code/action keywords ({c2_hits}), simple scope"
         )
 
     # Length-based heuristic for simple queries

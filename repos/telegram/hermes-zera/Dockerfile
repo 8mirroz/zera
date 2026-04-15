@@ -1,7 +1,6 @@
-FROM node:20-slim
+FROM python:3.12-slim
 WORKDIR /app
-COPY package.json ./
-RUN npm install --production
-COPY bot.js ./
-COPY SOUL.md ./
-CMD ["node", "bot.js"]
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "bot.py"]

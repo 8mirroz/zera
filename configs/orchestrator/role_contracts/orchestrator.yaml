@@ -104,3 +104,20 @@ fail_safe:
   on_model_alias_unresolved: "fallback_then_escalate"
   on_invalid_handoff_target: "escalate_to_council"
   on_trace_failure: "warn_and_restrict_execution"
+
+# ============================================================================
+# EXECUTION TRUTH CONTRACT — Injected from _execution_constraints.yaml
+# Enforced by: agent_os.execution_guards.ExecutionGuards
+# Source: configs/rules/EXECUTION_TRUTH_CONTRACT.md
+# ============================================================================
+execution_truth:
+  evidence_required: true
+  grounding_required: true
+  auto_continue_safe: true
+  stall_timeout_seconds: 20
+  completion_artifacts_required: true
+  forbidden_patterns:
+    - "created without evidence"
+    - "done without artifact list"
+    - "checking without findings"
+    - "continuing without state"

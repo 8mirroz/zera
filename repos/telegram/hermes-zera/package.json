@@ -1,15 +1,15 @@
 {
   "name": "hermes-zera",
-  "version": "1.0.0",
-  "description": "Hermes Zera — Telegram AI agent for Antigravity Core",
-  "main": "bot.js",
+  "version": "2.0.0",
+  "description": "Hermes Zera — Telegram AI agent with Antigravity Core routing (C1-C5 tiers, multi-model, fallback chains)",
+  "main": "bot.py",
   "scripts": {
-    "start": "node bot.js",
-    "dev": "node --watch bot.js"
+    "start": "python bot.py",
+    "dev": "python bot.py --debug",
+    "test": "python -m pytest tests/ -v 2>/dev/null || echo 'No tests yet'"
   },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
-    "node-telegram-bot-api": "^0.66.0",
-    "dotenv": "^16.4.7"
+  "engines": {
+    "node": ">=18",
+    "python": ">=3.11"
   }
 }

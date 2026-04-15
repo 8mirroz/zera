@@ -1,0 +1,576 @@
+{
+  "status": "ok",
+  "generated_at": "2026-04-15T11:34:50.289574+00:00",
+  "trace_file": "/Users/user/zera/logs/agent_traces.jsonl",
+  "allow_legacy": true,
+  "normalization": {
+    "lines_total": 128,
+    "v2_rows": 24,
+    "legacy_rows": 0,
+    "invalid_rows": 104,
+    "events_emitted_after_normalization": 24,
+    "normalization_errors_count": 104
+  },
+  "event_counts": {
+    "task_end": 12,
+    "task_start": 12
+  },
+  "kpis": {
+    "pass_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "unavailable"
+    },
+    "tool_success_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "unavailable"
+    },
+    "capture_coverage": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "retro_written + triage_decision/task_run_summary (C3+)"
+    },
+    "escalation_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "task_run_summary"
+    },
+    "policy_compliance_rate": {
+      "value": 1.0,
+      "numerator": 12,
+      "denominator": 12,
+      "source": "policy_violation_detected"
+    },
+    "ralph_best_of_n_uplift": {
+      "value": null,
+      "runs_with_multistep_ralph": 0,
+      "runs_with_any_ralph_signal": 0,
+      "source": "ralph_iteration_scored"
+    },
+    "flake_rate": {
+      "value": null,
+      "source": "verification_result",
+      "note": "Requires explicit nondeterministic/flake signal in verification_result.data"
+    },
+    "runtime_provider_fallback_success": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "runtime_provider_fallback"
+    },
+    "background_job_success_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "background_job_started/background_job_completed"
+    },
+    "persona_eval_pass_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "persona_eval_scored"
+    },
+    "memory_retrieval_hit_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "memory_retrieval_scored"
+    },
+    "autonomy_gate_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "autonomy_decision/approval_gate_triggered"
+    },
+    "stop_signal_compliance": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "stop_signal_received/stop_signal_honored"
+    },
+    "proof_of_action_coverage": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "proof_of_action_recorded/background_job_completed"
+    },
+    "budget_limit_hit_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "budget_limit_hit/autonomy_decision"
+    },
+    "self_reflection_valid_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "self_reflection_written/policy_violation_detected(reflection_validation)"
+    },
+    "self_reflection_rejection_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "policy_violation_detected(reflection_validation)"
+    },
+    "self_reflection_schema_coverage": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "self_reflection_written.data(schema_name,schema_version)"
+    },
+    "harness_validation_completion_rate": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "harness_validation_started/harness_validation_completed"
+    },
+    "harness_evidence_per_validation": {
+      "value": null,
+      "numerator": 0,
+      "denominator": 0,
+      "source": "harness_evidence_collected/harness_validation_started"
+    }
+  },
+  "run_counters": {
+    "runs_seen": 12,
+    "runs_with_retro": 0,
+    "runs_eligible_capture_c3plus": 0,
+    "task_summary_total": 0,
+    "task_summary_success": 0,
+    "task_summary_fail": 0,
+    "task_summary_escalated": 0,
+    "fallback_total": 0,
+    "background_started": 0,
+    "background_completed": 0,
+    "persona_eval_total": 0,
+    "memory_retrieval_total": 0,
+    "autonomy_decision_total": 0,
+    "stop_signal_received_total": 0,
+    "stop_signal_honored_total": 0,
+    "proof_of_action_total": 0,
+    "self_reflection_written_total": 0,
+    "self_reflection_rejected_total": 0,
+    "harness_validation_started_total": 0,
+    "harness_validation_completed_total": 0,
+    "harness_evidence_total": 0,
+    "doc_gardening_issue_total": 0
+  },
+  "errors": [
+    {
+      "line": 1,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 2,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 3,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 4,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 5,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 6,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 7,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 8,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 9,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 10,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 11,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 12,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 13,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 14,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 15,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 16,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 17,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 18,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 19,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 20,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 21,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 22,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 23,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 24,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 25,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 26,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 27,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 28,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 29,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 30,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 31,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 32,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 33,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 34,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 35,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 36,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 37,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 38,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 39,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 40,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 41,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 42,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 43,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 44,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 45,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 46,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 47,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 48,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 49,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 50,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 51,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 52,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 53,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 54,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 55,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 56,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 57,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 58,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 59,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 60,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 61,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 62,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 63,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 64,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 65,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 66,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 67,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 68,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 69,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 70,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 71,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 72,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 73,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 74,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 75,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 76,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 77,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 78,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 79,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 80,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 81,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 82,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 83,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 84,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 85,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 86,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 87,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 88,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 89,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 90,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 91,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 92,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 93,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 94,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 95,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 96,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 97,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 98,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 99,
+      "error": "unrecognized trace row format"
+    },
+    {
+      "line": 100,
+      "error": "unrecognized trace row format"
+    }
+  ],
+  "dimensions": {
+    "event_type": {
+      "task_end": 12,
+      "task_start": 12
+    },
+    "component": {
+      "registry_workflows": 16,
+      "router": 4,
+      "runtime_registry": 4
+    }
+  }
+}

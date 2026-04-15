@@ -168,22 +168,23 @@ class _JsonlMemoryBackend:
         needle = needle_raw.lower().strip()
         rows = self._load_rows()
         if not needle:
-            return rows[:10]
+            return rows[:15]
         query_tokens = self._tokenize(needle)
         scored: list[tuple[float, dict[str, Any]]] = []
         for row in rows:
             haystack = f"{row.get('key', '')} {self._serialize_payload(row.get('payload', {}))}".lower()
             token_hits = sum(1 for token in query_tokens if token in haystack)
-            substring_hit = 1 if needle in haystack else 0
-            recency_bonus = 0.1 if row.get("memory_class") in {"active_goal", "working_memory"} else 0.0
+            substring_hit = 1.5 if needle in haystack else 0.0
+            recency_bonus = 0.2 if row.get("memory_class") in {"active_goal", "working_memory"} else 0.0
             confidence = float(row.get("confidence", 1.0))
-            score = (token_hits * 1.0) + (substring_hit * 0.5) + recency_bonus + confidence * 0.2
-            if score > 0:
+            # Score = tokens + exact/substring bonus + recency + confidence
+            score = (token_hits * 1.0) + substring_hit + recency_bonus + confidence * 0.2
+            if score > 0.5:  # Filter noise: simple token hits on small common words often yield low scores
                 row_copy = dict(row)
                 row_copy["search_score"] = round(score, 4)
                 scored.append((score, row_copy))
         scored.sort(key=lambda item: item[0], reverse=True)
-        return [row for _, row in scored[:10]]
+        return [row for _, row in scored[:50]]
 
     def _is_expired(self, row: dict[str, Any]) -> bool:
         raw = row.get("expires_at")

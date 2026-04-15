@@ -1,0 +1,325 @@
+# Task Progress Protocol — Antigravity Core v4.2
+# Version: 1.0.0
+# Purpose: Define run states, transitions, heartbeat, and stall detection
+# Applies to: All agent executors (Hermes, Zera, CLI tools, workflows)
+# 
+# This protocol ensures that every task run has observable progress,
+# automatic stall detection, and clean state transitions.
+
+version: "1.0.0"
+status: "ACTIVE"
+
+# ============================================================================
+# RUN STATE MACHINE
+# ============================================================================
+
+run_states:
+  planning:
+    description: "Agent is analyzing task and creating execution plan"
+    max_duration_seconds: 30
+    heartbeat_required: false
+    transitions:
+      - executing
+      - blocked
+      - failed
+
+  executing:
+    description: "Agent is actively executing tools/actions"
+    max_duration_seconds: 300
+    heartbeat_required: true
+    heartbeat_interval_seconds: 15
+    transitions:
+      - verifying
+      - stalled
+      - failed
+      - blocked
+
+  verifying:
+    description: "Agent is verifying state changes from executed actions"
+    max_duration_seconds: 60
+    heartbeat_required: false
+    transitions:
+      - reporting
+      - executing  # more work needed
+      - failed
+
+  reporting:
+    description: "Agent is summarizing results and preparing next steps"
+    max_duration_seconds: 30
+    heartbeat_required: false
+    transitions:
+      - executing  # continue with next step
+      - completed  # all work done
+      - blocked    # waiting on input
+
+  blocked:
+    description: "Task blocked, waiting for human input or external resource"
+    max_duration_seconds: 3600  # 1 hour
+    heartbeat_required: false
+    transitions:
+      - executing  # unblocked
+      - failed     # timeout
+
+  stalled:
+    description: "No progress detected within stall timeout"
+    max_duration_seconds: 60
+    heartbeat_required: false
+    transitions:
+      - executing  # recovered
+      - failed     # unrecoverable
+
+  failed:
+    description: "Task failed with error"
+    terminal: true
+    transitions: []
+
+  completed:
+    description: "Task completed successfully with verified artifacts"
+    terminal: true
+    transitions: []
+
+# ============================================================================
+# TRANSITION RULES
+# ============================================================================
+
+transitions:
+  # Normal flow
+  planning -> executing:
+    condition: "Plan created and first tool ready"
+    required_output: "execution_plan + first_tool_call"
+
+  executing -> verifying:
+    condition: "Tool call returned result"
+    required_output: "tool_result + verification_check"
+
+  verifying -> reporting:
+    condition: "Verification complete (pass/fail)"
+    required_output: "verification_result + evidence"
+
+  reporting -> executing:
+    condition: "More steps remain in plan"
+    required_output: "next_step_plan"
+
+  reporting -> completed:
+    condition: "All steps complete, artifact summary ready"
+    required_output: "final_artifact_summary"
+
+  # Error flows
+  executing -> stalled:
+    condition: "No tool call or state change within stall_timeout_seconds"
+    required_output: "stall_reason"
+
+  executing -> failed:
+    condition: "Unrecoverable tool error or max retries exceeded"
+    required_output: "error_details + failure_context"
+
+  stalled -> failed:
+    condition: "Stall persisted for stall_max_duration_seconds"
+    required_output: "stall_duration + last_known_state"
+
+  blocked -> executing:
+    condition: "Blocking condition resolved"
+    required_output: "resolution_confirmation"
+
+  blocked -> failed:
+    condition: "Block timeout exceeded"
+    required_output: "timeout_details"
+
+# ============================================================================
+# HEARTBEAT SPECIFICATION
+# ============================================================================
+
+heartbeat:
+  enabled: true
+  
+  # During executing state, emit heartbeat at this interval
+  interval_seconds: 15
+  
+  # Heartbeat payload
+  schema:
+    run_id: "string"
+    state: "executing"
+    current_step: "integer (1-based)"
+    total_steps: "integer"
+    last_tool: "string (tool name)"
+    last_tool_status: "success | error | timeout"
+    artifacts_created: "integer (count)"
+    last_verified_change: "timestamp | null"
+    stall_seconds: "integer (time since last state change)"
+  
+  # Actions on missed heartbeat
+  on_miss:
+    1: "Log warning, check agent status"
+    2: "Emit stall event"
+    3: "Transition to stalled state"
+    4: "If stall persists -> failed"
+
+# ============================================================================
+# STALL DETECTION
+# ============================================================================
+
+stall_detection:
+  enabled: true
+  
+  # Time without state change before stall is triggered
+  timeout_seconds: 20
+  
+  # Maximum time in stalled state before auto-fail
+  max_duration_seconds: 60
+  
+  # What counts as "progress" (resets stall timer)
+  progress_signals:
+    - tool_call_executed
+    - tool_result_received
+    - filesystem_diff_detected
+    - artifact_created
+    - verification_passed
+    - verification_failed
+    - state_transition
+  
+  # Stall event payload
+  stall_event_schema:
+    run_id: "string"
+    stalled_at: "timestamp"
+    last_progress_signal: "timestamp"
+    last_known_state: "planning | executing | verifying | reporting"
+    last_tool_call: "string | null"
+    last_tool_result: "string | null"
+    stall_duration_seconds: "integer"
+    likely_cause: |
+      - waiting_for_tool: tool call pending
+      - no_diff: tool returned but no filesystem change
+      - reasoning_loop_stuck: agent cycling without tool calls
+      - tool_timeout: tool exceeded timeout
+      - orchestration_error: transition failed
+
+# ============================================================================
+# MULTI-STEP AUTO-CONTINUE
+# ============================================================================
+
+auto_continue:
+  enabled: true
+  
+  # For safe multi-step tasks, agent should NOT stop after each step.
+  # It should continue until one of these boundary conditions:
+  
+  boundary_conditions:
+    - all_steps_completed
+    - tool_error
+    - safety_boundary_triggered
+    - missing_input_required
+    - human_review_required  # C4+ tasks
+    - stall_detected
+    - explicit_user_interrupt
+  
+  # What counts as "safe" for auto-continue
+  safe_operations:
+    - filesystem_read  # ls, cat, find, grep
+    - filesystem_write  # mkdir, touch, write_file
+    - code_generation  # create new files
+    - config_write  # write/modify config files
+    - documentation  # create/modify docs
+    - test_execution  # run tests
+  
+  # What requires pause (not auto-continued)
+  unsafe_operations:
+    - destructive_delete  # rm -rf, DROP TABLE
+    - production_write  # deploy, migrate
+    - security_change  # chmod, chown, permissions
+    - external_api_write  # POST to external service
+    - payment_operation
+    - data_deletion
+
+# ============================================================================
+# ARTIFACT SUMMARY (Required on Completion)
+# ============================================================================
+
+artifact_summary:
+  required: true
+  
+  # Final summary must include:
+  schema:
+    task: "string (objective)"
+    status: "completed | partial | failed"
+    duration_seconds: "integer"
+    total_steps: "integer"
+    completed_steps: "integer"
+    
+    artifacts:
+      created:
+        - path: "string"
+          type: "file | directory | config"
+          size_bytes: "integer"
+          checksum: "string (optional)"
+      
+      modified:
+        - path: "string"
+          change_type: "content | permissions | metadata"
+          diff_summary: "string"
+      
+      failed:
+        - path: "string"
+          reason: "string"
+      
+      skipped:
+        - path: "string"
+          reason: "string"
+    
+    verification:
+      total_checks: "integer"
+      passed: "integer"
+      failed: "integer"
+    
+    next_actions:
+      - "string (if partial or follow-up needed)"
+
+# ============================================================================
+# OBSERVABILITY EVENTS
+# ============================================================================
+
+observability:
+  # Events emitted to trace log
+  events:
+    - run_started
+    - state_transition
+    - tool_call_started
+    - tool_call_completed
+    - verification_passed
+    - verification_failed
+    - artifact_created
+    - artifact_modified
+    - heartbeat_emitted
+    - heartbeat_missed
+    - stall_detected
+    - stall_recovered
+    - run_completed
+    - run_failed
+    - run_blocked
+
+  # Trace output location
+  trace_log: "logs/agent_traces.jsonl"
+  
+  # Progress file (for external monitoring)
+  progress_file: ".agent/runtime/progress/{run_id}.yaml"
+
+# ============================================================================
+# GUARDS (Enforced by Runtime)
+# ============================================================================
+
+guards:
+  forbid_unverified_completion_claims: true
+  require_evidence_for_filesystem_claims: true
+  auto_continue_safe_multistep_tasks: true
+  stall_timeout_seconds: 20
+  require_artifact_summary_on_completion: true
+  evidence_required_for:
+    - filesystem_operations
+    - code_execution
+    - test_results
+    - api_responses
+    - configuration_changes
+
+---
+
+Protocol version: 1.0.0 | Created: 2026-04-14 | Status: ACTIVE
+Enforcement: Runtime guards + completion gates

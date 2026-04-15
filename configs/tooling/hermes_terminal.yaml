@@ -1,0 +1,90 @@
+# ──────────────────────────────────────────────────────────────────────
+# Hermes/Zera Terminal Aesthetics Configuration
+# ──────────────────────────────────────────────────────────────────────
+# Controls the visual style of all Hermes and Zera terminal output.
+#
+# Available styles:
+#   void_prism      — Cyber-minimal with geometric depth
+#   neural_glass    — Luxury monochrome with layered transparency
+#   phantom_pulse   — Retro-futurist CRT with kinetic energy
+#
+# Override via environment: export HERMES_STYLE=neural_glass
+# ──────────────────────────────────────────────────────────────────────
+
+terminal:
+  # Default style
+  style: void_prism
+
+  # Terminal width for layout (null = auto-detect)
+  width: null
+
+  # Truecolor support (null = auto-detect)
+  truecolor: null
+
+  # Unicode width safety (false = assume terminal handles wide chars correctly)
+  unicode_safe: true
+
+# ── Style-specific overrides ─────────────────────────────────────────
+
+styles:
+  void_prism:
+    description: "Cyber-minimal with geometric depth"
+    palette:
+      accent: "violet"          # #8B5CF6
+      accent2: "cyan"           # #06B6D4
+      background: "#0A0A0E"
+      text: "#DCDCE6"
+      dim: "#4B4B5A"
+      success: "#22C55E"
+      warn: "#EAB308"
+      error: "#EF4444"
+    glyphs: "geometric"         # ◆ ◇ ◈ ▹
+    mood: "precise, restrained, sharp"
+
+  neural_glass:
+    description: "Luxury monochrome with layered transparency"
+    palette:
+      accent: "gold"            # #D9A957
+      background: "#121214"
+      text: "#C8C8CD"
+      dim: "#505055"
+      success: "#78B48C"
+      warn: "#C8AA64"
+      error: "#BE5A5A"
+    glyphs: "editorial"         # ⟡ · → ✓
+    mood: "spacious, warm, editorial"
+
+  phantom_pulse:
+    description: "Retro-futurist CRT with kinetic energy"
+    palette:
+      primary: "amber"          # #FFAA00
+      secondary: "rust"         # #B4501E
+      phosphor: "green"         # #00FF41
+      background: "#080604"
+      text: "#DCB478"
+      dim: "#645032"
+      success: "#00C832"
+      warn: "#C89600"
+      error: "#DC3C1E"
+    glyphs: "telemetry"         # ⚡ ● ▶ ╬
+    mood: "energetic, phosphor, mission-control"
+
+# ── Output contexts ──────────────────────────────────────────────────
+# Which style to use for different output contexts.
+# All default to the global style above.
+
+contexts:
+  report: null          # null = inherit from terminal.style
+  response: null        # null = inherit from terminal.style
+  error: null           # null = inherit from terminal.style
+  progress: null        # null = inherit from terminal.style
+  log: null             # null = inherit from terminal.style
+
+# ── Fallback chain ───────────────────────────────────────────────────
+# If a terminal doesn't support a feature, fall back gracefully.
+
+fallbacks:
+  no_truecolor: "Use 16-color ANSI palette"
+  no_unicode: "Use ASCII-only glyphs"
+  narrow_terminal: "Degrade to single-column layout"
+  no_hyperlinks: "Show URL as plain text after link text"

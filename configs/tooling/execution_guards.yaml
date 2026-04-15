@@ -1,0 +1,193 @@
+# Execution Guards Configuration — Antigravity Core v4.2
+# Version: 1.0.0
+# Purpose: Runtime enforcement of execution truth contract and response grounding
+# Enforcement: Applied by agent runtime at every step
+# 
+# These guards are non-negotiable. They apply to ALL agents at ALL tiers.
+
+version: "1.0.0"
+status: "ACTIVE"
+enforcement: "runtime"
+
+# ============================================================================
+# CORE GUARDS
+# ============================================================================
+
+guards:
+  
+  # --- TRUTHFULNESS GUARDS ---
+  
+  forbid_unverified_completion_claims:
+    enabled: true
+    description: "Agent cannot claim completion without tool result + verification"
+    violation_action: "reject_response"
+    retry_message: "Response rejected: completion claim not supported by tool results. Add evidence block."
+    escalation_after: 3  # violations before human notification
+  
+  require_evidence_for_filesystem_claims:
+    enabled: true
+    description: "Any filesystem claim (created/modified/deleted) must include evidence"
+    evidence_types:
+      created: ["path_exists", "ls_output", "find_output"]
+      modified: ["diff", "content_excerpt", "checksum_change"]
+      deleted: ["path_not_exists", "ls_empty"]
+    violation_action: "reject_response"
+  
+  require_evidence_for:
+    - filesystem_operations
+    - code_execution
+    - test_results
+    - api_responses
+    - configuration_changes
+  
+  # --- EXECUTION LOOP GUARDS ---
+  
+  auto_continue_safe_multistep_tasks:
+    enabled: true
+    description: "For safe operations, agent continues without waiting for user confirmation"
+    safe_operations:
+      - filesystem_read
+      - filesystem_write
+      - code_generation
+      - config_write
+      - documentation
+      - test_execution
+    requires_pause_for:
+      - destructive_delete
+      - production_write
+      - security_change
+      - external_api_write
+      - payment_operation
+      - data_deletion
+  
+  enforce_execution_loop:
+    enabled: true
+    description: "Agent must follow plan->act->verify->report cycle, not narrate->stop"
+    required_cycle:
+      - plan_step
+      - execute_tool
+      - verify_result
+      - report_with_evidence
+      - continue_or_complete
+    violation: "narrate_without_tool"
+    violation_action: "force_tool_call"
+  
+  # --- OBSERVABILITY GUARDS ---
+  
+  stall_timeout_seconds: 20
+  stall_detection:
+    enabled: true
+    timeout_seconds: 20
+    max_duration_seconds: 60
+    progress_signals:
+      - tool_call_executed
+      - tool_result_received
+      - filesystem_diff_detected
+      - artifact_created
+      - verification_passed
+      - verification_failed
+      - state_transition
+    on_stall:
+      - "Log stall event with likely_cause"
+      - "Emit stall heartbeat"
+      - "If recoverable: retry last tool"
+      - "If unrecoverable: transition to stalled state"
+  
+  require_heartbeat:
+    enabled: true
+    interval_seconds: 15
+    during_state: "executing"
+    on_miss:
+      1: "Log warning"
+      2: "Check agent status"
+      3: "Emit stall event"
+      4: "If persistent: transition to stalled"
+  
+  # --- COMPLETION GUARDS ---
+  
+  require_artifact_summary_on_completion:
+    enabled: true
+    description: "Final response must include complete artifact summary"
+    required_fields:
+      - created_files
+      - modified_files
+      - failed_operations
+      - verification_results
+    violation_action: "reject_response"
+    retry_message: "Response rejected: missing artifact summary. Include created/modified/failed lists."
+  
+  require_verification_summary:
+    enabled: true
+    description: "Task completion must include verification summary"
+    required_fields:
+      - total_checks
+      - passed
+      - failed
+  
+  enforce_final_state_verification:
+    enabled: true
+    description: "Before claiming 'completed', verify final state matches expected"
+    verification_steps:
+      - "All claimed artifacts exist"
+      - "No unexpected side effects"
+      - "No error states present"
+
+# ============================================================================
+# VIOLATION HANDLING
+# ============================================================================
+
+violations:
+  levels:
+    warning:
+      action: "Log warning, allow response"
+      notify: false
+    error:
+      action: "Reject response, request regeneration"
+      notify: false
+      max_retries: 3
+    critical:
+      action: "Reject response, notify human, pause task"
+      notify: true
+      pause_task: true
+  
+  mapping:
+    unverified_completion_claim: "error"
+    missing_filesystem_evidence: "error"
+    fabricated_evidence: "critical"
+    narrate_without_tool: "warning"
+    missing_artifact_summary: "error"
+    stall_detected: "warning"
+    stall_persistent: "critical"
+    heartbeat_miss: "warning"
+    forward_claim: "error"
+
+# ============================================================================
+# INTEGRATION
+# ============================================================================
+
+integration:
+  # Where guards are enforced
+  enforcement_points:
+    - "pre_response_validation"   # Before response is emitted
+    - "post_response_validation"  # After response is emitted
+    - "tool_result_processing"   # After tool result received
+    - "completion_gate"          # At task completion
+  
+  # Trace events
+  trace_events:
+    guard_violation_detected: "warning"
+    guard_response_rejected: "error"
+    guard_escalation_triggered: "critical"
+    stall_event_emitted: "warning"
+    heartbeat_missed: "warning"
+  
+  # Related contracts
+  contracts:
+    - "configs/rules/EXECUTION_TRUTH_CONTRACT.md"
+    - "configs/rules/TOOL_GROUNDED_RESPONSE_RULES.md"
+    - "configs/tooling/TASK_PROGRESS_PROTOCOL.yaml"
+    - "configs/orchestrator/router.yaml"
+
+---
+
+*Configuration version: 1.0.0 | Created: 2026-04-14 | Status: ACTIVE*

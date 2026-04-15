@@ -36,6 +36,8 @@ combos:
     description: "Task classification and swarm coordination"
     strategy: "priority"
     models:
+      - model: "ollama/qwen3.5:9b-q4_K_M"
+        reason: "Local Qwen3.5 9B — robust multipurpose"
       - model: "kc/deepseek/deepseek-v3.2"
         reason: "DeepSeek V3.2 — strong general reasoning, good at task classification"
       - model: "kc/qwen/qwen3-coder"
@@ -53,6 +55,8 @@ combos:
     description: "Low-complexity deterministic execution"
     strategy: "priority"
     models:
+      - model: "ollama/qwen3.5:4b-q4_K_M"
+        reason: "Local Qwen3.5 4B — very fast and capable for routine tasks"
       - model: "kc/google/gemini-2.0-flash"
         reason: "Gemini Flash — fastest model, ideal for trivial tasks"
       - model: "kc/openai/gpt-4o-mini"
@@ -72,6 +76,8 @@ combos:
     description: "Code implementation and refactoring"
     strategy: "priority"
     models:
+      - model: "ollama/qwen2.5-coder:7b"
+        reason: "Local Qwen2.5 Coder 7B — specialized for engineering"
       - model: "qw/qwen3-coder-plus"
         reason: "Qwen3 Coder Plus — specialized coding model, best generation quality"
       - model: "qw/qwen3-coder-flash"
@@ -91,6 +97,8 @@ combos:
     description: "UX and visual governance"
     strategy: "priority"
     models:
+      - model: "ollama/minicpm-v:latest"
+        reason: "Local MiniCPM-V — vision capable lead for design tasks"
       - model: "antigravity/gemini-3.1-pro-high"
         reason: "Gemini 3.1 Pro High — best multimodal capability for design"
       - model: "antigravity/gemini-3.1-pro-low"
@@ -110,6 +118,8 @@ combos:
     description: "Independent validation and critique"
     strategy: "priority"
     models:
+      - model: "ollama/deepseek-r1:7b"
+        reason: "Local DeepSeek R1 7B — analytical reasoning for reviews"
       - model: "antigravity/claude-opus-4-6-thinking"
         reason: "Claude Opus Thinking — best at adversarial review and edge cases"
       - model: "gh/claude-opus-4.6"
@@ -129,6 +139,8 @@ combos:
     description: "System design and governance authority"
     strategy: "priority"
     models:
+      - model: "ollama/deepseek-r1:7b"
+        reason: "Local DeepSeek R1 7B — specialized system design reasoning"
       - model: "antigravity/claude-opus-4-6-thinking"
         reason: "Claude Opus Thinking — best reasoning for architecture decisions"
       - model: "cl/anthropic/claude-opus-4-20250514"
@@ -148,6 +160,8 @@ combos:
     description: "Multi-role arbitration and strategic escalation"
     strategy: "priority"
     models:
+      - model: "ollama/deepseek-r1:7b"
+        reason: "Local DeepSeek R1 7B — highest available local reasoning for arbitration"
       - model: "antigravity/claude-opus-4-6-thinking"
         reason: "Claude Opus Thinking — top tier for strategic judgment"
       - model: "gh/claude-opus-4.6"

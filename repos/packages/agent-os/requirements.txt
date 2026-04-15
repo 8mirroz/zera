@@ -9,3 +9,6 @@ pytest>=7.0.0
 
 # Optional: for better performance
 numpy>=1.20.0
+
+# Local inference (optional, for Mac Apple Silicon)
+mlx-lm>=0.11.0

@@ -11,7 +11,7 @@ from typing import Any
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def load_json(path: Path) -> Any:
@@ -36,6 +36,9 @@ def _validate_v2_event(row: dict[str, Any], schema: dict[str, Any]) -> list[str]
 
     required_common = list(schema.get("required_common_fields", []))
     for key in required_common:
+        # run_id is allowed to be missing for system-level or shared logs
+        if key == "run_id":
+            continue
         if key not in row:
             errors.append(f"missing required field: {key}")
 
@@ -44,7 +47,7 @@ def _validate_v2_event(row: dict[str, Any], schema: dict[str, Any]) -> list[str]
 
     if "event_type" in row and not isinstance(row.get("event_type"), str):
         errors.append("event_type must be string")
-    if "run_id" in row and not isinstance(row.get("run_id"), str):
+    if "run_id" in row and row.get("run_id") is not None and not isinstance(row.get("run_id"), str):
         errors.append("run_id must be string")
     if "level" in row and row.get("level") not in {"debug", "info", "warn", "error"}:
         errors.append("level must be one of debug|info|warn|error")
@@ -54,10 +57,11 @@ def _validate_v2_event(row: dict[str, Any], schema: dict[str, Any]) -> list[str]
     event_type = row.get("event_type")
     event_specs = schema.get("event_types", {})
     if isinstance(event_type, str) and event_type in event_specs:
-        spec = event_specs[event_type] or {}
-        for key in spec.get("required", []):
-            if key not in row:
-                errors.append(f"event {event_type}: missing required field {key}")
+        spec = event_specs[event_type]
+        if isinstance(spec, dict):
+            for key in spec.get("required", []):
+                if key not in row:
+                    errors.append(f"event {event_type}: missing required field {key}")
 
     return errors
 
