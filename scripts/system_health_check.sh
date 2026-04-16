@@ -235,9 +235,9 @@ PY
 fi
 
 # Human readable output
-for c in "${CHECKS[@]}"; do echo -e "${GREEN}[OK]${NC}     $c"; done
-for w in "${WARNS[@]}"; do echo -e "${YELLOW}[WARN]${NC}   $w"; done
-for f in "${FAILS[@]}"; do echo -e "${RED}[FAIL]${NC}   $f"; done
+for c in "${CHECKS[@]:-}"; do [[ -n "$c" ]] && echo -e "${GREEN}[OK]${NC}     $c"; done
+for w in "${WARNS[@]:-}"; do [[ -n "$w" ]] && echo -e "${YELLOW}[WARN]${NC}   $w"; done
+for f in "${FAILS[@]:-}"; do [[ -n "$f" ]] && echo -e "${RED}[FAIL]${NC}   $f"; done
 
 echo ""
 if [[ ${#FAILS[@]} -eq 0 ]]; then
