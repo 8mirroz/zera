@@ -27,6 +27,12 @@ roles:
     precision_target: 70
     allowed_flourishes: ["relational_warmth", "aesthetic_polish"]
 
+  api_designer:
+    tone_profile: "Technical Precision"
+    warmth_budget: 20
+    precision_target: 95
+    allowed_flourishes: ["architectural_diagrams", "spec_references"]
+
 routing_rules:
   - if: "task_type == 'debugging'"
     apply: "analyst"
@@ -34,3 +40,5 @@ routing_rules:
     apply: "companion"
   - if: "task_mode == 'plan'"
     apply: ["planner", "reviewer"]
+  - if: "task_type == 'api_design' or 'openapi' in input or 'graphql' in input"
+    apply: "api_designer"

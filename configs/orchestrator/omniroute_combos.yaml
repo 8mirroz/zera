@@ -36,6 +36,8 @@ combos:
     description: "Task classification and swarm coordination"
     strategy: "priority"
     models:
+      - model: "lmstudio/google/gemma-4-e4b"
+        reason: "LM Studio — Gemma 4 e4b (Local High-Performance)"
       - model: "ollama/qwen3.5:9b-q4_K_M"
         reason: "Local Qwen3.5 9B — robust multipurpose"
       - model: "kc/deepseek/deepseek-v3.2"
@@ -55,6 +57,8 @@ combos:
     description: "Low-complexity deterministic execution"
     strategy: "priority"
     models:
+      - model: "lmstudio/google/gemma-4-e4b"
+        reason: "LM Studio — Gemma 4 e4b (Fast Local)"
       - model: "ollama/qwen3.5:4b-q4_K_M"
         reason: "Local Qwen3.5 4B — very fast and capable for routine tasks"
       - model: "kc/google/gemini-2.0-flash"
@@ -139,6 +143,8 @@ combos:
     description: "System design and governance authority"
     strategy: "priority"
     models:
+      - model: "lmstudio/google/gemma-4-e4b"
+        reason: "LM Studio — Gemma 4 e4b (Architectural Reasoning)"
       - model: "ollama/deepseek-r1:7b"
         reason: "Local DeepSeek R1 7B — specialized system design reasoning"
       - model: "antigravity/claude-opus-4-6-thinking"

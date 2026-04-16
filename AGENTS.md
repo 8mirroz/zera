@@ -107,6 +107,7 @@ cat .agent/skills/.active_set_manifest.json
 |-------|----------|
 | `design-system-architect` | Creating or evolvinging UI component systems |
 | `ui-premium` | Building any user-facing interface |
+| `ai-designer` | High-end design workflow using Figma, Magic MCP, Google Stitch and Nanobanana |
 | `visual-intelligence` | Design critique, visual consistency checks |
 | `telegram-bot` | Creating or modifying Telegram bots |
 | `telegram-miniapp` | Building Telegram Web App integrations |

@@ -59,7 +59,10 @@
       "Bash(chmod *)",
       "Bash(memory_pressure)",
       "Bash(ollama *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(command *)",
+      "Bash(pip list)",
+      "Read(//Users/user/.openclaw/**)"
     ]
   },
   "$version": 3

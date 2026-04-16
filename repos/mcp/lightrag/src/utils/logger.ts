@@ -55,15 +55,15 @@ function output(entry: LogEntry): void {
   switch (entry.level) {
     case 'DEBUG':
       // eslint-disable-next-line no-console
-      console.debug(line);
+      console.error(line);
       break;
     case 'INFO':
       // eslint-disable-next-line no-console
-      console.info(line);
+      console.error(line);
       break;
     case 'WARN':
       // eslint-disable-next-line no-console
-      console.warn(line);
+      console.error(line);
       break;
     case 'ERROR':
       // eslint-disable-next-line no-console

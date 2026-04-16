@@ -20,6 +20,14 @@ prompts:
     description: "Промт для реализации атомарных задач и написания чистого кода."
     model_hint: "$MODEL_ENGINEER_PRIMARY"
 
+  - id: system.api_designer.v1
+    name: "API Designer System Prompt"
+    path: "system/api_designer.yaml"
+    role: "api_designer"
+    tier: "C3-C5"
+    description: "Промт для проектирования API архитектур (REST, GraphQL) и OpenAPI спецификаций."
+    model_hint: "claude-3-5-sonnet-latest"
+
   - id: tasks.research.v1
     name: "Deep Research Prompt"
     path: "tasks/research.yaml"
