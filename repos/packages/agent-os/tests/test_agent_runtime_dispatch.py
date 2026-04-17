@@ -444,7 +444,7 @@ stages:
 
             self.assertEqual(output.status, "completed")
             self.assertIn("stdio adapter executed profile", output.diff_summary)
-            goal_stack_path = repo / ".agent/memory/goal-stack.json"
+            goal_stack_path = repo / ".agents/memory/goal-stack.json"
             self.assertTrue(goal_stack_path.exists())
             payload = json.loads(goal_stack_path.read_text(encoding="utf-8"))
             self.assertGreaterEqual(len(payload.get("goals", [])), 1)
@@ -542,7 +542,7 @@ stages:
                 )
 
             self.assertEqual(output.status, "completed")
-            queue_path = repo / ".agent/runtime/background-jobs.json"
+            queue_path = repo / ".agents/runtime/background-jobs.json"
             payload = json.loads(queue_path.read_text(encoding="utf-8"))
             self.assertEqual(len(payload.get("queued", [])), 1)
             self.assertEqual(payload["queued"][0]["job_type"], "harness_gardening")

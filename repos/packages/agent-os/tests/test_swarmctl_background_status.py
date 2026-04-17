@@ -20,7 +20,7 @@ class TestSwarmctlBackgroundStatus(unittest.TestCase):
     def test_background_status_reports_counts(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             repo = Path(td)
-            queue_path = repo / ".agent/runtime/background-jobs.json"
+            queue_path = repo / ".agents/runtime/background-jobs.json"
             queue_path.parent.mkdir(parents=True, exist_ok=True)
             queue_path.write_text(
                 json.dumps(

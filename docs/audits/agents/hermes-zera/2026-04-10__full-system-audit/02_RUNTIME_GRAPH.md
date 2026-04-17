@@ -25,7 +25,7 @@
 ## Hidden Coupling
 - L1 memory injection из `configs/orchestrator/user_profile.json` меняет objective до route/provider selection.
 - Benchmark validity зависит не от suite semantics, а от parser behavior в `analyze_benchmark.py`.
-- Workflow control plane зависит от `.agent/config/workflow_sets.active.json`, но сами workflow assets отсутствуют.
+- Workflow control plane зависит от `.agents/config/workflow_sets.active.json`, но сами workflow assets отсутствуют.
 - Operator-side Hermes/Gemini config уже содержит repo-semantics contract и влияет на live behavior вне git tree.
 
 ## Fallback Paths
@@ -72,7 +72,7 @@ Missing states: `initializing`, `healthy`, `degraded`, `unhealthy`, `recovering`
 ### Motion-Aware Routing — Dead Config Surface
 `router.yaml` contains a full `motion_awareness` block with GSAP/Framer/CSS triggers, skill assignments, and quality gates. However:
 - `configs/capabilities/gsap_motion.yaml` does not exist
-- Referenced skills are not published to `.agent/skills/`
+- Referenced skills are not published to `.agents/skills/`
 - No Python code in `agent_os/` consumes `motion_awareness` from the router config
 - This is a declarative surface with zero executable backing
 

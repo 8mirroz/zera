@@ -84,7 +84,7 @@ class TestSwarmctlDoctor(unittest.TestCase):
             json.dumps({"routing": []}),
         )
 
-        skill_dir = root / ".agent/skills/systematic-debugging"
+        skill_dir = root / ".agents/skills/systematic-debugging"
         self._write(skill_dir / "SKILL.md", "# published skill\n")
         manifest = {
             "skills": [
@@ -94,7 +94,7 @@ class TestSwarmctlDoctor(unittest.TestCase):
                 }
             ]
         }
-        self._write(root / ".agent/skills/.active_set_manifest.json", json.dumps(manifest))
+        self._write(root / ".agents/skills/.active_set_manifest.json", json.dumps(manifest))
 
     def test_doctor_warn_only_returns_ok(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -122,7 +122,7 @@ class TestSwarmctlDoctor(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             repo = Path(td)
             self._build_min_repo(repo)
-            self._write(repo / ".agent/skills/systematic-debugging/EXTRA.md", "local overlay\n")
+            self._write(repo / ".agents/skills/systematic-debugging/EXTRA.md", "local overlay\n")
 
             stdout = io.StringIO()
             stderr = io.StringIO()
@@ -143,7 +143,7 @@ class TestSwarmctlDoctor(unittest.TestCase):
         with tempfile.TemporaryDirectory() as td:
             repo = Path(td)
             self._build_min_repo(repo)
-            self._write(repo / ".agent/skills/systematic-debugging/EXTRA.md", "local overlay\n")
+            self._write(repo / ".agents/skills/systematic-debugging/EXTRA.md", "local overlay\n")
 
             stdout = io.StringIO()
             stderr = io.StringIO()
@@ -195,7 +195,7 @@ class TestSwarmctlDoctor(unittest.TestCase):
                         "  wiki: repos/data/knowledge/wiki-core/wiki",
                         "  manifests: repos/data/knowledge/wiki-core/manifests",
                         "  skills: repos/data/knowledge/wiki-core/.skills",
-                        "  local_skill_target: .agent/skills",
+                        "  local_skill_target: .agents/skills",
                         "search:",
                         "  primary_backend: qmd",
                         "  fallback_backend: tfidf",

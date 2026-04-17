@@ -88,7 +88,7 @@ class HermesZeraAgent:
         self._load_contract(soul_path)
 
         # Load Skill Registry
-        skills_dir = self.repo_root / ".agent/skills"
+        skills_dir = self.repo_root / ".agents/skills"
         self.skill_registry = SkillRegistry(skills_dir)
         logger.info(f"✅ SkillRegistry: {len(self.skill_registry.skills)} skills loaded")
 

@@ -148,7 +148,7 @@ tool_registry:
       - repos/
       - configs/
       - scripts/
-      - .agent/
+      - .agents/
       - /Users/user/projects/ZeraWork/
     forbidden_directories:
       - ".env"
@@ -168,7 +168,7 @@ tool_registry:
       - repos/
       - configs/
       - scripts/
-      - .agent/
+      - .agents/
       - docs/
       - /Users/user/projects/ZeraWork/
 

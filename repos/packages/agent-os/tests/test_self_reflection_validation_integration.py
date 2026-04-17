@@ -330,7 +330,7 @@ class TestSelfReflectionValidationIntegration(unittest.TestCase):
             self.assertEqual(reflection_events[0]["data"]["decision"], "auto_apply_memory_tag")
             approval_events = [row for row in events if row.get("event_type") == "approval_gate_triggered"]
             self.assertEqual(len(approval_events), 0)
-            memory_file = repo / ".agent/memory/memory.jsonl"
+            memory_file = repo / ".agents/memory/memory.jsonl"
             self.assertTrue(memory_file.exists())
             rows = [json.loads(line) for line in memory_file.read_text(encoding="utf-8").splitlines() if line.strip()]
             reflection_rows = [row for row in rows if str(row.get("key") or "").startswith("reflection:run-auto-apply-memory-tag:")]

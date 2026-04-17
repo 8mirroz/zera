@@ -11,7 +11,7 @@
 ## 🚀 Статус внедрения
 | Компонент | Статус | Путь |
 | :--- | :--- | :--- |
-| **Схемы (Schemas)** | ✅ Ready | `.agent/memory/repos-catalog/schemas/` |
+| **Схемы (Schemas)** | ✅ Ready | `.agents/memory/repos-catalog/schemas/` |
 | **Шаблоны (Templates)** | ✅ Ready | `.agents/memory/build-library/templates/` |
 | **Индексы (Indexes)** | ⏳ Pending | `.agents/memory/build-library/indexes/` |
 | **Скрипты (Tooling)** | ⏳ Pending | `repos/packages/agent-os/scripts/build_memory_library.py` |

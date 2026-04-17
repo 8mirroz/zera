@@ -34,5 +34,5 @@
 - Regression test for benchmark case normalization.
 - Contract test for provider registration parity.
 - Non-zero exit on MCP validator mismatch.
-- Doctor check for empty `.agent/workflows`.
+- Doctor check for empty `.agents/workflows`.
 - Audit check for out-of-repo active cron jobs affecting Zera.

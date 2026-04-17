@@ -126,7 +126,7 @@ high_risk_controls:
 
 replay_and_rollback:
   enabled: true
-  storage_path: ".agent/desktop_replays/"
+  storage_path: ".agents/desktop_replays/"
 
   record_actions: true
   record_screenshots: true
@@ -149,7 +149,7 @@ monitoring:
   enabled: true
   log_all_actions: true
   log_to_file: true
-  log_path: ".agent/desktop_logs/"
+  log_path: ".agents/desktop_logs/"
 
   metrics:
     - action_count

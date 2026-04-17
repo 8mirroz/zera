@@ -88,7 +88,7 @@ with default fallback if missing.
 
 ### State File
 
-`.agent/evolution/promotion_state.json` — tracks:
+`.agents/evolution/promotion_state.json` — tracks:
 - `snapshots[]` — all created snapshots
 - `latest_snapshot` — most recent snapshot ID
 - `promotion` — current promotion state (enabled, TTL, expiry)

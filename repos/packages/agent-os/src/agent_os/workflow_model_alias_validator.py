@@ -26,7 +26,7 @@ def repo_root() -> Path:
 
 
 def _load_active_workflow_paths(root: Path) -> tuple[list[Path], list[str]]:
-    cfg = json.loads((root / ".agent/config/workflow_sets.active.json").read_text(encoding="utf-8"))
+    cfg = json.loads((root / ".agents/config/workflow_sets.active.json").read_text(encoding="utf-8"))
     rels: list[str] = []
 
     for set_row in (cfg.get("sets") or {}).values():
@@ -41,7 +41,7 @@ def _load_active_workflow_paths(root: Path) -> tuple[list[Path], list[str]]:
         for wf_name in cfg.get(key, []) or []:
             if isinstance(wf_name, str):
                 name = wf_name if wf_name.endswith(".md") else f"{wf_name}.md"
-                rels.append(f".agent/workflows/{name}")
+                rels.append(f".agents/workflows/{name}")
 
     # de-duplicate preserving order
     out: list[Path] = []
@@ -72,7 +72,7 @@ def _load_active_skill_files(root: Path) -> list[Path]:
                 seen.add(key)
                 out.append(p)
         # Validate published skills if present (runtime copy)
-        published = root / ".agent/skills" / spec.name
+        published = root / ".agents/skills" / spec.name
         if published.exists():
             for p in published.rglob("*.md"):
                 key = p.resolve().as_posix()

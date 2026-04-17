@@ -23,7 +23,7 @@ from datetime import datetime
 from pathlib import Path
 
 # Initialize working memory
-wm = WorkingMemory(Path(".agent/memory/working_memory.json"))
+wm = WorkingMemory(Path(".agents/memory/working_memory.json"))
 
 # Add entry
 wm.add(MemoryEntry(

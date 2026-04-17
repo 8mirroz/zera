@@ -157,7 +157,7 @@
 │  Location: agent_os/approval_engine.py                                │
 │  Input: Action requiring approval                                     │
 │  Output: ApprovalTicket (pending/approved/rejected)                    │
-│  Mechanism: Persistent JSON file (.agent/runtime/approvals.json)      │
+│  Mechanism: Persistent JSON file (.agents/runtime/approvals.json)      │
 │  Gates: destructive, external, privacy_sensitive, financial, etc.     │
 └────────────────────────┬─────────────────────────────────────────────┘
                          │
@@ -174,7 +174,7 @@
 │    12c. promote-enable — enable promotion with attempt binding         │
 │    12d. promote-rollback — rollback to snapshot                        │
 │    12e. status/doctor — health checks                                  │
-│  SoT: .agent/evolution/state.json, promotion_state.json               │
+│  SoT: .agents/evolution/state.json, promotion_state.json               │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -230,11 +230,11 @@
 | Router config | `configs/orchestrator/router.yaml` | YAML | Human | UnifiedRouter |
 | Model registry | `configs/orchestrator/models.yaml` | YAML | Human | ModelRouter |
 | Runtime state | `.agents/runtime/*.json` | JSON | Runtime providers | RuntimeRegistry |
-| Approval state | `.agent/runtime/approvals.json` | JSON | ApprovalEngine | Auditor |
-| Stop signals | `.agent/runtime/stop-signals.json` | JSON | StopController | All agents |
-| Background jobs | `.agent/runtime/background-jobs.json` | JSON | BackgroundJobRegistry | Scheduler |
-| Evolution state | `.agent/evolution/state.json` | JSON | zera-evolutionctl | All evolution tools |
-| Telemetry | `.agent/evolution/telemetry.jsonl` | JSONL | self_evolution_loop.py | Dashboard |
+| Approval state | `.agents/runtime/approvals.json` | JSON | ApprovalEngine | Auditor |
+| Stop signals | `.agents/runtime/stop-signals.json` | JSON | StopController | All agents |
+| Background jobs | `.agents/runtime/background-jobs.json` | JSON | BackgroundJobRegistry | Scheduler |
+| Evolution state | `.agents/evolution/state.json` | JSON | zera-evolutionctl | All evolution tools |
+| Telemetry | `.agents/evolution/telemetry.jsonl` | JSONL | self_evolution_loop.py | Dashboard |
 | Traces | `logs/agent_traces.jsonl` | JSONL | emit_event() | Validator, dashboard |
 | Memory | `.agents/memory/memory.jsonl` | JSONL | All agents | Retriever |
 

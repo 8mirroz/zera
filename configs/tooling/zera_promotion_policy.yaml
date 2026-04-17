@@ -85,13 +85,13 @@ role_contracts:
 workflow_integrity:
   checker: "scripts/workflow_and_memory_checker.py"
   all_valid_required: true     # All workflows must be valid
-  workflows_dir: ".agent/workflows"
+  workflows_dir: ".agents/workflows"
 
 memory_quality:
   checker: "scripts/workflow_and_memory_checker.py"
   no_duplicates_required: true
   no_invalid_json_required: true
-  memory_file: ".agent/memory/memory.jsonl"
+  memory_file: ".agents/memory/memory.jsonl"
 
 observability:
   structured_logging_required: true

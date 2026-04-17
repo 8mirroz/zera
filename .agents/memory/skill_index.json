@@ -8,7 +8,7 @@
     {
       "id": "SK-EXEC-001",
       "name": "executing-plans",
-      "path": ".agent/skills/executing-plans/SKILL.md",
+      "path": ".agents/skills/executing-plans/SKILL.md",
       "triggers": ["execute plan", "implement plan", "run plan", "batch execution"],
       "complexity": ["C2", "C3", "C4"],
       "task_types": ["T3", "T4"],
@@ -18,7 +18,7 @@
     {
       "id": "SK-PLAN-001",
       "name": "writing-plans",
-      "path": ".agent/skills/writing-plans/SKILL.md",
+      "path": ".agents/skills/writing-plans/SKILL.md",
       "triggers": ["write plan", "create plan", "plan task", "blueprint"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T3", "T4", "T5"],
@@ -28,7 +28,7 @@
     {
       "id": "SK-SWARM-001",
       "name": "subagent-driven-development",
-      "path": ".agent/skills/subagent-driven-development/SKILL.md",
+      "path": ".agents/skills/subagent-driven-development/SKILL.md",
       "triggers": ["subagent", "parallel agents", "swarm", "complex feature", "critical"],
       "complexity": ["C5"],
       "task_types": ["T3", "T4"],
@@ -38,7 +38,7 @@
     {
       "id": "SK-DEBUG-001",
       "name": "systematic-debugging",
-      "path": ".agent/skills/systematic-debugging/SKILL.md",
+      "path": ".agents/skills/systematic-debugging/SKILL.md",
       "triggers": ["debug", "error", "bug", "fix", "broken", "failing"],
       "complexity": ["C2", "C3", "C4"],
       "task_types": ["T2"],
@@ -48,7 +48,7 @@
     {
       "id": "SK-REVIEW-001",
       "name": "requesting-code-review",
-      "path": ".agent/skills/requesting-code-review/SKILL.md",
+      "path": ".agents/skills/requesting-code-review/SKILL.md",
       "triggers": ["code review", "review code", "review changes"],
       "complexity": ["C2", "C3", "C4"],
       "task_types": ["T2", "T3"],
@@ -58,7 +58,7 @@
     {
       "id": "SK-TDD-001",
       "name": "test-driven-development",
-      "path": ".agent/skills/test-driven-development/SKILL.md",
+      "path": ".agents/skills/test-driven-development/SKILL.md",
       "triggers": ["tdd", "tests first", "write tests", "test coverage"],
       "complexity": ["C3", "C4"],
       "task_types": ["T3"],
@@ -68,7 +68,7 @@
     {
       "id": "SK-VERIFY-001",
       "name": "verification-before-completion",
-      "path": ".agent/skills/verification-before-completion/SKILL.md",
+      "path": ".agents/skills/verification-before-completion/SKILL.md",
       "triggers": ["verify", "check before done", "validate completion"],
       "complexity": ["C1", "C2", "C3", "C4", "C5"],
       "task_types": ["T1", "T2", "T3", "T4", "T5", "T6", "T7"],
@@ -79,7 +79,7 @@
     {
       "id": "SK-DESIGN-001",
       "name": "design-system-architect",
-      "path": ".agent/skills/design-system-architect/SKILL.md",
+      "path": ".agents/skills/design-system-architect/SKILL.md",
       "triggers": ["design system", "ui components", "tokens", "theme"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T6"],
@@ -89,7 +89,7 @@
     {
       "id": "SK-MEM-001",
       "name": "obsidian-memory",
-      "path": ".agent/skills/obsidian-memory/SKILL.md",
+      "path": ".agents/skills/obsidian-memory/SKILL.md",
       "triggers": ["save memory", "write to vault", "capture insight", "remember"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T3", "T4", "T5"],
@@ -100,7 +100,7 @@
     {
       "id": "SK-IMPROVE-001",
       "name": "self-improvement",
-      "path": ".agent/skills/self-improvement/SKILL.md",
+      "path": ".agents/skills/self-improvement/SKILL.md",
       "triggers": ["improve", "self-improve", "optimize skills", "update patterns", "/improve"],
       "complexity": ["C3"],
       "task_types": ["T5"],
@@ -114,7 +114,7 @@
     {
       "id": "SK-PRD-001",
       "name": "write-a-prd",
-      "path": ".agent/skills/write-a-prd/SKILL.md",
+      "path": ".agents/skills/write-a-prd/SKILL.md",
       "triggers": ["write prd", "product requirements", "plan feature", "prd"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T4", "T5"],
@@ -124,7 +124,7 @@
     {
       "id": "SK-PRD-002",
       "name": "prd-to-plan",
-      "path": ".agent/skills/prd-to-plan/SKILL.md",
+      "path": ".agents/skills/prd-to-plan/SKILL.md",
       "triggers": ["prd to plan", "turn prd into plan", "implement prd", "phase prd"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T4"],
@@ -134,7 +134,7 @@
     {
       "id": "SK-GRILL-001",
       "name": "grill-me",
-      "path": ".agent/skills/grill-me/SKILL.md",
+      "path": ".agents/skills/grill-me/SKILL.md",
       "triggers": ["grill me", "stress test plan", "challenge design", "interview me"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T4", "T5"],
@@ -144,7 +144,7 @@
     {
       "id": "SK-IFACE-001",
       "name": "design-an-interface",
-      "path": ".agent/skills/design-an-interface/SKILL.md",
+      "path": ".agents/skills/design-an-interface/SKILL.md",
       "triggers": ["design interface", "design api", "design it twice", "compare module shapes", "interface options"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T3", "T4"],
@@ -154,7 +154,7 @@
     {
       "id": "SK-TRIAGE-001",
       "name": "triage-issue",
-      "path": ".agent/skills/triage-issue/SKILL.md",
+      "path": ".agents/skills/triage-issue/SKILL.md",
       "triggers": ["triage", "file issue", "investigate bug", "root cause", "create github issue"],
       "complexity": ["C2", "C3", "C4"],
       "task_types": ["T2"],
@@ -164,7 +164,7 @@
     {
       "id": "SK-GUARD-001",
       "name": "git-guardrails",
-      "path": ".agent/skills/git-guardrails/SKILL.md",
+      "path": ".agents/skills/git-guardrails/SKILL.md",
       "triggers": ["git guardrails", "protect git", "block force push", "dangerous git", "git hooks safety"],
       "complexity": ["C1", "C2"],
       "task_types": ["T1"],
@@ -174,7 +174,7 @@
     {
       "id": "SK-UL-001",
       "name": "ubiquitous-language",
-      "path": ".agent/skills/ubiquitous-language/SKILL.md",
+      "path": ".agents/skills/ubiquitous-language/SKILL.md",
       "triggers": ["ubiquitous language", "domain model", "ddd", "glossary", "define terms", "terminology"],
       "complexity": ["C3", "C4", "C5"],
       "task_types": ["T5"],

@@ -13,7 +13,7 @@ class VectorEngine:
     def __init__(self, model: str = "all-minilm", host: str = "http://localhost:11434"):
         self.model = model
         self.host = host
-        self.cache_path = ".agent/memory/router_embeddings.json"
+        self.cache_path = ".agents/memory/router_embeddings.json"
         self._cache = self._load_cache()
 
     def _load_cache(self) -> Dict:

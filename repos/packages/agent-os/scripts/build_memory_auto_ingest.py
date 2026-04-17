@@ -171,7 +171,7 @@ def main(args_list: list[str] | None = None) -> int:
             if isinstance(cand_fp, str) and cand_fp in existing_fps:
                 print(f"Duplicate candidate detected for run_id {args.run_id}; skipping register")
                 return 0
-            existing_path = root / ".agent/memory/build-library/global/entries" / f"{candidate['entry_id']}.json"
+            existing_path = root / ".agents/memory/build-library/global/entries" / f"{candidate['entry_id']}.json"
             if existing_path.exists():
                 print(f"Entry already exists at {existing_path}; skipping register")
                 return 0

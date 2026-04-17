@@ -44,7 +44,7 @@ def repo_root() -> Path:
 
 
 def list_agent_skills(root: Path) -> set[str]:
-    skills_dir = root / ".agent/skills"
+    skills_dir = root / ".agents/skills"
     if not skills_dir.exists():
         return set()
     return {
@@ -67,7 +67,7 @@ def list_external_skills(root: Path) -> set[str]:
     Discover vendor skill packs under repos/skills/*/skills/*/SKILL.md.
 
     These are valid skill slugs for routing references, even if they are not
-    currently published into `.agent/skills` via ACTIVE_SKILLS.md.
+    currently published into `.agents/skills` via ACTIVE_SKILLS.md.
     """
     base = root / "repos/skills"
     out: set[str] = set()
@@ -144,7 +144,7 @@ def build_report(root: Path) -> dict:
         severity = "warn"
 
     migration_actions = [
-        "Publish referenced skills to .agent/skills via ACTIVE_SKILLS.md, or remove references from TASK_ROUTING.md",
+        "Publish referenced skills to .agents/skills via ACTIVE_SKILLS.md, or remove references from TASK_ROUTING.md",
         "Keep internal meta skills unpublished (e.g. using-superpowers/writing-skills) and exclude them from active-set drift warnings",
         "Treat external vendor skill refs in TASK_ROUTING.md as optional unless they are promoted to active/published skills",
     ]

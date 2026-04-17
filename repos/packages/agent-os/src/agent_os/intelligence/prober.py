@@ -14,7 +14,7 @@ class ModelProber:
     def __init__(self,
                  repo_root: str = ".",
                  config_path: str = "configs/orchestrator/models.yaml",
-                 overlay_path: str = ".agent/runtime/model_ovl.yaml",
+                 overlay_path: str = ".agents/runtime/model_ovl.yaml",
                  ollama_host: str = "http://localhost:11434"):
         self.repo_root = repo_root
         self.config_path = config_path if os.path.isabs(config_path) else os.path.join(repo_root, config_path)

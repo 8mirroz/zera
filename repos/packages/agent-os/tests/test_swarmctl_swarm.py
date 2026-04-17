@@ -54,7 +54,7 @@ completion_criteria:
             """
 version: "2026-04-08"
 feature_flag: "ENABLE_SWARM_V2"
-storage: ".agent/swarm/events/{task_id}.jsonl"
+storage: ".agents/swarm/events/{task_id}.jsonl"
 event_types:
   - Started
   - Failed
@@ -155,7 +155,7 @@ verification_required: true
             self.assertEqual(payload["status"], "ok")
             self.assertTrue(payload["feature_enabled"])
             self.assertEqual(payload["workflow"]["handoff_skill"], "dynamic-handoff")
-            self.assertEqual(payload["lane_events"]["storage"], ".agent/swarm/events/{task_id}.jsonl")
+            self.assertEqual(payload["lane_events"]["storage"], ".agents/swarm/events/{task_id}.jsonl")
 
     def test_cmd_swarm_inspect_merges_route_workflow_and_recovery(self) -> None:
         with self._repo() as td, patch.object(swarmctl, "_repo_root", return_value=Path(td)), patch.dict(
@@ -196,7 +196,7 @@ verification_required: true
             os.environ, {"ENABLE_SWARM_V2": "1"}, clear=False
         ):
             repo = Path(td)
-            event_file = repo / ".agent/swarm/events/task-123.jsonl"
+            event_file = repo / ".agents/swarm/events/task-123.jsonl"
             event_file.parent.mkdir(parents=True, exist_ok=True)
             event_file.write_text(
                 "\n".join(

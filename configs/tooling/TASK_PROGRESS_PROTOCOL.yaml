@@ -300,7 +300,7 @@ observability:
   trace_log: "logs/agent_traces.jsonl"
   
   # Progress file (for external monitoring)
-  progress_file: ".agent/runtime/progress/{run_id}.yaml"
+  progress_file: ".agents/runtime/progress/{run_id}.yaml"
 
 # ============================================================================
 # GUARDS (Enforced by Runtime)

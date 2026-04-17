@@ -8,7 +8,7 @@
 - Restored NotebookLM runtime on ARM-native Python 3.12 and updated `configs/tooling/notebooklm_integration.json` (`python_bin`).
 - Switched `uv` to ARM-native binary and rebuilt `repos/packages/agent-os/.venv` on ARM.
 - Converted workspace git metadata from external worktree pointer to local `.git/` directory.
-- Fixed `.agent/workflows` broken migration path and committed stabilization:
+- Fixed `.agents/workflows` broken migration path and committed stabilization:
   - `659a493` - `fix: stabilize workflows after migration`
 
 ### Stabilization

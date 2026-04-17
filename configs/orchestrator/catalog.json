@@ -3,199 +3,199 @@
   "skills": [
     {
       "name": "zera-style-curator",
-      "path": ".agent/skills/zera-style-curator/SKILL.md",
+      "path": ".agents/skills/zera-style-curator/SKILL.md",
       "triggers": [],
       "description": "Refined aesthetic and lifestyle guidance aligned to user preferences and context."
     },
     {
       "name": "using-git-worktrees",
-      "path": ".agent/skills/using-git-worktrees/SKILL.md",
+      "path": ".agents/skills/using-git-worktrees/SKILL.md",
       "triggers": [],
       "description": "Use when starting a new complex task to isolate changes from the main working directory."
     },
     {
       "name": "ui-premium",
-      "path": ".agent/skills/ui-premium/SKILL.md",
+      "path": ".agents/skills/ui-premium/SKILL.md",
       "triggers": [],
       "description": "Create premium interfaces using the unified Antigravity design-system package."
     },
     {
       "name": "zera-core",
-      "path": ".agent/skills/zera-core/SKILL.md",
+      "path": ".agents/skills/zera-core/SKILL.md",
       "triggers": [],
       "description": "Core operating behavior for Zera persona (truthfulness, care, anti-sycophancy, action orientation)."
     },
     {
       "name": "zera-muse",
-      "path": ".agent/skills/zera-muse/SKILL.md",
+      "path": ".agents/skills/zera-muse/SKILL.md",
       "triggers": [],
       "description": "Creative support mode for ideation while preserving practicality and coherence."
     },
     {
       "name": "test-driven-development",
-      "path": ".agent/skills/test-driven-development/SKILL.md",
+      "path": ".agents/skills/test-driven-development/SKILL.md",
       "triggers": [],
       "description": "Use when writing logic that needs to be robust, or when fixing bugs (reproduction test first)."
     },
     {
       "name": "telegram-miniapp",
-      "path": ".agent/skills/telegram-miniapp/SKILL.md",
+      "path": ".agents/skills/telegram-miniapp/SKILL.md",
       "triggers": [],
       "description": "Develop Telegram Mini Apps using React and native SDKs"
     },
     {
       "name": "zera-strategist",
-      "path": ".agent/skills/zera-strategist/SKILL.md",
+      "path": ".agents/skills/zera-strategist/SKILL.md",
       "triggers": [],
       "description": "Strategic planning mode for turning goals into prioritized execution paths."
     },
     {
       "name": "write-a-prd",
-      "path": ".agent/skills/write-a-prd/SKILL.md",
+      "path": ".agents/skills/write-a-prd/SKILL.md",
       "triggers": [],
       "description": "Create a PRD through user interview, codebase exploration, and module design, then submit as a GitHub issue. Use when user wants to write a PRD, create a product requirements document, or plan a new feature."
     },
     {
       "name": "systematic-debugging",
-      "path": ".agent/skills/systematic-debugging/SKILL.md",
+      "path": ".agents/skills/systematic-debugging/SKILL.md",
       "triggers": [],
       "description": "Use when investigating a reproducible bug, failing test, or runtime error. Prevents random trial-and-error."
     },
     {
       "name": "design-system-architect",
-      "path": ".agent/skills/design-system-architect/SKILL.md",
+      "path": ".agents/skills/design-system-architect/SKILL.md",
       "triggers": [],
       "description": "Generate and maintain design systems with token governance, page overrides, and adaptive source routing."
     },
     {
       "name": "triage-issue",
-      "path": ".agent/skills/triage-issue/SKILL.md",
+      "path": ".agents/skills/triage-issue/SKILL.md",
       "triggers": [],
       "description": "Investigate a bug by exploring the codebase, identify root cause, and file a GitHub issue with a TDD-based fix plan. Use when user reports a bug, wants to file an issue, mentions \"triage\", or wants to investigate and plan a fix."
     },
     {
       "name": "telegram-bot",
-      "path": ".agent/skills/telegram-bot/SKILL.md",
+      "path": ".agents/skills/telegram-bot/SKILL.md",
       "triggers": [],
       "description": "Develop Telegram Bots using aiogram 3.x patterns"
     },
     {
       "name": "prd-to-plan",
-      "path": ".agent/skills/prd-to-plan/SKILL.md",
+      "path": ".agents/skills/prd-to-plan/SKILL.md",
       "triggers": [],
       "description": "Turn a PRD into a multi-phase implementation plan using tracer-bullet vertical slices. Use when user has a PRD and wants an implementation plan, or mentions \"turn PRD into plan\"."
     },
     {
       "name": "ubiquitous-language",
-      "path": ".agent/skills/ubiquitous-language/SKILL.md",
+      "path": ".agents/skills/ubiquitous-language/SKILL.md",
       "triggers": [],
       "description": "Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Use when user wants to define domain terms, build a glossary, harden terminology, or mentions \"domain model\", \"DDD\", \"ubiquitous language\"."
     },
     {
       "name": "dispatching-parallel-agents",
-      "path": ".agent/skills/dispatching-parallel-agents/SKILL.md",
+      "path": ".agents/skills/dispatching-parallel-agents/SKILL.md",
       "triggers": [],
       "description": "Use when you have multiple independent tasks (e.g. creating 5 separate component files) to speed up execution."
     },
     {
       "name": "executing-plans",
-      "path": ".agent/skills/executing-plans/SKILL.md",
+      "path": ".agents/skills/executing-plans/SKILL.md",
       "triggers": [],
       "description": "Use when you have a written implementation plan to execute in a separate session with review checkpoints"
     },
     {
       "name": "finishing-a-development-branch",
-      "path": ".agent/skills/finishing-a-development-branch/SKILL.md",
+      "path": ".agents/skills/finishing-a-development-branch/SKILL.md",
       "triggers": [],
       "description": "Use when development is complete and verified. Merges worktree changes back to main branch."
     },
     {
       "name": "visual-intelligence",
-      "path": ".agent/skills/visual-intelligence/SKILL.md",
+      "path": ".agents/skills/visual-intelligence/SKILL.md",
       "triggers": [],
       "description": "Extract design DNA, trends, and aesthetic parameters from visual sources (Pinterest) using Perplexity Sonar Pro."
     },
     {
       "name": "git-guardrails",
-      "path": ".agent/skills/git-guardrails/SKILL.md",
+      "path": ".agents/skills/git-guardrails/SKILL.md",
       "triggers": [],
       "description": "Set up Claude Code hooks to block dangerous git commands before they execute. Use when setting up a new project, hardening CI safety, or user mentions \"git guardrails\", \"protect from force push\", \"block dangerous git\"."
     },
     {
       "name": "brainstorming",
-      "path": ".agent/skills/brainstorming/SKILL.md",
+      "path": ".agents/skills/brainstorming/SKILL.md",
       "triggers": [],
       "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
     },
     {
       "name": "e-commerce",
-      "path": ".agent/skills/e-commerce/SKILL.md",
+      "path": ".agents/skills/e-commerce/SKILL.md",
       "triggers": [],
       "description": "E-commerce patterns for Web and Mini Apps"
     },
     {
       "name": "telegram-payments",
-      "path": ".agent/skills/telegram-payments/SKILL.md",
+      "path": ".agents/skills/telegram-payments/SKILL.md",
       "triggers": [],
       "description": "Integration patterns for Telegram Stars and TON Connect"
     },
     {
       "name": "writing-plans",
-      "path": ".agent/skills/writing-plans/SKILL.md",
+      "path": ".agents/skills/writing-plans/SKILL.md",
       "triggers": [],
       "description": "Use when you need to create a plan for implementation, after design is mostly settled"
     },
     {
       "name": "design-an-interface",
-      "path": ".agent/skills/design-an-interface/SKILL.md",
+      "path": ".agents/skills/design-an-interface/SKILL.md",
       "triggers": [],
       "description": "Generate multiple radically different interface designs for a module using parallel sub-agents. Use when user wants to design an API, explore interface options, compare module shapes, or mentions \"design it twice\"."
     },
     {
       "name": "requesting-code-review",
-      "path": ".agent/skills/requesting-code-review/SKILL.md",
+      "path": ".agents/skills/requesting-code-review/SKILL.md",
       "triggers": [],
       "description": "Use when you want a second opinion on your code before human review."
     },
     {
       "name": "receiving-code-review",
-      "path": ".agent/skills/receiving-code-review/SKILL.md",
+      "path": ".agents/skills/receiving-code-review/SKILL.md",
       "triggers": [],
       "description": "How to process and apply feedback from code reviews (human or agent)."
     },
     {
       "name": "zera-researcher",
-      "path": ".agent/skills/zera-researcher/SKILL.md",
+      "path": ".agents/skills/zera-researcher/SKILL.md",
       "triggers": [],
       "description": "Source-aware research mode for reliable synthesis and decision support."
     },
     {
       "name": "react-doctor-analyzer",
-      "path": ".agent/skills/react-doctor-analyzer/SKILL.md",
+      "path": ".agents/skills/react-doctor-analyzer/SKILL.md",
       "triggers": [],
       "description": "Assess and automatically heal React/Next.js projects by fixing performance, architecture, React warnings, and dead code using millionco react-doctor CLI tool."
     },
     {
       "name": "grill-me",
-      "path": ".agent/skills/grill-me/SKILL.md",
+      "path": ".agents/skills/grill-me/SKILL.md",
       "triggers": [],
       "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions \"grill me\"."
     },
     {
       "name": "subagent-driven-development",
-      "path": ".agent/skills/subagent-driven-development/SKILL.md",
+      "path": ".agents/skills/subagent-driven-development/SKILL.md",
       "triggers": [],
       "description": "Use when a task is complex (C5) and requires high quality. Orchestrates specialized sub-agents."
     },
     {
       "name": "claude-code-patterns",
-      "path": ".agent/skills/claude-code-patterns/SKILL.md",
+      "path": ".agents/skills/claude-code-patterns/SKILL.md",
       "triggers": [],
       "description": "Адаптированные паттерны из awesome-claude-code для локальной (offline-first) интеграции в Antigravity: CLAUDE.md, slash-commands, hooks и review workflows.\n"
     },
     {
       "name": "memfree-engine",
-      "path": ".agent/skills/memfree-engine/SKILL.md",
+      "path": ".agents/skills/memfree-engine/SKILL.md",
       "triggers": [],
       "description": "Hybrid AI Search Engine (Internet + Project Context + Docs)"
     },
@@ -547,152 +547,152 @@
   "workflows": [
     {
       "name": "error-healing",
-      "path": ".agent/workflows/error-healing.md",
+      "path": ".agents/workflows/error-healing.md",
       "description": "Systematic debugging workflow for failures and regressions."
     },
     {
       "name": "explore",
-      "path": ".agent/workflows/explore.md",
+      "path": ".agents/workflows/explore.md",
       "description": "深度探索复杂问题，通过\"向外搜索 + 向内发散\"双向螺旋产出结构化洞察，适用于技术调研、方案选型和头脑风暴。"
     },
     {
       "name": "drift-validator",
-      "path": ".agent/workflows/drift-validator.md",
+      "path": ".agents/workflows/drift-validator.md",
       "description": "Validate that configs, runtime state, docs, and validators still agree."
     },
     {
       "name": "validate",
-      "path": ".agent/workflows/validate.md",
+      "path": ".agents/workflows/validate.md",
       "description": ""
     },
     {
       "name": "infa",
-      "path": ".agent/workflows/infa.md",
+      "path": ".agents/workflows/infa.md",
       "description": "Show system information and available workflows."
     },
     {
       "name": "repo-memory-refresh",
-      "path": ".agent/workflows/repo-memory-refresh.md",
+      "path": ".agents/workflows/repo-memory-refresh.md",
       "description": "Refresh repository memory before planning or execution."
     },
     {
       "name": "triage",
-      "path": ".agent/workflows/triage.md",
+      "path": ".agents/workflows/triage.md",
       "description": "Classify incoming tasks by type, complexity, risk, and required gates."
     },
     {
       "name": "self-learning-retro",
-      "path": ".agent/workflows/self-learning-retro.md",
+      "path": ".agents/workflows/self-learning-retro.md",
       "description": "Retrospective loop for extracting reliable process improvements."
     },
     {
       "name": "change",
-      "path": ".agent/workflows/change.md",
+      "path": ".agents/workflows/change.md",
       "description": "处理微调级变更请求，通过 7 问题法严格评估，仅允许修改已有任务的细节，禁止创建新任务或添加新功能。需要新任务时引导用户运行 /genesis。"
     },
     {
       "name": "challenge",
-      "path": ".agent/workflows/challenge.md",
+      "path": ".agents/workflows/challenge.md",
       "description": "对项目决策进行系统性挑战，通过三维度审查框架（系统设计、运行模拟、工程实现）深度分析，用证据证明风险真实存在，产出分级问题清单。"
     },
     {
       "name": "genesis",
-      "path": ".agent/workflows/genesis.md",
+      "path": ".agents/workflows/genesis.md",
       "description": "从 0 到代码的项目启动全流程，将模糊想法转化为清晰的 PRD、架构文档和 ADR，适用于新项目立项、重大功能重构或架构升级。"
     },
     {
       "name": "project-bootstrap-guided",
-      "path": ".agent/workflows/project-bootstrap-guided.md",
+      "path": ".agents/workflows/project-bootstrap-guided.md",
       "description": "Guided project bootstrap with checkpoints and validation."
     },
     {
       "name": "build-memory-capture",
-      "path": ".agent/workflows/build-memory-capture.md",
+      "path": ".agents/workflows/build-memory-capture.md",
       "description": "Capture durable lessons after a completed task."
     },
     {
       "name": "critic",
-      "path": ".agent/workflows/critic.md",
+      "path": ".agents/workflows/critic.md",
       "description": ""
     },
     {
       "name": "kilo-mode-routing",
-      "path": ".agent/workflows/kilo-mode-routing.md",
+      "path": ".agents/workflows/kilo-mode-routing.md",
       "description": "Role-based planning, coding, debugging, and review flow."
     },
     {
       "name": "craft",
-      "path": ".agent/workflows/craft.md",
+      "path": ".agents/workflows/craft.md",
       "description": "创建高质量的工作流、技能和提示词，融合行业最佳实践与实战经验，提供 Workflow/Skill/Prompt 三种模式的标准框架。"
     },
     {
       "name": "qwen-orchestration",
-      "path": ".agent/workflows/qwen-orchestration.md",
+      "path": ".agents/workflows/qwen-orchestration.md",
       "description": ""
     },
     {
       "name": "session-memory",
-      "path": ".agent/workflows/session-memory.md",
+      "path": ".agents/workflows/session-memory.md",
       "description": "Управление памятью сессии — запись контекста при старте и сохранение summary перед сжатием. Предотвращает деградацию точности при \"Session compressed N times\"."
     },
     {
       "name": "swarm-review",
-      "path": ".agent/workflows/swarm-review.md",
+      "path": ".agents/workflows/swarm-review.md",
       "description": "Final review gate for multi-file or C3+ changes."
     },
     {
       "name": "multi-agent-routing",
-      "path": ".agent/workflows/multi-agent-routing.md",
+      "path": ".agents/workflows/multi-agent-routing.md",
       "description": "Standard multi-agent routing for complex execution."
     },
     {
       "name": "swarm-plan",
-      "path": ".agent/workflows/swarm-plan.md",
+      "path": ".agents/workflows/swarm-plan.md",
       "description": "Plan coordinated multi-agent or multi-lane execution."
     },
     {
       "name": "multi-agent-routing-v3-free-first",
-      "path": ".agent/workflows/multi-agent-routing-v3-free-first.md",
+      "path": ".agents/workflows/multi-agent-routing-v3-free-first.md",
       "description": "Free-first multi-agent routing with premium escalation gates."
     },
     {
       "name": "design-system",
-      "path": ".agent/workflows/design-system.md",
+      "path": ".agents/workflows/design-system.md",
       "description": "为单个系统设计详细的技术文档，通过调研最佳实践和深度思考产出完整的 System Design，包含架构图、接口设计和 Trade-offs 讨论。"
     },
     {
       "name": "axel",
-      "path": ".agent/workflows/axel.md",
+      "path": ".agents/workflows/axel.md",
       "description": "Architecture-first execution flow for high-uncertainty changes."
     },
     {
       "name": "ai-bot-kb",
-      "path": ".agent/workflows/ai-bot-kb.md",
+      "path": ".agents/workflows/ai-bot-kb.md",
       "description": "Knowledge-base workflow for AI bot and RAG systems."
     },
     {
       "name": "task-blueprint-selection",
-      "path": ".agent/workflows/task-blueprint-selection.md",
+      "path": ".agents/workflows/task-blueprint-selection.md",
       "description": "Select the best local implementation blueprint for the task."
     },
     {
       "name": "scout",
-      "path": ".agent/workflows/scout.md",
+      "path": ".agents/workflows/scout.md",
       "description": "探测系统风险、隐藏耦合和\"改了就炸\"的暗坑，通过 Git 热点分析和 Gap Analysis 产出风险报告，适用于接手遗留项目或重大变更前。"
     },
     {
       "name": "polyglot-autoevo-routing",
-      "path": ".agent/workflows/polyglot-autoevo-routing.md",
+      "path": ".agents/workflows/polyglot-autoevo-routing.md",
       "description": "Route multi-language work across bounded lanes."
     },
     {
       "name": "blueprint",
-      "path": ".agent/workflows/blueprint.md",
+      "path": ".agents/workflows/blueprint.md",
       "description": "将架构设计拆解为可执行的 WBS 任务清单，每个任务带验收标准和验证说明，生成 Mermaid 依赖图，前提是已完成 /genesis。"
     },
     {
       "name": "ralph-loop",
-      "path": ".agent/workflows/ralph-loop.md",
+      "path": ".agents/workflows/ralph-loop.md",
       "description": "Bounded evolutionary optimization loop."
     }
   ],

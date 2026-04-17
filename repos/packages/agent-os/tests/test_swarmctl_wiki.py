@@ -41,7 +41,7 @@ paths:
   wiki: "repos/data/knowledge/wiki-core/wiki"
   manifests: "repos/data/knowledge/wiki-core/manifests"
   skills: "repos/data/knowledge/wiki-core/.skills"
-  local_skill_target: ".agent/skills"
+  local_skill_target: ".agents/skills"
 search:
   primary_backend: "qmd"
   fallback_backend: "tfidf"
@@ -133,7 +133,7 @@ verification_required: true
                 rc = swarmctl.cmd_wiki_publish_skills(SimpleNamespace(config=None, global_target=None, mode="copy"))
             payload = json.loads(out.getvalue())
             self.assertEqual(rc, 0)
-            self.assertTrue((Path(td) / ".agent/skills/wiki-ingest-source/SKILL.md").exists())
+            self.assertTrue((Path(td) / ".agents/skills/wiki-ingest-source/SKILL.md").exists())
             self.assertEqual(payload["published"][0]["name"], "wiki-ingest-source")
 
     def test_wiki_core_context_is_c3_plus_only(self) -> None:

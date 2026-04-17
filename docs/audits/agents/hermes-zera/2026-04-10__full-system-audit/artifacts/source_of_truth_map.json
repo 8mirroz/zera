@@ -109,21 +109,21 @@
         "configs/skills/ZERA_ACTIVE_SKILLS.md"
       ],
       "derived": [
-        ".agent/skills/.active_set_manifest.json"
+        ".agents/skills/.active_set_manifest.json"
       ],
       "status": "drifted",
       "drift": [
-        "ZERA_ACTIVE_SKILLS.md is not published into .agent/skills."
+        "ZERA_ACTIVE_SKILLS.md is not published into .agents/skills."
       ]
     },
     {
       "domain": "workflow_catalog",
       "canonical": [
-        ".agent/config/workflow_sets.active.json",
+        ".agents/config/workflow_sets.active.json",
         "configs/tooling/workflow_sets_catalog.json"
       ],
       "required_runtime_assets": [
-        ".agent/workflows/*"
+        ".agents/workflows/*"
       ],
       "status": "broken",
       "drift": [

@@ -25,7 +25,7 @@ def build_report(root: Path) -> dict[str, Any]:
     model_routing = load_json(root / "configs/tooling/model_routing.json")
     providers = load_json(root / "configs/tooling/model_providers.json")
     mcp_profiles = load_json(root / "configs/tooling/mcp_profiles.json")
-    legacy_router_yaml = parse_simple_yaml((root / ".agent/config/model_router.yaml").read_text(encoding="utf-8"))
+    legacy_router_yaml = parse_simple_yaml((root / ".agents/config/model_router.yaml").read_text(encoding="utf-8"))
     v4_router_yaml = parse_simple_yaml(router_yaml_path.read_text(encoding="utf-8")) if router_yaml_path.exists() else {}
     v4_models_yaml = parse_simple_yaml(models_yaml_path.read_text(encoding="utf-8")) if models_yaml_path.exists() else {}
 
@@ -192,7 +192,7 @@ def build_report(root: Path) -> dict[str, Any]:
             {
                 "severity": "warn",
                 "code": "TIER_SET_MISMATCH_YAML",
-                "message": f"model_routing tiers={sorted(routing_tiers)} vs .agent/config/model_router.yaml tiers={sorted(yaml_tiers)}",
+                "message": f"model_routing tiers={sorted(routing_tiers)} vs .agents/config/model_router.yaml tiers={sorted(yaml_tiers)}",
             }
         )
 
@@ -298,7 +298,7 @@ def build_report(root: Path) -> dict[str, Any]:
                 {
                     "severity": "warn",
                     "code": "ROUTER_MODE_PRECEDENCE_UNSPECIFIED",
-                    "message": "model_providers.router_mode_default=hybrid while .agent/config/model_router.yaml strategy=free-first; precedence is not machine-readable here",
+                    "message": "model_providers.router_mode_default=hybrid while .agents/config/model_router.yaml strategy=free-first; precedence is not machine-readable here",
                 }
             )
 
@@ -310,7 +310,7 @@ def build_report(root: Path) -> dict[str, Any]:
 
     migration_actions = [
         "Keep configs/orchestrator/router.yaml + models.yaml as primary source-of-truth for task/complexity and alias routing",
-        "Treat configs/tooling/model_routing.json and .agent/config/model_router.yaml as compatibility layers until agent-os migration is complete",
+        "Treat configs/tooling/model_routing.json and .agents/config/model_router.yaml as compatibility layers until agent-os migration is complete",
     ]
 
     return {

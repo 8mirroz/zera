@@ -236,22 +236,22 @@ crontab -e
 
 ### State file
 ```bash
-cat .agent/evolution/state.json
+cat .agents/evolution/state.json
 ```
 
 ### Telemetry
 ```bash
-tail -f .agent/evolution/telemetry.jsonl | jq
+tail -f .agents/evolution/telemetry.jsonl | jq
 ```
 
 ### Log
 ```bash
-tail -f .agent/evolution/loop.log
+tail -f .agents/evolution/loop.log
 ```
 
 ### Scout Journal
 ```bash
-cat .agent/evolution/scout_journal.md
+cat .agents/evolution/scout_journal.md
 ```
 
 ---
@@ -350,7 +350,7 @@ Loop algorithms:  karpathy → rsi → darwin-goedel → pantheon
 - Выбор loop-алгоритма теперь адаптивный, а не только ротация.
 - Система балансирует exploration/exploitation по накопленному reward.
 
-2. **Meta-memory цикла (`.agent/evolution/meta_memory.json`)**
+2. **Meta-memory цикла (`.agents/evolution/meta_memory.json`)**
 - Каждый цикл сохраняет insight: `algorithm`, `candidate_class`, `score`, `status`, `reward`, `next_focus`, `risk_hint`.
 - Память ограничена (`MAX_META_MEMORY_ENTRIES`) и используется в будущих циклах.
 

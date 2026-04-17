@@ -8,7 +8,7 @@ Inputs:
 
 - `/Users/user/antigravity-core`
 - `~/.hermes/profiles/zera`
-- `.agent/evolution/*`
+- `.agents/evolution/*`
 - `vault/loops/.evolve-state.json`
 - Hermes logs, cron jobs, sessions, gateway state
 

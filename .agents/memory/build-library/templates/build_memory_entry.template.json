@@ -72,7 +72,7 @@
     "links": []
   },
   "trace_refs": [
-    ".agent/memory/traces/example.jsonl"
+    ".agents/memory/traces/example.jsonl"
   ],
   "ki_refs": [
     "docs/ki/EXAMPLE_KI.md"

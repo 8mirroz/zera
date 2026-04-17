@@ -27,10 +27,10 @@ _LAYER_WEIGHTS: dict[str, float] = {
 }
 
 _DEFAULT_LAYER_PATHS: dict[str, str] = {
-    "session": ".agent/memory/session/",
-    "project": ".agent/memory/projects/",
-    "workspace": ".agent/memory/build-library/global/",
-    "user_preferences": ".agent/memory/build-library/global/",
+    "session": ".agents/memory/session/",
+    "project": ".agents/memory/projects/",
+    "workspace": ".agents/memory/build-library/global/",
+    "user_preferences": ".agents/memory/build-library/global/",
 }
 
 

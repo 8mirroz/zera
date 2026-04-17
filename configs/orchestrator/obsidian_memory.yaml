@@ -3,7 +3,7 @@ vault_root: "."
 system_root: "."
 project_root: "."
 inbox_root: "09_Inbox"
-index_output: ".agent/memory/obsidian/indexes/zera_local_index.json"
+index_output: ".agents/memory/obsidian/indexes/zera_local_index.json"
 
 taxonomy:
   allowed_note_types:

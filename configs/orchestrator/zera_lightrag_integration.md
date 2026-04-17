@@ -91,4 +91,4 @@ This creates a compounding knowledge base that improves Zera's capabilities over
 |-------|----------|
 | LightRAG unavailable | Degrade to general knowledge, log warning |
 | Low confidence (< 0.3) | Flag to user, do not suppress |
-| Ingestion failure | Retry 3x, then log to .agent/memory/errors/ |
+| Ingestion failure | Retry 3x, then log to .agents/memory/errors/ |

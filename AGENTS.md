@@ -42,7 +42,7 @@ The system operates on **4 layers of knowledge**, each accessible on demand:
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Layer 3 — .agent/skills/*  |  .agent/workflows/*          │
+│  Layer 3 — .agents/skills/*  |  .agents/workflows/*          │
 │  Capabilities (what to do)  |  Procedures (how to do it)   │
 └─────────────────────────────────────────────────────────────┘
                             │
@@ -76,13 +76,13 @@ The system operates on **4 layers of knowledge**, each accessible on demand:
 | [`rules.registry.yaml`](./configs/rules/rules.registry.yaml) | Machine manifest: canonical order/status/consumers of rule docs | Before loader/catalog/runtime rule changes |
 | [`WORKSPACE_STANDARD`](./configs/rules/WORKSPACE_STANDARD.md) | Canonical placement, naming, directory responsibilities | Before creating/moving any file |
 | [`router.yaml`](./configs/orchestrator/router.yaml) | Source of Truth for task routing (C1–C5 tiers) | Before accepting or classifying any task |
-| [`multi-agent-routing`](./.agent/workflows/multi-agent-routing.md) | Swarm coordination protocol (v3.1) | Before spawning or coordinating agents |
+| [`multi-agent-routing`](./.agents/workflows/multi-agent-routing.md) | Swarm coordination protocol (v3.1) | Before spawning or coordinating agents |
 
 **Minimum viable context for any task:**
 1. Read this file (done ✓)
 2. Read `WORKSPACE_STANDARD.md`
-3. Scan relevant skills in `.agent/skills/`
-4. Check for existing workflows in `.agent/workflows/`
+3. Scan relevant skills in `.agents/skills/`
+4. Check for existing workflows in `.agents/workflows/`
 
 ---
 
@@ -94,10 +94,10 @@ Skills are **battle-tested, peer-reviewed procedural knowledge**. They encode pa
 
 ```bash
 # List all available skills
-ls -la .agent/skills/
+ls -la .agents/skills/
 
 # Check active skill manifest
-cat .agent/skills/.active_set_manifest.json
+cat .agents/skills/.active_set_manifest.json
 ```
 
 ### Skill Categories
@@ -156,7 +156,7 @@ When web interaction is required:
 **Quick start:**
 ```bash
 # Use the browser-use workflow
-# Follow instructions in .agent/workflows/browser-use.md
+# Follow instructions in .agents/workflows/browser-use.md
 ```
 
 **Anti-patterns:**

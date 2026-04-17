@@ -7,7 +7,7 @@
 
 ---
 
-## QW-1: Eliminate `.agent/.agents` Path Mismatch
+## QW-1: Eliminate `.agents/.agents` Path Mismatch
 
 **Impact:** Critical — causes intermittent failures, confusing for all developers
 **Effort:** 2–4 hours

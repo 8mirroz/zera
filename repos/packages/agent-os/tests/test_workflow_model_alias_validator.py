@@ -17,7 +17,7 @@ class TestWorkflowModelAliasValidator(unittest.TestCase):
     def test_scan_file_detects_unknown_alias_and_hardcoded_model(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            path = root / ".agent/workflows/example.md"
+            path = root / ".agents/workflows/example.md"
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(
                 "\n".join(
@@ -32,7 +32,7 @@ class TestWorkflowModelAliasValidator(unittest.TestCase):
 
             scan = alias_validator._scan_file(path, root, {"AGENT_MODEL_C2_FREE"})
 
-            self.assertEqual(scan["path"], ".agent/workflows/example.md")
+            self.assertEqual(scan["path"], ".agents/workflows/example.md")
             self.assertIn("AGENT_MODEL_C2_FREE", scan["alias_refs"])
             self.assertEqual(scan["unknown_aliases"], ["AGENT_MODEL_DOES_NOT_EXIST"])
             self.assertIn("openrouter/deepseek/deepseek-r1:free", scan["hardcoded_models"])

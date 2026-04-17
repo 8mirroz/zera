@@ -128,7 +128,7 @@
     "drift-validator"
   ],
   "validation_gates": {
-    "require_symlink_validity": [".agent/workflows"],
+    "require_symlink_validity": [".agents/workflows"],
     "require_file_existence": "sequence_paths"
   },
   "always_run_post_c3_plus": [
@@ -179,15 +179,15 @@
         "drift-validator.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/build-memory-capture.md",
-        ".agent/workflows/drift-validator.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/build-memory-capture.md",
+        ".agents/workflows/drift-validator.md"
       ],
       "post_actions": [
         "self-learning-retro.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md"
+        ".agents/workflows/self-learning-retro.md"
       ],
       "algorithm": {
         "style": "memory refresh + indexing + capture",
@@ -212,21 +212,21 @@
         "swarm-review.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/project-bootstrap-guided.md",
-        ".agent/workflows/polyglot-autoevo-routing.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/swarm-review.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/project-bootstrap-guided.md",
+        ".agents/workflows/polyglot-autoevo-routing.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/swarm-review.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "guided bootstrap with template selection, user checkpoints, and optional polyglot execution lanes",
@@ -248,19 +248,19 @@
         "error-healing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/error-healing.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/error-healing.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "single-worker free-first + validator gate",
@@ -284,21 +284,21 @@
         "error-healing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/swarm-plan.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/swarm-review.md",
-        ".agent/workflows/error-healing.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/swarm-plan.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/swarm-review.md",
+        ".agents/workflows/error-healing.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "planner+coding lane + reviewer gate",
@@ -323,21 +323,21 @@
         "swarm-review.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/multi-agent-routing-v3-free-first.md",
-        ".agent/workflows/axel.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/swarm-review.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/multi-agent-routing-v3-free-first.md",
+        ".agents/workflows/axel.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/swarm-review.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "consilium planning + single-command automated execution",
@@ -362,21 +362,21 @@
         "swarm-review.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/multi-agent-routing-v3-free-first.md",
-        ".agent/workflows/ralph-loop.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/swarm-review.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/multi-agent-routing-v3-free-first.md",
+        ".agents/workflows/ralph-loop.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/swarm-review.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "parallel research tracks + architecture council + free worker swarm",
@@ -402,22 +402,22 @@
         "swarm-review.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/polyglot-autoevo-routing.md",
-        ".agent/workflows/multi-agent-routing-v3-free-first.md",
-        ".agent/workflows/ralph-loop.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/swarm-review.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/polyglot-autoevo-routing.md",
+        ".agents/workflows/multi-agent-routing-v3-free-first.md",
+        ".agents/workflows/ralph-loop.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/swarm-review.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "polyglot lane specialization + council judge + mid-tier orchestrator + free worker swarm",
@@ -440,19 +440,19 @@
         "error-healing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/repo-memory-refresh.md",
-        ".agent/workflows/triage.md",
-        ".agent/workflows/task-blueprint-selection.md",
-        ".agent/workflows/drift-validator.md",
-        ".agent/workflows/error-healing.md"
+        ".agents/workflows/repo-memory-refresh.md",
+        ".agents/workflows/triage.md",
+        ".agents/workflows/task-blueprint-selection.md",
+        ".agents/workflows/drift-validator.md",
+        ".agents/workflows/error-healing.md"
       ],
       "post_actions": [
         "self-learning-retro.md",
         "build-memory-capture.md"
       ],
       "post_action_paths": [
-        ".agent/workflows/self-learning-retro.md",
-        ".agent/workflows/build-memory-capture.md"
+        ".agents/workflows/self-learning-retro.md",
+        ".agents/workflows/build-memory-capture.md"
       ],
       "algorithm": {
         "style": "read-only validation and diff-spec generation",
@@ -471,7 +471,7 @@
         "genesis.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/genesis.md"
+        ".agents/workflows/genesis.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -490,7 +490,7 @@
         "scout.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/scout.md"
+        ".agents/workflows/scout.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -509,7 +509,7 @@
         "design-system.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/design-system.md"
+        ".agents/workflows/design-system.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -527,7 +527,7 @@
         "blueprint.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/blueprint.md"
+        ".agents/workflows/blueprint.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -546,7 +546,7 @@
         "triage.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/triage.md"
+        ".agents/workflows/triage.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -564,7 +564,7 @@
         "swarm-plan.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/swarm-plan.md"
+        ".agents/workflows/swarm-plan.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -582,7 +582,7 @@
         "swarm-review.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/swarm-review.md"
+        ".agents/workflows/swarm-review.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -600,7 +600,7 @@
         "change.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/change.md"
+        ".agents/workflows/change.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -620,7 +620,7 @@
         "error-healing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/error-healing.md"
+        ".agents/workflows/error-healing.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -639,7 +639,7 @@
         "explore.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/explore.md"
+        ".agents/workflows/explore.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -659,7 +659,7 @@
         "craft.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/craft.md"
+        ".agents/workflows/craft.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -677,7 +677,7 @@
         "multi-agent-routing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/multi-agent-routing.md"
+        ".agents/workflows/multi-agent-routing.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -696,7 +696,7 @@
         "kilo-mode-routing.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/kilo-mode-routing.md"
+        ".agents/workflows/kilo-mode-routing.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -715,7 +715,7 @@
         "ralph-loop.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/ralph-loop.md"
+        ".agents/workflows/ralph-loop.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -733,7 +733,7 @@
         "self-learning-retro.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/self-learning-retro.md"
+        ".agents/workflows/self-learning-retro.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -752,7 +752,7 @@
         "ai-bot-kb.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/ai-bot-kb.md"
+        ".agents/workflows/ai-bot-kb.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -770,7 +770,7 @@
         "challenge.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/challenge.md"
+        ".agents/workflows/challenge.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -789,7 +789,7 @@
         "drift-validator.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/drift-validator.md"
+        ".agents/workflows/drift-validator.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -807,7 +807,7 @@
         "task-blueprint-selection.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/task-blueprint-selection.md"
+        ".agents/workflows/task-blueprint-selection.md"
       ],
       "post_actions": [],
       "post_action_paths": [],
@@ -825,7 +825,7 @@
         "infa.md"
       ],
       "sequence_paths": [
-        ".agent/workflows/infa.md"
+        ".agents/workflows/infa.md"
       ],
       "post_actions": [],
       "post_action_paths": [],

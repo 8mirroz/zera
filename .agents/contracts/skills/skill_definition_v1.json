@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Skill Definition Contract v1.0",
+  "description": "Mandatory schema for all skill definitions in .agents/skills/",
+  "type": "object",
+  "required": ["id", "name", "version", "description", "entry_point", "input_schema", "output_schema"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique identifier for the skill (lowercase, hyphens)"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "entry_point": {
+      "type": "string",
+      "description": "Path to the script or function that executes this skill"
+    },
+    "model_alias": {
+      "type": "string",
+      "description": "Recommended model alias from model_router.yaml (e.g., 'coder', 'researcher')"
+    },
+    "input_schema": {
+      "type": "object",
+      "description": "JSON Schema defining expected input parameters"
+    },
+    "output_schema": {
+      "type": "object",
+      "description": "JSON Schema defining expected output structure"
+    },
+    "tools_required": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "List of tool names required by this skill"
+    },
+    "permissions": {
+      "type": "object",
+      "properties": {
+        "file_write": {"type": "boolean"},
+        "shell_exec": {"type": "boolean"},
+        "network_access": {"type": "boolean"}
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "max_tokens": {"type": "integer"},
+        "timeout_seconds": {"type": "integer"},
+        "cost_limit_usd": {"type": "number"}
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

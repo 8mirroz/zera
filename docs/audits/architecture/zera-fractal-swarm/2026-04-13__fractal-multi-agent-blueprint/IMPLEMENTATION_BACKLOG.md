@@ -101,7 +101,7 @@
 - **Priority:** P0
 - **Effort:** M
 - **Dependencies:** None
-- **Description:** Resolve `.agent/.agents` mismatch. Pick one canonical path, update all references, create compat symlink for the other.
+- **Description:** Resolve `.agents/.agents` mismatch. Pick one canonical path, update all references, create compat symlink for the other.
 - **Acceptance criteria:**
   - Zero references to `.agents` in code (verified by grep)
   - All tests pass with canonical path

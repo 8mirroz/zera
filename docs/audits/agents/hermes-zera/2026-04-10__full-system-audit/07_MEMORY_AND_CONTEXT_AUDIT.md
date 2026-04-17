@@ -2,12 +2,12 @@
 
 ## Current Architecture
 - L1: `configs/orchestrator/user_profile.json` -> `ProfileManager` -> injected into `objective`.
-- Store: `.agent/memory/memory.jsonl` via `MemoryStore`.
+- Store: `.agents/memory/memory.jsonl` via `MemoryStore`.
 - Declared layering: `configs/global/memory_policy.yaml`, `memory_write_policy.yaml`, `memory_mesh.yaml`, `memory_policy_layer.py`, `memory/layered_retriever.py`.
 - Runtime evidence: retrieval and some writes exist, but most writes remain flat JSONL with weak scope discipline.
 
 ## Evidence
-- `.agent/memory/memory.jsonl` contains thousands of rows dominated by `memory_class=general` and `promotion_state=session_only`.
+- `.agents/memory/memory.jsonl` contains thousands of rows dominated by `memory_class=general` and `promotion_state=session_only`.
 - Observed distribution is heavily flat: roughly `2498/2691` rows are `memory_class=general`, `2463/2691` are `promotion_state=session_only`, and only `8` entries are explicitly scope-tagged.
 - Trace contains 117 `memory_retrieval_scored` events and 221 `goal_stack_updated` events, but lacks rich policy-block / dedup / stale-memory rejection telemetry.
 

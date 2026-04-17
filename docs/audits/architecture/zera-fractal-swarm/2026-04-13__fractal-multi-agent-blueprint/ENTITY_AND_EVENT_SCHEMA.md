@@ -107,7 +107,7 @@ A `workflow` is a named sequence of tasks with internal dependencies.
   "started_at": "2026-04-13T10:00:03Z",
   "completed_at": null,
   "metadata": {
-    "source": ".agent/workflows/implement-dark-mode.yaml",
+    "source": ".agents/workflows/implement-dark-mode.yaml",
     "tier": "C3"
   }
 }

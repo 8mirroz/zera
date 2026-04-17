@@ -101,7 +101,7 @@ def response_chunks(text: str, *, limit: int = 3500) -> list[str]:
 
 
 def queue_summary() -> dict[str, Any]:
-    queue_path = repo_root() / ".agent/runtime/background-jobs.json"
+    queue_path = repo_root() / ".agents/runtime/background-jobs.json"
     if not queue_path.exists():
         return {"queued": 0, "completed": 0, "failed": 0, "queue_file": str(queue_path)}
     try:

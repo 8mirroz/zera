@@ -48,11 +48,11 @@
 
 | Path | Purpose | Format | SoT? |
 |------|---------|--------|------|
-| `.agent/workflows/` | 44 workflow definition files | Markdown | ✅ Yes |
+| `.agents/workflows/` | 44 workflow definition files | Markdown | ✅ Yes |
 | `configs/registry/workflows/*.yaml` | 5 registry workflow definitions | YAML | ✅ Yes |
-| `.agent/skills/` | 29 published skills (SKILL.md files) | Markdown | ✅ Yes |
+| `.agents/skills/` | 29 published skills (SKILL.md files) | Markdown | ✅ Yes |
 | `configs/registry/skills/*.yaml` | 12 registered skill definitions | YAML | ✅ Yes |
-| `.agent/templates/compressed/` | T1–T7 prompt templates | Markdown | ✅ Yes |
+| `.agents/templates/compressed/` | T1–T7 prompt templates | Markdown | ✅ Yes |
 
 ---
 
@@ -128,15 +128,15 @@
 | `.agents/memory/build-library/` | Build memory | Persistent | Build memory writer | Agent OS |
 | `.agents/memory/quarantine/` | Quarantined entries | Persistent | Quarantine system | Auditor |
 | `.agents/memory/repos-catalog/` | Repository catalog | Persistent | Catalog builder | Agent OS |
-| `.agent/evolution/telemetry.jsonl` | Evolution telemetry | Persistent | `self_evolution_loop.py` | Dashboard, auditor |
-| `.agent/evolution/state.json` | Evolution state | Persistent | Evolution controller | All |
-| `.agent/evolution/evolutionctl-state.json` | Evolutionctl state | Persistent | `zera-evolutionctl.py` | Evolutionctl |
-| `.agent/evolution/promotion_state.json` | Promotion state | Persistent | `zera-evolutionctl.py` | Promotion system |
-| `.agent/evolution/meta_memory.json` | Meta memory | Persistent | Evolution system | Agent |
-| `.agent/runtime/approvals.json` | Approval records | Persistent | Approval engine | Auditor |
-| `.agent/runtime/background-jobs.json` | Background job state | Persistent | Background scheduler | Monitor |
-| `.agent/runtime/background-control.json` | Background control state | Persistent | Background controller | Monitor |
-| `.agent/runtime/model_ovl.yaml` | Model overlay config | Persistent | Model manager | Router |
+| `.agents/evolution/telemetry.jsonl` | Evolution telemetry | Persistent | `self_evolution_loop.py` | Dashboard, auditor |
+| `.agents/evolution/state.json` | Evolution state | Persistent | Evolution controller | All |
+| `.agents/evolution/evolutionctl-state.json` | Evolutionctl state | Persistent | `zera-evolutionctl.py` | Evolutionctl |
+| `.agents/evolution/promotion_state.json` | Promotion state | Persistent | `zera-evolutionctl.py` | Promotion system |
+| `.agents/evolution/meta_memory.json` | Meta memory | Persistent | Evolution system | Agent |
+| `.agents/runtime/approvals.json` | Approval records | Persistent | Approval engine | Auditor |
+| `.agents/runtime/background-jobs.json` | Background job state | Persistent | Background scheduler | Monitor |
+| `.agents/runtime/background-control.json` | Background control state | Persistent | Background controller | Monitor |
+| `.agents/runtime/model_ovl.yaml` | Model overlay config | Persistent | Model manager | Router |
 | `vault/loops/.evolve-state.json` | Legacy evolution state | Persistent | Legacy loops | Legacy readers |
 | `vault/knowledge/ki/` | Knowledge items | Persistent | Knowledge capture | All |
 | `docs/ki/` | Knowledge items (flat) | Persistent | Knowledge capture | All |
@@ -148,9 +148,9 @@
 | Path | Format | Schema | Validator | Dashboard |
 |------|--------|--------|-----------|-----------|
 | `logs/agent_traces.jsonl` | JSONL (one event per line) | `configs/tooling/trace_schema.json` (v2.1) | `repos/packages/agent-os/scripts/trace_validator.py` | `scripts/hermes/hermes-dashboard.sh` |
-| `.agent/evolution/telemetry.jsonl` | JSONL (evolution events) | Implicit (evolution loop format) | None explicit | `vault/reports/evolution_dashboard.md` |
-| `.agent/evolution/loop.log` | Plain text log | None | None | None |
-| `.agent/evolution/evolutionctl.out.log` | Plain text log | None | None | None |
+| `.agents/evolution/telemetry.jsonl` | JSONL (evolution events) | Implicit (evolution loop format) | None explicit | `vault/reports/evolution_dashboard.md` |
+| `.agents/evolution/loop.log` | Plain text log | None | None | None |
+| `.agents/evolution/evolutionctl.out.log` | Plain text log | None | None | None |
 
 ---
 
@@ -193,5 +193,5 @@
 | `docs/` (documentation) | 60+ |
 | `vault/` (knowledge graph) | 50+ |
 | `configs/registry/` (registry) | 40+ |
-| `.agent/workflows/` (workflow definitions) | 44 |
-| `.agent/skills/` (skill definitions) | 29 |
+| `.agents/workflows/` (workflow definitions) | 44 |
+| `.agents/skills/` (skill definitions) | 29 |

@@ -7,7 +7,7 @@
 
   "indexes": {
     "global_index": {
-      "path": ".agent/memory/build-library/indexes/global_index.json",
+      "path": ".agents/memory/build-library/indexes/global_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -24,7 +24,7 @@
       "facets": ["kind", "status", "tags", "problem_types", "tier", "cost_class", "models", "providers"]
     },
     "projects_index": {
-      "path": ".agent/memory/build-library/indexes/projects_index.json",
+      "path": ".agents/memory/build-library/indexes/projects_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -35,7 +35,7 @@
       "sort_default": "project_name_asc"
     },
     "best_library_snapshot": {
-      "path": ".agent/memory/build-library/indexes/best_library_snapshot.json",
+      "path": ".agents/memory/build-library/indexes/best_library_snapshot.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -49,7 +49,7 @@
       "include_decay_adjusted": true
     },
     "validation_report": {
-      "path": ".agent/memory/build-library/indexes/validation_report.json",
+      "path": ".agents/memory/build-library/indexes/validation_report.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -60,7 +60,7 @@
       "description": "Entry validation results produced by rebuild_indexes()"
     },
     "lineage_index": {
-      "path": ".agent/memory/build-library/indexes/lineage_index.json",
+      "path": ".agents/memory/build-library/indexes/lineage_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -71,7 +71,7 @@
       "description": "Tracks parent/child/fork/merge relationships across entries"
     },
     "decay_index": {
-      "path": ".agent/memory/build-library/indexes/decay_index.json",
+      "path": ".agents/memory/build-library/indexes/decay_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -82,7 +82,7 @@
       "description": "Tracks decay state for scheduled decay passes"
     },
     "fingerprint_index": {
-      "path": ".agent/memory/build-library/indexes/fingerprint_index.json",
+      "path": ".agents/memory/build-library/indexes/fingerprint_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -91,7 +91,7 @@
       "description": "Maps fingerprint → entry_id for dedup lookups by auto_ingest.py"
     },
     "search_text_index": {
-      "path": ".agent/memory/build-library/indexes/search_text_index.json",
+      "path": ".agents/memory/build-library/indexes/search_text_index.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -101,7 +101,7 @@
       "description": "Backing index for full-text _search_text queries"
     },
     "status_transition_log": {
-      "path": ".agent/memory/build-library/indexes/status_transition_log.json",
+      "path": ".agents/memory/build-library/indexes/status_transition_log.json",
       "contents": [
         "generated_at",
         "schema_version",
@@ -185,7 +185,7 @@
       "dry_run": false,
       "description": "Keep historical best_library_snapshot versions for rollback",
       "max_snapshots": 30,
-      "path": ".agent/memory/build-library/indexes/snapshots/"
+      "path": ".agents/memory/build-library/indexes/snapshots/"
     }
   },
 

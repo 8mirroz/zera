@@ -41,7 +41,7 @@ def dump_json(path: Path, data: Any) -> None:
 
 
 def build_lib_root(root: Path) -> Path:
-    return root / ".agent/memory/build-library"
+    return root / ".agents/memory/build-library"
 
 
 def ensure_structure(root: Path) -> dict[str, str]:
@@ -394,7 +394,7 @@ def sync_memory_store(root: Path, top_n: int = 20, status_filter: str | None = N
         if len(selected) >= top_n:
             break
 
-    memory_file = root / ".agent/memory/memory.jsonl"
+    memory_file = root / ".agents/memory/memory.jsonl"
     memory_file.parent.mkdir(parents=True, exist_ok=True)
     if not memory_file.exists():
         memory_file.write_text("", encoding="utf-8")

@@ -97,7 +97,7 @@ state["current_algorithm"]
 - не было single-instance lock, поэтому запустилось несколько процессов.
 - не было healthcheck/status команды.
 
-Исторический `.agent/evolution/loop.log` показывает, что более ранний настоящий `scripts/internal/self_evolution_loop.py` был существенно ближе к рабочей системе: он проходил фазы OBSERVE/CLASSIFY/SCORE/DESIGN/SANDBOX/EVAL/PROMOTE/REFLECT. Но там тоже были серьезные проблемы:
+Исторический `.agents/evolution/loop.log` показывает, что более ранний настоящий `scripts/internal/self_evolution_loop.py` был существенно ближе к рабочей системе: он проходил фазы OBSERVE/CLASSIFY/SCORE/DESIGN/SANDBOX/EVAL/PROMOTE/REFLECT. Но там тоже были серьезные проблемы:
 
 - старые циклы падали на `TypeError: Object of type CandidateStatus is not JSON serializable`;
 - часть циклов считалась успешной даже при rollback после failed eval;

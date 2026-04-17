@@ -6,7 +6,7 @@
 
 ---
 
-## 1. Critical: `.agent/` vs `.agents/` Mismatch
+## 1. Critical: `.agents/` vs `.agents/` Mismatch
 
 ### 1.1 The Problem
 
@@ -14,35 +14,35 @@ The workspace has **two parallel directory trees** for agent runtime state:
 
 | Directory | Files Present | Used By |
 |-----------|--------------|---------|
-| `.agent/` | `evolution/`, `memory/`, `skills/`, `workflows/`, `templates/` | `zera-evolutionctl.py`, `self_evolution_loop.py`, legacy scripts |
+| `.agents/` | `evolution/`, `memory/`, `skills/`, `workflows/`, `templates/` | `zera-evolutionctl.py`, `self_evolution_loop.py`, legacy scripts |
 | `.agents/` | `config/`, `evolution/`, `memory/`, `rules/`, `runtime/`, `skills/`, `templates/` | Current runtime expectations, `core-zera.md`, newer tooling |
 
 **Specific mismatches:**
 
-| Path (`.agent/`) | Path (`.agents/`) | Status |
+| Path (`.agents/`) | Path (`.agents/`) | Status |
 |------------------|-------------------|--------|
-| `.agent/evolution/state.json` | `.agents/evolution/state.json` | ⚠️ Both exist, different content |
-| `.agent/evolution/telemetry.jsonl` | `.agents/evolution/` (no telemetry.jsonl) | 🔴 Only `.agent/` has telemetry |
-| `.agent/evolution/evolutionctl-state.json` | `.agents/evolution/evolutionctl-state.json` | ⚠️ Both exist |
-| `.agent/evolution/promotion_state.json` | `.agents/evolution/promotion_state.json` | ⚠️ Both exist |
-| `.agent/evolution/meta_memory.json` | `.agents/evolution/meta_memory.json` | ⚠️ Both exist |
-| `.agent/memory/` | `.agents/memory/` | ⚠️ `.agents/memory/` has more structure (indexes, quarantine, solutions) |
-| `.agent/skills/` (29 skills) | `.agents/skills/` (29 skills) | ⚠️ Same count, but may diverge |
-| `.agent/workflows/` (44 workflows) | `.agents/workflows/` (not found) | 🔴 Only `.agent/` has workflows |
-| `.agent/templates/compressed/T1–T7` | `.agents/templates/compressed/T1–T7` | ✅ Both exist (duplicated) |
+| `.agents/evolution/state.json` | `.agents/evolution/state.json` | ⚠️ Both exist, different content |
+| `.agents/evolution/telemetry.jsonl` | `.agents/evolution/` (no telemetry.jsonl) | 🔴 Only `.agents/` has telemetry |
+| `.agents/evolution/evolutionctl-state.json` | `.agents/evolution/evolutionctl-state.json` | ⚠️ Both exist |
+| `.agents/evolution/promotion_state.json` | `.agents/evolution/promotion_state.json` | ⚠️ Both exist |
+| `.agents/evolution/meta_memory.json` | `.agents/evolution/meta_memory.json` | ⚠️ Both exist |
+| `.agents/memory/` | `.agents/memory/` | ⚠️ `.agents/memory/` has more structure (indexes, quarantine, solutions) |
+| `.agents/skills/` (29 skills) | `.agents/skills/` (29 skills) | ⚠️ Same count, but may diverge |
+| `.agents/workflows/` (44 workflows) | `.agents/workflows/` (not found) | 🔴 Only `.agents/` has workflows |
+| `.agents/templates/compressed/T1–T7` | `.agents/templates/compressed/T1–T7` | ✅ Both exist (duplicated) |
 | — | `.agents/config/workflow_sets.active.json` | 🔴 Only `.agents/` has this |
 | — | `.agents/rules/core-zera.md` | 🔴 Only `.agents/` has this |
 
 ### 1.2 Impact
 
-- **State divergence:** Writes to `.agent/evolution/` by `zera-evolutionctl.py` are NOT visible to readers expecting `.agents/evolution/`
-- **Telemetry loss:** `.agent/evolution/telemetry.jsonl` is the active sink, but newer code may look for `.agents/`
-- **Skill inconsistency:** Two skill directories; `swarmctl.py publish-skills` targets `.agent/skills/`, but `.agents/skills/` exists independently
-- **Workflow isolation:** Workflows only in `.agent/workflows/`, not mirrored to `.agents/`
+- **State divergence:** Writes to `.agents/evolution/` by `zera-evolutionctl.py` are NOT visible to readers expecting `.agents/evolution/`
+- **Telemetry loss:** `.agents/evolution/telemetry.jsonl` is the active sink, but newer code may look for `.agents/`
+- **Skill inconsistency:** Two skill directories; `swarmctl.py publish-skills` targets `.agents/skills/`, but `.agents/skills/` exists independently
+- **Workflow isolation:** Workflows only in `.agents/workflows/`, not mirrored to `.agents/`
 
 ### 1.3 Root Cause
 
-Historical naming migration: `.agent/` → `.agents/` was partially applied. The `zera-evolutionctl.py` code explicitly uses:
+Historical naming migration: `.agents/` → `.agents/` was partially applied. The `zera-evolutionctl.py` code explicitly uses:
 ```python
 EVOLUTION_DIR = ROOT / ".agent" / "evolution"
 ```
@@ -86,7 +86,7 @@ While the audit spec and newer conventions expect `.agents/`.
 |-----------|-------------|--------|
 | `templates/adaptation/efficiency-dashboard.json` (in `docs/AGENT_ONBOARDING.md`) | Does not exist | ❌ Missing |
 | `templates/` directory (root level) | Does not exist | ❌ Missing |
-| `.agent/templates/compressed/` | Exists | ✅ Present |
+| `.agents/templates/compressed/` | Exists | ✅ Present |
 
 **Note:** The `AGENT_ONBOARDING.md` references a `templates/` directory at the repo root that does not exist.
 
@@ -132,14 +132,14 @@ The `router.yaml` defines `roles.contracts_path: "configs/orchestrator/role_cont
 
 | Source 1 | Source 2 | Duplication? |
 |----------|----------|-------------|
-| `.agent/skills/zera-core/SKILL.md` | `configs/skills/zera-core/SKILL.md` | ⚠️ Two skill source directories |
-| `.agent/skills/zera-muse/SKILL.md` | `configs/skills/zera-muse/SKILL.md` | ⚠️ Two skill source directories |
-| `.agent/skills/zera-researcher/SKILL.md` | `configs/skills/zera-researcher/SKILL.md` | ⚠️ Two skill source directories |
-| `.agent/skills/zera-rhythm-coach/SKILL.md` | `configs/skills/zera-rhythm-coach/SKILL.md` | ⚠️ Two skill source directories |
-| `.agent/skills/zera-strategist/SKILL.md` | `configs/skills/zera-strategist/SKILL.md` | ⚠️ Two skill source directories |
-| `.agent/skills/zera-style-curator/SKILL.md` | `configs/skills/zera-style-curator/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-core/SKILL.md` | `configs/skills/zera-core/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-muse/SKILL.md` | `configs/skills/zera-muse/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-researcher/SKILL.md` | `configs/skills/zera-researcher/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-rhythm-coach/SKILL.md` | `configs/skills/zera-rhythm-coach/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-strategist/SKILL.md` | `configs/skills/zera-strategist/SKILL.md` | ⚠️ Two skill source directories |
+| `.agents/skills/zera-style-curator/SKILL.md` | `configs/skills/zera-style-curator/SKILL.md` | ⚠️ Two skill source directories |
 
-**6 skills** exist in both `.agent/skills/` AND `configs/skills/`. Unclear which is canonical.
+**6 skills** exist in both `.agents/skills/` AND `configs/skills/`. Unclear which is canonical.
 
 ### 4.5 Config Catalog Duplication
 
@@ -240,7 +240,7 @@ def _load_config(self) -> None:
 
 ### 6.2 Vault State
 
-`vault/loops/.evolve-state.json` is a **legacy** evolution state file. The active state is in `.agent/evolution/evolutionctl-state.json`. The vault file is maintained for backward compatibility only.
+`vault/loops/.evolve-state.json` is a **legacy** evolution state file. The active state is in `.agents/evolution/evolutionctl-state.json`. The vault file is maintained for backward compatibility only.
 
 ### 6.3 Trace Schema Migration
 
@@ -260,7 +260,7 @@ Traces in `logs/agent_traces.jsonl` may contain a mix of v1 and v2.1 format even
 
 | Category | Count | Severity | Priority |
 |----------|-------|----------|----------|
-| `.agent/` vs `.agents/` mismatch | 1 (systemic) | 🔴 Critical | P0 |
+| `.agents/` vs `.agents/` mismatch | 1 (systemic) | 🔴 Critical | P0 |
 | Duplicate scripts (root vs internal) | 3 pairs | 🔴 Critical | P0 |
 | Missing referenced paths | 3 | 🟡 Medium | P1 |
 | Skill dual sources | 6 skills | 🟡 Medium | P1 |
@@ -275,10 +275,10 @@ Traces in `logs/agent_traces.jsonl` may contain a mix of v1 and v2.1 format even
 
 ## 8. Recommended Immediate Actions
 
-1. **Resolve `.agent/` → `.agents/`** — symlink or full migration
+1. **Resolve `.agents/` → `.agents/`** — symlink or full migration
 2. **Remove duplicate root scripts** — keep `scripts/internal/` copies, delete root copies
 3. **Create missing `configs/orchestrator/completion_gates.yaml`** or remove references
-4. **Consolidate skill sources** — pick one canonical location (`.agent/skills/` recommended)
+4. **Consolidate skill sources** — pick one canonical location (`.agents/skills/` recommended)
 5. **Fix YAML fallback** — add validation that simple parser results match expected schema
 6. **Fix trace path default** — use absolute path based on repo root
 7. **Catalog cleanup** — remove references to non-existent artifacts

@@ -29,7 +29,7 @@ Workspace: `/Users/user/antigravity-core`
 - Result: PASS
 - Warnings left:
   - `configs/tooling/model_routing.json` missing (legacy compat note)
-  - `.agent/config/model_router.yaml` missing (legacy compat note)
+  - `.agents/config/model_router.yaml` missing (legacy compat note)
 
 4. `uv run python scripts/swarmctl.py smoke`
 - Result: PASS (`status: pass`)

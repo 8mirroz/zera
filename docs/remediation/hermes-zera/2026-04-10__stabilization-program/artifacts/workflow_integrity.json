@@ -14,133 +14,133 @@
     "hardcoded_model_refs": 0
   },
   "missing_workflow_paths": [
-    ".agent/workflows/repo-memory-refresh.md",
-    ".agent/workflows/build-memory-capture.md",
-    ".agent/workflows/drift-validator.md",
-    ".agent/workflows/self-learning-retro.md",
-    ".agent/workflows/triage.md",
-    ".agent/workflows/task-blueprint-selection.md",
-    ".agent/workflows/project-bootstrap-guided.md",
-    ".agent/workflows/polyglot-autoevo-routing.md",
-    ".agent/workflows/swarm-review.md",
-    ".agent/workflows/error-healing.md",
-    ".agent/workflows/swarm-plan.md",
-    ".agent/workflows/multi-agent-routing-v3-free-first.md",
-    ".agent/workflows/axel.md",
-    ".agent/workflows/ralph-loop.md",
-    ".agent/workflows/multi-agent-routing.md",
-    ".agent/workflows/kilo-mode-routing.md",
-    ".agent/workflows/ai-bot-kb.md",
-    ".agent/workflows/infa.md"
+    ".agents/workflows/repo-memory-refresh.md",
+    ".agents/workflows/build-memory-capture.md",
+    ".agents/workflows/drift-validator.md",
+    ".agents/workflows/self-learning-retro.md",
+    ".agents/workflows/triage.md",
+    ".agents/workflows/task-blueprint-selection.md",
+    ".agents/workflows/project-bootstrap-guided.md",
+    ".agents/workflows/polyglot-autoevo-routing.md",
+    ".agents/workflows/swarm-review.md",
+    ".agents/workflows/error-healing.md",
+    ".agents/workflows/swarm-plan.md",
+    ".agents/workflows/multi-agent-routing-v3-free-first.md",
+    ".agents/workflows/axel.md",
+    ".agents/workflows/ralph-loop.md",
+    ".agents/workflows/multi-agent-routing.md",
+    ".agents/workflows/kilo-mode-routing.md",
+    ".agents/workflows/ai-bot-kb.md",
+    ".agents/workflows/infa.md"
   ],
   "findings": [
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/repo-memory-refresh.md"
+      "path": ".agents/workflows/repo-memory-refresh.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/build-memory-capture.md"
+      "path": ".agents/workflows/build-memory-capture.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/drift-validator.md"
+      "path": ".agents/workflows/drift-validator.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/self-learning-retro.md"
+      "path": ".agents/workflows/self-learning-retro.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/triage.md"
+      "path": ".agents/workflows/triage.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/task-blueprint-selection.md"
+      "path": ".agents/workflows/task-blueprint-selection.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/project-bootstrap-guided.md"
+      "path": ".agents/workflows/project-bootstrap-guided.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/polyglot-autoevo-routing.md"
+      "path": ".agents/workflows/polyglot-autoevo-routing.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/swarm-review.md"
+      "path": ".agents/workflows/swarm-review.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/error-healing.md"
+      "path": ".agents/workflows/error-healing.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/swarm-plan.md"
+      "path": ".agents/workflows/swarm-plan.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/multi-agent-routing-v3-free-first.md"
+      "path": ".agents/workflows/multi-agent-routing-v3-free-first.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/axel.md"
+      "path": ".agents/workflows/axel.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/ralph-loop.md"
+      "path": ".agents/workflows/ralph-loop.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/multi-agent-routing.md"
+      "path": ".agents/workflows/multi-agent-routing.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/kilo-mode-routing.md"
+      "path": ".agents/workflows/kilo-mode-routing.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/ai-bot-kb.md"
+      "path": ".agents/workflows/ai-bot-kb.md"
     },
     {
       "severity": "error",
       "code": "MISSING_WORKFLOW_FILE",
       "kind": "workflow",
-      "path": ".agent/workflows/infa.md"
+      "path": ".agents/workflows/infa.md"
     }
   ],
   "migration_actions": [

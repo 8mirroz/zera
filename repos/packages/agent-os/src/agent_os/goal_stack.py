@@ -43,7 +43,7 @@ class GoalStack:
 
     def __init__(self, repo_root: Path, storage_path: Path | None = None) -> None:
         self.repo_root = Path(repo_root)
-        self.storage_path = storage_path or (self.repo_root / ".agent/memory/goal-stack.json")
+        self.storage_path = storage_path or (self.repo_root / ".agents/memory/goal-stack.json")
         self.storage_path.parent.mkdir(parents=True, exist_ok=True)
         self._goals = self._load()
 

@@ -112,7 +112,7 @@ def install_preset(root: Path, preset_name: str) -> dict[str, Any]:
         "sets": resolved_sets
     }
 
-    out_path = root / ".agent/config/workflow_sets.active.json"
+    out_path = root / ".agents/config/workflow_sets.active.json"
     dump_json(out_path, active)
     return {
         "status": "ok",
@@ -132,7 +132,7 @@ def list_presets(root: Path) -> dict[str, Any]:
 
 
 def show_active(root: Path) -> dict[str, Any]:
-    path = root / ".agent/config/workflow_sets.active.json"
+    path = root / ".agents/config/workflow_sets.active.json"
     if not path.exists():
         return {"status": "error", "error": "No active workflow sets installed"}
     return {"status": "ok", "active": load_json(path)}
@@ -144,7 +144,7 @@ def parse_args() -> argparse.Namespace:
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("validate", help="Validate workflow sets catalog")
     sub.add_parser("list", help="List available workflow sets and presets")
-    ins = sub.add_parser("install", help="Install a workflow set preset into .agent/config")
+    ins = sub.add_parser("install", help="Install a workflow set preset into .agents/config")
     ins.add_argument("--preset", required=True, help="Preset name (e.g. speed_free_max)")
     sub.add_parser("show-active", help="Show installed active workflow set config")
     return parser.parse_args()

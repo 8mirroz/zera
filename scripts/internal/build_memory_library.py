@@ -36,7 +36,7 @@ def dump_json(path: Path, data: Any) -> None:
 
 
 def build_lib_root(root: Path) -> Path:
-    return root / ".agent/memory/build-library"
+    return root / ".agents/memory/build-library"
 
 
 def ensure_structure(root: Path) -> dict[str, str]:
@@ -384,7 +384,7 @@ def sync_memory_store(root: Path, top_n: int = 20, status_filter: str | None = N
         if len(selected) >= top_n:
             break
 
-    memory_file = root / ".agent/memory/memory.jsonl"
+    memory_file = root / ".agents/memory/memory.jsonl"
     memory_file.parent.mkdir(parents=True, exist_ok=True)
     if not memory_file.exists():
         memory_file.write_text("", encoding="utf-8")
@@ -474,7 +474,7 @@ def parse_args() -> argparse.Namespace:
     q.add_argument("--status", choices=["candidate", "validated", "gold", "deprecated"], help="Status filter")
     q.add_argument("--limit", type=int, default=10, help="Max results")
 
-    sync = sub.add_parser("sync-memory-store", help="Sync top build entries into .agent/memory/memory.jsonl")
+    sync = sub.add_parser("sync-memory-store", help="Sync top build entries into .agents/memory/memory.jsonl")
     sync.add_argument("--top-n", type=int, default=20, help="Number of top entries to sync")
     sync.add_argument("--status", choices=["candidate", "validated", "gold", "deprecated"], help="Status filter before sync")
 

@@ -55,11 +55,11 @@ _hermes_profiles = Path.home() / ".hermes/profiles"
 ZERA_PROFILES_DIR = _zera_profiles if _zera_profiles.exists() else _hermes_profiles
 
 GOVERNANCE_PATH = REPO_ROOT / "configs/tooling/zera_growth_governance.json"
-EVO_STATE_PATH = REPO_ROOT / ".agent/evolution/state.json"
-EVO_TELEMETRY_PATH = REPO_ROOT / ".agent/evolution/telemetry.jsonl"
-EVO_LOG_PATH = REPO_ROOT / ".agent/evolution/loop.log"
-EVO_META_MEMORY_PATH = REPO_ROOT / ".agent/evolution/meta_memory.json"
-SCOUT_JOURNAL_PATH = REPO_ROOT / ".agent/evolution/scout_journal.md"
+EVO_STATE_PATH = REPO_ROOT / ".agents/evolution/state.json"
+EVO_TELEMETRY_PATH = REPO_ROOT / ".agents/evolution/telemetry.jsonl"
+EVO_LOG_PATH = REPO_ROOT / ".agents/evolution/loop.log"
+EVO_META_MEMORY_PATH = REPO_ROOT / ".agents/evolution/meta_memory.json"
+SCOUT_JOURNAL_PATH = REPO_ROOT / ".agents/evolution/scout_journal.md"
 MAX_TRACE_SCAN_LINES = 250
 MAX_MEMORY_SCAN_LINES = 120
 MAX_TELEMETRY_STATUS_LINES = 5
@@ -655,7 +655,7 @@ def review_recent_failures() -> list[dict[str, str]]:
 
 def check_memory_signals() -> list[dict[str, Any]]:
     """Check BM25 memory for evolution signals."""
-    memory_file = REPO_ROOT / ".agent/memory/memory.jsonl"
+    memory_file = REPO_ROOT / ".agents/memory/memory.jsonl"
     signals = []
     if not memory_file.exists():
         return signals

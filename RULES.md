@@ -19,12 +19,12 @@
 
 ## Как запускать Agent OS v2
 
-1) Active Skills публикуются в `.agent/skills/` из `configs/skills/ACTIVE_SKILLS.md`:
+1) Active Skills публикуются в `.agents/skills/` из `configs/skills/ACTIVE_SKILLS.md`:
 ```bash
 python3 repos/packages/agent-os/scripts/swarmctl.py publish-skills
 ```
 
-2) Swarm управляется workflow’ами из `.agent/workflows/*.md`.
+2) Swarm управляется workflow’ами из `.agents/workflows/*.md`.
 
 3) Быстрая проверка целостности:
 ```bash

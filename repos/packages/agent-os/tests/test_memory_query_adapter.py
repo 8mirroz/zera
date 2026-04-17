@@ -25,14 +25,14 @@ class TestMemoryQueryAdapter(unittest.TestCase):
     def _seed_fresh_indexes(self, root: Path) -> None:
         ts = datetime.now(tz=timezone.utc).isoformat()
         for rel in (
-            ".agent/memory/build-library/indexes/global_index.json",
-            ".agent/memory/build-library/indexes/projects_index.json",
-            ".agent/memory/build-library/indexes/best_library_snapshot.json",
-            ".agent/memory/build-library/indexes/validation_report.json",
-            ".agent/memory/repos-catalog/indexes/repos_index.json",
-            ".agent/memory/repos-catalog/indexes/aliases_index.json",
-            ".agent/memory/repos-catalog/indexes/navigation_shortcuts.json",
-            ".agent/memory/repos-catalog/indexes/validation_report.json",
+            ".agents/memory/build-library/indexes/global_index.json",
+            ".agents/memory/build-library/indexes/projects_index.json",
+            ".agents/memory/build-library/indexes/best_library_snapshot.json",
+            ".agents/memory/build-library/indexes/validation_report.json",
+            ".agents/memory/repos-catalog/indexes/repos_index.json",
+            ".agents/memory/repos-catalog/indexes/aliases_index.json",
+            ".agents/memory/repos-catalog/indexes/navigation_shortcuts.json",
+            ".agents/memory/repos-catalog/indexes/validation_report.json",
         ):
             _write_json(root / rel, {"generated_at": ts})
 
@@ -74,7 +74,7 @@ class TestMemoryQueryAdapter(unittest.TestCase):
     def test_compact_runtime_memory_applies_ttl_for_managed_sources_and_dedupes(self) -> None:
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            memory_file = root / ".agent/memory/memory.jsonl"
+            memory_file = root / ".agents/memory/memory.jsonl"
             memory_file.parent.mkdir(parents=True, exist_ok=True)
 
             now = datetime.now(tz=timezone.utc)

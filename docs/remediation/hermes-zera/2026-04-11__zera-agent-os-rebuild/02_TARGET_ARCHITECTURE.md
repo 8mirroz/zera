@@ -42,10 +42,10 @@ Aggressive autonomy is allowed only as bounded autonomy:
 - Mutation jobs require `zera-evolutionctl`.
 - Promotion is disabled by default in test/live smoke runs via `--no-promote`.
 - Forever mode requires explicit `--forever`; interval under 300s requires `--force`.
-- Kill switch file: `.agent/evolution/KILL_SWITCH`.
-- PID file: `.agent/evolution/evolutionctl.pid`.
-- Controller state: `.agent/evolution/evolutionctl-state.json`.
-- Core telemetry/log: `.agent/evolution/telemetry.jsonl` and `.agent/evolution/loop.log`.
+- Kill switch file: `.agents/evolution/KILL_SWITCH`.
+- PID file: `.agents/evolution/evolutionctl.pid`.
+- Controller state: `.agents/evolution/evolutionctl-state.json`.
+- Core telemetry/log: `.agents/evolution/telemetry.jsonl` and `.agents/evolution/loop.log`.
 
 ## Model Routing
 

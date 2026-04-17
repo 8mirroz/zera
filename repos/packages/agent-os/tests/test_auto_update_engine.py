@@ -33,7 +33,7 @@ def _trace(outcome: str = "success", qgf: int = 0, path: str = "Quality Path",
 def _make_repo(tmp_path: Path, traces: list[dict], memory_entries: list[dict] | None = None) -> Path:
     (tmp_path / "configs/tooling").mkdir(parents=True)
     (tmp_path / "logs").mkdir(parents=True)
-    (tmp_path / ".agent/memory").mkdir(parents=True)
+    (tmp_path / ".agents/memory").mkdir(parents=True)
 
     # kill-switches config
     (tmp_path / "configs/tooling/kill-switches.yaml").write_text(
@@ -49,7 +49,7 @@ def _make_repo(tmp_path: Path, traces: list[dict], memory_entries: list[dict] | 
 
     # memory
     if memory_entries is not None:
-        (tmp_path / ".agent/memory/memory.jsonl").write_text(
+        (tmp_path / ".agents/memory/memory.jsonl").write_text(
             "\n".join(json.dumps(e) for e in memory_entries)
         )
 

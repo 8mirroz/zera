@@ -29,7 +29,7 @@ class TestActiveSetPluginMetadata(unittest.TestCase):
             active = repo / "configs/skills/ACTIVE_SKILLS.md"
             active.write_text("- `configs/skills/legacy`\n", encoding="utf-8")
 
-            manifest = publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agent/skills")
+            manifest = publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agents/skills")
 
             self.assertEqual(manifest["skills"][0]["name"], "legacy")
             self.assertNotIn("plugin", manifest["skills"][0])
@@ -50,10 +50,10 @@ class TestActiveSetPluginMetadata(unittest.TestCase):
             active = repo / "configs/skills/ACTIVE_SKILLS.md"
             active.write_text("- `configs/skills/with-plugin`\n", encoding="utf-8")
 
-            manifest = publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agent/skills")
+            manifest = publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agents/skills")
 
             plugin = manifest["skills"][0]["plugin"]
-            self.assertEqual(plugin["path"], ".agent/skills/with-plugin/plugin.json")
+            self.assertEqual(plugin["path"], ".agents/skills/with-plugin/plugin.json")
             self.assertEqual(plugin["hooks"], ["PostToolUse", "PreToolUse"])
             self.assertEqual(plugin["lifecycle"], ["Init", "Shutdown"])
 
@@ -69,7 +69,7 @@ class TestActiveSetPluginMetadata(unittest.TestCase):
             active.write_text("- `configs/skills/bad-plugin`\n", encoding="utf-8")
 
             with self.assertRaisesRegex(ValueError, "Unsupported plugin hook"):
-                publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agent/skills")
+                publish_active_set(repo_root=repo, active_md=active, dest_dir=repo / ".agents/skills")
 
 
 if __name__ == "__main__":

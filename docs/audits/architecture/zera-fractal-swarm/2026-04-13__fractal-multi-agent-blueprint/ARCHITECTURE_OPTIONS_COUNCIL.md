@@ -11,7 +11,7 @@
 
 ## Executive Summary
 
-This document presents architecture options for each of the 10 subsystems identified during Waves 0-2. The current system operates as a single-threaded sequential orchestration with no true parallel agents, no lease/heartbeat mechanism, no idempotency on writes, fragmented memory directories (`.agent/` vs `.agents/`), and no distributed locking. Each subsystem below is evaluated on three axes: what exists today, what could replace it, and which path we recommend.
+This document presents architecture options for each of the 10 subsystems identified during Waves 0-2. The current system operates as a single-threaded sequential orchestration with no true parallel agents, no lease/heartbeat mechanism, no idempotency on writes, fragmented memory directories (`.agents/` vs `.agents/`), and no distributed locking. Each subsystem below is evaluated on three axes: what exists today, what could replace it, and which path we recommend.
 
 ---
 
@@ -47,7 +47,7 @@ Option C is premature — the system has 613 files total and has not yet proven 
 
 ## 2. Coordination Model
 
-**Current:** Centralized orchestration only. Workflows defined in YAML (44 files in `.agent/workflows/`), executed sequentially by the orchestrator. No choreography. No inter-agent communication. "Swarm" is a workflow name, not actual parallel execution.
+**Current:** Centralized orchestration only. Workflows defined in YAML (44 files in `.agents/workflows/`), executed sequentially by the orchestrator. No choreography. No inter-agent communication. "Swarm" is a workflow name, not actual parallel execution.
 
 ### Option A — Conservative: Enhanced Centralized Orchestration
 Keep centralized control. Add DAG execution within workflows, dependency graphs between steps, and parallel step groups. Use existing YAML workflow definitions.
@@ -77,10 +77,10 @@ Option C requires infrastructure (message broker) and skills the project does no
 
 ## 3. Memory System
 
-**Current:** Fragmented. `.agent/memory/` (BM25 indexes, working memory JSONL, pattern cache) and `.agents/` (duplicate directory — critical drift from Wave 2). JSONL append-only writes with no idempotency. LightRAG integration exists but is separate. Unified fabric declared in `router.yaml` but not fully implemented.
+**Current:** Fragmented. `.agents/memory/` (BM25 indexes, working memory JSONL, pattern cache) and `.agents/` (duplicate directory — critical drift from Wave 2). JSONL append-only writes with no idempotency. LightRAG integration exists but is separate. Unified fabric declared in `router.yaml` but not fully implemented.
 
 ### Option A — Conservative: Consolidate Directories, Keep Storage Model
-Merge `.agents/` into `.agent/` (canonical). Add idempotency keys to all memory writes. Add a `.memory_lock` file for write serialization. Keep JSONL + BM25 + LightRAG as-is.
+Merge `.agents/` into `.agents/` (canonical). Add idempotency keys to all memory writes. Add a `.memory_lock` file for write serialization. Keep JSONL + BM25 + LightRAG as-is.
 
 **Pros:** Minimal code change, fixes critical drift, adds basic safety (idempotency, lock file), zero new dependencies.
 **Cons:** JSONL is not queryable, BM25 is primitive for semantic search, no TTL enforcement.
@@ -319,7 +319,7 @@ Option C is designed for a multi-tenant SaaS, not a single-user agent OS. Option
 
 | Concern | Impact | Mitigation |
 |---------|--------|------------|
-| `.agent/` vs `.agents/` drift | Critical — affects all subsystems | Resolve before any migration; canonical is `.agent/` |
+| `.agents/` vs `.agents/` drift | Critical — affects all subsystems | Resolve before any migration; canonical is `.agents/` |
 | No idempotency on writes | High — affects memory, traces, evals | Add idempotency keys as part of SQLite migration |
 | File-based shared state with no locking | High — affects all subsystems | SQLite's WAL mode solves this |
 | LLM non-determinism in routing | Medium — mitigated by seed control | Outcome-weighted routing (Subsystem 5) addresses this |

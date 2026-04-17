@@ -4,7 +4,7 @@
 - Fail `scripts/test_mcp_profiles.py` on any routing mismatch or missing required parity surface.
 - Add unit test that every enabled provider in `runtime_providers.json` is registered in `RuntimeRegistry`.
 - Make benchmark gate fail if canonical expected IDs are missing, regardless of raw score.
-- Add workflow existence validation for all `.agent/workflows/*` references.
+- Add workflow existence validation for all `.agents/workflows/*` references.
 - Mark `agent_os_python` output as simulated/unverified instead of normal completion.
 
 ## Medium Structural Fixes

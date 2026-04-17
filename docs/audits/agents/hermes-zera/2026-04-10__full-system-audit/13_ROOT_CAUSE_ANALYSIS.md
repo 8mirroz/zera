@@ -56,7 +56,7 @@
 ## RC-8. Motion-aware routing config surface has zero executable backing
 - Symptom: `router.yaml` contains a full `motion_awareness` block with GSAP/Framer/CSS triggers, skill assignments, workflow paths, and quality gates. None of the referenced files exist.
 - Root cause: config was written as a design specification but no implementation was built. The config is consumed by no Python component.
-- Affected nodes: `router.yaml` motion_awareness block, `configs/capabilities/gsap_motion.yaml` (missing), `.agent/skills/gsap-*.md` (not published).
+- Affected nodes: `router.yaml` motion_awareness block, `configs/capabilities/gsap_motion.yaml` (missing), `.agents/skills/gsap-*.md` (not published).
 - Severity: medium — not actively harmful but creates false capability expectations.
 - User impact: task descriptions containing motion keywords get no special handling despite config promising GSAP/Framer routing.
 - Recommended fix: either implement the motion awareness pipeline or remove the config block to eliminate false expectations.

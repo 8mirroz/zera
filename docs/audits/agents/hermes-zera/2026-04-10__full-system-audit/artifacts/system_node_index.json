@@ -72,7 +72,7 @@
       "docs/ki/benchmark_anomalies.json",
       "docs/ki/benchmark_gate.json",
       "configs/orchestrator/catalog.json",
-      ".agent/skills/.active_set_manifest.json",
+      ".agents/skills/.active_set_manifest.json",
       "outputs/reliability/**"
     ],
     "narrative_only": [
@@ -107,17 +107,17 @@
       "logs/benchmark-latest.json"
     ],
     "dead_references": [
-      ".agent/workflows/multi-agent-routing.md",
-      ".agent/workflows/* (entire directory empty)",
+      ".agents/workflows/multi-agent-routing.md",
+      ".agents/workflows/* (entire directory empty)",
       "configs/registry/workflows/path-fast.yaml",
       "configs/registry/workflows/path-quality.yaml",
       "configs/registry/workflows/path-swarm.yaml",
       "configs/registry/schemas/task.schema.yaml",
       "configs/capabilities/gsap_motion.yaml",
-      ".agent/skills/gsap-animation.md",
-      ".agent/skills/gsap-performance-guardrails.md",
-      ".agent/skills/gsap-scrolltrigger.md",
-      ".agent/skills/gsap-vs-framer-motion.md"
+      ".agents/skills/gsap-animation.md",
+      ".agents/skills/gsap-performance-guardrails.md",
+      ".agents/skills/gsap-scrolltrigger.md",
+      ".agents/skills/gsap-vs-framer-motion.md"
     ],
     "orphan_configs": [
       "configs/tooling/model_routing.json.DEPRECATED",
@@ -137,12 +137,12 @@
     },
     {
       "zone": "workflow_catalog",
-      "evidence": ".agent/workflows/* empty; workflow_sets_catalog.json references non-existent files",
+      "evidence": ".agents/workflows/* empty; workflow_sets_catalog.json references non-existent files",
       "severity": "high"
     },
     {
       "zone": "skill_publication",
-      "evidence": "ZERA_ACTIVE_SKILLS.md declares 6 skills; .agent/skills/ publishes none",
+      "evidence": "ZERA_ACTIVE_SKILLS.md declares 6 skills; .agents/skills/ publishes none",
       "severity": "medium"
     },
     {
