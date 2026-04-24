@@ -1,0 +1,21 @@
+schema_version: "3.0.0"
+kind: hermes_execution_policy
+owner: hermes_runtime
+
+accepted_packets:
+  - execution_packet
+
+required_return:
+  - evidence_packet
+
+execution_rules:
+  - validate_autonomy_level_before_execution
+  - refuse_L5
+  - create_backup_before_destructive_action
+  - log_files_changed
+  - log_tools_used
+  - report_errors
+  - include_confidence
+  - include_rollback_status
+
+default_confidence_if_uncertain: 0.55

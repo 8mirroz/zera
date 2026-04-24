@@ -1,0 +1,41 @@
+name: pattern-scanner
+description: Scan codebase and skill library for recurring patterns, anti-patterns, and improvement opportunities
+version: 1.0
+created: 2026-04-17
+category: quality
+
+scope:
+  - skills_library: ~/.hermes/profiles/zera/skills/
+  - antigravity_core: /Users/user/antigravity-core/
+  - memory: ~/.hermes/profiles/zera/vault/memory/
+  - configs: ~/.hermes/profiles/zera/
+
+scan_types:
+  - stub_detection: Skills with table/threshold descriptions but no actual commands
+  - broken_refs: Skills referencing non-existent paths
+  - dead_deps: Skills referencing external CLI/tools not in runtime
+  - duplicate_names: Skills with identical names
+  - size_anomalies: Oversized (>50KB) or undersized (<1KB) skills
+  - category_mismatch: Skill name vs category alignment
+  - cross_refs: Skills referencing each other or external systems
+  - memory_gaps: Missing meta-memory.json, decision logs, session captures
+
+tools_checked:
+  - imsg: MISSING
+  - remindctl: MISSING
+  - memo: MISSING
+  - blogwatcher: MISSING
+  - himalaya: MISSING
+  - yq: MISSING
+  - qwen: PRESENT (/Users/user/.nvm/versions/node/v22.22.2/bin/qwen)
+  - jq: PRESENT (/usr/bin/jq)
+
+total_skills: 111
+total_categories: 36
+
+findings_count: 8
+severity:
+  critical: 2  # stubs referencing non-existent scripts
+  high: 1      # qwen integration broken refs
+  medium: 3    # missing CLI tools
+  low: 2       # action items

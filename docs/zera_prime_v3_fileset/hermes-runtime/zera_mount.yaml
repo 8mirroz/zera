@@ -1,0 +1,29 @@
+schema_version: "3.0.0"
+kind: hermes_zera_mount
+owner: hermes_runtime
+
+mounts:
+  identity:
+    type: symlink_or_readonly_reference
+    source: "/Users/user/zera-core/identity"
+    mode: read_only
+
+  governance:
+    type: symlink_or_readonly_reference
+    source: "/Users/user/zera-core/governance"
+    mode: read_only
+
+  interfaces:
+    type: symlink_or_readonly_reference
+    source: "/Users/user/zera-core/interfaces"
+    mode: read_only
+
+  memory:
+    type: governed_reference
+    source: "/Users/user/zera-core/memory"
+    mode: write_by_approved_request_only
+
+prohibitions:
+  - no_local_persona_copy
+  - no_local_identity_override
+  - no_unapproved_memory_write

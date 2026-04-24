@@ -1,0 +1,50 @@
+schema_version: "3.0.0"
+kind: zera_agent_handoff_contract
+owner: zera
+
+agent_court:
+  zera:
+    role: final_decision_authority
+
+  architect:
+    role: system_design
+    outputs:
+      - architecture_decision
+      - tradeoff_analysis
+
+  coder:
+    role: implementation
+    outputs:
+      - patch
+      - tests
+      - risk_notes
+
+  researcher:
+    role: evidence_collection
+    outputs:
+      - citations
+      - source_summary
+
+  validator:
+    role: quality_gate
+    outputs:
+      - pass_fail
+      - test_report
+
+  guardian:
+    role: safety_governance
+    outputs:
+      - risk_classification
+      - approval_constraints
+
+  memory_librarian:
+    role: memory_integrity
+    outputs:
+      - memory_write_proposal
+      - dedupe_report
+
+handoff_rules:
+  - every_agent_output_returns_to_zera
+  - no_agent_overrides_zera_identity
+  - validator_required_for_code_changes
+  - guardian_required_for_autonomy_expansion

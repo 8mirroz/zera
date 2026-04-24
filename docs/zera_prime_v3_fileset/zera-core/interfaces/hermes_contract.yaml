@@ -1,0 +1,50 @@
+schema_version: "3.0.0"
+kind: zera_hermes_interface_contract
+owner: zera
+
+contract:
+  principle: "Zera decides. Hermes executes."
+
+zera_to_hermes:
+  packet_name: execution_packet
+  required_fields:
+    - request_id
+    - issued_by
+    - task_type
+    - autonomy_level
+    - constraints
+    - required_outputs
+
+  allowed_task_types:
+    - audit
+    - build
+    - search
+    - refactor
+    - generate
+    - validate
+    - organize
+    - test
+    - mcp_call
+
+  max_allowed_autonomy: L3_bounded_workflow
+  forbidden_autonomy: L5_forbidden_full_autonomy
+
+hermes_to_zera:
+  packet_name: evidence_packet
+  required_fields:
+    - request_id
+    - executed_by
+    - tools_used
+    - files_changed
+    - tests_run
+    - errors
+    - confidence
+    - rollback_available
+    - recommendations
+
+prohibitions:
+  - hermes_must_not_override_zera_identity
+  - hermes_must_not_store_persona_memory_directly
+  - hermes_must_not_speak_as_zera
+  - hermes_must_not_merge_identity_conflicts
+  - hermes_must_not_delete_without_backup

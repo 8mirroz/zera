@@ -1,0 +1,210 @@
+schema_version: "1.0.0"
+system_role: "memory_control_plane"
+status: "active"
+
+vault:
+  root_path: "./docs"
+  source_type: "obsidian_markdown"
+  feature_flag: "memory_v1"
+  modes:
+    enabled: true
+    degraded_on_error: true
+    read_only_fallback: true
+
+  sync:
+    mode: "incremental" # full | incremental | rebuild
+    lock_file: ".obsidian/.sync.lock"
+    max_concurrency: 4
+    debounce_ms: 750
+    checksum_strategy: "sha256"
+    state_manifest: "memory/state/sync_manifest.json"
+    last_run_report: "memory/reports/last_sync.json"
+
+  include:
+    patterns:
+      - "**/*.md"
+      - "**/*.mdx"
+
+  exclude:
+    patterns:
+      - "**/.obsidian/**"
+      - "**/node_modules/**"
+      - "**/.git/**"
+      - "**/secrets/**"
+      - "**/private/**"
+      - "**/*.png"
+      - "**/*.jpg"
+      - "**/*.pdf"
+      - "**/*.zip"
+
+memory_layers:
+  short_term:
+    enabled: true
+    ttl_hours: 48
+    path: "memory/runtime/session"
+
+  project:
+    enabled: true
+    path: "memory/projects"
+    required_metadata:
+      - project_id
+      - source_path
+      - updated_at
+
+  semantic:
+    enabled: true
+    path: "memory/index"
+    purpose: "retrieval_augmented_context"
+
+  long_term:
+    enabled: true
+    path: "memory/validated"
+    write_policy: "curated_only"
+
+chunker:
+  strategy: "markdown_semantic"
+  max_tokens: 512
+  min_tokens: 80
+  overlap: 64
+  respect_headings: true
+  preserve_code_blocks: true
+  preserve_tables: true
+  split_on:
+    - "# "
+    - "## "
+    - "### "
+    - "---"
+    - "<!-- chunk -->"
+
+  metadata_enrichment:
+    enabled: true
+    extract:
+      - frontmatter
+      - headings
+      - backlinks
+      - tags
+      - code_language
+      - document_title
+      - modified_time
+      - content_hash
+
+embedding:
+  provider: "local" # local | openai | cloudflare | ollama
+  model: "sentence-transformers/all-MiniLM-L6-v2"
+  dim: 384
+  batch_size: 32
+  normalize_vectors: true
+  cache_path: "memory/cache/embeddings"
+  cache_key: "model+dim+content_hash"
+  fallback:
+    enabled: true
+    provider: "ollama"
+    model: "nomic-embed-text"
+
+index:
+  engine: "faiss"
+  path: "memory/index/faiss.index"
+  manifest: "memory/index/index_manifest.json"
+  metadata_store: "memory/index/chunks.jsonl"
+  backup:
+    enabled: true
+    keep_last: 5
+    path: "memory/backups"
+  rollback:
+    enabled: true
+    on_corruption: "restore_last_good"
+
+retrieval:
+  default_top_k: 8
+  max_top_k: 24
+  hybrid_search:
+    enabled: true
+    lexical_weight: 0.35
+    semantic_weight: 0.65
+  reranker:
+    enabled: true
+    strategy: "local_cross_encoder_optional"
+  filters:
+    allow_by:
+      - project_id
+      - tags
+      - source_path
+      - freshness
+      - confidence
+
+governance:
+  write_policy: "curated_memory_only"
+  allow_raw_transcript_ingest: false
+  require_source_path: true
+  require_content_hash: true
+  pii_guard:
+    enabled: true
+    action: "quarantine"
+  conflict_resolution:
+    strategy: "newer_with_higher_confidence"
+  deletion_policy:
+    tombstone_enabled: true
+    tombstone_path: "memory/state/deletions.jsonl"
+
+quality_gates:
+  sync_success_rate_min: 0.98
+  max_failed_files: 5
+  embedding_dim_must_match: true
+  index_load_test_required: true
+  duplicate_chunk_threshold: 0.92
+  stale_document_days_warn: 90
+  block_on:
+    - index_corruption
+    - embedding_dim_mismatch
+    - missing_manifest
+    - unsafe_private_path
+
+observability:
+  traces_path: "memory/traces"
+  metrics_path: "memory/metrics"
+  report_path: "memory/reports"
+  emit_events:
+    - sync_started
+    - sync_completed
+    - file_changed
+    - chunk_created
+    - embedding_cached
+    - index_rebuilt
+    - rollback_triggered
+    - quality_gate_failed
+
+agent_interface:
+  tools:
+    search_memory:
+      input:
+        - query
+        - project_id
+        - filters
+        - top_k
+      output:
+        - chunks
+        - citations
+        - confidence
+
+    write_memory:
+      policy: "curated_only"
+      requires:
+        - summary
+        - source
+        - reason
+        - ttl_or_lifecycle
+
+    forget_memory:
+      mode: "tombstone_then_reindex"
+
+    rebuild_index:
+      requires_approval: true
+
+extension_system:
+  merge_strategy: "deep_merge"
+  override_order:
+    - "global"
+    - "workspace"
+    - "project"
+    - "agent"
+  custom_profiles_path: "memory/config/profiles"

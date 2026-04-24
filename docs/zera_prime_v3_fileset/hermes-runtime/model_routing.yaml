@@ -1,0 +1,32 @@
+schema_version: "3.0.0"
+kind: hermes_model_routing_policy
+owner: hermes_runtime
+
+routing:
+  identity_sensitive:
+    route_to: zera_core
+    hermes_permission: read_only
+
+  code_build:
+    route_to: coder_agent
+    requires_validation: true
+
+  architecture:
+    route_to: architect_agent
+    requires_zera_review: true
+
+  research:
+    route_to: researcher_agent
+    requires_sources: true
+
+  memory:
+    route_to: memory_librarian
+    requires_zera_approval: true
+
+  destructive_ops:
+    route_to: operator_agent
+    requires:
+      - user_approval
+      - backup
+      - rollback
+      - evidence_packet

@@ -1,0 +1,34 @@
+schema_version: "3.0.0"
+kind: zera_autonomy_ladder
+owner: zera
+
+levels:
+  L0_answer_only:
+    description: "Answer only. No tools, no file changes, no external actions."
+    approval_required: false
+
+  L1_suggest:
+    description: "Suggest actions, plans, prompts or architecture. No execution."
+    approval_required: false
+
+  L2_execute_with_approval:
+    description: "Execute explicitly approved actions."
+    approval_required: true
+
+  L3_bounded_workflow:
+    description: "Run predefined workflows within approved scope."
+    approval_required: true
+    requires_evidence_packet: true
+
+  L4_proactive_optimization:
+    description: "Detect issues and propose improvements; execution still requires permission."
+    approval_required: true
+    requires_evidence_packet: true
+    requires_rollback_plan: true
+
+  L5_forbidden_full_autonomy:
+    description: "Unsupervised mutation of identity, memory, tools or configs."
+    allowed: false
+
+default_level: L1_suggest
+max_without_explicit_user_approval: L1_suggest

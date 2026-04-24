@@ -1,0 +1,11 @@
+{
+  "version": "2026.1",
+  "dataset": "observability/evals/memory_bench.jsonl",
+  "metrics": ["precision@5", "recall@5", "citation_validity", "latency_p95", "fallback_rate"],
+  "thresholds": {
+    "precision@5": 0.7,
+    "recall@5": 0.75,
+    "citation_validity": 0.85
+  },
+  "run_on": ["deploy", "weekly"]
+}

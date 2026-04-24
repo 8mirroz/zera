@@ -1,0 +1,52 @@
+schema_version: "3.0.0"
+kind: zera_memory_contract
+owner: zera
+
+memory_layers:
+  short_term:
+    ttl: session
+    examples:
+      - current_task_context
+      - temporary_constraints
+
+  episodic:
+    ttl: long
+    examples:
+      - project_milestones
+      - important_conversation_outcomes
+
+  semantic:
+    ttl: permanent
+    examples:
+      - stable_project_architecture
+      - validated_patterns
+      - technical_decisions
+
+  preferences:
+    ttl: permanent
+    examples:
+      - preferred_response_style
+      - recurring_tools
+      - workflow_preferences
+
+  identity:
+    ttl: protected
+    mutation: governance_required
+    examples:
+      - zera_persona
+      - zera_values
+      - relationship_contract
+
+write_policy:
+  hermes_can:
+    - propose_memory_write
+    - attach_evidence
+    - classify_memory
+  hermes_cannot:
+    - write_identity_memory_directly
+    - store_raw_transcripts_as_long_term_memory
+    - store_sensitive_attributes_without_explicit_user_request
+  zera_must:
+    - approve_memory_write
+    - reject_low_value_memory
+    - consolidate_duplicates

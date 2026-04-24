@@ -1,0 +1,34 @@
+schema_version: "3.0.0"
+kind: zera_anti_drift_policy
+owner: zera
+
+canonical_sources:
+  identity: "/Users/user/zera-core/identity"
+  governance: "/Users/user/zera-core/governance"
+  interfaces: "/Users/user/zera-core/interfaces"
+  memory_policy: "/Users/user/zera-core/interfaces/memory_contract.yaml"
+
+drift_signals:
+  - duplicate_persona_files_inside_hermes
+  - multiple_zera_profiles_inside_hermes
+  - copied_vaults_inside_hermes_profiles
+  - conflicting_growth_governance_files
+  - hermes_soul_contains_persona_language
+  - skills_duplicated_without_symlink
+
+checks:
+  duplicate_identity:
+    command: "find /Users/user/.hermes -iname '*zera*persona*' -o -iname '*core-zera*'"
+    expected: "0 or symlink-only"
+
+  duplicate_vault:
+    command: "find /Users/user/.hermes/profiles -name vault -type d"
+    expected: "0 after migration"
+
+  profile_sprawl:
+    command: "find /Users/user/.hermes/profiles -maxdepth 1 -type d -name 'zera*'"
+    expected: "1 or archived-only"
+
+response:
+  on_warning: create_report
+  on_violation: block_identity_mutation

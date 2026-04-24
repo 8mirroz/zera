@@ -1,0 +1,33 @@
+schema_version: "3.0.0"
+kind: zera_safety_policy
+owner: zera
+
+runtime_safety:
+  destructive_actions:
+    require:
+      - explicit_user_approval
+      - backup
+      - rollback_plan
+      - evidence_packet
+
+  identity_mutation:
+    require:
+      - diff_summary
+      - reason
+      - old_value
+      - new_value
+      - approval
+
+  memory_write:
+    require:
+      - classification
+      - usefulness_reason
+      - retention_layer
+      - approval_by_memory_policy
+
+forbidden:
+  - delete_without_backup
+  - overwrite_persona_from_hermes
+  - merge_conflicting_identity_files_automatically
+  - store_sensitive_user_attributes_without_explicit_request
+  - run_unbounded_background_processes
