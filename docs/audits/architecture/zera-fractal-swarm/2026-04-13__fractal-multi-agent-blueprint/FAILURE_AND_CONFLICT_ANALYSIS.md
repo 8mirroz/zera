@@ -47,7 +47,7 @@
 | **JSON state corruption** | Crash mid-write leaves partial JSON | `_load()` catches JSON parse error → returns default | ⚠️ Data loss — corrupt state replaced with empty default |
 | **Telemetry loss** | Trace file grows too large / disk full | None | ❌ No rotation, no disk space monitoring |
 | **Memory index corruption** | BM25 index corrupted | Rebuild from `memory.jsonl` (possible but not automated) | ❌ No automated rebuild |
-| **Evolution state corruption** | `.agent/evolution/state.json` corrupted | Evolution falls back to default state | ⚠️ Evolution context lost |
+| **Evolution state corruption** | `.agents/evolution/state.json` corrupted | Evolution falls back to default state | ⚠️ Evolution context lost |
 
 ### 1.5 Observability Failures
 
@@ -92,9 +92,9 @@
 
 ### 3.2 State Conflict: Dual Evolution State
 
-**Scenario:** `.agent/evolution/state.json` and `.agents/evolution/state.json` diverge.
+**Scenario:** `.agents/evolution/state.json` and `.agents/evolution/state.json` diverge.
 
-**Current behavior:** `zera-evolutionctl.py` reads/writes `.agent/evolution/` only. Any tool reading `.agents/evolution/` sees stale data.
+**Current behavior:** `zera-evolutionctl.py` reads/writes `.agents/evolution/` only. Any tool reading `.agents/evolution/` sees stale data.
 
 **Risk:** Decision based on stale state → incorrect promotion/rollback.
 

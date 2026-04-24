@@ -23,9 +23,9 @@ customizable_paths:
   - configs/adapters/hermes/templates/
   - configs/adapters/antigravity/wrappers/
   - configs/adapters/hermes/wrappers/
-  - .agent/skills/
-  - .agent/memory/
-  - .agent/workflows/
+  - .agents/skills/
+  - .agents/memory/
+  - .agents/workflows/
   - Zera/
 
 sync_rules:

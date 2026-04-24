@@ -69,8 +69,8 @@ class BackgroundJobQueue:
 
     def __init__(self, repo_root: Path, queue_path: Path | None = None) -> None:
         self.repo_root = Path(repo_root)
-        self.queue_path = queue_path or (self.repo_root / ".agent/runtime/background-jobs.json")
-        self.control_path = self.repo_root / ".agent/runtime/background-control.json"
+        self.queue_path = queue_path or (self.repo_root / ".agents/runtime/background-jobs.json")
+        self.control_path = self.repo_root / ".agents/runtime/background-control.json"
         self.queue_path.parent.mkdir(parents=True, exist_ok=True)
 
     def _load(self) -> dict[str, Any]:

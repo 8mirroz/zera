@@ -1,7 +1,7 @@
 # Agent OS v2 (Runtime + Tooling)
 
 Минимальный набор утилит и контрактов для Agent OS v2:
-- публикация Active Skills в `.agent/skills/`
+- публикация Active Skills в `.agents/skills/`
 - `doctor` проверки целостности конфигов/скиллов
 - `triage` и `route` для model routing
 - smoke/integration/regression проверки
@@ -56,5 +56,5 @@ Notes:
 - No `memu-py` dependency is required in `agent-os`; integration uses stdlib HTTP calls.
 
 ## Notes
-- `ROUTER_MODE=legacy` переключает route на `.agent/config/model_router.yaml`.
+- `ROUTER_MODE=legacy` переключает route на `.agents/config/model_router.yaml`.
 - Optional adapters (`autogen`, `gpt-engineer`, `letta`) выключены по умолчанию и управляются через env флаги.

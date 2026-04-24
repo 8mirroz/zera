@@ -22,17 +22,17 @@ def _make_repo(tmp_path: Path) -> Path:
     """Create minimal repo structure with memory layers."""
     # session layer
     _write_jsonl(
-        tmp_path / ".agent/memory/session/session.jsonl",
+        tmp_path / ".agents/memory/session/session.jsonl",
         [{"content": "user prefers dark mode interface", "id": "s1"}],
     )
     # project layer
     _write_jsonl(
-        tmp_path / ".agent/memory/projects/project.jsonl",
+        tmp_path / ".agents/memory/projects/project.jsonl",
         [{"content": "project uses Python 3.12 and FastAPI", "id": "p1"}],
     )
     # workspace layer
     _write_jsonl(
-        tmp_path / ".agent/memory/build-library/global/workspace.jsonl",
+        tmp_path / ".agents/memory/build-library/global/workspace.jsonl",
         [{"content": "global convention: always write tests", "id": "w1"}],
     )
     # policy config
@@ -41,13 +41,13 @@ def _make_repo(tmp_path: Path) -> Path:
         """version: 1
 memory_layers:
   session:
-    path: .agent/memory/session/
+    path: .agents/memory/session/
   project:
-    path: .agent/memory/projects/
+    path: .agents/memory/projects/
   workspace:
-    path: .agent/memory/build-library/global/
+    path: .agents/memory/build-library/global/
   user_preferences:
-    path: .agent/memory/build-library/global/
+    path: .agents/memory/build-library/global/
 """,
         encoding="utf-8",
     )
@@ -73,11 +73,11 @@ class TestLayeredMemoryRetriever:
         """Session layer weight (1.0) > workspace weight (0.70)."""
         # Put same content in both layers
         _write_jsonl(
-            tmp_path / ".agent/memory/session/s2.jsonl",
+            tmp_path / ".agents/memory/session/s2.jsonl",
             [{"content": "routing policy test entry", "id": "s2"}],
         )
         _write_jsonl(
-            tmp_path / ".agent/memory/build-library/global/w2.jsonl",
+            tmp_path / ".agents/memory/build-library/global/w2.jsonl",
             [{"content": "routing policy test entry", "id": "w2"}],
         )
         repo = _make_repo(tmp_path)
@@ -97,7 +97,7 @@ class TestLayeredMemoryRetriever:
     def test_empty_layers_return_empty(self, tmp_path):
         (tmp_path / "configs/global").mkdir(parents=True)
         (tmp_path / "configs/global/memory_policy.yaml").write_text(
-            "version: 1\nmemory_layers:\n  session:\n    path: .agent/memory/session/\n"
+            "version: 1\nmemory_layers:\n  session:\n    path: .agents/memory/session/\n"
         )
         r = LayeredMemoryRetriever(tmp_path)
         results = r.retrieve("anything", top_k=5, min_score=0.0)
@@ -106,8 +106,8 @@ class TestLayeredMemoryRetriever:
     def test_deduplication_keeps_highest_score(self, tmp_path):
         """Same content in two layers — only one result after dedup."""
         content = "unique dedup test content"
-        _write_jsonl(tmp_path / ".agent/memory/session/d1.jsonl", [{"content": content, "id": "d1"}])
-        _write_jsonl(tmp_path / ".agent/memory/projects/d2.jsonl", [{"content": content, "id": "d2"}])
+        _write_jsonl(tmp_path / ".agents/memory/session/d1.jsonl", [{"content": content, "id": "d1"}])
+        _write_jsonl(tmp_path / ".agents/memory/projects/d2.jsonl", [{"content": content, "id": "d2"}])
         repo = _make_repo(tmp_path)
         r = LayeredMemoryRetriever(repo)
         results = r.retrieve(content, top_k=10, min_score=0.0)

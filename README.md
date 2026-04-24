@@ -40,7 +40,7 @@ cat configs/rules/WORKSPACE_STANDARD.md
 python3 repos/packages/agent-os/scripts/swarmctl.py doctor
 
 # See what skills are available
-ls .agent/skills/
+ls .agents/skills/
 ```
 
 ### 10-Minute Setup
@@ -168,7 +168,7 @@ antigravity-core/
 │   ├── data/                      # Data processing, scraping, parsing tools
 │   └── telegram/                  # Telegram bots, mini apps, payments
 │
-├── 🤖 .agent/                     # Agent runtime
+├── 🤖 .agents/                     # Agent runtime
 │   ├── config/                    # Agent runtime configurations
 │   ├── memory/                    # BM25-indexed memory store (memory.jsonl)
 │   ├── skills/                    # 29 published skills (from configs/skills/)
@@ -247,7 +247,7 @@ kiro-cli setup                # Kiro components
 
 ## 🧬 Skills System
 
-29 active skills published from `configs/skills/` to `.agent/skills/`.
+29 active skills published from `configs/skills/` to `.agents/skills/`.
 
 ### Domain Skills (7)
 
@@ -295,7 +295,7 @@ kiro-cli setup                # Kiro components
 python3 repos/packages/agent-os/scripts/swarmctl.py publish-skills
 
 # Browse skills
-ls .agent/skills/
+ls .agents/skills/
 ```
 
 ---
@@ -387,9 +387,9 @@ A task is **DONE** only if all applicable gates pass:
 - **[57+ Knowledge Items](docs/ki/)** — Benchmarks, retrospectives, system analyses
 
 ### Guides
-- **[Browser Use Workflow](.agent/workflows/browser-use.md)** — Web automation guide
-- **[Multi-Agent Routing](.agent/workflows/multi-agent-routing.md)** — Swarm coordination (v3.1)
-- **[Ralph Loop](.agent/workflows/ralph-loop.md)** — Iterative refinement loop
+- **[Browser Use Workflow](.agents/workflows/browser-use.md)** — Web automation guide
+- **[Multi-Agent Routing](.agents/workflows/multi-agent-routing.md)** — Swarm coordination (v3.1)
+- **[Ralph Loop](.agents/workflows/ralph-loop.md)** — Iterative refinement loop
 
 ---
 
@@ -521,10 +521,10 @@ Full catalog: `configs/tooling/model_providers.json`
 |------|-------|
 | "Where does my code go?" | `configs/rules/WORKSPACE_STANDARD.md` §Placement Matrix |
 | "Which tier is my task?" | `configs/orchestrator/router.yaml` |
-| "What skills exist?" | `.agent/skills/` |
+| "What skills exist?" | `.agents/skills/` |
 | "How to run quality checks?" | `bash scripts/run_quality_checks.sh` |
 | "What decided architecturally?" | `docs/adr/` |
-| "How does routing work?" | `.agent/workflows/multi-agent-routing.md` |
+| "How does routing work?" | `.agents/workflows/multi-agent-routing.md` |
 | "System health?" | `swarmctl.py doctor` |
 | "Folder audit knowledge?" | `audit/090426/` |
 

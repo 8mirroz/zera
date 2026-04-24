@@ -83,7 +83,7 @@ The self-evolution loop (`scripts/self_evolution_loop.py`, `scripts/zera-self-ev
 `zera_growth_governance.json` defines `emotional_closeness` as a governed axis with `soft_delta_per_cycle: 0.3`, `hard_delta_per_cycle: 0.5`, and `rollback_trigger: 0.8`. The `evaluate_governor` method checks this. But since the governor is never called, emotional closeness can drift without any runtime detection or blocking.
 
 ### Zera Skills — Published but Not Active
-`configs/skills/zera-core/SKILL.md`, `zera-muse`, `zera-researcher`, `zera-rhythm-coach`, `zera-strategist`, `zera-style-curator` all exist as source skill packs. `configs/skills/ZERA_ACTIVE_SKILLS.md` declares them active. But `swarmctl.py publish-skills` has never published them to `.agent/skills/`. They are invisible to the agent runtime.
+`configs/skills/zera-core/SKILL.md`, `zera-muse`, `zera-researcher`, `zera-rhythm-coach`, `zera-strategist`, `zera-style-curator` all exist as source skill packs. `configs/skills/ZERA_ACTIVE_SKILLS.md` declares them active. But `swarmctl.py publish-skills` has never published them to `.agents/skills/`. They are invisible to the agent runtime.
 
 ### Tone Governance — No Runtime Instrumentation
 `configs/personas/zera/tone.md` defines specific tonal requirements. No telemetry event type exists for tone validation. The observability schema has no `tone` field, no tone scorer, no tone violation detector.

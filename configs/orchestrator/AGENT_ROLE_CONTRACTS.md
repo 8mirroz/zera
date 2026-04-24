@@ -51,7 +51,7 @@ forbidden_from:
 handoff_triggers:
   - condition: "string"
     target: "role_name"
-    contract_template: ".agent/contracts/path.md"
+    contract_template: ".agents/contracts/path.md"
 
 escalation_path: "role_name"
 

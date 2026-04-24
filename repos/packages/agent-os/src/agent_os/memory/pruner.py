@@ -22,7 +22,7 @@ class PruningConfig:
     half_life_days: int = 7        # For temporal decay scoring
     min_relevance_score: float = 0.3
     archive_before_delete: bool = True
-    archive_path: str = ".agent/memory/archive/"
+    archive_path: str = ".agents/memory/archive/"
 
 
 class MemoryPruner:

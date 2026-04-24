@@ -24,7 +24,7 @@ agents:
     metric: "skill_match_rate"
 
   - name: agent-workflows
-    target: ".agent/workflows/"
+    target: ".agents/workflows/"
     metric: "workflow_efficiency"
 
 # Swarm coordination

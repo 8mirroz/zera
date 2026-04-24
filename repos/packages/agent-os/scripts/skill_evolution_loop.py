@@ -29,8 +29,8 @@ def analyze_failure(failure):
     print(f"Actual:   {actual}")
     
     # Read skill files
-    expected_path = Path(f".agent/skills/{expected}/SKILL.md")
-    actual_path = Path(f".agent/skills/{actual}/SKILL.md") if actual else None
+    expected_path = Path(f".agents/skills/{expected}/SKILL.md")
+    actual_path = Path(f".agents/skills/{actual}/SKILL.md") if actual else None
     
     expected_content = expected_path.read_text() if expected_path.exists() else ""
     actual_content = actual_path.read_text() if actual_path and actual_path.exists() else ""
@@ -64,7 +64,7 @@ def analyze_mastery_failure(skill_name, mastery):
     print(f"\n--- Analyzing behavior failure for skill: '{skill_name}' ---")
     print(f"Success: {success}, Failed: {failed}")
     
-    skill_path = Path(f".agent/skills/{skill_name}/SKILL.md")
+    skill_path = Path(f".agents/skills/{skill_name}/SKILL.md")
     content = skill_path.read_text() if skill_path.exists() else ""
     
     evolution_query = f"""

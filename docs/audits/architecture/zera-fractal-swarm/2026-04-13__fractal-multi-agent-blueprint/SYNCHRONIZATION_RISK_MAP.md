@@ -15,9 +15,9 @@
 | `.agents/memory/memory.jsonl` | Append-only | All agents | Retriever, indexer | ⚠️ Same as above |
 | `.agents/runtime/approvals.json` | Read-write | ApprovalEngine | Auditor, agent | 🔴 Read-modify-write without lock |
 | `.agents/runtime/background-jobs.json` | Read-modify-write | BackgroundJobRegistry, Scheduler | Monitor | 🔴 Read-modify-write without lock |
-| `.agent/evolution/state.json` | Read-modify-write | zera-evolutionctl, self_evolution_loop | All evolution tools | 🔴 Read-modify-write without lock |
-| `.agent/evolution/promotion_state.json` | Read-modify-write | zera-evolutionctl (promote) | Promotion auditor | 🔴 Read-modify-write without lock |
-| `.agent/evolution/evolutionctl-state.json` | Read-modify-write | zera-evolutionctl | Status queries | 🔴 Read-modify-write without lock |
+| `.agents/evolution/state.json` | Read-modify-write | zera-evolutionctl, self_evolution_loop | All evolution tools | 🔴 Read-modify-write without lock |
+| `.agents/evolution/promotion_state.json` | Read-modify-write | zera-evolutionctl (promote) | Promotion auditor | 🔴 Read-modify-write without lock |
+| `.agents/evolution/evolutionctl-state.json` | Read-modify-write | zera-evolutionctl | Status queries | 🔴 Read-modify-write without lock |
 | `.agents/memory/goal-stack.json` | Read-modify-write | Goal manager | Agent runtime | 🔴 Read-modify-write without lock |
 | `.agents/memory/skill_index.json` | Read-modify-write | `publish-skills` | Skill router | 🟡 Low contention (infrequent writes) |
 | `.agents/memory/router_embeddings.json` | Read-modify-write | Embedding generator | Router | 🟡 Low contention |
@@ -37,7 +37,7 @@
 
 ### 2.1 🔴 High Risk: No File Locking on State Files
 
-**Affected files:** All `.json` state files in `.agents/runtime/`, `.agent/evolution/`
+**Affected files:** All `.json` state files in `.agents/runtime/`, `.agents/evolution/`
 
 **Pattern:**
 ```python
@@ -57,7 +57,7 @@ def _save(self, payload):
 
 ### 2.2 🔴 High Risk: Concurrent Trace Appends
 
-**Affected:** `logs/agent_traces.jsonl`, `.agent/evolution/telemetry.jsonl`, `.agents/memory/memory.jsonl`
+**Affected:** `logs/agent_traces.jsonl`, `.agents/evolution/telemetry.jsonl`, `.agents/memory/memory.jsonl`
 
 **Pattern:**
 ```python
@@ -128,7 +128,7 @@ with path.open("a", encoding="utf-8") as f:
 
 | Mechanism | Needed Where | Current State | Priority |
 |-----------|-------------|---------------|----------|
-| File locks (flock) | `.agents/runtime/*.json`, `.agent/evolution/*.json` | ❌ Not implemented | P0 |
+| File locks (flock) | `.agents/runtime/*.json`, `.agents/evolution/*.json` | ❌ Not implemented | P0 |
 | Atomic writes (temp + rename) | All state files | ❌ Not implemented | P0 |
 | Idempotency keys | emit_event, approval, stop signals | ❌ Not implemented | P1 |
 | Lease + heartbeat | Long-running tasks, background jobs | ❌ Not implemented | P1 |

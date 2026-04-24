@@ -31,7 +31,7 @@
 
 ## Memory Policy Governance
 - All memory writes must route through `MemoryPolicyLayer` (once implemented).
-- Memory schema changes require a migration plan for existing `.agent/memory/memory.jsonl` entries.
+- Memory schema changes require a migration plan for existing `.agents/memory/memory.jsonl` entries.
 - Profile injection changes require context budget impact assessment.
 
 ## Tool/MCP Admission Policy

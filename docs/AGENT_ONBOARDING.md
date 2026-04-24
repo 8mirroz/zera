@@ -111,7 +111,7 @@ forbidden_from:
 
 ## Как создать workflow
 
-1. Создайте `.md` файл в `.agent/workflows/`
+1. Создайте `.md` файл в `.agents/workflows/`
 2. Используйте существующие workflow как образец (например, `genesis.md`, `craft.md`)
 3. Workflow должен содержать: triggers, steps, completion criteria
 
@@ -144,9 +144,9 @@ forbidden_from:
 | `templates/adaptation/pattern-library.yaml` | Библиотека паттернов (13 шт.) |
 | `templates/adaptation/efficiency-dashboard.json` | Метрики эффективности |
 | `templates/` | Шаблоны проектов (nextjs, fastapi, telegram, cli, astro, agent-skill) |
-| `.agent/templates/compressed/` | Сжатые промпт-шаблоны (T1–T7) |
-| `.agent/memory/memory.jsonl` | Агентная память (BM25-indexed) |
-| `.agent/workflows/` | Workflow-файлы (31 шт.) |
+| `.agents/templates/compressed/` | Сжатые промпт-шаблоны (T1–T7) |
+| `.agents/memory/memory.jsonl` | Агентная память (BM25-indexed) |
+| `.agents/workflows/` | Workflow-файлы (31 шт.) |
 | `configs/tooling/test_reliability_program.yaml` | Reliability program contract |
 | `configs/tooling/test_suite_matrix.yaml` | Suite taxonomy and gate matrix |
 | `configs/tooling/debug_surface_map.yaml` | Failure-class triage map |
@@ -172,7 +172,7 @@ forbidden_from:
 
 **Память не находит релевантные записи:**
 - BM25 ищет по лексическому совпадению — переформулируйте запрос
-- Проверьте `.agent/memory/memory.jsonl` на наличие данных
+- Проверьте `.agents/memory/memory.jsonl` на наличие данных
 
 **Quality checks не проходят:**
 - Запустите `make test-contract`

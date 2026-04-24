@@ -280,7 +280,7 @@ class AutoUpdateEngine:
     # ── Memory eval ───────────────────────────────────────────────────────────
 
     def _run_memory_eval(self, traces: list[dict[str, Any]]) -> MemoryEvalResult | None:
-        memory_path = self.repo_root / ".agent/memory/memory.jsonl"
+        memory_path = self.repo_root / ".agents/memory/memory.jsonl"
         if not memory_path.exists():
             return None
 

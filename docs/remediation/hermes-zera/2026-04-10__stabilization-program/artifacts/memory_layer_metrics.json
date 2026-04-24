@@ -9,7 +9,7 @@
     "general": "~93%",
     "session_only": "~91%",
     "scope_tagged": "~7%",
-    "source": "Audit analysis of .agent/memory/memory.jsonl"
+    "source": "Audit analysis of .agents/memory/memory.jsonl"
   },
   "write_policy": {
     "policy_layer_exists": true,

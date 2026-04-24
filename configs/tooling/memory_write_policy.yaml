@@ -43,7 +43,7 @@ dedup_strategy:
 
 cold_storage_sync:
   enabled: true
-  source: ".agent/memory/memory.jsonl"
+  source: ".agents/memory/memory.jsonl"
   on_prune: "export_to_vault"
   export_target: "memory/archive/"
   export_format: "markdown_frontmatter"

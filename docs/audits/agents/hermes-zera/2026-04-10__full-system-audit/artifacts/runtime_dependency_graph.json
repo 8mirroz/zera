@@ -21,8 +21,8 @@
     {"id": "configs/tooling/memory_write_policy.yaml", "kind": "policy_config"},
     {"id": "configs/orchestrator/user_profile.json", "kind": "l1_memory"},
     {"id": "logs/agent_traces.jsonl", "kind": "trace_sink"},
-    {"id": ".agent/runtime/background-jobs.json", "kind": "background_queue"},
-    {"id": ".agent/memory/memory.jsonl", "kind": "memory_store"},
+    {"id": ".agents/runtime/background-jobs.json", "kind": "background_queue"},
+    {"id": ".agents/memory/memory.jsonl", "kind": "memory_store"},
     {"id": "docs/ki/benchmark_latest.json", "kind": "derived_report"}
   ],
   "edges": [
@@ -42,8 +42,8 @@
     {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.agent_os_python", "label": "default reachable provider"},
     {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.zeroclaw", "label": "T7 override when enabled"},
     {"from": "agent_os.agent_runtime", "to": "agent_os.runtime_providers.claw_code", "label": "override/fallback when enabled"},
-    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agent/runtime/background-jobs.json", "label": "background job emission"},
-    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agent/memory/memory.jsonl", "label": "memory operations"},
+    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agents/runtime/background-jobs.json", "label": "background job emission"},
+    {"from": "agent_os.runtime_providers.zeroclaw", "to": ".agents/memory/memory.jsonl", "label": "memory operations"},
     {"from": "agent_os.runtime_providers.agent_os_python", "to": "logs/agent_traces.jsonl", "label": "start/verification/completed only"},
     {"from": "logs/agent_traces.jsonl", "to": "docs/ki/benchmark_latest.json", "label": "analyze_benchmark.py derived metrics"}
   ],
@@ -54,8 +54,8 @@
       "label": "declared in runtime_providers.json but not registered in _builtin_factories"
     },
     {
-      "from": ".agent/config/workflow_sets.active.json",
-      "to": ".agent/workflows/*",
+      "from": ".agents/config/workflow_sets.active.json",
+      "to": ".agents/workflows/*",
       "label": "indexes reference absent workflow files"
     }
   ],

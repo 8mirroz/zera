@@ -42,7 +42,7 @@ Scope:
 - Repository no longer depends on external backup/worktree path.
 
 ### 5) Workflow stabilization
-- Fixed `.agent/workflows` migration path and committed:
+- Fixed `.agents/workflows` migration path and committed:
   - `659a493` `fix: stabilize workflows after migration`
 
 ### 6) Skill drift

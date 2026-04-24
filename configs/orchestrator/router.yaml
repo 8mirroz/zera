@@ -110,11 +110,11 @@ memory:
   working_memory:
     max_entries: 150
     ttl_hours: 24
-    path: ".agent/memory/working_memory.json"
+    path: ".agents/memory/working_memory.json"
   retrieval:
     engine: "hybrid"
     semantic_backend: "lightrag"
-    index_path: ".agent/memory/indexes/"
+    index_path: ".agents/memory/indexes/"
     min_confidence: 0.3
     fallback_to_general: true
   unified_fabric:
@@ -133,7 +133,7 @@ memory:
 adaptation:
   enabled: true
   retro_capture: true
-  pattern_cache_path: ".agent/memory/patterns/"
+  pattern_cache_path: ".agents/memory/patterns/"
   self_learning_loop:
     enabled: true
     target_dir: "docs/ki/"
@@ -207,7 +207,7 @@ execution_guards:
 motion_awareness:
   enabled: true
   capability_spec: "configs/capabilities/gsap_motion.yaml"
-  skills_path: ".agent/skills/"
+  skills_path: ".agents/skills/"
   
   # GSAP Activation Keywords
   # When ANY of these appear in task description → activate GSAP capability
@@ -286,8 +286,8 @@ motion_awareness:
         optional_skills:
           - "gsap-scrolltrigger.md"
           - "gsap-vs-framer-motion.md"
-        workflow: ".agent/workflows/gsap-implementation.md"
-        validation: ".agent/workflows/gsap-production-validation.md"
+        workflow: ".agents/workflows/gsap-implementation.md"
+        validation: ".agents/workflows/gsap-production-validation.md"
         min_tier: "C2"
         quality_gate: "motion_system"
     
@@ -297,7 +297,7 @@ motion_awareness:
         activate_capability: "motion_engine:framer"
         required_skills:
           - "framer-motion-patterns.md"
-        workflow: ".agent/workflows/framer-implementation.md"
+        workflow: ".agents/workflows/framer-implementation.md"
         quality_gate: "motion_system"
     
     # Priority 3: CSS triggers (default, lowest complexity)

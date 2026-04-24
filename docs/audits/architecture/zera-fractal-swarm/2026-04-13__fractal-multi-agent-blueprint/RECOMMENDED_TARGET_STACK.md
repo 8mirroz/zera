@@ -44,7 +44,7 @@ The recommended stack converges on a cohesive architecture: **async Python runti
 **Migration Complexity:** **M** (medium)
 **Estimated Effort:** 2-3 weeks
 
-**Why Not Runner-Up (Qdrant):** Qdrant ties on raw score (6.35 each) but loses on migration complexity (0.75 vs 0.30), cost efficiency (0.80 vs 0.40), and team readiness (0.35 vs 0.20). Running a vector database service is an operational burden. The `.agent/` vs `.agents/` drift must be resolved first anyway — merging directories and adding idempotency keys is a prerequisite that benefits both options. SQLite delivers ACID semantics immediately; Qdrant can be added later as a sync layer. The path: JSONL → SQLite adapter → Qdrant sync → Qdrant primary (when entry count exceeds 100K or latency exceeds 200ms).
+**Why Not Runner-Up (Qdrant):** Qdrant ties on raw score (6.35 each) but loses on migration complexity (0.75 vs 0.30), cost efficiency (0.80 vs 0.40), and team readiness (0.35 vs 0.20). Running a vector database service is an operational burden. The `.agents/` vs `.agents/` drift must be resolved first anyway — merging directories and adding idempotency keys is a prerequisite that benefits both options. SQLite delivers ACID semantics immediately; Qdrant can be added later as a sync layer. The path: JSONL → SQLite adapter → Qdrant sync → Qdrant primary (when entry count exceeds 100K or latency exceeds 200ms).
 
 ---
 
@@ -150,9 +150,9 @@ The subsystems are not independent. The build order is determined by data depend
 
 ### Phase 1: Foundation (Weeks 1-4)
 
-**Priority 1: Resolve `.agent/` vs `.agents/` Drift** (not a subsystem, but a prerequisite)
-- Canonical directory: `.agent/`
-- Merge `.agents/` content into `.agent/`
+**Priority 1: Resolve `.agents/` vs `.agents/` Drift** (not a subsystem, but a prerequisite)
+- Canonical directory: `.agents/`
+- Merge `.agents/` content into `.agents/`
 - Update all references across 613 files
 - Duration: 1 week
 - Risk: High — reference updates must be exhaustive
@@ -233,7 +233,7 @@ The subsystems are not independent. The build order is determined by data depend
 
 ```
                     ┌─────────────────────┐
-                    │  P1: .agent/ Merge  │  Week 1
+                    │  P1: .agents/ Merge  │  Week 1
                     └─────────┬───────────┘
                               │
                     ┌─────────▼───────────┐

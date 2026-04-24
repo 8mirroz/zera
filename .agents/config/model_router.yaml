@@ -1,0 +1,80 @@
+# Model Router Policy v1.0
+# Governs deterministic model selection for skills and workflows.
+# Source of Truth for Agent OS Routing Layer.
+
+routing_strategy: hybrid  # hybrid = embedding_search + rule_filter
+
+# Default fallback chain if no rule matches
+fallback_chain:
+  - $AGENT_MODEL_PRIMARY
+  - $AGENT_MODEL_FALLBACK
+  - $AGENT_MODEL_TINY
+
+# Cost & Safety Limits
+global_limits:
+  max_tokens_per_task: 128000
+  max_cost_per_task_usd: 2.0
+  timeout_seconds: 300
+  require_human_approval_for:
+    - file_delete_recursive
+    - shell_sudo
+    - network_external_write
+
+# Model Aliases (Environment Variable Mapping)
+models:
+  primary: $AGENT_MODEL_PRIMARY
+  strategist: $AGENT_MODEL_STRATEGIST
+  coder: $AGENT_MODEL_CODER
+  researcher: $AGENT_MODEL_RESEARCHER
+  tiny: $AGENT_MODEL_TINY
+  vision: $AGENT_MODEL_VISION
+
+# Routing Rules (Ordered by Priority)
+# Pattern matches skill name or workflow tag.
+rules:
+  - id: strategic_planning
+    pattern: ["strategist", "planner", "architect", "meta_memory"]
+    model: $AGENT_MODEL_STRATEGIST
+    temperature: 0.7
+    reasoning_effort: high
+
+  - id: coding_tasks
+    pattern: ["coder", "developer", "fix", "refactor", "build"]
+    model: $AGENT_MODEL_CODER
+    temperature: 0.2
+    tools_allowlist: ["file_edit", "shell", "git"]
+
+  - id: research_tasks
+    pattern: ["researcher", "search", "summarize", "audit"]
+    model: $AGENT_MODEL_RESEARCHER
+    temperature: 0.5
+    tools_allowlist: ["web_search", "file_read", "browser"]
+
+  - id: creative_tasks
+    pattern: ["muse", "designer", "writer", "curator"]
+    model: $AGENT_MODEL_PRIMARY
+    temperature: 0.8
+    reasoning_effort: medium
+
+  - id: zera_core
+    pattern: ["zera-core", "zera-*"]
+    model: $AGENT_MODEL_PRIMARY
+    temperature: 0.6
+    
+  - id: legacy_compat
+    pattern: ["ai-designer", "brainstorming", "telegram-bot"]
+    model: $AGENT_MODEL_PRIMARY
+    temperature: 0.7
+    note: "Legacy skills routed to primary model"
+
+  - id: quick_tasks
+    pattern: ["lint", "format", "simple_fix"]
+    model: $AGENT_MODEL_TINY
+    temperature: 0.0
+    cost_limit_usd: 0.05
+
+# Validation Settings
+validation:
+  enforce_model_aliases: true  # Fail if hardcoded ID found instead of alias
+  warn_on_missing_rule: true   # Log warning if embedding picks a rule not defined here
+  dry_run: false               # If true, log decision but don't enforce

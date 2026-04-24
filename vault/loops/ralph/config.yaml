@@ -27,7 +27,7 @@ stopping_criteria:
 targets:
   - "configs/orchestrator/"
   - "configs/tooling/"
-  - ".agent/workflows/"
+  - ".agents/workflows/"
 
 # Knowledge accumulation
 knowledge_base: "/Users/user/zera/vault/loops/ralph/knowledge.md"

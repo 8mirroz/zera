@@ -7,5 +7,5 @@ deprecated_reason: "exec_path references sandbox/tooling/model_prober.py which w
 deprecated_date: "2026-04-08"
 description: Measures latency and health of LLM providers and updates the runtime configuration overlay.
 exec_path: null
-outputs: [.agent/runtime/model_ovl.yaml]
+outputs: [.agents/runtime/model_ovl.yaml]
 replacement: "Use model_providers.json health checks and router fallback chains instead"

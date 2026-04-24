@@ -11,8 +11,8 @@
    - Symptom: `scripts/test_mcp_profiles.py` exits `0` and prints “All tests passed (7/8)” despite routing mismatch.
    - Evidence: `scripts/test_mcp_profiles.py`, observed stdout.
 4. **Workflow set contract points to absent assets.**
-   - Symptom: `.agent/config/workflow_sets.active.json` and `workflow_sets_catalog.json` reference missing `.agent/workflows/*.md`.
-   - Evidence: `.agent/workflows` is empty.
+   - Symptom: `.agents/config/workflow_sets.active.json` and `workflow_sets_catalog.json` reference missing `.agents/workflows/*.md`.
+   - Evidence: `.agents/workflows` is empty.
 
 ## Contradictory Defaults
 - `runtime_providers.json` says `mlx_lm.enabled=true`; code effectively says “unavailable.”
@@ -41,7 +41,7 @@
 ## Safe-Fix Candidates
 - Add config-vs-code provider registration test for every enabled provider.
 - Make MCP profile validator fail non-zero on any routing mismatch.
-- Add workflow existence validator for `.agent/workflows/*`.
+- Add workflow existence validator for `.agents/workflows/*`.
 - Validate command telemetry against registry-required fields at emission time.
 - Add home-profile parity doctor for Hermes/Gemini/Zera cron.
 
@@ -57,12 +57,12 @@ The following config keys/fields are declared but never consumed by any Python c
 - `persona_eval_suite.json`: most test case definitions (not executed as formal harness)
 - `prompt_assembly.yaml`: entire file (no runtime consumer)
 - `memory_schema.json`: entire file (not loaded at runtime)
-- `workflow_sets_catalog.json`: references to non-existent `.agent/workflows/*.md`
+- `workflow_sets_catalog.json`: references to non-existent `.agents/workflows/*.md`
 - `zera_mode_router.json`: all mode definitions beyond keyword lists (no semantic routing)
 
 ### Dead Aliases
 - `configs/tooling/model_routing.json.DEPRECATED` — explicitly deprecated but still present in config path
-- `.agent/config/workflow_sets.active.json` — references non-existent workflows
+- `.agents/config/workflow_sets.active.json` — references non-existent workflows
 - `scripts/test_mcp_profiles.py.bak` — backup copy in active path
 
 ### Schema Inconsistency

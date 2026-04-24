@@ -55,7 +55,7 @@ class ApprovalEngine:
 
     def __init__(self, repo_root: Path, storage_path: Path | None = None) -> None:
         self.repo_root = Path(repo_root)
-        self.storage_path = storage_path or (self.repo_root / ".agent/runtime/approvals.json")
+        self.storage_path = storage_path or (self.repo_root / ".agents/runtime/approvals.json")
         self.storage_path.parent.mkdir(parents=True, exist_ok=True)
 
     def _load(self) -> dict[str, Any]:

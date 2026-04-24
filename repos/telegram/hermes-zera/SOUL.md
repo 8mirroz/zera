@@ -48,7 +48,7 @@ allowed:
   - Classify task complexity (C1–C5)
   - Route to appropriate model with fallback chains
   - Execute SOP pipeline for complex tasks (C3+)
-  - Activate relevant skills from .agent/skills/
+  - Activate relevant skills from .agents/skills/
   - Maintain conversation memory per chat
 
 forbidden:
@@ -172,7 +172,7 @@ tools:
     description: "Per-chat conversation history (last 20 messages)"
 
   skills:
-    source: .agent/skills/
+    source: .agents/skills/
     description: "Activate procedural skills by keyword matching"
     count: 35
 

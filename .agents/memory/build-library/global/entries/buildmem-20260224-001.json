@@ -105,14 +105,14 @@
     "links": []
   },
   "trace_refs": [
-    ".agent/memory/traces/model_integration_v4_1.jsonl"
+    ".agents/memory/traces/model_integration_v4_1.jsonl"
   ],
   "ki_refs": [
     "configs/orchestrator/router.yaml",
     "configs/orchestrator/models.yaml"
   ],
   "pattern_refs": [
-    ".agent/workflows/kilo-mode-routing.md"
+    ".agents/workflows/kilo-mode-routing.md"
   ],
   "anti_patterns": [
     "Using paid models when Qwen 72B or GLM-5 provides equivalent reasoning for T3/T4",

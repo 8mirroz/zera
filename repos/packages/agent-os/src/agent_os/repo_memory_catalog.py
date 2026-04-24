@@ -58,7 +58,7 @@ def policy(root: Path) -> dict[str, Any]:
 
 
 def catalog_root(root: Path) -> Path:
-    return root / ".agent/memory/repos-catalog"
+    return root / ".agents/memory/repos-catalog"
 
 
 def ensure_catalog_structure(root: Path) -> None:
@@ -497,10 +497,10 @@ def write_indexes(root: Path, records: list[dict[str, Any]], alias_index: dict[s
         "aliases_count": len(alias_index),
         "warnings_count": len(warnings),
         "indexes": [
-            ".agent/memory/repos-catalog/indexes/repos_index.json",
-            ".agent/memory/repos-catalog/indexes/aliases_index.json",
-            ".agent/memory/repos-catalog/indexes/navigation_shortcuts.json",
-            ".agent/memory/repos-catalog/indexes/validation_report.json"
+            ".agents/memory/repos-catalog/indexes/repos_index.json",
+            ".agents/memory/repos-catalog/indexes/aliases_index.json",
+            ".agents/memory/repos-catalog/indexes/navigation_shortcuts.json",
+            ".agents/memory/repos-catalog/indexes/validation_report.json"
         ]
     }
 
@@ -596,7 +596,7 @@ def resolve_alias(root: Path, alias: str) -> dict[str, Any]:
 
 def sync_memory(root: Path) -> dict[str, Any]:
     records, aliases = load_current_indexes(root)
-    memory_file = root / ".agent/memory/memory.jsonl"
+    memory_file = root / ".agents/memory/memory.jsonl"
     memory_file.parent.mkdir(parents=True, exist_ok=True)
     if not memory_file.exists():
         memory_file.write_text("", encoding="utf-8")
@@ -650,7 +650,7 @@ def parse_args() -> argparse.Namespace:
     sub = p.add_subparsers(dest="cmd", required=True)
 
     rf = sub.add_parser("refresh", help="Scan repos, rebuild indexes, optionally sync runtime memory")
-    rf.add_argument("--sync-memory", action="store_true", help="Sync catalog entries/aliases into .agent/memory/memory.jsonl")
+    rf.add_argument("--sync-memory", action="store_true", help="Sync catalog entries/aliases into .agents/memory/memory.jsonl")
 
     q = sub.add_parser("query", help="Query catalog")
     q.add_argument("--text", help="Text search")
@@ -662,7 +662,7 @@ def parse_args() -> argparse.Namespace:
     rs = sub.add_parser("resolve", help="Resolve alias to repo path")
     rs.add_argument("--alias", required=True)
 
-    sub.add_parser("sync-memory", help="Sync current indexes to .agent/memory/memory.jsonl")
+    sub.add_parser("sync-memory", help="Sync current indexes to .agents/memory/memory.jsonl")
 
     return p.parse_args()
 

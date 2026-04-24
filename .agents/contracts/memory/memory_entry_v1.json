@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Memory Entry Contract v1.0",
+  "description": "Mandatory schema for all memory entries in .agents/memory/",
+  "type": "object",
+  "required": ["id", "source", "timestamp", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+      "description": "UUID v4 format"
+    },
+    "key": {
+      "type": "string",
+      "description": "Unique key for indexing (optional if id is present)"
+    },
+    "content": {
+      "type": ["string", "object", "null"],
+      "description": "The actual memory content (text, JSON object, or null if stored in payload)"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Structured payload containing memory data (alternative to content)"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["user_input", "agent_output", "tool_result", "external_import", "synthetic", "repo_catalog", "run_log"],
+      "description": "Origin of the memory entry"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of creation"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["fact", "procedure", "preference", "context", "evaluation", "metadata", "run_record", "catalog_entry"],
+      "description": "Category of memory"
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence level in the accuracy of this memory"
+    },
+    "ttl_days": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Time-to-live in days (optional, defaults to permanent)"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Auto-calculated expiration date (optional)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags for indexing and retrieval"
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "agent_id": {"type": "string"},
+        "task_id": {"type": "string"},
+        "workflow_id": {"type": "string"},
+        "source_file": {"type": "string"}
+      },
+      "description": "Traceability information"
+    },
+    "related_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Links to related memory entries"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional unstructured metadata"
+    }
+  },
+  "oneOf": [
+    {"required": ["content"]},
+    {"required": ["payload"]}
+  ]
+}

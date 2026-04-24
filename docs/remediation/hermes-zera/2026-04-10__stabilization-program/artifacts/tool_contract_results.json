@@ -48,109 +48,109 @@
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/repo-memory-refresh.md"
+        "path": ".agents/workflows/repo-memory-refresh.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/build-memory-capture.md"
+        "path": ".agents/workflows/build-memory-capture.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/drift-validator.md"
+        "path": ".agents/workflows/drift-validator.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/self-learning-retro.md"
+        "path": ".agents/workflows/self-learning-retro.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/triage.md"
+        "path": ".agents/workflows/triage.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/task-blueprint-selection.md"
+        "path": ".agents/workflows/task-blueprint-selection.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/project-bootstrap-guided.md"
+        "path": ".agents/workflows/project-bootstrap-guided.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/polyglot-autoevo-routing.md"
+        "path": ".agents/workflows/polyglot-autoevo-routing.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/swarm-review.md"
+        "path": ".agents/workflows/swarm-review.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/error-healing.md"
+        "path": ".agents/workflows/error-healing.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/swarm-plan.md"
+        "path": ".agents/workflows/swarm-plan.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/multi-agent-routing-v3-free-first.md"
+        "path": ".agents/workflows/multi-agent-routing-v3-free-first.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/axel.md"
+        "path": ".agents/workflows/axel.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/ralph-loop.md"
+        "path": ".agents/workflows/ralph-loop.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/multi-agent-routing.md"
+        "path": ".agents/workflows/multi-agent-routing.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/kilo-mode-routing.md"
+        "path": ".agents/workflows/kilo-mode-routing.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/ai-bot-kb.md"
+        "path": ".agents/workflows/ai-bot-kb.md"
       },
       {
         "severity": "error",
         "code": "MISSING_WORKFLOW_FILE",
         "kind": "workflow",
-        "path": ".agent/workflows/infa.md"
+        "path": ".agents/workflows/infa.md"
       }
     ],
     "diff_spec_proposals": [

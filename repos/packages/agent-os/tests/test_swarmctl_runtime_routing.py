@@ -301,7 +301,7 @@ paths:
   wiki: "repos/data/knowledge/wiki-core/wiki"
   manifests: "repos/data/knowledge/wiki-core/manifests"
   skills: "repos/data/knowledge/wiki-core/.skills"
-  local_skill_target: ".agent/skills"
+  local_skill_target: ".agents/skills"
 search:
   primary_backend: "qmd"
   fallback_backend: "tfidf"

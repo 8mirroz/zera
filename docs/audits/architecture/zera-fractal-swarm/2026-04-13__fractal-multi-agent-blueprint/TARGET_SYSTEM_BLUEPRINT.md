@@ -276,7 +276,7 @@ Policy Engine ──(safe-mode trigger)──▶ Scheduler
 | Goal | Mechanism |
 |------|-----------|
 | Existing workflows continue to run unchanged | Single-adapter shim layer translates legacy workflow format to new entity model |
-| `.agent/` (singular) remains readable | Read-compat symlink or dual-read during migration; all writes go to `.agents/` (plural) |
+| `.agents/` (singular) remains readable | Read-compat symlink or dual-read during migration; all writes go to `.agents/` (plural) |
 | Existing CLI tools work unchanged | `swarmctl.py` gains a `--v2` flag; default behavior routes through shim |
 | Existing trace consumers work unchanged | Trace collector emits v1-compatible events alongside v2 events |
 
@@ -285,7 +285,7 @@ Policy Engine ──(safe-mode trigger)──▶ Scheduler
 ```
 ┌───────────────────────────────────────────────────────┐
 │  Legacy Workflow (v1 format)                          │
-│  .agent/workflows/*.yaml                              │
+│  .agents/workflows/*.yaml                              │
 └────────────────────┬──────────────────────────────────┘
                      │
                      ▼
@@ -345,5 +345,5 @@ Policy Engine ──(safe-mode trigger)──▶ Scheduler
 | **Append-only JSONL traces** | Append-only is crash-safe; JSONL is streamable and grep-friendly | SQLite traces (write contention in single-process) |
 | **Deterministic orchestration** | Reproducible execution; debuggable; auditable | Fully LLM-driven orchestration (non-reproducible) |
 | **6-level decomposition** | Matches existing workflow hierarchy; sufficient granularity | 4 levels (too coarse), 8 levels (overhead) |
-| **`.agents/` as canonical** | Plural form is conventional; avoids collision with existing `.agent/` | Keep `.agent/` (migration complexity) |
-| **Read-compat for `.agent/`** | Zero-downtime migration; existing tools continue working | Hard cutover (breaks existing consumers) |
+| **`.agents/` as canonical** | Plural form is conventional; avoids collision with existing `.agents/` | Keep `.agents/` (migration complexity) |
+| **Read-compat for `.agents/`** | Zero-downtime migration; existing tools continue working | Hard cutover (breaks existing consumers) |

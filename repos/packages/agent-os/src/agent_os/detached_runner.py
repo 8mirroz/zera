@@ -26,7 +26,7 @@ CLI_COMMANDS: dict[str, list[str]] = {
 class DetachedRunner:
     """
     Запускает CLI-агента как detached process.
-    Статус пишется в .agent/tasks/<task_id>/status.json.
+    Статус пишется в .agents/tasks/<task_id>/status.json.
     Поддерживает on_complete цепочки (передаёт task_id следующему шагу).
     """
 

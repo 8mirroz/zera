@@ -230,7 +230,7 @@ EOF
         local proj_name
         proj_name="$(basename "$proj_dir")"
 
-        if [ -f "$proj_dir/.agent/config.yaml" ] || [ -f "$proj_dir/.claude/settings.local.json" ] || \
+        if [ -f "$proj_dir/.agents/config.yaml" ] || [ -f "$proj_dir/.claude/settings.local.json" ] || \
            [ -f "$proj_dir/CLAUDE.md" ] || [ -f "$proj_dir/AGENTS.md" ] || [ -f "$proj_dir/QWEN.md" ]; then
             cat > "$INTEL_DIR/projects/${proj_name}.md" <<EOF
 ---

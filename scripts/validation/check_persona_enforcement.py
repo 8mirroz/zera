@@ -160,7 +160,7 @@ def check_governor_callable(repo_root: Path) -> dict[str, Any]:
 
 
 def check_zera_skills_published(repo_root: Path) -> dict[str, Any]:
-    """Check if Zera skills are published to .agent/skills/."""
+    """Check if Zera skills are published to .agents/skills/."""
     skills_dir = repo_root / ".agent" / "skills"
     zera_skills = ["zera-core", "zera-muse", "zera-researcher", "zera-rhythm-coach", "zera-strategist", "zera-style-curator"]
     published = []

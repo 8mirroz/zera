@@ -1,4 +1,4 @@
-"""Skill Registry — metadata layer over .agent/skills/.
+"""Skill Registry — metadata layer over .agents/skills/.
 
 Reads all skill.md frontmatter, extracts capability metadata,
 and provides skill matching by keyword/trigger/intent.
@@ -336,7 +336,7 @@ class SkillRegistry:
     """Registry of all available skills with metadata and matching."""
 
     def __init__(self, skills_dir: Path | None = None) -> None:
-        self.skills_dir = skills_dir or Path(__file__).parents[4] / ".agent/skills"
+        self.skills_dir = skills_dir or Path(__file__).parents[4] / ".agents/skills"
         self.skills: dict[str, SkillMetadata] = {}
         self._load_known()
 

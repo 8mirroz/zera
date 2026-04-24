@@ -52,7 +52,7 @@ zera/  (antigravity-core)
 │   ├── mcp/              # MCP server implementations (incl. LightRAG)
 │   └── packages/         # Shared libraries (agent-os, design-system, mcp-profile-manager, mcp_context)
 │
-├── .agent/               # Agent runtime
+├── .agents/               # Agent runtime
 │   ├── config/           # Agent runtime configurations
 │   ├── evolution/        # Zera evolution state & logs
 │   ├── memory/           # BM25-indexed memory store
@@ -206,7 +206,7 @@ Key variables from `.env.example`:
 
 Manage skills:
 ```bash
-ls .agent/skills/                                    # List skills
+ls .agents/skills/                                    # List skills
 python3 repos/packages/agent-os/scripts/swarmctl.py publish-skills  # Publish
 ```
 
@@ -216,7 +216,7 @@ The `zera-evolutionctl` script manages Zera's self-evolution lifecycle:
 - **Shadow upgrade:** Clone Hermes profile into shadow profile for testing
 - **Promotion:** Controlled promotion with attempt binding, rollback capability
 - **Algorithms:** karpathy, rsi, darwin-goedel, pantheon, self-improving, karpathy-swarm, ralph, agentic-ci, self-driving, meta-learning
-- **State:** `.agent/evolution/` (primary), `vault/loops/.evolve-state.json` (legacy)
+- **State:** `.agents/evolution/` (primary), `vault/loops/.evolve-state.json` (legacy)
 
 ---
 
@@ -277,7 +277,7 @@ The `zera-evolutionctl` script manages Zera's self-evolution lifecycle:
 | `RULES.md` | Rule hierarchy entry point (Layer 2) |
 | `configs/rules/WORKSPACE_STANDARD.md` | Directory placement, naming conventions |
 | `configs/orchestrator/router.yaml` | Task routing source of truth |
-| `.agent/workflows/multi-agent-routing.md` | Swarm coordination protocol |
+| `.agents/workflows/multi-agent-routing.md` | Swarm coordination protocol |
 | `Makefile` | Build, test, quality targets |
 | `.env.example` | Environment variable template |
 
@@ -289,10 +289,10 @@ The `zera-evolutionctl` script manages Zera's self-evolution lifecycle:
 |------|-------|
 | "Where does my code go?" | `configs/rules/WORKSPACE_STANDARD.md` §Placement Matrix |
 | "Which tier is my task?" | `configs/orchestrator/router.yaml` |
-| "What skills exist?" | `.agent/skills/` |
+| "What skills exist?" | `.agents/skills/` |
 | "How to run quality checks?" | `bash scripts/run_quality_checks.sh` |
 | "What decided architecturally?" | `docs/adr/` |
-| "How does routing work?" | `.agent/workflows/multi-agent-routing.md` |
+| "How does routing work?" | `.agents/workflows/multi-agent-routing.md` |
 | "System health?" | `swarmctl.py doctor` |
 
 ---

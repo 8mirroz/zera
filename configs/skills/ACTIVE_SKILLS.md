@@ -1,7 +1,7 @@
 # Active Skills Set (Agent OS v2)
 
-Правило: автозагрузка skills идёт **только** из `.agent/skills/`.  
-`.agent/skills/` публикуется из этого файла командой `swarmctl publish-skills`.
+Правило: автозагрузка skills идёт **только** из `.agents/skills/`.  
+`.agents/skills/` публикуется из этого файла командой `swarmctl publish-skills`.
 
 ## Domain (8)
 - `configs/skills/design-system-architect`

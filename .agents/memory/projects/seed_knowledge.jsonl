@@ -1,0 +1,4 @@
+{"content": "Zera Multi-Agent Orchestration: Uses Omniroute combos to select model tiers (premium, balanced, efficient) based on task complexity (C1-C5). Logic in configs/orchestrator/.", "metadata": {"source": "configs/orchestrator/"}}
+{"content": "Memory Layered Retriever: Implements 4-layer memory (session, project, workspace, user). Uses BM25 for ranking. Default paths in .agents/memory/.", "metadata": {"source": "repos/packages/agent-os/src/agent_os/memory/layered_retriever.py"}}
+{"content": "AGENTS Core: Zero Law - Production or Nothing. Architectural integrity, premium by default, zero chaos. Level 1 in the knowledge hierarchy.", "metadata": {"source": "AGENTS.md"}}
+{"content": "Hermes Configuration: Models defined in models.yaml. Profiles in ~/.hermes/profiles/. Skill wiki path /Users/user/wiki.", "metadata": {"source": "hermes config"}}

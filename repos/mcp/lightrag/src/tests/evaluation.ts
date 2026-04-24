@@ -34,7 +34,7 @@ Documentation goes in docs/ with ADRs in docs/adr/ and knowledge items in docs/k
   },
   {
     content: `BM25 is the current memory system using rank-bm25 library with BM25Plus algorithm.
-It uses lexical matching only, no semantic embeddings. The system stores memory in .agent/memory/memory.jsonl.
+It uses lexical matching only, no semantic embeddings. The system stores memory in .agents/memory/memory.jsonl.
 LightRAG adds semantic retrieval on top of BM25 with vector embeddings.`,
     metadata: { source: 'memory', tags: ['BM25', 'memory', 'RAG'] },
   },

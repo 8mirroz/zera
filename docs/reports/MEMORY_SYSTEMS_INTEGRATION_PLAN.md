@@ -68,7 +68,7 @@
 
 | Aspect | Status | Details |
 |--------|--------|---------|
-| Memory Store | ✅ Active | `.agent/memory/memory.jsonl` — 228+ entries |
+| Memory Store | ✅ Active | `.agents/memory/memory.jsonl` — 228+ entries |
 | Repo Catalog | ✅ Indexed | `repos-catalog/indexes/` — aliases, repos |
 | Router Integration | ✅ Active | `router.yaml` → retrieval engine |
 | Hybrid Retrieval | ✅ Configured | `engine: "hybrid"`, `semantic_backend: "lightrag"` |
@@ -244,8 +244,8 @@ Obsidian → Design Memory:
 | `repos/packages/memory-bridge/scripts/ingest_design_memory.sh` | Design→LightRAG | P0 |
 | `repos/packages/memory-bridge/scripts/export_to_obsidian.sh` | Design→Obsidian | P0 |
 | `repos/packages/memory-bridge/configs/memory_bridge.yaml` | Configuration | P0 |
-| `.agent/skills/memory-bridge.md` | Bridge usage skill | P1 |
-| `.agent/workflows/memory-sync.md` | Sync workflow | P1 |
+| `.agents/skills/memory-bridge.md` | Bridge usage skill | P1 |
+| `.agents/workflows/memory-sync.md` | Sync workflow | P1 |
 
 ---
 

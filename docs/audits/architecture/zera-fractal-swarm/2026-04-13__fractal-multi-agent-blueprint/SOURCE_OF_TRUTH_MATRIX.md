@@ -19,12 +19,12 @@
 | `configs/registry/skills/*.yaml` | Registered skill definitions | Platform architect | Direct edit | Schema validation | `RegistryWorkflowResolver` |
 | `configs/registry/schemas/*.yaml` | Schema definitions | Platform architect | Direct edit | YAML validation | All validation tools |
 | `configs/registry/personas/*.yaml` | Persona definitions | Platform architect | Direct edit | Schema validation | `persona_mode_router.py`, `persona_eval.py` |
-| `.agent/skills/<name>/SKILL.md` | Published skill definitions (29 skills) | Skill author | `swarmctl.py publish-skills` | Skill drift validator | Agent context injection |
-| `.agent/workflows/*.md` | Workflow definitions (44 workflows) | Workflow author | Direct edit | Workflow consistency check | Agent execution |
+| `.agents/skills/<name>/SKILL.md` | Published skill definitions (29 skills) | Skill author | `swarmctl.py publish-skills` | Skill drift validator | Agent context injection |
+| `.agents/workflows/*.md` | Workflow definitions (44 workflows) | Workflow author | Direct edit | Workflow consistency check | Agent execution |
 | `configs/personas/zera/*` | Zera persona configuration | Zera owner | Direct edit | `swarmctl.py doctor` | Persona loader |
 | `configs/tooling/zera_command_registry.yaml` | Zera command definitions | Platform architect | Direct edit | `zera_command_runtime.py catalog` | `ZeraCommandOS` |
 | `configs/tooling/zera_promotion_policy.yaml` | Promotion governance policy | Platform architect | Direct edit | `promote-policy-check` | `zera-evolutionctl.py` |
-| `.agent/evolution/state.json` | Evolution state | Evolution controller | `zera-evolutionctl.py` writes | State integrity check | All evolution tools |
+| `.agents/evolution/state.json` | Evolution state | Evolution controller | `zera-evolutionctl.py` writes | State integrity check | All evolution tools |
 | `configs/tooling/mcp_profiles.json` | MCP server profiles | Platform architect | Direct edit | MCP profile consistency checker | MCP integration layer |
 
 ---
@@ -34,14 +34,14 @@
 | Artifact | Type | Writer | Reader | Lifetime |
 |----------|------|--------|--------|----------|
 | `logs/agent_traces.jsonl` | Append-only event log | `emit_event()` (all components) | Dashboard, validator, auditor | Persistent (rotated manually) |
-| `.agent/evolution/telemetry.jsonl` | Append-only evolution log | `self_evolution_loop.py` | Dashboard, evolution auditor | Persistent |
-| `.agent/evolution/loop.log` | Text log | `self_evolution_loop.py` | Human operator | Persistent |
-| `.agent/evolution/evolutionctl.out.log` | Text log | `zera-evolutionctl.py` | Human operator | Persistent |
+| `.agents/evolution/telemetry.jsonl` | Append-only evolution log | `self_evolution_loop.py` | Dashboard, evolution auditor | Persistent |
+| `.agents/evolution/loop.log` | Text log | `self_evolution_loop.py` | Human operator | Persistent |
+| `.agents/evolution/evolutionctl.out.log` | Text log | `zera-evolutionctl.py` | Human operator | Persistent |
 | `.agents/memory/memory.jsonl` | Append-only memory | All agents | `Retriever`, `MemoryStore` | Persistent |
 | `.agents/memory/goal-stack.json` | Volatile state | Goal manager | Agent runtime | Volatile (session) |
 | `.agents/runtime/approvals.json` | Approval state | `ApprovalEngine` | Auditor | Persistent |
 | `.agents/runtime/background-jobs.json` | Job state | `BackgroundJobRegistry` | Scheduler, monitor | Persistent |
-| `.agent/evolution/promotion_state.json` | Promotion state | `zera-evolutionctl.py` | Promotion system | Persistent |
+| `.agents/evolution/promotion_state.json` | Promotion state | `zera-evolutionctl.py` | Promotion system | Persistent |
 | `vault/loops/.evolve-state.json` | Legacy evolution state | Legacy loops | Legacy readers | Persistent (deprecated) |
 
 ---
@@ -76,7 +76,7 @@
 |------------|--------|---------|-----------|
 | Routing consistency | `router.yaml` + `models.yaml` | `swarmctl.py doctor` | On every config change |
 | Trace schema compliance | `logs/agent_traces.jsonl` | `trace_validator.py` | Periodic |
-| Skill drift | `.agent/skills/` | `skill_drift_validator.py` | Periodic |
+| Skill drift | `.agents/skills/` | `skill_drift_validator.py` | Periodic |
 | Workflow model aliases | `router.yaml` → `models.yaml` | `workflow_model_alias_validator.py` | On routing changes |
 | Runtime sync | `runtimes.yaml` ↔ `runtime_providers.json` | `swarmctl.py doctor` | On runtime changes |
 | Document validation | Front-matter, naming | `validate_documents.py` | Periodic |
@@ -99,7 +99,7 @@
 | `runtimes.yaml` ≠ `runtime_providers.json` | `runtime_providers.json` wins | Regenerate `runtimes.yaml` from JSON |
 | `router.yaml` model alias ≠ `models.yaml` alias | `models.yaml` wins | Fix alias in `router.yaml` |
 | Onboarding doc ≠ actual code | Actual code wins | Update doc |
-| `.agent/` state ≠ `.agents/` state | `.agents/` wins (canonical) | Migrate `.agent/` → `.agents/` |
+| `.agents/` state ≠ `.agents/` state | `.agents/` wins (canonical) | Migrate `.agents/` → `.agents/` |
 | Legacy trace schema ≠ v2.1 schema | v2.1 schema wins | Migrate traces |
 | Narrative doc ↔ code implementation | Code wins | Update doc |
 
@@ -114,7 +114,7 @@
 | Runtime config | ⚠️ Dual source | `runtime_providers.json` (canonical) + `runtimes.yaml` (derived) |
 | Trace schema | ✅ Healthy | Single schema, validator exists |
 | Registry (workflows/skills) | ✅ Healthy | YAML + schema validation |
-| Memory stores | ⚠️ Fragmented | `.agents/memory/` (canonical) + `.agent/memory/` (legacy?) |
-| Evolution state | ⚠️ Dual state | `.agent/evolution/` (active) + `vault/loops/.evolve-state.json` (legacy) |
+| Memory stores | ⚠️ Fragmented | `.agents/memory/` (canonical) + `.agents/memory/` (legacy?) |
+| Evolution state | ⚠️ Dual state | `.agents/evolution/` (active) + `vault/loops/.evolve-state.json` (legacy) |
 | Narrative docs | ❌ Drift-prone | Multiple outdated guides |
 | Runtime traces | ✅ Healthy | Single sink, schema-validated |

@@ -70,7 +70,7 @@ There is **no** `spawn_agent()`, `wait_for_subagent()`, or `send_to_subagent()` 
 | **Pattern** | Job queue → sequential execution |
 | **Delegation** | Jobs are executed one at a time by the scheduler |
 | **Parallel?** | `runtimes.yaml` declares `max_parallel_tasks: 2-3`, but scheduler is sequential |
-| **State** | `.agent/runtime/background-jobs.json` |
+| **State** | `.agents/runtime/background-jobs.json` |
 
 ### 2.6 Evolution Loop — Self-Improvement Pipeline
 
@@ -109,9 +109,9 @@ There is **no** `spawn_agent()`, `wait_for_subagent()`, or `send_to_subagent()` 
 
 | Skill | File | Implies | Actually Does |
 |-------|------|---------|---------------|
-| `dispatching-parallel-agents` | `.agent/skills/dispatching-parallel-agents/SKILL.md` | Parallel agent dispatch | Provides procedural knowledge for manual dispatch — not automated |
-| `subagent-driven-development` | `.agent/skills/subagent-driven-development/SKILL.md` | Subagent spawning | Provides prompt templates for subagent simulation via LLM — not code-level spawning |
-| `brainstorming` | `.agent/skills/brainstorming/SKILL.md` | Multiple perspectives | Single-agent exploration pattern |
+| `dispatching-parallel-agents` | `.agents/skills/dispatching-parallel-agents/SKILL.md` | Parallel agent dispatch | Provides procedural knowledge for manual dispatch — not automated |
+| `subagent-driven-development` | `.agents/skills/subagent-driven-development/SKILL.md` | Subagent spawning | Provides prompt templates for subagent simulation via LLM — not code-level spawning |
+| `brainstorming` | `.agents/skills/brainstorming/SKILL.md` | Multiple perspectives | Single-agent exploration pattern |
 
 ---
 

@@ -22,7 +22,7 @@
       "weighted_total": 0.9525,
       "confidence": 1.0,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
     },
     {
       "entry_id": "buildmem-20260224-001",
@@ -48,7 +48,7 @@
       "weighted_total": 0.9475,
       "confidence": 0.9,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
     }
   ],
   "project_top": [],
@@ -75,7 +75,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       },
       {
         "entry_id": "buildmem-20260224-001",
@@ -101,7 +101,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "T6": [
@@ -126,7 +126,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       },
       {
         "entry_id": "buildmem-20260224-001",
@@ -152,7 +152,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "T3": [
@@ -180,7 +180,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "T4": [
@@ -208,7 +208,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "T5": [
@@ -236,7 +236,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ]
   }

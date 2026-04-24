@@ -24,7 +24,7 @@
       "weighted_total": 0.9525,
       "confidence": 1.0,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
     },
     {
       "entry_id": "buildmem-20260224-001",
@@ -50,7 +50,7 @@
       "weighted_total": 0.9475,
       "confidence": 0.9,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
     }
   ],
   "by_kind": {
@@ -76,7 +76,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "combo": [
@@ -104,7 +104,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ]
   },
@@ -131,7 +131,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "hero": [
@@ -156,7 +156,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "ai-images": [
@@ -181,7 +181,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "canvas-overhead": [
@@ -206,7 +206,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "ux-speed": [
@@ -231,7 +231,7 @@
         "weighted_total": 0.9525,
         "confidence": 1.0,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
       }
     ],
     "free-first": [
@@ -259,7 +259,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "kilo-modes": [
@@ -287,7 +287,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "qwen-72b": [
@@ -315,7 +315,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "glm-5": [
@@ -343,7 +343,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ],
     "swarm": [
@@ -371,7 +371,7 @@
         "weighted_total": 0.9475,
         "confidence": 0.9,
         "sample_size": 1,
-        "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+        "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
       }
     ]
   },
@@ -397,7 +397,7 @@
       "weighted_total": 0.9525,
       "confidence": 1.0,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20250224-premium-hero-opt.json"
     },
     {
       "entry_id": "buildmem-20260224-001",
@@ -423,7 +423,7 @@
       "weighted_total": 0.9475,
       "confidence": 0.9,
       "sample_size": 1,
-      "path": ".agent/memory/build-library/global/entries/buildmem-20260224-001.json"
+      "path": ".agents/memory/build-library/global/entries/buildmem-20260224-001.json"
     }
   ]
 }

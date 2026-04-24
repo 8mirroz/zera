@@ -14,7 +14,7 @@ def example_working_memory():
     """Demonstrate working memory with TTL and capacity limits."""
     print("=== Working Memory Example ===")
     
-    wm = WorkingMemory(Path(".agent/memory/working_memory.json"))
+    wm = WorkingMemory(Path(".agents/memory/working_memory.json"))
     
     wm.add(MemoryEntry(
         content="Implemented routing system with 3-tier architecture",
@@ -39,7 +39,7 @@ def example_pruning():
         half_life_days=7,
         min_relevance_score=0.3,
         archive_before_delete=True,
-        archive_path=".agent/memory/archive/"
+        archive_path=".agents/memory/archive/"
     )
     pruner = MemoryPruner(config)
     
@@ -57,7 +57,7 @@ def example_bm25_retrieval():
     print("\n=== BM25 Retrieval Example ===")
     
     try:
-        retriever = BM25Retriever(Path(".agent/memory/indexes"))
+        retriever = BM25Retriever(Path(".agents/memory/indexes"))
         entries = [
             {"content": "Routing configuration for model selection"},
             {"content": "Memory pruning with TTL policies"},

@@ -1,17 +1,61 @@
+```
+# Logs and traces
+logs/
+*.log
+*.jsonl
+
+# Environment and config
+.env
+.env.local
+*.env.*
+
+# Dependencies and build artifacts
 node_modules/
 .venv/
+venv/
 __pycache__/
-.pytest_cache/
-.env
-.DS_Store
+*.pyc
+*.pyo
+*.pyd
 dist/
 build/
-*.log
-/logs/
-/outputs/
-/tmp/
+target/
+.gradle/
 
-# Obsidian Vault — track content, exclude workspace state
-/vault/.obsidian/workspace.json
-/vault/.obsidian/workspace.json.local
-/vault/.obsidian/workspace-mobile.json
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Coverage and testing
+.coverage
+coverage/
+htmlcov/
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+
+# Agent-specific directories that might contain runtime data
+.agents/
+.agent/
+*.agents/
+*.agent/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+```

@@ -140,7 +140,7 @@ class TestBuildMemoryAutoIngest(unittest.TestCase):
         self.assertTrue((lib_root / "indexes/global_index.json").exists())
         
         # check memory was synced
-        mem_file = test_root / ".agent/memory/memory.jsonl"
+        mem_file = test_root / ".agents/memory/memory.jsonl"
         self.assertTrue(mem_file.exists())
         
         with mem_file.open("r", encoding="utf-8") as f:

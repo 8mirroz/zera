@@ -24,7 +24,7 @@
 | `configs/tooling/runtime_providers.json` | Declares `mlx_lm`, but `RuntimeRegistry` cannot instantiate it. |
 | `configs/tooling/zera_client_profiles.yaml` | Top-level parity/transport semantics are mostly declarative in this path. |
 | `configs/personas/zera/prompt_assembly.yaml` | Describes assembly order, but no direct runtime consumer found in main path. |
-| `.agent/config/workflow_sets.active.json` | Rich orchestration catalog exists, but required `.agent/workflows/*.md` assets are absent. |
+| `.agents/config/workflow_sets.active.json` | Rich orchestration catalog exists, but required `.agents/workflows/*.md` assets are absent. |
 | `docs/guides/hermes-agent-integration-guide.md` | Describes Hermes integration against a different workspace and broader capability surface than current repo-proven path. |
 
 ## Priority Conflicts

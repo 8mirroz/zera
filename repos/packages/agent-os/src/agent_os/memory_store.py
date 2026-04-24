@@ -44,7 +44,7 @@ class _JsonlMemoryBackend:
 
     def __init__(self, repo_root: Path) -> None:
         self.repo_root = Path(repo_root)
-        env_path = os.getenv("MEMORY_FILE_PATH", ".agent/memory/memory.jsonl")
+        env_path = os.getenv("MEMORY_FILE_PATH", ".agents/memory/memory.jsonl")
         path = Path(env_path)
         if not path.is_absolute():
             path = self.repo_root / path

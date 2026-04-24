@@ -6,7 +6,7 @@ Goals:
 - Fast navigation for all agents (planner/orchestrator/workers)
 - Stable aliases for repo references in prompts, traces, and memory
 - Prioritized catalog for free/fast solution discovery
-- Sync into `.agent/memory/memory.jsonl` for cross-session recall
+- Sync into `.agents/memory/memory.jsonl` for cross-session recall
 
 Index files:
 - `indexes/repos_index.json` : full repo records

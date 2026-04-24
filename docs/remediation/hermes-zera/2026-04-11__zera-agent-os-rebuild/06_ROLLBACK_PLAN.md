@@ -4,7 +4,7 @@
 
 ```bash
 zera-evolutionctl stop
-touch .agent/evolution/KILL_SWITCH
+touch .agents/evolution/KILL_SWITCH
 ps -Ao pid,ppid,pgid,stat,etime,command | rg 'Zera Evolution Daemon|self_evolution_loop.py|vault/loops|zera-evolve|zera-self-evolution' || true
 ```
 

@@ -16,21 +16,21 @@
       "id": "A-002",
       "severity": "critical",
       "domain": "workflow_catalog",
-      "title": "Workflow sets index points to missing .agent/workflows markdown files",
+      "title": "Workflow sets index points to missing .agents/workflows markdown files",
       "evidence": [
-        ".agent/config/workflow_sets.active.json",
+        ".agents/config/workflow_sets.active.json",
         "configs/tooling/workflow_sets_catalog.json",
-        ".agent/workflows/"
+        ".agents/workflows/"
       ]
     },
     {
       "id": "A-003",
       "severity": "high",
       "domain": "skills",
-      "title": "Zera active skills are defined but not published into .agent/skills",
+      "title": "Zera active skills are defined but not published into .agents/skills",
       "evidence": [
         "configs/skills/ZERA_ACTIVE_SKILLS.md",
-        ".agent/skills/.active_set_manifest.json"
+        ".agents/skills/.active_set_manifest.json"
       ]
     },
     {

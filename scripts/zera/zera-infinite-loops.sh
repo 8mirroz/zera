@@ -402,8 +402,8 @@ status: active
 scan_paths:
   - "configs/orchestrator/"
   - "configs/tooling/"
-  - ".agent/workflows/"
-  - ".agent/config/"
+  - ".agents/workflows/"
+  - ".agents/config/"
   - "scripts/"
 
 # What to look for
@@ -491,7 +491,7 @@ agents:
     metric: "skill_match_rate"
 
   - name: agent-workflows
-    target: ".agent/workflows/"
+    target: ".agents/workflows/"
     metric: "workflow_efficiency"
 
 # Swarm coordination
@@ -547,7 +547,7 @@ stopping_criteria:
 targets:
   - "configs/orchestrator/"
   - "configs/tooling/"
-  - ".agent/workflows/"
+  - ".agents/workflows/"
 
 # Knowledge accumulation
 knowledge_base: "$LOOPS_DIR/ralph/knowledge.md"

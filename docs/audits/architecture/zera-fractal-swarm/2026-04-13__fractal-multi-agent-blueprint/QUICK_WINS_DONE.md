@@ -48,7 +48,7 @@
 
 **What:** Both directories contain unique content, so a symlink would risk data loss. Instead, created a deprecation notice.
 
-**File created:** `.agent/DEPRECATION.md`
+**File created:** `.agents/DEPRECATION.md`
 
 **Contents:**
 - Deprecation notice directing users to `.agents/`
@@ -57,7 +57,7 @@
 - Explicit "Do NOT" instructions
 
 **Note:** Full migration requires:
-1. Merging `.agent/memory/` content into `.agents/memory/`
+1. Merging `.agents/memory/` content into `.agents/memory/`
 2. Updating all references in `router.yaml` and other configs
 3. Then converting `.agent` to a symlink: `ln -s .agents .agent`
 
@@ -139,5 +139,5 @@ trace_path = _default_trace_path()
 1. **Full .agent → .agents migration:** Merge content, update all references, create symlink
 2. **Safe removal of forwarding stubs:** Audit all consumers (cron, Makefile, scripts) before deletion
 3. **Create actual role contract YAML files:** README references 7 contract files that don't yet exist
-4. **Update router.yaml references:** Change `.agent/` paths to `.agents/` after migration
+4. **Update router.yaml references:** Change `.agents/` paths to `.agents/` after migration
 5. **Update AGENT_ROLE_CONTRACTS.md:** Fix path references after migration

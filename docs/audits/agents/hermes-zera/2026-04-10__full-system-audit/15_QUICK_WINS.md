@@ -7,7 +7,7 @@
 4. **Add provider registration contract test** — every enabled provider in `runtime_providers.json` must have a factory in `RuntimeRegistry._builtin_factories`. Currently `mlx_lm` is declared but impossible.
 
 ## High Priority (Do This Week)
-5. **Add workflow existence validation** — `test_workflow_catalog_paths_exist` should fail if `.agent/config/workflow_sets.active.json` references missing files.
+5. **Add workflow existence validation** — `test_workflow_catalog_paths_exist` should fail if `.agents/config/workflow_sets.active.json` references missing files.
 6. **Flag `real-trace-*` cases as non-canonical** — exclude from coverage arithmetic; label as sample/replay inputs.
 7. **Remove or archive `configs/tooling/model_routing.json.DEPRECATED`** — deprecated files in config paths create confusion.
 8. **Remove orphan config files** — `eggent_algorithm_matrix.json`, `polyglot_execution_matrix.json`, `notebooklm_agent_router_templates.json`, `suite_manifest.json`, `plugin_schema.json`, `repo_aliases_policy.json` have no consumers.

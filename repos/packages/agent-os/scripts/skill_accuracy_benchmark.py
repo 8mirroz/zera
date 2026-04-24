@@ -70,7 +70,7 @@ def run_benchmark(skills_dir):
 
 def main():
     parser = argparse.ArgumentParser(description='Antigravity Skill Accuracy Benchmark')
-    parser.add_argument('--skills_dir', default='.agent/skills', help='Directory containing skills')
+    parser.add_argument('--skills_dir', default='.agents/skills', help='Directory containing skills')
     parser.add_argument('--output', help='Save results to JSON file')
     
     args = parser.parse_args()

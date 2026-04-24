@@ -71,7 +71,7 @@ def score_skill(skill, task_text, mastery_db=None, task_type=None):
 def main():
     parser = argparse.ArgumentParser(description='Smart Skill Matcher for Antigravity')
     parser.add_argument('task', help='Task description to match against')
-    parser.add_argument('--skills_dir', default='.agent/skills', help='Directory containing skills')
+    parser.add_argument('--skills_dir', default='.agents/skills', help='Directory containing skills')
     parser.add_argument('--limit', type=int, default=5, help='Limit number of results')
     parser.add_argument('--json', action='store_true', help='Output in JSON format')
     parser.add_argument('--run_id', help='Run ID for observability tracking')

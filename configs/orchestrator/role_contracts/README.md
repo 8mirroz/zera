@@ -111,4 +111,4 @@ These files do NOT replace:
 - Runtime IO schemas in `contracts.py`
 - Provider configuration (`model_providers.json`)
 - Benchmark configuration
-- Workflow definitions (`.agent/workflows/`)
+- Workflow definitions (`.agents/workflows/`)

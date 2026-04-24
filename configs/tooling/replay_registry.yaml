@@ -5,15 +5,15 @@
 version: "1.0"
 
 replay_storage:
-  base_path: ".agent/replays/"
+  base_path: ".agents/replays/"
   format: "jsonl"
   compression: "gzip"
   retention_days: 90
 
   paths:
-    critical_actions: ".agent/replays/critical/"
-    desktop_sessions: ".agent/replays/desktop/"
-    rollback_snapshots: ".agent/replays/snapshots/"
+    critical_actions: ".agents/replays/critical/"
+    desktop_sessions: ".agents/replays/desktop/"
+    rollback_snapshots: ".agents/replays/snapshots/"
 
 action_logging:
   enabled: true

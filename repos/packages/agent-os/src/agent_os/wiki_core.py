@@ -275,7 +275,7 @@ class WikiCore:
             wiki=self._resolve_path(paths.get("wiki", root / "wiki")),
             manifests=self._resolve_path(paths.get("manifests", root / "manifests")),
             skills=self._resolve_path(paths.get("skills", root / ".skills")),
-            local_skill_target=self._resolve_path(paths.get("local_skill_target", ".agent/skills")),
+            local_skill_target=self._resolve_path(paths.get("local_skill_target", ".agents/skills")),
             search=self._resolve_path(paths.get("search", root / "search/qmd")),
         )
 

@@ -10,7 +10,7 @@ class PromptAutomationEngine:
     Handles loading, rendering, and caching of prompts from the centralized library.
     """
     
-    def __init__(self, base_path="/Users/user/zera/configs/prompts", runtime_path="/Users/user/zera/.agent/runtime/prompts"):
+    def __init__(self, base_path="/Users/user/zera/configs/prompts", runtime_path="/Users/user/zera/.agents/runtime/prompts"):
         self.base_path = base_path
         self.runtime_path = runtime_path
         self.manifest_path = os.path.join(base_path, "manifest.yaml")

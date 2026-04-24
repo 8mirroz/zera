@@ -41,14 +41,14 @@ def _load_json(path: Path) -> Any:
 def _freshness_check(root: Path, max_age_hours: int = 72) -> dict[str, Any]:
     now = utc_now()
     checks = [
-        root / ".agent/memory/build-library/indexes/global_index.json",
-        root / ".agent/memory/build-library/indexes/projects_index.json",
-        root / ".agent/memory/build-library/indexes/best_library_snapshot.json",
-        root / ".agent/memory/build-library/indexes/validation_report.json",
-        root / ".agent/memory/repos-catalog/indexes/repos_index.json",
-        root / ".agent/memory/repos-catalog/indexes/aliases_index.json",
-        root / ".agent/memory/repos-catalog/indexes/navigation_shortcuts.json",
-        root / ".agent/memory/repos-catalog/indexes/validation_report.json",
+        root / ".agents/memory/build-library/indexes/global_index.json",
+        root / ".agents/memory/build-library/indexes/projects_index.json",
+        root / ".agents/memory/build-library/indexes/best_library_snapshot.json",
+        root / ".agents/memory/build-library/indexes/validation_report.json",
+        root / ".agents/memory/repos-catalog/indexes/repos_index.json",
+        root / ".agents/memory/repos-catalog/indexes/aliases_index.json",
+        root / ".agents/memory/repos-catalog/indexes/navigation_shortcuts.json",
+        root / ".agents/memory/repos-catalog/indexes/validation_report.json",
     ]
 
     findings: list[dict[str, Any]] = []
@@ -263,7 +263,7 @@ def compact_runtime_memory(
     apply: bool,
     all_sources: bool,
 ) -> dict[str, Any]:
-    memory_file = root / ".agent/memory/memory.jsonl"
+    memory_file = root / ".agents/memory/memory.jsonl"
     if not memory_file.exists():
         return {"status": "ok", "memory_file": str(memory_file.relative_to(root)), "changed": False, "reason": "missing_file"}
 
@@ -401,7 +401,7 @@ def parse_args() -> argparse.Namespace:
     f = sub.add_parser("freshness-check", help="Validate memory index freshness/consistency")
     f.add_argument("--max-age-hours", type=int, default=72)
 
-    c = sub.add_parser("compact-runtime", help="Compact .agent/memory/memory.jsonl with TTL/dedupe")
+    c = sub.add_parser("compact-runtime", help="Compact .agents/memory/memory.jsonl with TTL/dedupe")
     c.add_argument("--ttl-days", type=int, default=30)
     c.add_argument("--max-rows", type=int, default=5000)
     c.add_argument("--all-sources", action="store_true", help="Apply TTL to all sources, not only managed derived sources")

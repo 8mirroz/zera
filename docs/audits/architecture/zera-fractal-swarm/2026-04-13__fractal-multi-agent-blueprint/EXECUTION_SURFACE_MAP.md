@@ -72,7 +72,7 @@
 │  Code changes: repos/{apps,mcp,packages,telegram}/<name>/            │
 │  Documentation: docs/ki/, docs/adr/, docs/patterns/                  │
 │  Memory writes: .agents/memory/memory.jsonl, working_memory.json     │
-│  Evolution state: .agent/evolution/state.json, telemetry.jsonl        │
+│  Evolution state: .agents/evolution/state.json, telemetry.jsonl        │
 │  Branch manifests: docs/remediation/hermes-zera/.../artifacts/wave4/ │
 │  Reports: vault/reports/, outputs/reliability/                        │
 └─────────────────────────────────────────────────────────────────────┘
@@ -197,7 +197,7 @@ $ zera-command resolve --command evolve --objective "Optimize router tiers"
 ```
 $ zera-evolutionctl start --cycles 3
   → zera-evolutionctl.py: cmd_start()
-  → PID file created (.agent/evolution/evolutionctl.pid)
+  → PID file created (.agents/evolution/evolutionctl.pid)
   → Core loop: self_evolution_loop.py
     Phase 1: OBSERVE → read telemetry, gather metrics
     Phase 2: CLASSIFY → classify candidates
@@ -207,7 +207,7 @@ $ zera-evolutionctl start --cycles 3
     Phase 6: EVALUATE → run benchmarks
     Phase 7: REFLECT → self-reflection
     ... repeat for N cycles
-  → emit events to .agent/evolution/telemetry.jsonl
+  → emit events to .agents/evolution/telemetry.jsonl
   → emit events to logs/agent_traces.jsonl
 ```
 
@@ -220,10 +220,10 @@ $ zera-evolutionctl start --cycles 3
 | Router → Runtime | `router.yaml` loaded by `ModelRouter._load_config()` | YAML → Python dict |
 | Command Runtime → Execution | `ZeraCommandOS.render_prompt()` → prompt text → subprocess | Text |
 | Events → Traces | `emit_event()` → JSONL append | JSON lines |
-| Evolution State | `.agent/evolution/state.json` → read/write | JSON |
+| Evolution State | `.agents/evolution/state.json` → read/write | JSON |
 | Memory → Retrieval | `.agents/memory/memory.jsonl` → BM25 index → retrieve | JSONL → index → results |
 | Branch → Merge | Branch manifest (JSON) → `create_branch_merge_record()` | JSON |
-| Skills → Execution | `.agent/skills/<name>/SKILL.md` → loaded into context | Markdown |
+| Skills → Execution | `.agents/skills/<name>/SKILL.md` → loaded into context | Markdown |
 | Workflow → Execution | `configs/registry/workflows/*.yaml` → `load_workflow()` | YAML → Python dict |
 
 ---

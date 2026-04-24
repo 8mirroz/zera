@@ -495,7 +495,7 @@ def _run_agent_pipeline(
 def cmd_publish_skills(_: argparse.Namespace) -> int:
     repo_root = _repo_root()
     active_md = repo_root / "configs/skills/ACTIVE_SKILLS.md"
-    dest_dir = repo_root / ".agent/skills"
+    dest_dir = repo_root / ".agents/skills"
     publish_active_set(repo_root=repo_root, active_md=active_md, dest_dir=dest_dir)
     print("OK: published active skills")
     return 0
@@ -969,8 +969,8 @@ def cmd_doctor(_: argparse.Namespace) -> int:
     model_routing_path = repo_root / "configs/tooling/model_routing.json"
     mcp_profiles_path = repo_root / "configs/tooling/mcp_profiles.json"
     model_providers_path = repo_root / "configs/tooling/model_providers.json"
-    legacy_router_yaml_path = repo_root / ".agent/config/model_router.yaml"
-    agent_skills_dir = repo_root / ".agent/skills"
+    legacy_router_yaml_path = repo_root / ".agents/config/model_router.yaml"
+    agent_skills_dir = repo_root / ".agents/skills"
     manifest_path = agent_skills_dir / ".active_set_manifest.json"
     trace_schema_path = repo_root / "configs/tooling/trace_schema.json"
     trace_file_path = Path(os.getenv("AGENT_OS_TRACE_FILE", str(repo_root / "logs/agent_traces.jsonl")))
@@ -1077,7 +1077,7 @@ def cmd_doctor(_: argparse.Namespace) -> int:
     if not model_routing_path.exists():
         warnings.append("Legacy compat missing: configs/tooling/model_routing.json (ok after full migration)")
     if not legacy_router_yaml_path.exists():
-        warnings.append("Legacy compat missing: .agent/config/model_router.yaml (ok after full migration)")
+        warnings.append("Legacy compat missing: .agents/config/model_router.yaml (ok after full migration)")
 
     wiki_core_config_path = repo_root / "configs/tooling/wiki_core.yaml"
     wiki_core_doctor = None
@@ -1142,7 +1142,7 @@ def cmd_doctor(_: argparse.Namespace) -> int:
 
             actual_dirs = {p.name for p in _iter_skill_dirs(agent_skills_dir)}
             if actual_dirs - expected:
-                msg = f"Extra directories in .agent/skills: {', '.join(sorted(actual_dirs - expected))}"
+                msg = f"Extra directories in .agents/skills: {', '.join(sorted(actual_dirs - expected))}"
                 if strict_skill_hash:
                     failures.append(msg)
                 else:
@@ -1766,7 +1766,7 @@ def _derive_lanes_for_bootstrap(execution_path: str, template: dict[str, Any], p
 
 
 def _workflow_set_sequence(repo_root: Path, set_name: str) -> dict[str, Any]:
-    active_path = repo_root / ".agent/config/workflow_sets.active.json"
+    active_path = repo_root / ".agents/config/workflow_sets.active.json"
     if not active_path.exists():
         return {"set_name": set_name, "sequence_paths": [], "post_action_paths": []}
     active = _load_json(active_path)
@@ -1970,7 +1970,7 @@ def cmd_bootstrap(args: argparse.Namespace) -> int:
         ],
         "handoff": {
             "next_mode": "/polyglot" if execution_path == "polyglot" else ("/neo" if execution_path == "neo" else None),
-            "next_workflow": ".agent/workflows/polyglot-autoevo-routing.md" if execution_path == "polyglot" else None,
+            "next_workflow": ".agents/workflows/polyglot-autoevo-routing.md" if execution_path == "polyglot" else None,
             "packet_contract": "configs/tooling/polyglot_handoff_contract.json" if execution_path == "polyglot" else None,
         },
         "memory_capture": {
@@ -3639,7 +3639,7 @@ def cmd_telegram_readiness(args: argparse.Namespace) -> int:
             failures += 1
         checks.append({"key": key, "status": "ok" if ok else "missing", "state": state})
 
-    queue_path = repo_root / ".agent/runtime/background-jobs.json"
+    queue_path = repo_root / ".agents/runtime/background-jobs.json"
     checks.append({"key": "background_queue_file", "status": "ok" if queue_path.exists() else "warn", "state": str(queue_path)})
 
     out = {
@@ -4158,7 +4158,7 @@ def cmd_swarm_events(args: argparse.Namespace) -> int:
 
     # Load lane_events config to find storage pattern
     lane_events_path = repo_root / "configs/orchestrator/lane_events.yaml"
-    storage_pattern = ".agent/swarm/events/{task_id}.jsonl"
+    storage_pattern = ".agents/swarm/events/{task_id}.jsonl"
     if lane_events_path.exists():
         try:
             import yaml as _yaml
@@ -5030,7 +5030,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(prog="swarmctl", description="Agent OS v2 utilities")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    p_pub = sub.add_parser("publish-skills", help="Publish ACTIVE_SKILLS.md into .agent/skills/")
+    p_pub = sub.add_parser("publish-skills", help="Publish ACTIVE_SKILLS.md into .agents/skills/")
     p_pub.set_defaults(fn=cmd_publish_skills)
 
     p_doc = sub.add_parser("doctor", help="Validate configs, env, and published active skills")
@@ -5077,7 +5077,7 @@ def main() -> int:
     p_wiki_reindex.add_argument("--dry-run", action="store_true")
     p_wiki_reindex.set_defaults(fn=cmd_wiki_reindex)
 
-    p_wiki_publish = wiki_sub.add_parser("publish-skills", help="Publish wiki-core skills into .agent/skills/wiki-*")
+    p_wiki_publish = wiki_sub.add_parser("publish-skills", help="Publish wiki-core skills into .agents/skills/wiki-*")
     p_wiki_publish.add_argument("--config", default=None, help="Path to wiki_core.yaml")
     p_wiki_publish.add_argument("--mode", choices=["copy", "symlink"], default="copy")
     p_wiki_publish.add_argument("--global-target", default=None, help="Explicit global skills target; omitted means repo-local only")

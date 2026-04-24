@@ -70,7 +70,7 @@ Resolve all structural issues identified in Wave 0. This is cleanup work that mu
 
 | ID | Deliverable | Description |
 |----|-------------|-------------|
-| P2-1 | Path canonicalization | Resolve `.agent/.agents` mismatch; single source of truth |
+| P2-1 | Path canonicalization | Resolve `.agents/.agents` mismatch; single source of truth |
 | P2-2 | Duplicate script removal | Audit `scripts/` directory; remove or consolidate duplicates |
 | P2-3 | Missing path creation | Create all directories referenced by code but not present on disk |
 | P2-4 | Silent fallback elimination | Replace all silent fallbacks with explicit error + trace |
@@ -80,7 +80,7 @@ Resolve all structural issues identified in Wave 0. This is cleanup work that mu
 
 ### Success Criteria
 
-- [ ] Zero `.agent/.agents` path references — single canonical path
+- [ ] Zero `.agents/.agents` path references — single canonical path
 - [ ] Zero duplicate scripts (verified by `swarmctl audit --duplicates`)
 - [ ] Zero silent fallbacks in production code paths
 - [ ] All configs validated at startup (invalid config → process exits with message)

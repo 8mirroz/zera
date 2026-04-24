@@ -14,7 +14,7 @@ Over Waves 0–6, we audited the Zera multi-agent architecture across 6 dimensio
 
 | Wave | Focus | Key Finding |
 |------|-------|-------------|
-| 0 | Structural hygiene | `.agent/.agents` mismatch, duplicate scripts, missing paths, silent fallbacks across the codebase |
+| 0 | Structural hygiene | `.agents/.agents` mismatch, duplicate scripts, missing paths, silent fallbacks across the codebase |
 | 1 | Orchestration topology | Single-threaded orchestration — no true parallel agents. RALPH is iterative refinement, not multi-agent coordination |
 | 2 | Fractal decomposition | 6-level decomposition hierarchy designed; delegation rules and parallelization policy defined |
 | 3 | Subsystem evaluation | 10 subsystems evaluated against 3 options each via weighted decision matrix |
