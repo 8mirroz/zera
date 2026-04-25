@@ -1,0 +1,35 @@
+# configs/autonomy/memory.yaml
+# Конфигурация трехслойной памяти (Memory Triad)
+
+memory_layers:
+  episodic:
+    store_type: "vector_db"
+    backend: "chroma_db"
+    retrieval_strategy: "semantic_similarity"
+    recency_decay: 0.995
+    importance_threshold: 0.7
+    ttl_days: 180
+    description: "Хранилище контекста диалогов и истории действий"
+
+  semantic:
+    store_type: "knowledge_graph"
+    backend: "neo4j_or_kv"
+    retrieval_strategy: "relation_traversal"
+    confidence_decay: 0.98  # снижение уверенности в неделю без подкрепления
+    description: "Факты о пользователе, домене и предпочтениях"
+
+  procedural:
+    store_type: "policy_library"
+    backend: "git_backed_yaml"
+    retrieval_strategy: "pattern_matching"
+    learning_mechanism: "RL_signals"
+    description: "Библиотека стратегий и паттернов успеха (IF context THEN action)"
+
+retrieval_weights:
+  episodic: 0.4
+  semantic: 0.4
+  procedural: 0.2
+
+observability:
+  log_retrieval_scores: true
+  trace_memory_usage: true

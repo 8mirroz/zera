@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/using-git-worktrees/SKILL.md

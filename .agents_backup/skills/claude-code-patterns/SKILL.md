@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/claude-code-patterns/SKILL.md

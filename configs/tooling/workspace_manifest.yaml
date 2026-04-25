@@ -1,0 +1,28 @@
+version: "1.0"
+workspace:
+  root: /Users/user/zera
+  name: zera-sovereign-kernel
+  mode: sovereign
+
+runtime:
+  hermes:
+    profile: zera
+    config: ~/.hermes/profiles/zera/config.yaml
+  zera:
+    adapter: configs/adapters/hermes/adapter.yaml
+    registry: configs/tooling/zera_command_registry.yaml
+  zeroclaw:
+    active: true
+
+governance:
+  secret_policy: env_ref_only
+  root_guard: enabled
+  drift_detection: enabled
+
+integrations:
+  - id: agent-os
+    path: repos/packages/agent-os
+    type: core-package
+  - id: configs
+    path: configs
+    type: governance-layer

@@ -21,8 +21,22 @@ HARDCODED_MODEL_RE = re.compile(
 )
 
 
+def find_workspace_root(start: Path) -> Path:
+    current = start.resolve()
+
+    for candidate in [current, *current.parents]:
+        if (
+            (candidate / "configs").exists()
+            and (candidate / "repos").exists()
+            and (candidate / "scripts").exists()
+        ):
+            return candidate
+
+    raise RuntimeError(f"Workspace root not found from {start}")
+
+
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return find_workspace_root(Path(__file__))
 
 
 def _load_active_workflow_paths(root: Path) -> tuple[list[Path], list[str]]:

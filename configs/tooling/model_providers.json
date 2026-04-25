@@ -212,40 +212,7 @@
           "ollama/bonsai"
         ]
       },
-      "gateway_models": [
-        "openrouter/qwen/qwen3.6-plus:free",
-        "openrouter/qwen/qwen3.6-plus-preview:free",
-        "openrouter/qwen/qwen3.5-plus-02-15",
-        "openrouter/qwen/qwen3-coder-next",
-        "openrouter/google/gemini-2.0-flash-exp:free",
-        "openrouter/google/gemma-3-27b-it:free",
-        "openrouter/meta-llama/llama-3.3-70b-instruct:free",
-        "openrouter/qwen/qwen3-next-80b-a3b-instruct:free",
-        "openrouter/qwen/qwen3-coder:free",
-        "openrouter/openai/gpt-oss-20b:free",
-        "openrouter/deepseek/deepseek-r1:free",
-        "openrouter/google/gemma-3-12b-it:free",
-        "openrouter/google/gemma-3-4b-it:free",
-        "openrouter/nousresearch/hermes-3-llama-3.1-405b:free",
-        "openrouter/meta-llama/llama-3.2-3b-instruct:free",
-        "openrouter/mistralai/mistral-small-3.1-24b-instruct:free",
-        "openrouter/arcee-ai/trinity-large-preview:free",
-        "openrouter/arcee-ai/trinity-mini:free",
-        "openrouter/cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
-        "openrouter/deepseek/deepseek-r1-0528:free",
-        "openrouter/google/gemma-3n-e2b-it:free",
-        "openrouter/google/gemma-3n-e4b-it:free",
-        "openrouter/liquid/lfm-2.5-1.2b-instruct:free",
-        "openrouter/liquid/lfm-2.5-1.2b-thinking:free",
-        "openrouter/nvidia/nemotron-3-nano-30b-a3b:free",
-        "openrouter/nvidia/nemotron-nano-12b-v2-vl:free",
-        "openrouter/nvidia/nemotron-nano-9b-v2:free",
-        "openrouter/openai/gpt-oss-120b:free",
-        "openrouter/qwen/qwen3-4b:free",
-        "openrouter/stepfun/step-3.5-flash:free",
-        "openrouter/upstage/solar-pro-3:free",
-        "openrouter/z-ai/glm-4.5-air:free"
-      ],
+      "gateway_models": [],
       "direct_models": [
         "qwen/qwen3.6-plus:free",
         "qwen/qwen3.6-plus-preview:free",
@@ -279,7 +246,7 @@
         "enabled": true,
         "strategy": "best_of_n",
         "max_candidates": 3,
-        "candidate_source": "gateway_models",
+        "candidate_source": "direct_models",
         "score_floor": 0.7,
         "tie_breaker": "lowest_latency_then_lowest_cost",
         "judge_model_tier": "light",
@@ -310,13 +277,7 @@
           "google/gemini-2.5-flash"
         ]
       },
-      "gateway_models": [
-        "openrouter/qwen/qwen3.6-plus-preview:free",
-        "openrouter/qwen/qwen3-coder-next",
-        "openrouter/google/gemini-2.5-flash",
-        "openrouter/qwen/qwen-2.5-7b-instruct",
-        "openrouter/microsoft/phi-3-mini-128k-instruct"
-      ],
+      "gateway_models": [],
       "direct_models": [
         "qwen/qwen3.6-plus-preview:free",
         "qwen/qwen3-coder-next",
@@ -347,12 +308,6 @@
         ]
       },
       "gateway_models": [
-        "openrouter/qwen/qwen3.5-plus-02-15",
-        "openrouter/qwen/qwen3-coder-next",
-        "openrouter/google/gemini-2.5-pro",
-        "openrouter/deepseek/deepseek-v3",
-        "openrouter/mistralai/mistral-medium",
-        "openrouter/z-ai/glm-5",
         "ezai/anthropic/claude-3-5-sonnet",
         "ezai/openai/gpt-4o"
       ],
@@ -384,12 +339,6 @@
         ]
       },
       "gateway_models": [
-        "openrouter/qwen/qwen3.6-plus-preview:free",
-        "openrouter/qwen/qwen3.5-plus-02-15",
-        "openrouter/openai/gpt-5.3",
-        "openrouter/anthropic/claude-opus-4.1",
-        "openrouter/openai/gpt-5.2",
-        "openrouter/z-ai/glm-5",
         "ezai/anthropic/claude-3-5-opus"
       ],
       "direct_models": [
@@ -401,5 +350,23 @@
       ]
     }
   },
-  "free_api_catalog_ref": "configs/tooling/free_llm_api_catalog.json"
+  "free_api_catalog_ref": "configs/tooling/free_llm_api_catalog.json",
+  "kilocode": {
+    "name": "KiloCode",
+    "base_url": "https://api.kilocode.com/v1",
+    "api_key_env": "KILOCODE_API_KEY",
+    "models": [
+      "openrouter/auto",
+      "google/gemini-2.0-flash-exp:free"
+    ]
+  },
+  "openrouter": {
+    "name": "OpenRouter",
+    "base_url": "https://openrouter.ai/api/v1",
+    "api_key_env": "OPENROUTER_API_KEY",
+    "models": [
+      "auto",
+      "free"
+    ]
+  }
 }

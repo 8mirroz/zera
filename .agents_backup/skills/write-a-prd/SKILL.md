@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/write-a-prd/SKILL.md

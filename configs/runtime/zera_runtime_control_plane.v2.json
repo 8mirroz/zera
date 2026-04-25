@@ -1,0 +1,646 @@
+{
+  "schema_version": "2.0.0",
+  "extends": "/Users/user/zera/configs/runtime/zera_runtime.v1.json",
+  "system_role": "zera_hermes_runtime_control_plane",
+  "status": "proposed",
+  "compatibility": {
+    "base_config_version": "1.0",
+    "merge_mode": "overlay_deep_merge",
+    "breaking_changes_allowed": false,
+    "rollback_target": "/Users/user/zera/configs/runtime/zera_runtime.v1.json"
+  },
+  "responsibilities": [
+    "Coordinate Zera command semantics across Hermes, Gemini, MCP and repository-native tools",
+    "Route tasks to the correct MCP server based on capability, risk and runtime profile",
+    "Preserve Obsidian as human-readable source of memory while using LightRAG and MCP memory for retrieval",
+    "Prevent unsafe tool execution through staged startup, health checks and risk-aware gating",
+    "Maintain deterministic workflow execution and auditability"
+  ],
+  "interfaces": {
+    "inputs": [
+      "user_intent",
+      "repo_state",
+      "vault_state",
+      "mcp_health_state",
+      "command_registry",
+      "client_profile",
+      "task_blueprint"
+    ],
+    "outputs": [
+      "execution_plan",
+      "tool_routing_decision",
+      "memory_write_decision",
+      "validation_report",
+      "retro_capture",
+      "rollback_plan"
+    ]
+  },
+  "runtime_profiles": {
+    "safe_default": {
+      "description": "Core daily Zera/Hermes runtime with memory, filesystem, retrieval and reasoning.",
+      "enabled_servers": [
+        "context7",
+        "fetch",
+        "filesystem",
+        "memory",
+        "sequential-thinking",
+        "obsidian",
+        "lightrag"
+      ],
+      "disabled_by_default": [
+        "archicad",
+        "figma",
+        "blender",
+        "puppeteer",
+        "chrome-devtools-mcp",
+        "nanobanana",
+        "pi"
+      ]
+    },
+    "research_intelligence": {
+      "description": "External research and market intelligence mode.",
+      "enabled_servers": [
+        "context7",
+        "fetch",
+        "exa",
+        "google-developer-knowledge",
+        "stitch",
+        "obsidian",
+        "lightrag"
+      ],
+      "requires_network": true,
+      "fallback_profile": "safe_default"
+    },
+    "design_build": {
+      "description": "UI/design/build mode for Stitch, 21st.dev Magic, shadcn, Figma and frontend work.",
+      "enabled_servers": [
+        "context7",
+        "filesystem",
+        "magic-mcp",
+        "shadcn",
+        "figma",
+        "stitch",
+        "obsidian",
+        "memory"
+      ],
+      "requires_review_before_file_mutation": true,
+      "fallback_profile": "safe_default"
+    },
+    "bim_archicad": {
+      "description": "Archicad bridge mode for BIM automation, measured plans, IFC and live project handoff.",
+      "enabled_servers": [
+        "filesystem",
+        "archicad",
+        "obsidian",
+        "memory",
+        "lightrag",
+        "sequential-thinking"
+      ],
+      "requires_local_app": "Archicad",
+      "requires_human_approval_for_live_mutation": true,
+      "fallback_profile": "safe_default"
+    },
+    "repo_governance": {
+      "description": "Repository audit, branching, validation and deterministic improvement mode.",
+      "enabled_servers": [
+        "filesystem",
+        "git",
+        "context7",
+        "obsidian",
+        "memory",
+        "lightrag",
+        "sequential-thinking"
+      ],
+      "requires_branch_policy": true,
+      "fallback_profile": "safe_default"
+    }
+  },
+  "mcp_capability_matrix": {
+    "context7": {
+      "class": "knowledge_context",
+      "risk_tier": "low",
+      "capabilities": [
+        "library_docs",
+        "framework_context",
+        "implementation_references"
+      ],
+      "write_access": false
+    },
+    "fetch": {
+      "class": "web_fetch",
+      "risk_tier": "medium",
+      "capabilities": [
+        "open_url",
+        "retrieve_public_content"
+      ],
+      "write_access": false
+    },
+    "filesystem": {
+      "class": "local_fs",
+      "risk_tier": "high",
+      "capabilities": [
+        "read_files",
+        "write_files",
+        "scan_projects",
+        "create_artifacts"
+      ],
+      "write_access": true,
+      "allowed_roots": [
+        "/Users/user/zera",
+        "/Users/user/projects",
+        "/Users/user/lab",
+        "/Users/user/zera/vault"
+      ],
+      "blocked_patterns": [
+        ".env",
+        "*.pem",
+        "*.key",
+        "id_rsa",
+        "secrets.*",
+        ".git/config"
+      ]
+    },
+    "obsidian": {
+      "class": "human_memory",
+      "risk_tier": "medium",
+      "capabilities": [
+        "read_vault",
+        "write_notes",
+        "project_memory"
+      ],
+      "write_access": true,
+      "source_of_truth_role": "human_readable_memory"
+    },
+    "memory": {
+      "class": "agent_memory",
+      "risk_tier": "medium",
+      "capabilities": [
+        "short_term_memory",
+        "entity_memory",
+        "agent_context"
+      ],
+      "write_access": true,
+      "source_of_truth_role": "volatile_agent_memory"
+    },
+    "lightrag": {
+      "class": "semantic_memory",
+      "risk_tier": "medium",
+      "capabilities": [
+        "semantic_search",
+        "knowledge_graph_retrieval",
+        "project_rag"
+      ],
+      "write_access": true,
+      "source_of_truth_role": "semantic_index"
+    },
+    "sequential-thinking": {
+      "class": "reasoning_assist",
+      "risk_tier": "low",
+      "capabilities": [
+        "planning",
+        "decomposition",
+        "decision_trace"
+      ],
+      "write_access": false
+    },
+    "stitch": {
+      "class": "design_generation",
+      "risk_tier": "medium",
+      "capabilities": [
+        "ui_generation",
+        "screen_generation",
+        "google_design_context"
+      ],
+      "write_access": false,
+      "requires_secret": "STITCH_API_KEY"
+    },
+    "magic-mcp": {
+      "class": "ui_component_generation",
+      "risk_tier": "medium",
+      "capabilities": [
+        "21st_dev_components",
+        "component_generation",
+        "ui_patterns"
+      ],
+      "write_access": false,
+      "requires_secret": "TWENTY_FIRST_API_KEY"
+    },
+    "shadcn": {
+      "class": "frontend_component_system",
+      "risk_tier": "medium",
+      "capabilities": [
+        "component_registry",
+        "ui_installation_guidance"
+      ],
+      "write_access": true
+    },
+    "archicad": {
+      "class": "bim_live_bridge",
+      "risk_tier": "critical",
+      "capabilities": [
+        "archicad_session_check",
+        "bim_entity_query",
+        "project_mutation",
+        "handoff_verification"
+      ],
+      "write_access": true,
+      "requires_local_app": true,
+      "requires_human_approval": true,
+      "startup_timeout_seconds": 120,
+      "healthcheck_timeout_seconds": 20,
+      "safe_modes": [
+        "preview",
+        "dry_run",
+        "read_only"
+      ],
+      "live_modes": [
+        "approved_handoff",
+        "verified_mutation"
+      ]
+    },
+    "git": {
+      "class": "repo_control",
+      "risk_tier": "high",
+      "capabilities": [
+        "diff",
+        "branch",
+        "status",
+        "commit_assist"
+      ],
+      "write_access": true,
+      "requires_branch_policy": true
+    }
+  },
+  "startup_policy": {
+    "strategy": "staged_parallel_with_circuit_breakers",
+    "stages": [
+      {
+        "name": "core_memory",
+        "servers": [
+          "memory",
+          "obsidian",
+          "filesystem"
+        ],
+        "required": true,
+        "timeout_seconds": 45
+      },
+      {
+        "name": "reasoning_and_context",
+        "servers": [
+          "sequential-thinking",
+          "context7",
+          "lightrag"
+        ],
+        "required": true,
+        "timeout_seconds": 60
+      },
+      {
+        "name": "network_research",
+        "servers": [
+          "fetch",
+          "exa",
+          "google-developer-knowledge"
+        ],
+        "required": false,
+        "timeout_seconds": 90
+      },
+      {
+        "name": "design_generation",
+        "servers": [
+          "stitch",
+          "magic-mcp",
+          "shadcn",
+          "figma"
+        ],
+        "required": false,
+        "timeout_seconds": 120
+      },
+      {
+        "name": "domain_live_bridges",
+        "servers": [
+          "archicad",
+          "blender"
+        ],
+        "required": false,
+        "timeout_seconds": 150,
+        "manual_activation_required": true
+      }
+    ],
+    "failure_behavior": {
+      "required_stage_failed": "enter_degraded_mode_and_report",
+      "optional_stage_failed": "continue_with_capability_warning",
+      "critical_tool_failed": "disable_tool_for_session_and_open_triage"
+    }
+  },
+  "health_checks": {
+    "global": {
+      "on_startup": true,
+      "periodic": true,
+      "interval_seconds": 300,
+      "retries": 2,
+      "retry_backoff_ms": 1500
+    },
+    "archicad": {
+      "enabled": true,
+      "preconditions": [
+        "archicad_app_running",
+        "port_19723_open",
+        "project_open_if_required",
+        "api_version_detected"
+      ],
+      "timeout_seconds": 120,
+      "degrade_to": "bim_archicad_preview_only"
+    },
+    "remote_mcp": {
+      "enabled": true,
+      "preconditions": [
+        "network_available",
+        "required_env_present"
+      ],
+      "degrade_to": "local_context_only"
+    }
+  },
+  "command_governance": {
+    "semantics_source": "repo",
+    "parity_mode": "strict_reference",
+    "unsupported_command": "route_to_zera_plan",
+    "unsupported_transport": "use_repo_native_contract",
+    "unsupported_tool_surface": "propose_and_request_review",
+    "destructive_actions": {
+      "requires_human_review": true,
+      "examples": [
+        "delete_files",
+        "live_archicad_mutation",
+        "git_commit",
+        "git_push",
+        "database_write",
+        "bulk_memory_rewrite"
+      ]
+    }
+  },
+  "memory_control_plane": {
+    "source_of_truth": {
+      "human_memory": "obsidian",
+      "semantic_index": "lightrag",
+      "volatile_agent_memory": "memory"
+    },
+    "layers": {
+      "session": {
+        "ttl": "24h",
+        "write_policy": "compact_facts_only",
+        "storage": "memory"
+      },
+      "project": {
+        "ttl": "until_project_archive",
+        "write_policy": "evidence_backed_entries_only",
+        "storage": "obsidian"
+      },
+      "semantic": {
+        "ttl": "rebuildable",
+        "write_policy": "chunked_index_with_source_refs",
+        "storage": "lightrag"
+      },
+      "user_preferences": {
+        "ttl": "long_term",
+        "write_policy": "explicit_or_high_confidence_only",
+        "storage": "obsidian"
+      }
+    },
+    "dedupe_policy": {
+      "strategy": "semantic_hash_plus_path_identity",
+      "conflict_resolution": "obsidian_wins_for_human_notes"
+    },
+    "memory_write_gate": {
+      "requires_reason": true,
+      "requires_source": true,
+      "forbid_raw_transcript_dump": true
+    }
+  },
+  "workflow_graph": {
+    "default_sequence": [
+      "obsidian_project_context",
+      "repo_memory_refresh",
+      "mcp_health_preflight",
+      "drift_validator",
+      "triage",
+      "task_blueprint_selection",
+      "execution_plan",
+      "swarm_review",
+      "quality_gate",
+      "self_learning_retro",
+      "build_memory_capture"
+    ],
+    "phases": {
+      "discovery": [
+        "obsidian_project_context",
+        "repo_memory_refresh",
+        "mcp_health_preflight"
+      ],
+      "analysis": [
+        "drift_validator",
+        "triage"
+      ],
+      "planning": [
+        "task_blueprint_selection",
+        "execution_plan"
+      ],
+      "execution": [
+        "tool_routing",
+        "artifact_generation",
+        "mutation_if_approved"
+      ],
+      "validation": [
+        "quality_gate",
+        "regression_check",
+        "before_after_diff"
+      ],
+      "learning": [
+        "self_learning_retro",
+        "build_memory_capture"
+      ]
+    }
+  },
+  "agent_orchestration": {
+    "strategy": "role_based_swarm_with_governor",
+    "agents": {
+      "governor": {
+        "role": "policy_and_risk_controller",
+        "can_block": true
+      },
+      "architect": {
+        "role": "system_design_and_dependency_reasoning",
+        "can_write": false
+      },
+      "planner": {
+        "role": "task_decomposition_and_execution_plan",
+        "can_write": false
+      },
+      "implementer": {
+        "role": "controlled_file_change_execution",
+        "can_write": true,
+        "requires_quality_gate": true
+      },
+      "validator": {
+        "role": "tests_contracts_regression_and_diff_review",
+        "can_write": false
+      },
+      "memory_curator": {
+        "role": "obsidian_and_semantic_memory_hygiene",
+        "can_write": true,
+        "requires_memory_write_gate": true
+      }
+    }
+  },
+  "tool_routing_policy": {
+    "routing_order": [
+      "intent_classification",
+      "risk_classification",
+      "profile_selection",
+      "capability_match",
+      "health_state_check",
+      "cost_score",
+      "fallback_selection"
+    ],
+    "cost_score_formula": {
+      "weights": {
+        "latency": 0.2,
+        "reliability": 0.3,
+        "risk": 0.3,
+        "context_relevance": 0.2
+      }
+    },
+    "fallbacks": {
+      "context7_unavailable": [
+        "lightrag",
+        "obsidian"
+      ],
+      "obsidian_unavailable": [
+        "filesystem",
+        "memory"
+      ],
+      "lightrag_unavailable": [
+        "obsidian",
+        "context7"
+      ],
+      "archicad_unavailable": [
+        "preview_ifc_export",
+        "dry_run_bundle",
+        "manual_handoff_report"
+      ],
+      "stitch_unavailable": [
+        "magic-mcp",
+        "shadcn",
+        "manual_prompt_generation"
+      ],
+      "remote_research_unavailable": [
+        "local_docs_only",
+        "defer_external_sources"
+      ]
+    }
+  },
+  "quality_gates": {
+    "preflight": [
+      "json_schema_valid",
+      "env_refs_present",
+      "mcp_servers_resolvable",
+      "filesystem_roots_exist",
+      "vault_path_exists"
+    ],
+    "before_mutation": [
+      "branch_policy_checked",
+      "diff_plan_generated",
+      "rollback_plan_generated",
+      "risk_tier_allowed"
+    ],
+    "after_mutation": [
+      "schema_revalidation",
+      "runtime_startup_test",
+      "mcp_health_check",
+      "memory_dedupe_check",
+      "regression_snapshot"
+    ],
+    "block_on_fail": [
+      "secret_policy_violation",
+      "critical_mcp_unhealthy_in_required_profile",
+      "unsafe_filesystem_write",
+      "archicad_live_mutation_without_approval"
+    ],
+    "warn_on_fail": [
+      "optional_remote_mcp_unavailable",
+      "design_tool_unavailable",
+      "semantic_index_stale"
+    ]
+  },
+  "observability": {
+    "trace_schema": {
+      "event_id": "uuid",
+      "timestamp": "iso8601",
+      "profile": "string",
+      "agent": "string",
+      "tool": "string",
+      "action": "string",
+      "risk_tier": "string",
+      "status": "success|warning|failure|blocked",
+      "latency_ms": "number",
+      "fallback_used": "boolean",
+      "artifact_refs": "array"
+    },
+    "logs": {
+      "path": "/Users/user/zera/logs/runtime",
+      "rotation": "daily",
+      "retain_days": 30
+    },
+    "reports": {
+      "health_report_path": "/Users/user/zera/docs/audits/runtime/latest_health_report.md",
+      "drift_report_path": "/Users/user/zera/docs/audits/runtime/latest_drift_report.md"
+    }
+  },
+  "archicad_activation_protocol": {
+    "status": "disabled_until_preflight_passes",
+    "activation_steps": [
+      "verify_archicad_server_binary_exists",
+      "verify_archicad_app_running",
+      "verify_port_19723_available",
+      "start_archicad_mcp_with_timeout_120",
+      "run_read_only_session_snapshot",
+      "run_preview_handoff_dry_run",
+      "enable_live_mode_only_after_manual_approval"
+    ],
+    "safe_defaults": {
+      "disabled": true,
+      "timeout": 120,
+      "dry_run": true,
+      "live_mutation": false,
+      "verify_after_handoff": true
+    }
+  },
+  "extension_system": {
+    "merge_rules": {
+      "arrays": "replace_by_key_when_possible_else_append_unique",
+      "objects": "deep_merge",
+      "server_configs": "base_plus_profile_override",
+      "secrets": "env_ref_only"
+    },
+    "override_order": [
+      "base_config",
+      "runtime_control_plane",
+      "profile_override",
+      "session_override"
+    ],
+    "forbidden_overrides": [
+      "secret_policy.inline_secret_forbidden=false",
+      "quality_gates.block_on_fail=[]",
+      "filesystem.blocked_patterns=[]"
+    ]
+  },
+  "success_metrics": {
+    "startup_success_rate_target": 0.98,
+    "required_mcp_health_target": 0.99,
+    "optional_mcp_health_target": 0.85,
+    "memory_duplicate_rate_max": 0.03,
+    "unsafe_write_incidents_target": 0,
+    "archicad_preview_success_target": 0.95,
+    "archicad_live_mutation_without_approval_target": 0,
+    "workflow_completion_rate_target": 0.9
+  }
+}

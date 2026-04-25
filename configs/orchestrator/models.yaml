@@ -16,10 +16,10 @@ version: "4.3"
 # OMNIRROUTE GATEWAY CONFIGURATION
 # ============================================================================
 omniroute:
-  enabled: true
+  enabled: false
   base_url: "http://localhost:20128/v1"
   timeout_seconds: 60
-  fallback_on_unavailable: true  # Fall back to direct API if OmniRoute down
+  fallback_on_unavailable: true
   combo_config: "configs/orchestrator/omniroute_combos.yaml"
 
 # ============================================================================
@@ -37,52 +37,44 @@ models:
   # Aliases reference combo names from omniroute_combos.yaml.
   # ==========================================
 
-  # === OMNIRROUTE COMBO ALIASES ===
-  # Each combo is a fallback chain managed by OmniRoute.
-  # The alias resolves to the first available model in the chain.
-  MODEL_OMNIRROUTE_ORCHESTRATOR: "omniroute://combo/orchestrator"
-  MODEL_OMNIRROUTE_ROUTINE: "omniroute://combo/routine_worker"
-  MODEL_OMNIRROUTE_ENGINEER: "omniroute://combo/engineer"
-  MODEL_OMNIRROUTE_DESIGN: "omniroute://combo/design_lead"
-  MODEL_OMNIRROUTE_REVIEWER: "omniroute://combo/reviewer"
-  MODEL_OMNIRROUTE_ARCHITECT: "omniroute://combo/architect"
-  MODEL_OMNIRROUTE_COUNCIL: "omniroute://combo/council"
+  # === OMNIRROUTE COMBO ALIASES (DISABLED) ===
+  # MODEL_OMNIRROUTE_ORCHESTRATOR: "omniroute://combo/orchestrator"
+  # ...
 
   # === ARCHITECT (Complex Reasoning / C4-C5) ===
-  MODEL_ARCHITECT_PRIMARY: "ollama/deepseek-r1:7b"
+  MODEL_ARCHITECT_PRIMARY: "kc/google/gemini-2.0-flash-exp:free"
   MODEL_ARCHITECT_STABILITY: "anthropic/claude-3.5-opus"
   MODEL_ARCHITECT_POWER: "openai/gpt-4o"
 
   # === ENGINEER (Coding / C2-C3) ===
-  MODEL_ENGINEER_PRIMARY: "ollama/qwen2.5-coder:7b"
+  MODEL_ENGINEER_PRIMARY: "kc/openrouter/auto"
   MODEL_ENGINEER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
-  MODEL_ENGINEER_POWER: "openrouter/qwen/qwen2.5-coder-72b-instruct"
+  MODEL_ENGINEER_POWER: "cx/gpt-5.4"
 
   # === REVIEWER (Security / Quality Audit) ===
   MODEL_REVIEWER_PRIMARY: "qwen/qwen-2.5-72b-instruct"
   MODEL_REVIEWER_STABILITY: "anthropic/claude-3-5-sonnet-20241022"
-  MODEL_REVIEWER_POWER: "openrouter/qwen/qwen2.5-coder-32b-instruct"
+  MODEL_REVIEWER_POWER: "cl/anthropic/claude-opus-4-20250514"
 
   # === ROUTINE/FAST (Trivial / UI / C1) ===
-  MODEL_FAST_PRIMARY: "ollama/qwen3.5:4b-q4_K_M"
+  MODEL_FAST_PRIMARY: "kc/openrouter/auto"
   MODEL_FAST_STABILITY: "$MODEL_ENGINEER_PRIMARY"
-  MODEL_FAST_POWER: "openrouter/qwen/qwen2.5-72b-instruct"
+  MODEL_FAST_POWER: "cl/openai/gpt-4.1"
 
   # === DESIGN (UX / Visual / Creative) ===
-  MODEL_DESIGN_PRIMARY: "google/gemma-3-27b-it"
-  MODEL_DESIGN_STABILITY: "$MODEL_FAST_PRIMARY"
-  MODEL_DESIGN_POWER: "openrouter/qwen/qwen3.5-plus-02-15"
+  MODEL_DESIGN_POWER: "antigravity/gemini-3.1-pro-high"
 
   # === LOCAL MODELS (Ollama / Mac mini M1) ===
-  MODEL_LOCAL_CODING: "ollama/qwen2.5-coder:7b"
-  MODEL_LOCAL_MULTIPURPOSE: "ollama/qwen3.5:9b-q4_K_M"
-  MODEL_LOCAL_VISION: "ollama/minicpm-v:latest"
-  MODEL_LOCAL_COMPACT: "ollama/gemma4:e2b"
-  MODEL_LOCAL_MEDIUM: "ollama/gemma4:e4b"
-  MODEL_LOCAL_ROBUST: "ollama/llama3.1:8b"
-  MODEL_LOCAL_FAST_QWEN: "ollama/qwen3.5:4b-q4_K_M"
-  MODEL_LOCAL_BONSAI: "ollama/bonsai"
-  MODEL_LOCAL_LMSTUDIO: "lmstudio/google/gemma-4-e4b"
+  MODEL_LOCAL_CODING: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_MULTIPURPOSE: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_VISION: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_COMPACT: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_MEDIUM: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_ROBUST: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_FAST_QWEN: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_BONSAI: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_LMSTUDIO: "lmstudio/google/gemma-4-e2b"
+  MODEL_LOCAL_LMSTUDIO_E2B: "lmstudio/google/gemma-4-e2b"
 
   # === LOCAL MLX MODELS (Direct Metal / TurboQuant) ===
   MODEL_LOCAL_MLX_FAST: "mlx:mlx-community/Llama-3.2-3B-Instruct-4bit"
@@ -94,10 +86,10 @@ models:
   # === HERMES RUNTIME DEFAULTS ===
   # Free strong models for Hermes agent profile (zera)
   # Synced with ${HOME}/.hermes/profiles/*/config.yaml model.default
-  MODEL_HERMES_DEFAULT: "ollama/qwen3.5:9b-q4_K_M"
-  MODEL_HERMES_FALLBACK_1: "openrouter/qwen/qwen3.6-plus:free"
-  MODEL_HERMES_FALLBACK_2: "openrouter/google/gemma-3-27b-it:free"
-  MODEL_HERMES_COMPRESSION: "openrouter/qwen/qwen3.6-plus-preview:free"
+  MODEL_HERMES_DEFAULT: "lmstudio/google/gemma-4-e2b"
+  MODEL_HERMES_FALLBACK_1: "$MODEL_LOCAL_COMPACT"
+  MODEL_HERMES_FALLBACK_2: "$MODEL_LOCAL_MEDIUM"
+  MODEL_HERMES_COMPRESSION: "lmstudio/google/gemma-4-e2b"
   # Premium override (requires OpenRouter credits):
   # MODEL_HERMES_PREMIUM: "qwen/qwen3-235b-a22b"
 
@@ -106,14 +98,13 @@ models:
   # Maps roles to OmniRoute combos with direct fallbacks.
   # ==========================================
 
-  # === OMNIRROUTE COMBO ALIASES (Primary) ===
-  AGENT_MODEL_ORCHESTRATOR: "$MODEL_OMNIRROUTE_ORCHESTRATOR"
-  AGENT_MODEL_ROUTINE: "$MODEL_OMNIRROUTE_ROUTINE"
-  AGENT_MODEL_ENGINEER: "$MODEL_OMNIRROUTE_ENGINEER"
-  AGENT_MODEL_DESIGN: "$MODEL_OMNIRROUTE_DESIGN"
-  AGENT_MODEL_REVIEWER: "$MODEL_OMNIRROUTE_REVIEWER"
-  AGENT_MODEL_ARCHITECT: "$MODEL_OMNIRROUTE_ARCHITECT"
-  AGENT_MODEL_COUNCIL: "$MODEL_OMNIRROUTE_COUNCIL"
+  AGENT_MODEL_ORCHESTRATOR: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_ROUTINE: "$MODEL_FAST_PRIMARY"
+  AGENT_MODEL_ENGINEER: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_DESIGN: "kc/google/gemini-2.0-flash-exp:free"
+  AGENT_MODEL_REVIEWER: "$MODEL_ENGINEER_PRIMARY"
+  AGENT_MODEL_ARCHITECT: "$MODEL_ARCHITECT_PRIMARY"
+  AGENT_MODEL_COUNCIL: "cl/anthropic/claude-opus-4-20250514"
 
   # === DIRECT FALLBACK ALIASES (when OmniRoute unavailable) ===
   AGENT_MODEL_ORCHESTRATOR_DIRECT: "$MODEL_FAST_PRIMARY"
@@ -148,4 +139,4 @@ hermes_profiles:
   zera:
     default: "$MODEL_HERMES_DEFAULT"
     fallback: "$MODEL_HERMES_FALLBACK_1"
-  premium_override: "qwen/qwen3-235b-a22b"  # Requires OpenRouter credits
+  premium_override: "antigravity/claude-opus-4-6-thinking"

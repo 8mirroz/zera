@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/react-doctor-analyzer/SKILL.md

@@ -57,7 +57,7 @@ from agent_os.yaml_compat import parse_simple_yaml
 from agent_os.notebooklm_doctor import run_notebooklm_doctor
 from agent_os.notebooklm_router_prompt import build_router_packet
 from agent_os.skill_drift_validator import build_report as build_skill_drift_report
-from agent_os.trace_metrics_materializer import materialize_metrics as materialize_trace_metrics
+from agent_os.metrics.trace_materialization import materialize_metrics as materialize_trace_metrics
 from agent_os.trace_validator import validate_trace_file as validate_trace_jsonl
 from agent_os.workflow_model_alias_validator import build_report as build_workflow_model_alias_report
 

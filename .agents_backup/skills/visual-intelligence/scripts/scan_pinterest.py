@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/visual-intelligence/scripts/scan_pinterest.py

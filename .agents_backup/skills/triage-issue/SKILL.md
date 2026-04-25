@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/triage-issue/SKILL.md

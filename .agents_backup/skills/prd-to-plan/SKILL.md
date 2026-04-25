@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/prd-to-plan/SKILL.md

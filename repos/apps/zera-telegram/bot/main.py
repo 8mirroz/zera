@@ -7,8 +7,6 @@ load_dotenv()
 
 from aiohttp import web
 from aiogram import Bot, Dispatcher, F, Router
-from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
@@ -47,7 +45,7 @@ def _resolve_bot_token() -> str | None:
 
 async def _answer_chunks(message: Message, text: str) -> None:
     for chunk in response_chunks(text):
-        await message.answer(chunk)
+        await message.answer(chunk, parse_mode=None)
 
 
 def _webhook_path() -> str:
@@ -267,7 +265,7 @@ async def main() -> None:
     if not token:
         raise RuntimeError("No bot token found. Set one of: BOT_TOKEN, ZERA_BOT_TOKEN, TELEGRAM_BOT_TOKEN, TG_BOT_TOKEN, ZERA_TOKEN")
 
-    bot = Bot(token=token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(token=token)
     dp = Dispatcher()
     dp.include_router(router)
 

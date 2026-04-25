@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/telegram-payments/SKILL.md

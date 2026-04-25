@@ -436,13 +436,14 @@ class StructuredTraceEmitter:
             envelope["_compact"] = True
 
         # Extract priority fields to envelope level if present in data
-        status = data.get("status")
-        duration_ms = data.get("duration_ms")
-
-        if status is not None:
-            envelope["status"] = status
-        if duration_ms is not None:
-            envelope["duration_ms"] = int(duration_ms) if isinstance(duration_ms, (int, float)) else duration_ms
+        # This is required for schema validation of specific event types
+        for field in ["status", "duration_ms", "tool_name", "task_type", "complexity", "model", "model_tier"]:
+            val = data.get(field)
+            if val is not None:
+                if field == "duration_ms" and isinstance(val, (int, float)):
+                    envelope[field] = int(val)
+                else:
+                    envelope[field] = val
 
         self.sink.write(envelope)
 

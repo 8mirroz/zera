@@ -28,7 +28,13 @@ Role contracts define explicit boundaries for all agent types: responsibilities,
 | Architect | C4-C5 | `$AGENT_MODEL_COUNCIL` | council |
 | Council | C5 | `$AGENT_MODEL_COUNCIL` | user |
 
-All model aliases resolve via `configs/orchestrator/models.yaml`.
+All model aliases resolve via `configs/orchestrator/models.yaml` and utilize the **Multi-Tier Fallback Strategy** defined in `configs/orchestrator/omniroute_combos.yaml`.
+
+### Model Selection Strategy (v4.3)
+1.  **Local Primary (Free/Fast)**: High-performance local models (`Qwen 2.5 Coder 7B`, `DeepSeek R1 7B`).
+2.  **Free Remote (Cost-Efficiency)**: OpenRouter free-tier models (`Qwen 3.6 Plus`, `Gemma 3`).
+3.  **Premium Remote (Complex/Rare)**: Top-tier models (`OpenAI Codex`, `Claude Opus`) used only for C4-C5 tiers or critical failures.
+4.  **Extreme Local Fallback**: Ultra-lightweight local models (`Gemma 4 e4b/e2b`) as the final line of defense.
 
 ---
 

@@ -267,3 +267,50 @@ commands:
     rollback_path: "quarantine imported pattern and remove candidate card"
     aliases: ["foundry", "ingest", "import pattern"]
     inference_keywords: ["ingest", "import pattern", "skill candidate", "foundry", "reuse pattern"]
+
+aliases:
+  analyze:
+    ru:
+      - анализ
+      - разбор
+      - проверь
+      - найди слабые места
+      - оцени
+
+  plan:
+    ru:
+      - план
+      - что дальше
+      - следующие шаги
+      - дорожная карта
+
+  improve:
+    ru:
+      - улучши
+      - усили
+      - прокачай
+      - сделай мощнее
+
+  execute:
+    ru:
+      - выполни
+      - сделай
+      - запусти
+      - внедри
+
+  audit:
+    ru:
+      - аудит
+      - проверка
+      - ревизия
+      - найди проблемы
+
+test_cases:
+  - input: "найди слабые места"
+    expected_intent: audit
+
+  - input: "улучши конфиги zera"
+    expected_intent: improve
+
+  - input: "сделай дальнейший план"
+    expected_intent: plan

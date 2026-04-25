@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -12,6 +13,12 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[4]
 SWARMCTL = REPO_ROOT / "repos/packages/agent-os/scripts/swarmctl.py"
 _LAST_REQUEST_TS: dict[int, float] = {}
+_INTERNAL_TOOLS_BLOCK_RE = re.compile(r"(?is)<tools>.*?</tools>")
+_TOOL_CALL_TOKEN_RE = re.compile(r"(?is)tool_call>\s*")
+_INTERNAL_TOOL_LINE_RE = re.compile(
+    r"^\s*</?(?:tools?|tool_call|function|functions|arguments)\b[^>]*>\s*$",
+    re.IGNORECASE,
+)
 
 
 def repo_root() -> Path:
@@ -98,6 +105,43 @@ def response_chunks(text: str, *, limit: int = 3500) -> list[str]:
     if current:
         chunks.append(current)
     return chunks
+
+
+def sanitize_runtime_text(text: str) -> str:
+    """Drop leaked internal tool-call markup from model/runtime output."""
+    raw = str(text or "")
+    if not raw.strip():
+        return ""
+
+    cleaned = _INTERNAL_TOOLS_BLOCK_RE.sub(" ", raw)
+    cleaned = _TOOL_CALL_TOKEN_RE.sub("", cleaned)
+
+    lines: list[str] = []
+    for line in cleaned.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            if lines and lines[-1] != "":
+                lines.append("")
+            continue
+        lower = stripped.lower()
+        if _INTERNAL_TOOL_LINE_RE.match(stripped):
+            continue
+        if lower.startswith("<tool") or lower.startswith("</tool"):
+            continue
+        lines.append(line.rstrip())
+
+    return "\n".join(lines).strip()
+
+
+def _select_user_response(*candidates: Any) -> str:
+    for candidate in candidates:
+        cleaned = sanitize_runtime_text(str(candidate or ""))
+        if cleaned:
+            return cleaned
+    return (
+        "Внутренний вызов инструмента не завершился корректно. "
+        "Повторите запрос или переформулируйте его без команды запуска сабагента."
+    )
 
 
 def queue_summary() -> dict[str, Any]:
@@ -235,8 +279,13 @@ def run_companion_flow(text: str) -> str:
     try:
         payload = json.loads(stdout)
     except Exception:
-        return stdout[:1000]
+        return _select_user_response(stdout[:1500])
     agent = payload.get("agent", {})
     if isinstance(agent, dict):
-        return str(agent.get("response_text") or agent.get("diff_summary") or "No response produced.")
-    return "No response produced."
+        return _select_user_response(
+            agent.get("response_text"),
+            agent.get("diff_summary"),
+            payload.get("error"),
+            stdout[:1500],
+        )
+    return _select_user_response(payload.get("error"), stdout[:1500])

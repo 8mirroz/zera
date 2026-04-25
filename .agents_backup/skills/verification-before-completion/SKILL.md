@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/verification-before-completion/SKILL.md

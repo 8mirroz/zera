@@ -26,8 +26,8 @@ from agent_os.agent_runtime import AgentRuntime
 from agent_os.contracts import AgentInput, ToolInput
 from agent_os.observability import emit_event
 from agent_os.tool_runner import ToolRunner
-from trace_metrics_materializer import materialize_metrics
-from trace_validator import validate_trace_file
+from agent_os.metrics.trace_materialization import materialize_metrics
+from agent_os.trace_validator import validate_trace_file
 
 
 def main() -> int:

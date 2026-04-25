@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/dispatching-parallel-agents/SKILL.md

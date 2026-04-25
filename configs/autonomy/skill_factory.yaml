@@ -1,0 +1,37 @@
+# configs/autonomy/skill_factory.yaml
+# Конфигурация жизненного цикла навыков (Skill Acquisition Engine)
+
+skill_lifecycle:
+  discovery:
+    trigger: "repeated_pattern_detected"
+    failure_clustering: true
+    min_failures_for_new_skill: 3
+  
+  creation:
+    engine: "claude-3.5-sonnet"
+    prompt_version: "v1.2"
+    constraints:
+      - "must_be_testable"
+      - "require_rollback_handler"
+      - "explicit_schema_required"
+    
+  validation:
+    sandbox: true
+    timeout_seconds: 30
+    accuracy_threshold: 0.95
+    required_test_coverage: 0.8
+  
+  deployment:
+    strategy: "canary"
+    canary_percentage: 5
+    monitoring:
+      error_rate_threshold: 0.02
+      max_calls_before_promotion: 100
+  
+  cataloging:
+    registry_path: ".agent/skills/registry.json"
+    semantic_tags_enabled: true
+
+observability:
+  log_lifecycle_events: true
+  track_usage_metrics: true

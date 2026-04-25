@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/grill-me/SKILL.md

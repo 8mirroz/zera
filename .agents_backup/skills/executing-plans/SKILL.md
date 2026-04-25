@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/executing-plans/SKILL.md

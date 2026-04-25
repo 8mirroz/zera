@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -13,6 +14,9 @@ from .model_router import UnifiedRouter
 from .routing_vector import RoutingVectorClassifier, RoutingVector
 from .yaml_compat import parse_simple_yaml
 from .config_loader import ModularConfigLoader, ConfigNode
+from .intelligence.semantic_cache import SemanticCache
+
+logger = logging.getLogger(__name__)
 
 
 class WorkflowRouter:
@@ -30,6 +34,7 @@ class WorkflowRouter:
         self._wf_cache: dict[str, Any] | None = None
         self._mode_cache: dict[str, Any] | None = None
         self._region_cache: dict[str, Any] | None = None
+        self._semantic_cache = SemanticCache({})  # Init with empty config or load from file
 
     def _load_yaml(self, rel_path: str) -> dict[str, Any]:
         path = self.repo_root / rel_path
@@ -150,7 +155,13 @@ class WorkflowRouter:
             ctx["routing_vector_lane"] = classification.lane
             ctx["routing_vector_reasons"] = classification.reasons
 
-        # Base route from UnifiedRouter
+        # 1. Semantic Cache Lookup
+        cached_route = self._semantic_cache.lookup(intent)
+        if cached_route:
+            logger.info("Semantic cache hit for intent: %s", intent)
+            return cached_route
+
+        # 2. Base route from UnifiedRouter
         base = self._unified.route(intent, complexity, context=ctx)
 
         # Workflow match
@@ -180,6 +191,9 @@ class WorkflowRouter:
         # Region profile constraints
         region = self._resolve_region_profile(ctx)
         base = self._apply_region_constraints(base, region, ctx)
+
+        # 3. Store in Semantic Cache
+        self._semantic_cache.store(intent, base)
 
         return base
 

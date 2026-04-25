@@ -7,8 +7,8 @@
 |-----------|--------|--------|
 | ZeRa Agent | v0.7.0 | ✅ Установлен |
 | Python | 3.12.12 (uv) | ✅ |
-| Модель | `openrouter/qwen/qwen3.6-plus-preview:free` | ✅ (из Antigravity Core) |
-| Провайдер | OpenRouter | ✅ (ключ из .env Antigravity) |
+| Модель | `lmstudio/google/gemma-4-e2b` | ✅ (Sovereign Local) |
+| Провайдер | LM Studio (Local) | ✅ (No External Gateway) |
 | Профиль | `antigravity` | ✅ (изолированный) |
 | Workspace | `/Users/user/antigravity-core` | ✅ |
 | MCP серверы | filesystem, context7, sequential-thinking | ⏳ требуют npx |
@@ -44,7 +44,7 @@ docker run -d -p 3000:8080 \
 ```bash
 # ZeRa работает как OpenAI-compatible бэкенд
 # URL: http://localhost:8000/v1
-# Key: OPENROUTER_API_KEY из .env
+# Key: Не требуется для локальных моделей
 ```
 
 ### Вариант 4: Telegram/Discord Gateway (готово к настройке)
@@ -176,7 +176,7 @@ hermes logs --since 1h      # за последний час
 
 # Конфигурация
 hermes config edit          # открыть config.yaml
-hermes config set model.default "openrouter/qwen/qwen3-coder-next"
+hermes config set model.default "lmstudio/google/gemma-4-e2b"
 hermes config migrate       # обновить конфиг
 
 # Профили

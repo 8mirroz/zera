@@ -1,0 +1,31 @@
+# configs/autonomy/routing.yaml
+# Детерминированная матрица маршрутизации и Fallback Chains
+
+request_router:
+  rules:
+    - task_type: "code_generation"
+      complexity_threshold: 7
+      primary_route: "claude-3.5-sonnet"
+      fallback_chain: ["gpt-4o", "local-llama-3.1-70b"]
+      timeout: 45
+        
+    - task_type: "web_research"
+      freshness_required: true
+      primary_route: "perplexity-api"
+      fallback_chain: ["tavily-search", "serpapi"]
+      cache_ttl_hours: 1
+        
+    - task_type: "self_improvement"
+      primary_route: "o1-preview"  # для сложного reasoning
+      fallback_chain: ["claude-3.5-sonnet", "reflexion-loop"]
+
+semantic_cache:
+  enabled: true
+  similarity_threshold: 0.92
+  storage: "vector_db"
+  ttl_seconds: 3600
+
+observability:
+  log_decisions: true
+  track_fallback_rate: true
+  alert_on_fallback_rate: 0.15

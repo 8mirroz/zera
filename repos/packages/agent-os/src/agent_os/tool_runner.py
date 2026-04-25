@@ -17,8 +17,11 @@ _emitter: Any = None
 def _get_emitter() -> Any:
     global _emitter
     if _emitter is None:
+        import os
         from .trace_context import TraceSink, StructuredTraceEmitter
-        _emitter = StructuredTraceEmitter(TraceSink(filename="agent_traces.jsonl"))
+        
+        trace_file = os.getenv("AGENT_OS_TRACE_FILE") or "logs/agent_traces.jsonl"
+        _emitter = StructuredTraceEmitter(TraceSink(filename=trace_file))
     return _emitter
 
 
@@ -45,6 +48,7 @@ class ToolRunner:
             task_id=f"tool-{tool_input.tool_name}",
             tier="C2",
             component="tool_runner",
+            run_id=tool_input.correlation_id,
         )
         # --- end trace ---
 

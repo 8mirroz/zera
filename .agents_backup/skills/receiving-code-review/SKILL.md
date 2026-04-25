@@ -1,1 +1,0 @@
-/Users/user/zera/.agents/skills/receiving-code-review/SKILL.md

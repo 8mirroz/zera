@@ -1,0 +1,33 @@
+# configs/autonomy/web_agent.yaml
+# Конфигурация автономной веб-навигации
+
+web_capabilities:
+  browsing:
+    engine: "playwright"
+    headless: true
+    strategy: "ReAct"  # Thought -> Action -> Observation
+    anti_detection:
+      enabled: true
+      random_delays: [1.0, 3.5]
+      human_like_cursor: true
+
+  information_extraction:
+    pipeline:
+      - method: "semantic_chunking"
+        chunk_size: 1000
+      - method: "NER"
+        entities: ["ORG", "PRODUCT", "VERSION", "PERSON"]
+      - method: "cross_reference"
+        target: "semantic_memory"
+
+  goal_driven_search:
+    algorithm: "MCTS"  # Monte-Carlo Tree Search
+    max_iterations: 10
+    utility_function: "information_gain * relevance_to_goal"
+    fallbacks:
+      max_attempts: 3
+      refine_strategy: "goal_decomposition"
+
+observability:
+  capture_screenshots: true
+  log_actions: true
