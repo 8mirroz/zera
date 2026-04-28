@@ -210,6 +210,7 @@ def materialize_metrics(trace_file: Path, *, allow_legacy: bool, include_dimensi
 
     task_summary_total = 0
     task_summary_success = 0
+    task_summary_first_pass_success = 0
     task_summary_escalated = 0
     task_summary_fail = 0
     fallback_total = 0
@@ -307,6 +308,9 @@ def materialize_metrics(trace_file: Path, *, allow_legacy: bool, include_dimensi
             status = str(ev.get("status") or "").lower()
             if status in SUCCESS_STATUSES:
                 task_summary_success += 1
+                # First pass success: successful without escalation
+                if not data.get("escalation_reason"):
+                    task_summary_first_pass_success += 1
             elif status in FAIL_STATUSES:
                 task_summary_fail += 1
             elif status == "escalated":
@@ -423,6 +427,12 @@ def materialize_metrics(trace_file: Path, *, allow_legacy: bool, include_dimensi
                 "numerator": pass_rate_numer,
                 "denominator": pass_rate_denom,
                 "source": pass_rate_source,
+            },
+            "first_pass_success_rate": {
+                "value": _ratio(task_summary_first_pass_success, task_summary_total),
+                "numerator": task_summary_first_pass_success,
+                "denominator": task_summary_total,
+                "source": "task_run_summary (без escalation_reason)",
             },
             "tool_success_rate": {
                 "value": _ratio(tool_numer, tool_denom),
@@ -544,6 +554,7 @@ def materialize_metrics(trace_file: Path, *, allow_legacy: bool, include_dimensi
             "runs_eligible_capture_c3plus": len(runs_eligible_capture),
             "task_summary_total": task_summary_total,
             "task_summary_success": task_summary_success,
+            "task_summary_first_pass_success": task_summary_first_pass_success,
             "task_summary_fail": task_summary_fail,
             "task_summary_escalated": task_summary_escalated,
             "fallback_total": fallback_total,

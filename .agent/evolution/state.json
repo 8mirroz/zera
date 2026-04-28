@@ -1,15 +1,15 @@
 {
-  "total_cycles": 7,
-  "successful_cycles": 3,
+  "total_cycles": 12,
+  "successful_cycles": 8,
   "failed_cycles": 0,
   "skipped_cycles": 0,
   "candidates_promoted": 0,
   "candidates_rolled_back": 0,
-  "current_cycle": 7,
-  "current_loop_algorithm": "ralph",
-  "loop_algorithm_index": 6,
-  "last_cycle_at": "2026-04-13T16:11:30.105918+00:00",
-  "last_cycle_status": "completed (dry run)",
+  "current_cycle": 12,
+  "current_loop_algorithm": "agentic-ci",
+  "loop_algorithm_index": 7,
+  "last_cycle_at": "2026-04-28T19:22:25.498078+00:00",
+  "last_cycle_status": "completed",
   "last_error": "",
   "started_at": "2026-04-11T19:06:33.507436+00:00",
   "freeze_active": false,
@@ -81,31 +81,31 @@
       "last_cycle": 7
     },
     "agentic-ci": {
-      "trials": 0,
-      "reward_sum": 0.0,
-      "successes": 0,
+      "trials": 2,
+      "reward_sum": 1.547,
+      "successes": 2,
       "promotions": 0,
       "failures": 0,
-      "last_reward": 0.0,
-      "last_cycle": 0
+      "last_reward": 0.7735,
+      "last_cycle": 12
     },
     "self-driving": {
-      "trials": 0,
-      "reward_sum": 0.0,
-      "successes": 0,
+      "trials": 1,
+      "reward_sum": 0.7735,
+      "successes": 1,
       "promotions": 0,
       "failures": 0,
-      "last_reward": 0.0,
-      "last_cycle": 0
+      "last_reward": 0.7735,
+      "last_cycle": 9
     },
     "meta-learning": {
-      "trials": 0,
-      "reward_sum": 0.0,
-      "successes": 0,
+      "trials": 2,
+      "reward_sum": 1.577,
+      "successes": 2,
       "promotions": 0,
       "failures": 0,
-      "last_reward": 0.0,
-      "last_cycle": 0
+      "last_reward": 0.7885,
+      "last_cycle": 11
     }
   },
   "class_stats": {
@@ -200,13 +200,13 @@
       "last_cycle": 0
     },
     "autonomy_behavior_adjustment": {
-      "trials": 0,
-      "reward_sum": 0.0,
-      "successes": 0,
+      "trials": 5,
+      "reward_sum": 3.8974999999999995,
+      "successes": 5,
       "promotions": 0,
       "failures": 0,
-      "last_reward": 0.0,
-      "last_cycle": 0
+      "last_reward": 0.7735,
+      "last_cycle": 12
     },
     "governance_affecting_candidate": {
       "trials": 0,

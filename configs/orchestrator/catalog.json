@@ -722,12 +722,6 @@
       "layer": "tooling"
     },
     {
-      "name": "mcp_design_sources",
-      "path": "configs/tooling/mcp_design_sources.json",
-      "ext": ".json",
-      "layer": "tooling"
-    },
-    {
       "name": "self-refusal-rules",
       "path": "configs/tooling/self-refusal-rules.yaml",
       "ext": ".yaml",

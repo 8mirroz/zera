@@ -32,7 +32,62 @@
       "reward": 0.7645,
       "next_focus": "workflow_optimization",
       "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-25T14:06:06.207305+00:00",
+      "cycle_number": 8,
+      "loop_algorithm": "agentic-ci",
+      "candidate_class": "autonomy_behavior_adjustment",
+      "score": 0.547,
+      "status": "approved",
+      "reward": 0.7735,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-25T14:06:18.225354+00:00",
+      "cycle_number": 9,
+      "loop_algorithm": "self-driving",
+      "candidate_class": "autonomy_behavior_adjustment",
+      "score": 0.547,
+      "status": "approved",
+      "reward": 0.7735,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-25T20:02:37.523864+00:00",
+      "cycle_number": 10,
+      "loop_algorithm": "meta-learning",
+      "candidate_class": "autonomy_behavior_adjustment",
+      "score": 0.577,
+      "status": "approved",
+      "reward": 0.7885,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-27T23:17:31.885424+00:00",
+      "cycle_number": 11,
+      "loop_algorithm": "meta-learning",
+      "candidate_class": "autonomy_behavior_adjustment",
+      "score": 0.577,
+      "status": "approved",
+      "reward": 0.7885,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
+    },
+    {
+      "timestamp": "2026-04-28T19:22:25.497535+00:00",
+      "cycle_number": 12,
+      "loop_algorithm": "agentic-ci",
+      "candidate_class": "autonomy_behavior_adjustment",
+      "score": 0.547,
+      "status": "approved",
+      "reward": 0.7735,
+      "next_focus": "workflow_optimization",
+      "risk_hint": "stable"
     }
   ],
-  "updated_at": "2026-04-11T19:15:24.434928+00:00"
+  "updated_at": "2026-04-28T19:22:25.497540+00:00"
 }

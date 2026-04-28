@@ -12,20 +12,47 @@ from agent_os.yaml_compat import parse_simple_yaml
 
 
 def repo_root() -> Path:
-    return Path(__file__).resolve().parents[4]
+    return Path(__file__).resolve().parents[5]
 
 
 def load_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return {}
 
 
 def build_report(root: Path) -> dict[str, Any]:
     router_yaml_path = root / "configs/orchestrator/router.yaml"
     models_yaml_path = root / "configs/orchestrator/models.yaml"
-    model_routing = load_json(root / "configs/tooling/model_routing.json")
+    
+    # Try to load model_routing.json (active or archived)
+    model_routing_path = root / "configs/tooling/model_routing.json"
+    if not model_routing_path.exists():
+        model_routing_path = root / "configs/tooling/_archived/model_routing.json.DEPRECATED"
+    
+    model_routing = load_json(model_routing_path)
+    
+    # Load other core configs
     providers = load_json(root / "configs/tooling/model_providers.json")
     mcp_profiles = load_json(root / "configs/tooling/mcp_profiles.json")
-    legacy_router_yaml = parse_simple_yaml((root / ".agent/config/model_router.yaml").read_text(encoding="utf-8"))
+    
+    # Load modern command registry if present
+    command_registry_path = root / "configs/tooling/zera_command_registry.yaml"
+    command_registry = {}
+    if command_registry_path.exists():
+        try:
+            command_registry = parse_simple_yaml(command_registry_path.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+
+    legacy_router_yaml_path = root / ".agent/config/model_router.yaml"
+    legacy_router_yaml = {}
+    if legacy_router_yaml_path.exists():
+        legacy_router_yaml = parse_simple_yaml(legacy_router_yaml_path.read_text(encoding="utf-8"))
+    
     v4_router_yaml = parse_simple_yaml(router_yaml_path.read_text(encoding="utf-8")) if router_yaml_path.exists() else {}
     v4_models_yaml = parse_simple_yaml(models_yaml_path.read_text(encoding="utf-8")) if models_yaml_path.exists() else {}
 
@@ -175,24 +202,34 @@ def build_report(root: Path) -> dict[str, Any]:
                         }
                     )
 
+    # Legacy checks - only if model_routing is present
     routing_tiers = set(model_routing.get("tiers", []))
     providers_tiers = set(providers.get("tiers", {}).keys())
     yaml_tiers = set((legacy_router_yaml.get("tiers") or {}).keys())
 
-    if routing_tiers != providers_tiers:
+    if model_routing:
+        if routing_tiers != providers_tiers:
+            findings.append(
+                {
+                    "severity": "warn",
+                    "code": "TIER_SET_MISMATCH_JSON",
+                    "message": f"model_routing tiers={sorted(routing_tiers)} vs model_providers tiers={sorted(providers_tiers)}",
+                }
+            )
+        if routing_tiers != yaml_tiers:
+            findings.append(
+                {
+                    "severity": "warn",
+                    "code": "TIER_SET_MISMATCH_YAML",
+                    "message": f"model_routing tiers={sorted(routing_tiers)} vs .agent/config/model_router.yaml tiers={sorted(yaml_tiers)}",
+                }
+            )
+    else:
         findings.append(
             {
-                "severity": "warn",
-                "code": "TIER_SET_MISMATCH_JSON",
-                "message": f"model_routing tiers={sorted(routing_tiers)} vs model_providers tiers={sorted(providers_tiers)}",
-            }
-        )
-    if routing_tiers != yaml_tiers:
-        findings.append(
-            {
-                "severity": "warn",
-                "code": "TIER_SET_MISMATCH_YAML",
-                "message": f"model_routing tiers={sorted(routing_tiers)} vs .agent/config/model_router.yaml tiers={sorted(yaml_tiers)}",
+                "severity": "info",
+                "code": "LEGACY_ROUTING_MISSING",
+                "message": "model_routing.json missing; skipping legacy tier set mismatch checks",
             }
         )
 
@@ -312,6 +349,22 @@ def build_report(root: Path) -> dict[str, Any]:
         "Keep configs/orchestrator/router.yaml + models.yaml as primary source-of-truth for task/complexity and alias routing",
         "Treat configs/tooling/model_routing.json and .agent/config/model_router.yaml as compatibility layers until agent-os migration is complete",
     ]
+
+    # Command Registry Validation
+    if command_registry:
+        commands = command_registry.get("commands", {})
+        for cmd_name, cmd_data in commands.items():
+            if not isinstance(cmd_data, dict):
+                continue
+            tier = cmd_data.get("model_transport_tier")
+            if tier and tier not in providers_tiers:
+                findings.append(
+                    {
+                        "severity": "error",
+                        "code": "COMMAND_TIER_INVALID",
+                        "message": f"command {cmd_name} references invalid model_transport_tier '{tier}' (not in model_providers.json tiers)",
+                    }
+                )
 
     return {
         "severity": severity,
